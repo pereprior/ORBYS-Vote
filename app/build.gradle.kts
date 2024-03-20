@@ -34,8 +34,14 @@ android {
         jvmTarget = "1.8"
     }
 
+    // ViewBinding
     buildFeatures {
         viewBinding = true
+    }
+
+    // Documentacion
+    subprojects {
+        apply(plugin = "org.jetbrains.dokka")
     }
 }
 
@@ -46,6 +52,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
