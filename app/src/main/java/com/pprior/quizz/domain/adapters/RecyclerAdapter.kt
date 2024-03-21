@@ -1,11 +1,11 @@
 package com.pprior.quizz.domain.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
+import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
 
 class RecyclerAdapter(
     // Lista de preguntas que se mostrarán en el RecyclerView
@@ -33,7 +33,10 @@ class RecyclerAdapter(
 
         fun bind(item: Question) {
             binding.titleQuestion.text = item.title
-            Log.d("ListFragment", binding.titleQuestion.text.toString())
+
+            binding.launchButton.setOnClickListener {
+                LaunchQuestionDialog(it.context).show()
+            }
         }
     }
 }
