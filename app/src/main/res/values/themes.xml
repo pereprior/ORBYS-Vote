@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.SchoolQuizz" parent="Base.Theme.SchoolQuizz" />
+
 </resources>

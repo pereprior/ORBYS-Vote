@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
             .replace(binding.headerFragment.id, headFragment)
             .commit()
 
-        val addFragment = ListFragment()
+        val listFragment = ListFragment()
         supportFragmentManager
             .beginTransaction()
-            .replace(binding.fragmentListRecyclerView.id, addFragment)
+            .replace(binding.fragmentListRecyclerView.id, listFragment)
             .commit()
     }
 }

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Ayudas del dialogo para añadir elementos -->
+    <string name="question_title">"Titulo:"</string>
+    <string name="question_question">Pregunta:</string>
+    <string name="save_button">Guardar</string>
 </resources>

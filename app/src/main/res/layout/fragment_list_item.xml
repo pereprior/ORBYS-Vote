@@ -1,0 +1,62 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="48dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:elevation="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center|bottom" >
+
+            <ImageButton
+                android:id="@+id/details_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:src="@drawable/baseline_expand_more_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button" />
+
+            <ImageButton
+                android:id="@+id/launch_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:src="@drawable/baseline_rocket_launch_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button"
+                android:layout_marginHorizontal="64dp"
+                android:layout_marginBottom="8dp" />
+
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:src="@drawable/baseline_edit_square_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

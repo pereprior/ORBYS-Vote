@@ -5,20 +5,66 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.databinding.FragmentListBinding
+import com.pprior.quizz.domain.adapters.RecyclerAdapter
+import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.ui.viewmodels.QuestionViewModel
+import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
+
+private const val COLUMN_NUMBER = 3
 
 class ListFragment : Fragment() {
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
+    // Variables that reference the xml
+    private var _listBinding: FragmentListBinding? = null
+    private val listBinding get() = _listBinding!!
+
 
     private lateinit var recyclerView: RecyclerView
+    private val viewModel = QuestionViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
-        return binding.root
+        _listBinding = FragmentListBinding.inflate(inflater, container, false)
+        return listBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val dialog = AddQuestionDialog(
+            viewModel = viewModel,
+            context = requireContext()
+        )
+
+        dialog.setOnDismissListener {
+            // Actualiza el recycler view cada vez que se cierre el dialogo
+            setUpRecyclerView(viewModel.getQuestionsList())
+        }
+
+        // Muestra el dialogo para crear una nueva pregunta
+        listBinding.fab.setOnClickListener {
+            dialog.show()
+        }
+    }
+
+    // Update the recyclerView with the new data
+    private fun setUpRecyclerView(list: List<Question>) {
+        val adapter = RecyclerAdapter(questions = list)
+        if (list.isEmpty()) {
+            return
+        }
+
+        // Reference the RecyclerView from the xml
+        recyclerView = listBinding.fragmentListRecyclerView
+        // Set a fixed size for the RecyclerView
+        recyclerView.setHasFixedSize(true)
+        // Assign a layout to the RecyclerView
+        recyclerView.layoutManager = GridLayoutManager(context, COLUMN_NUMBER)
+        // Assign the adapter with the default elements
+        recyclerView.adapter = adapter
     }
 }
