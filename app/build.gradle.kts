@@ -56,10 +56,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.core)
-    implementation(libs.ktor)
+    /*implementation(libs.ktor)
     implementation(libs.ktor.server)
     implementation(libs.ktor.gson)
-    implementation(libs.koin.ktor)
+    implementation(libs.koin.ktor)*/
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

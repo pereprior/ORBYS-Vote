@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.pprior.quizz.R
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.domain.adapters.RecyclerAdapter
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
-
-private const val COLUMN_NUMBER = 3
 
 class ListFragment : Fragment() {
     // Variables that reference the xml
@@ -63,7 +62,8 @@ class ListFragment : Fragment() {
         // Set a fixed size for the RecyclerView
         recyclerView.setHasFixedSize(true)
         // Assign a layout to the RecyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, COLUMN_NUMBER)
+        val columnNumber = resources.getInteger(R.integer.column_number)
+        recyclerView.layoutManager = GridLayoutManager(context, columnNumber)
         // Assign the adapter with the default elements
         recyclerView.adapter = adapter
     }
