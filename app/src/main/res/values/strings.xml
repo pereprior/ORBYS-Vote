@@ -5,12 +5,15 @@
     <!-- Elements description -->
     <string name="menu_button_desc" translatable="false">Boton de menu del top bar</string>
     <string name="fab_desc" translatable="false">Boton de añadir preguntas</string>
-
+    <string name="exit_button" translatable="false">Exit from the dialog\n</string>
+    <string name="qr_code" translatable="false">Imagen con el codigo qr</string>
 
     <!-- Add dialog hint -->
     <string name="question_title">"Title:"</string>
     <string name="question_question">Question:</string>
     <string name="save_button">Save</string>
-    <string name="exit_button">Exit from the dialog\n</string>
-    <string name="qr_code">Imagen con el codigo qr</string>
+
+    <!-- Error messages -->
+    <string name="questions_exists">"Question already exists"</string>
+
 </resources>

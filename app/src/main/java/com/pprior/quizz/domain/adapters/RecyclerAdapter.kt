@@ -3,7 +3,7 @@ package com.pprior.quizz.domain.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
 
@@ -31,11 +31,14 @@ class RecyclerAdapter(
         private val binding: FragmentListItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Question) {
-            binding.titleQuestion.text = item.title
+        fun bind(question: Question) {
+            binding.titleQuestion.text = question.title
 
             binding.launchButton.setOnClickListener {
-                LaunchQuestionDialog(it.context).show()
+                LaunchQuestionDialog(
+                    question = question.question,
+                    it.context
+                ).show()
             }
         }
     }

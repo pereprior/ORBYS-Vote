@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_icn_size">40dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_margin">72dp</dimen>
+</resources>

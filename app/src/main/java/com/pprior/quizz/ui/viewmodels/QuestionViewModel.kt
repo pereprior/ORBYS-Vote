@@ -3,7 +3,7 @@ package com.pprior.quizz.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.domain.models.Question
 
 class QuestionViewModel: ViewModel() {
 
@@ -20,6 +20,10 @@ class QuestionViewModel: ViewModel() {
 
     fun removeQuestion(question: Question) {
         _questionsList.value?.remove(question)
+    }
+
+    fun exists(question: Question): Boolean {
+        return _questionsList.value?.any { it.title == question.title } ?: false
     }
 
 }

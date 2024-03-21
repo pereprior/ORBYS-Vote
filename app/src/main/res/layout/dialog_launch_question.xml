@@ -26,4 +26,12 @@ android:gravity="center_horizontal">
         android:layout_height="200dp"
         android:contentDescription="@string/qr_code" />
 
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="20sp" />
+
 </LinearLayout>

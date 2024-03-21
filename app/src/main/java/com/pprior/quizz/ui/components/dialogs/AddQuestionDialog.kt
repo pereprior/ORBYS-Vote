@@ -2,7 +2,8 @@ package com.pprior.quizz.ui.components.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.R
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
 import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 
@@ -14,8 +15,6 @@ class AddQuestionDialog(
     init {
         binding.saveButton.setOnClickListener {
             saveQuestion()
-            dismiss()
-            clear()
         }
 
         binding.closeButton.setOnClickListener {
@@ -30,14 +29,27 @@ class AddQuestionDialog(
     private fun saveQuestion() {
         val question = Question(
             binding.questionTitle.text.toString(),
-            binding.questionTitle.text.toString()
+            binding.questionQuestion.text.toString()
         )
 
-        viewModel.addQuestion(question)
+        // Comprobar si la pregunta o el título están vacíos
+        if (question.title.isEmpty() || question.question.isEmpty()) {
+            return
+        }
+
+        // Si ya existe la pregunta, mostrar un mensaje de error
+        if (viewModel.exists(question)) {
+            binding.errorMessage.text = context.getString(R.string.questions_exists)
+        } else {
+            viewModel.addQuestion(question)
+            dismiss()
+            clear()
+        }
     }
 
     private fun clear() {
         binding.questionTitle.text.clear()
         binding.questionQuestion.text.clear()
+        binding.errorMessage.text = ""
     }
 }

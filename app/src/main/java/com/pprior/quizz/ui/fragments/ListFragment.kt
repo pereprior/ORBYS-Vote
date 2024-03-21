@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.domain.adapters.RecyclerAdapter
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
 
