@@ -2,13 +2,11 @@ package com.pprior.quizz.data.server.controllers
 
 import com.pprior.quizz.data.server.models.ResponseBase
 import com.pprior.quizz.data.server.di.QuestionComponent
-import io.ktor.application.call
-import io.ktor.response.respond
-import io.ktor.routing.Route
 import org.koin.ktor.ext.inject
-import io.ktor.routing.get
+import io.ktor.server.routing.Route
+import org.koin.java.KoinJavaComponent.inject
 
-fun Route.questionController() {
+/*fun Route.questionController() {
     val questionComponent by inject<QuestionComponent>()
 
     get("/questions/{title}") {
@@ -31,4 +29,4 @@ fun Route.questionController() {
             )
         }
     }
-}
+}*/

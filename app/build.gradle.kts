@@ -58,16 +58,23 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     implementation(libs.androidx.recyclerview)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.runtime.livedata)
+
     implementation(libs.core)
-    implementation(libs.ktor)
+
+    implementation(libs.ktor.core)
     implementation(libs.ktor.server)
-    implementation(libs.ktor.gson)
     implementation(libs.koin.ktor)
-    //implementation(libs.ktor.server.freemarker)
-    implementation(libs.ktor.freemarker)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.logback.classic)
+    //noinspection UseTomlInstead
+    testImplementation("io.ktor:ktor-server-tests-jvm")
+    testImplementation(libs.kotlin.test.junit)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
