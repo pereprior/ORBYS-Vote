@@ -43,6 +43,12 @@ android {
     subprojects {
         apply(plugin = "org.jetbrains.dokka")
     }
+
+    packagingOptions {
+        exclude("META-INF/INDEX.LIST")
+        exclude("META-INF/io.netty.versions.properties")
+    }
+
 }
 
 dependencies {
@@ -56,10 +62,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.core)
-    /*implementation(libs.ktor)
+    implementation(libs.ktor)
     implementation(libs.ktor.server)
     implementation(libs.ktor.gson)
-    implementation(libs.koin.ktor)*/
+    implementation(libs.koin.ktor)
+    //implementation(libs.ktor.server.freemarker)
+    implementation(libs.ktor.freemarker)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
