@@ -11,7 +11,13 @@ import com.pprior.quizz.data.server.module
 import io.ktor.server.application.Application
 import io.ktor.server.netty.NettyApplicationEngine
 
+/**
+ * MainActivity es la actividad principal de la aplicación.
+ *
+ * Se encarga de la creación de los fragmentos y del servidor HTTP.
+ */
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var server: NettyApplicationEngine
 
@@ -20,21 +26,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Cargar el fragmento de la barra superior
-        val headFragment = HeadFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.headerFragment.id, headFragment)
-            .commit()
+        // Agregamos los fragmentos al contenedor
+        supportFragmentManager.beginTransaction().apply {
+            // Barra superior
+            replace(binding.headerFragment.id, HeadFragment())
+            // Lista de preguntas
+            replace(binding.fragmentListRecyclerView.id, ListFragment())
+            commit()
+        }
 
-        // Cargar el fragmento de la lista de preguntas
-        val listFragment = ListFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.fragmentListRecyclerView.id, listFragment)
-            .commit()
+        // inicamos el servidor http
+        startServer()
+    }
 
-        // Iniciar el servidor Ktor
+    private fun startServer() {
         server = embeddedServer(Netty, port = 8888, module = Application::module)
         server.start(wait = false)
     }

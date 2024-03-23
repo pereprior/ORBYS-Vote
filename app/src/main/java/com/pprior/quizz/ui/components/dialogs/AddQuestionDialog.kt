@@ -7,24 +7,27 @@ import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
 import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 
+
+/**
+ * Clase que representa un dialogo para añadir preguntas a la lista.
+ *
+ * @param viewModel El viewmodel que gestiona las preguntas.
+ * @param context El contexto del dialogo.
+ */
 class AddQuestionDialog(
     private val viewModel: QuestionViewModel,
     context: Context
 ) : QuestionDialog<DialogAddQuestionBinding>(context) {
 
     init {
-        binding.saveButton.setOnClickListener {
-            saveQuestion()
-        }
-
-        binding.closeButton.setOnClickListener {
-            dismiss()
+        with(binding) {
+            // Asignar los listeners a los botones
+            saveButton.setOnClickListener { saveQuestion() }
+            closeButton.setOnClickListener { dismiss() }
         }
     }
 
-    override fun getViewBinding(inflater: LayoutInflater): DialogAddQuestionBinding {
-        return DialogAddQuestionBinding.inflate(inflater)
-    }
+    override fun getViewBinding(inflater: LayoutInflater) = DialogAddQuestionBinding.inflate(inflater)
 
     private fun saveQuestion() {
         val question = Question(
@@ -41,6 +44,7 @@ class AddQuestionDialog(
         if (viewModel.exists(question)) {
             binding.errorMessage.text = context.getString(R.string.questions_exists)
         } else {
+            // GUardamos la pregunta en la lista y cerramos el dialogo
             viewModel.addQuestion(question)
             dismiss()
             clear()
@@ -48,8 +52,11 @@ class AddQuestionDialog(
     }
 
     private fun clear() {
-        binding.questionTitle.text.clear()
-        binding.questionQuestion.text.clear()
-        binding.errorMessage.text = ""
+        with(binding) {
+            // Limpiar los campos de texto y el mensaje de error
+            questionTitle.text.clear()
+            questionQuestion.text.clear()
+            errorMessage.text = ""
+        }
     }
 }

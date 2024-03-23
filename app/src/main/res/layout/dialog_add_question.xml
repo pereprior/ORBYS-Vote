@@ -22,7 +22,7 @@
 
     <EditText
         android:id="@+id/question_title"
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:hint="@string/question_title"
         android:inputType="textPersonName"

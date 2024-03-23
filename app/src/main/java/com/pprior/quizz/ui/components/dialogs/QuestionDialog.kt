@@ -6,6 +6,12 @@ import android.view.LayoutInflater
 import android.view.Window
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Clase abstracta que representa un dialogo de gestión de las preguntas.
+ *
+ * @param T La vista del dialogo que herede de esta clase.
+ * @property context El contexto del dialogo.
+ */
 abstract class QuestionDialog<T: ViewBinding>(
     context: Context
 ) : Dialog(context) {
@@ -18,5 +24,11 @@ abstract class QuestionDialog<T: ViewBinding>(
         setContentView(binding.root)
     }
 
+    /**
+     * Método abstracto que devuelve la vista del dialogo.
+     *
+     * @param inflater El inflater del dialogo.
+     * @return La vista del dialogo.
+     */
     abstract fun getViewBinding(inflater: LayoutInflater): T
 }

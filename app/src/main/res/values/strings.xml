@@ -16,4 +16,8 @@
     <!-- Error messages -->
     <string name="questions_exists">"Question already exists"</string>
 
+    <!-- Dialog launch question -->
+    <string name="yes_aswers">Yes:</string>
+    <string name="no_aswers" translatable="false">No:</string>
+
 </resources>

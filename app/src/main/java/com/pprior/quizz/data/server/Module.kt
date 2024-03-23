@@ -6,26 +6,30 @@ import io.ktor.server.freemarker.FreeMarker
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.*
 import io.ktor.http.ContentType.Text.Html
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
+// Configura el servidor http
 fun Application.module() {
     configureRouting()
     configureTemplating()
 }
 
+// Configura las rutas del servidor http
 fun Application.configureRouting() {
     routing {
+        // prueba
         get("/") {
             call.respondText("Hello, world!")
         }
 
+        // Ruta para la página de respuesta de una pregunta
         get("/question") {
-            val inputStream = this::class.java.classLoader?.getResourceAsStream("static/templates/index.html")
-            val fileContent = BufferedReader(InputStreamReader(inputStream)).use { it.readText() }
+            val fileContent = this::class.java.classLoader
+                ?.getResourceAsStream("static/templates/index.html")
+                ?.bufferedReader()
+                ?.use { it.readText() }
 
             call.respondText(
-                text = fileContent,
+                text = fileContent ?: "",
                 contentType = Html
             )
         }
@@ -33,6 +37,7 @@ fun Application.configureRouting() {
 }
 
 fun Application.configureTemplating() {
+    // Establece el cargador de plantillas al directorio "static/templates".
     install(FreeMarker) {
         templateLoader = ClassTemplateLoader(this::class.java.classLoader, "static/templates")
     }
