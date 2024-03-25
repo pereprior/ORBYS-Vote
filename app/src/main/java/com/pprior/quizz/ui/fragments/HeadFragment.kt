@@ -7,16 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.pprior.quizz.databinding.FragmentHeadBinding
 
+/**
+ * Fragmento que muestra la barra superior de la aplicación.
+ *
+ * Se encarga de mostrar el logo de la aplicación y el nombre de la aplicación al usuario
+ */
 class HeadFragment : Fragment() {
-    // Clase que referencia al fichero xml
-    private var _binding:FragmentHeadBinding? = null
-    private val binding get() = _binding!!
+
+    private lateinit var binding: FragmentHeadBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHeadBinding.inflate(inflater, container, false)
+        binding = FragmentHeadBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 }

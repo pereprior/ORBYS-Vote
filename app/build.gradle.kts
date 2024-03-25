@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsDokka)
 }
 
 android {
@@ -64,7 +65,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.runtime.livedata)
 
-    implementation(libs.core)
+    implementation(libs.zxing)
 
     implementation(libs.ktor.core)
     implementation(libs.ktor.server)

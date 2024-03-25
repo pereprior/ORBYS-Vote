@@ -26,10 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".data.server.HttpService"
-            android:enabled="true" />
     </application>
 
 </manifest>
