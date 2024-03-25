@@ -37,36 +37,38 @@ android:gravity="center_horizontal">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:id="@+id/count_yes"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20sp"
-            android:layout_marginTop="10dp"
+
             android:text="@string/yes_aswers" />
 
         <TextView
             android:id="@+id/yes_answers_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/count_no"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20sp"
-            android:layout_marginTop="10dp"
             android:text="@string/no_aswers" />
 
         <TextView
             android:id="@+id/no_answers_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
             android:textSize="20sp" />
 
     </LinearLayout>
