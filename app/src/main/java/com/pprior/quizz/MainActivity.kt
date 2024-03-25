@@ -1,15 +1,12 @@
 package com.pprior.quizz
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
-import com.pprior.quizz.data.server.module
-import io.ktor.server.application.Application
-import io.ktor.server.netty.NettyApplicationEngine
 
 /**
  * MainActivity es la actividad principal de la aplicación.
@@ -19,7 +16,6 @@ import io.ktor.server.netty.NettyApplicationEngine
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var server: NettyApplicationEngine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // inicamos el servidor http
-        startServer()
+        startService(Intent(this, HttpService::class.java))
     }
 
-    private fun startServer() {
-        server = embeddedServer(Netty, port = 8888, module = Application::module)
-        server.start(wait = false)
-    }
-
-    override fun onDestroy() {
-        server.stop(0, 0)
-        super.onDestroy()
-    }
 }

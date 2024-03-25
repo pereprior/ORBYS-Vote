@@ -3,7 +3,7 @@ package com.pprior.quizz.ui.components.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import com.pprior.quizz.R
-import com.pprior.quizz.domain.models.Question
+import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
 import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 

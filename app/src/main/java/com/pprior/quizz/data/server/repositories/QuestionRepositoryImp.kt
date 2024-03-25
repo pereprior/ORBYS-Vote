@@ -1,22 +1,24 @@
 package com.pprior.quizz.data.server.repositories
 
-import android.content.res.Resources.NotFoundException
-import com.pprior.quizz.domain.models.Question
+import com.pprior.quizz.data.models.Answer
+import com.pprior.quizz.ui.viewmodels.QuestionViewModel
 
 class QuestionRepositoryImp (
-    private val questions: List<Question>
+    private val viewModel: QuestionViewModel
 ): IQuestionRepository {
 
-    override fun getQuestionByTitle(title: String): Question {
-        questions.find {
-            it.title == title
-            // Si el titulo existe, devuelve la pregunta
-        }?.let {
-            return it
-            // Si el titulo no existe, lanza una excepción
-        } ?: run {
-            throw NotFoundException("Question not found")
+    override fun setPostInAnswerCount(answer: String?) {
+        if (answer == "Si") {
+            this.viewModel.setYesAnswer()
         }
+
+        if (answer == "No") {
+            this.viewModel.setNoAnswer()
+        }
+    }
+
+    fun getAnswer(): Answer {
+        return this.viewModel.getAnswer()
     }
 
 }

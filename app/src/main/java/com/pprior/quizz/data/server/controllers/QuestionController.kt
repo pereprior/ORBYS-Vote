@@ -1,32 +1,71 @@
 package com.pprior.quizz.data.server.controllers
 
-import com.pprior.quizz.data.server.models.ResponseBase
+import android.util.Log
 import com.pprior.quizz.data.server.di.QuestionComponent
-import org.koin.ktor.ext.inject
+import io.ktor.http.ContentType
+import io.ktor.server.application.application
+import io.ktor.server.application.call
+import io.ktor.server.request.receiveParameters
+import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
 import org.koin.java.KoinJavaComponent.inject
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
-/*fun Route.questionController() {
-    val questionComponent by inject<QuestionComponent>()
+fun Route.questionController() {
 
-    get("/questions/{title}") {
-        val title = call.parameters["title"]
+    val questionComponent: QuestionComponent by inject(QuestionComponent::class.java)
 
-        if (title != null) {
-            val question = questionComponent.getQuestion(title)
-            call.respond(
-                ResponseBase(
-                    status = 200,
-                    data = question
-                )
+    // Ruta para la página de respuesta de una pregunta
+    get("/question") {
+        val fileContent = try {
+            InputStreamReader(application::class.java.getResourceAsStream("/assets/index.html")).use { reader ->
+                BufferedReader(reader).use { it.readText() }
+            }
+        } catch (e: Exception) {
+            Log.e("Quizz", "Error al leer el archivo index.html", e)
+            null
+        }
+
+        if (fileContent != null) {
+            call.respondText(
+                text = fileContent,
+                contentType = ContentType.Text.Html
             )
         } else {
-            call.respond(
-                ResponseBase<Unit>(
-                    status = 400,
-                    message = "Title parameter is missing"
-                )
+            call.respondText(
+                text = "Error: no se pudo leer el archivo index.html",
+                contentType = ContentType.Text.Html
             )
         }
     }
-}*/
+
+    post("/submit") {
+        Log.d("Quizz", "Entrando al método post")
+        val parameters = call.receiveParameters()
+        val choice = parameters["choice"]
+        Log.d("Quizz", "Parámetros recibidos: $parameters")
+
+        try {
+            questionComponent.setAnswer(choice)
+            Log.d("Quizz", "Respuesta: $choice")
+            Log.d("Quizz", "Numero de si: ${questionComponent.getAnswer().yesCount}")
+            Log.d("Quizz", "Numero de no: ${questionComponent.getAnswer().noCount}")
+        } catch (e: Exception) {
+            Log.e("Quizz", "Error al obtener la respuesta", e)
+        }
+
+        call.respondRedirect("/success")
+    }
+
+    get("/success") {
+        call.respondText(
+            text = "Gracias por tu respuesta",
+            contentType = ContentType.Text.Html
+        )
+    }
+
+}

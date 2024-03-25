@@ -3,7 +3,7 @@ package com.pprior.quizz.domain.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pprior.quizz.domain.models.Question
+import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
 

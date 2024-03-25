@@ -1,4 +1,4 @@
-package com.pprior.quizz.domain.models
+package com.pprior.quizz.data.models
 
 data class Question(
     val title: String,
