@@ -7,6 +7,11 @@ import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
+import com.pprior.quizz.data.server.di.QuestionComponent
+import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
+import com.pprior.quizz.domain.viewModels.QuestionViewModel
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 /**
  * MainActivity es la actividad principal de la aplicación.
@@ -22,7 +27,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Inyeccion de dependencias
+        startKoin {
+            modules(
+                module {
+                    single { QuestionViewModel() }
+                    single { QuestionComponent() }
+                    single { QuestionRepositoryImp() }
+                    single {  }
+                }
+            )
+        }
+
+        // inicamos el servidor http
+        startService(Intent(this, HttpService::class.java))
+
         // Agregamos los fragmentos al contenedor
+        printFragments()
+    }
+
+    private fun printFragments() {
         supportFragmentManager.beginTransaction().apply {
             // Barra superior
             replace(binding.headerFragment.id, HeadFragment())
@@ -30,9 +54,6 @@ class MainActivity : AppCompatActivity() {
             replace(binding.fragmentListRecyclerView.id, ListFragment())
             commit()
         }
-
-        // inicamos el servidor http
-        startService(Intent(this, HttpService::class.java))
     }
 
 }

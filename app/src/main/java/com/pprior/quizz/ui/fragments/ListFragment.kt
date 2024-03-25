@@ -9,18 +9,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.domain.adapters.RecyclerAdapter
-import com.pprior.quizz.data.models.Question
-import com.pprior.quizz.ui.viewmodels.QuestionViewModel
+import com.pprior.quizz.domain.viewModels.QuestionViewModel
 import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
+import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
 /**
  * Fragmento que muestra la lista de preguntas.
  *
  * Se inicializa el ViewModel que gestiona la lista de preguntas y se configura
  */
-class ListFragment : Fragment() {
+class ListFragment: Fragment() {
 
     private lateinit var binding: FragmentListBinding
+    private val viewModel: QuestionViewModel by inject(QuestionViewModel::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +34,6 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Inicializamos el ViewModel que gestiona la lista de preguntas
-        val viewModel = QuestionViewModel()
 
         // Dialogo para añadir preguntas a la lista
         val dialog = AddQuestionDialog(
@@ -43,7 +43,7 @@ class ListFragment : Fragment() {
 
         // Cuando se cierre el dialogo, actualizamos la lista de preguntas
         dialog.setOnDismissListener {
-            setUpRecyclerView(viewModel.getQuestionsList())
+            setUpRecyclerView(viewModel)
         }
 
         // Boton flotante para mostrar el dialogo de añadir preguntas
@@ -52,18 +52,17 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun setUpRecyclerView(list: List<Question>) {
+    private fun setUpRecyclerView(viewModel: QuestionViewModel) {
         // Si aun no hay preguntas, no pintamos el recyclerView
-        if (list.isEmpty()) {
+        if (viewModel.getQuestionsList().isEmpty()) {
             return
         }
 
         // Configuramos el recyclerView con la lista de preguntas
         binding.fragmentListRecyclerView.apply {
             setHasFixedSize(true)
-            // Numero de columnas en el recyclerView dependiendo del ancho de la pantalla del dispositivo
             layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = RecyclerAdapter(questions = list)
+            adapter = RecyclerAdapter(viewModel, viewLifecycleOwner)
         }
     }
 }

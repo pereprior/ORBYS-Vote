@@ -16,5 +16,4 @@ class QuestionComponent: KoinComponent {
     fun getAnswer(): Answer {
         return questionRepository.getAnswer()
     }
-
 }

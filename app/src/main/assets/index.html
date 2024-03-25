@@ -109,6 +109,7 @@
                 })
                 .then(function(text) {
                     console.log('Respuesta recibida: ', text);
+                    window.location.href = '/success'; // Redirige al usuario a la página /success
                 })
                 .catch(function(error) {
                     console.error('Error: ', error);

@@ -1,19 +1,20 @@
 package com.pprior.quizz.data.server.repositories
 
 import com.pprior.quizz.data.models.Answer
-import com.pprior.quizz.ui.viewmodels.QuestionViewModel
+import com.pprior.quizz.domain.viewModels.QuestionViewModel
+import org.koin.java.KoinJavaComponent
 
-class QuestionRepositoryImp (
-    private val viewModel: QuestionViewModel
-): IQuestionRepository {
+class QuestionRepositoryImp: IQuestionRepository {
+
+    private val viewModel: QuestionViewModel by KoinJavaComponent.inject(QuestionViewModel::class.java)
 
     override fun setPostInAnswerCount(answer: String?) {
         if (answer == "Si") {
-            this.viewModel.setYesAnswer()
+            this.viewModel.incYesAnswer()
         }
 
         if (answer == "No") {
-            this.viewModel.setNoAnswer()
+            this.viewModel.incNoAnswer()
         }
     }
 

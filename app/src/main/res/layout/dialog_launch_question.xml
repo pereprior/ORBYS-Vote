@@ -49,6 +49,12 @@ android:gravity="center_horizontal">
             android:text="@string/yes_aswers" />
 
         <TextView
+            android:id="@+id/yes_answers_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/count_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,6 +62,12 @@ android:gravity="center_horizontal">
             android:textSize="20sp"
             android:layout_marginTop="10dp"
             android:text="@string/no_aswers" />
+
+        <TextView
+            android:id="@+id/no_answers_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

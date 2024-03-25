@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import com.pprior.quizz.R
 import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
-import com.pprior.quizz.ui.viewmodels.QuestionViewModel
+import com.pprior.quizz.domain.viewModels.QuestionViewModel
 
 
 /**
