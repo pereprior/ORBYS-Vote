@@ -1,25 +1,26 @@
 package com.pprior.quizz.data.server.repositories
 
+import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.models.Answer
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
-import org.koin.java.KoinJavaComponent
+import kotlinx.coroutines.flow.Flow
+import org.koin.java.KoinJavaComponent.inject
 
 class QuestionRepositoryImp: IQuestionRepository {
 
-    private val viewModel: QuestionViewModel by KoinJavaComponent.inject(QuestionViewModel::class.java)
+    private val repository: FlowRepository by inject(FlowRepository::class.java)
 
     override fun setPostInAnswerCount(answer: String?) {
         if (answer == "Si") {
-            this.viewModel.incYesAnswer()
+            this.repository.incYesAnswer()
         }
 
         if (answer == "No") {
-            this.viewModel.incNoAnswer()
+            this.repository.incNoAnswer()
         }
     }
 
-    fun getAnswer(): Answer {
-        return this.viewModel.getAnswer()
+    fun getAnswer(): Flow<Answer> {
+        return this.repository.answer
     }
 
 }

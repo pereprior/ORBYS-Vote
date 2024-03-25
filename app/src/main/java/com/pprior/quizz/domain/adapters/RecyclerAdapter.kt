@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
 import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
 
 /**
@@ -15,7 +15,7 @@ import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
  * @param viewModel lista de perguntas a mostrar.
  */
 class RecyclerAdapter(
-    private var viewModel: QuestionViewModel,
+    private var flowRepository: FlowRepository,
     private val lifecycleOwner: LifecycleOwner
 ): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
@@ -26,10 +26,10 @@ class RecyclerAdapter(
     }
 
     // Asigna los valores a los componentes de la vista
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(viewModel.getQuestionsList()[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(flowRepository.getQuestionsList()[position])
 
     // Devuelve la cantidad de preguntas
-    override fun getItemCount() = viewModel.getQuestionsList().size
+    override fun getItemCount() = flowRepository.getQuestionsList().size
 
     /**
      * Vista para una pregunta.
@@ -46,7 +46,7 @@ class RecyclerAdapter(
                 LaunchQuestionDialog(
                     question.question,
                     it.context,
-                    viewModel,
+                    flowRepository,
                     lifecycleOwner
                 ).show()
             }

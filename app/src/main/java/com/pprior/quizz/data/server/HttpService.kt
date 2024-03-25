@@ -4,14 +4,12 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.pprior.quizz.data.server.controllers.questionController
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.freemarker.FreeMarker
 import io.ktor.server.netty.Netty
 import io.ktor.server.routing.routing
-import org.koin.java.KoinJavaComponent.inject
 
 class HttpService: Service() {
     override fun onCreate() {

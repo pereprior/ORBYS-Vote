@@ -3,9 +3,9 @@ package com.pprior.quizz.ui.components.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import com.pprior.quizz.R
+import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
 
 
 /**
@@ -15,7 +15,7 @@ import com.pprior.quizz.domain.viewModels.QuestionViewModel
  * @param context El contexto del dialogo.
  */
 class AddQuestionDialog(
-    private val viewModel: QuestionViewModel,
+    private val flowRepository: FlowRepository,
     context: Context
 ) : QuestionDialog<DialogAddQuestionBinding>(context) {
 
@@ -41,11 +41,11 @@ class AddQuestionDialog(
         }
 
         // Si ya existe la pregunta, mostrar un mensaje de error
-        if (viewModel.exists(question)) {
+        if (flowRepository.exists(question)) {
             binding.errorMessage.text = context.getString(R.string.questions_exists)
         } else {
             // GUardamos la pregunta en la lista y cerramos el dialogo
-            viewModel.addQuestion(question)
+            flowRepository.addQuestion(question)
             dismiss()
             clear()
         }

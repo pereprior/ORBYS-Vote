@@ -3,13 +3,13 @@ package com.pprior.quizz
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
 import com.pprior.quizz.data.server.di.QuestionComponent
 import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
@@ -31,10 +31,9 @@ class MainActivity : AppCompatActivity() {
         startKoin {
             modules(
                 module {
-                    single { QuestionViewModel() }
                     single { QuestionComponent() }
                     single { QuestionRepositoryImp() }
-                    single {  }
+                    single { FlowRepository() }
                 }
             )
         }

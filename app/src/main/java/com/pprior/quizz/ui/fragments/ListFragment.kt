@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
+import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.domain.adapters.RecyclerAdapter
-import com.pprior.quizz.domain.viewModels.QuestionViewModel
 import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
-import org.koin.java.KoinJavaComponent
 import org.koin.java.KoinJavaComponent.inject
 
 /**
@@ -22,7 +21,7 @@ import org.koin.java.KoinJavaComponent.inject
 class ListFragment: Fragment() {
 
     private lateinit var binding: FragmentListBinding
-    private val viewModel: QuestionViewModel by inject(QuestionViewModel::class.java)
+    private val flowRepository: FlowRepository by inject(FlowRepository::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +36,13 @@ class ListFragment: Fragment() {
 
         // Dialogo para añadir preguntas a la lista
         val dialog = AddQuestionDialog(
-            viewModel = viewModel,
+            flowRepository = flowRepository,
             context = requireContext()
         )
 
         // Cuando se cierre el dialogo, actualizamos la lista de preguntas
         dialog.setOnDismissListener {
-            setUpRecyclerView(viewModel)
+            setUpRecyclerView()
         }
 
         // Boton flotante para mostrar el dialogo de añadir preguntas
@@ -52,9 +51,9 @@ class ListFragment: Fragment() {
         }
     }
 
-    private fun setUpRecyclerView(viewModel: QuestionViewModel) {
+    private fun setUpRecyclerView() {
         // Si aun no hay preguntas, no pintamos el recyclerView
-        if (viewModel.getQuestionsList().isEmpty()) {
+        if (flowRepository.getQuestionsList().isEmpty()) {
             return
         }
 
@@ -62,7 +61,7 @@ class ListFragment: Fragment() {
         binding.fragmentListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = RecyclerAdapter(viewModel, viewLifecycleOwner)
+            adapter = RecyclerAdapter(flowRepository, viewLifecycleOwner)
         }
     }
 }

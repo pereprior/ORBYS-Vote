@@ -31,6 +31,7 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackClassic" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }  # Updated dependency
 

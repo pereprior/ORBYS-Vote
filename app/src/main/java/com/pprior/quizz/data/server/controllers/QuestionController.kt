@@ -52,8 +52,8 @@ fun Route.questionController() {
         try {
             questionComponent.setAnswer(choice)
             Log.d("Quizz", "Respuesta: $choice")
-            Log.d("Quizz", "Numero de si: ${questionComponent.getAnswer().yesCount}")
-            Log.d("Quizz", "Numero de no: ${questionComponent.getAnswer().noCount}")
+            //Log.d("Quizz", "Numero de si: ${questionComponent.getAnswer().}")
+            //Log.d("Quizz", "Numero de no: ${questionComponent.getAnswer().noCount}")
         } catch (e: Exception) {
             Log.e("Quizz", "Error al obtener la respuesta", e)
         }
