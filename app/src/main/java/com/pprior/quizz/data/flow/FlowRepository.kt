@@ -1,8 +1,8 @@
 package com.pprior.quizz.data.flow
 
 import android.util.Log
-import com.pprior.quizz.data.models.Answer
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.data.server.models.Answer
+import com.pprior.quizz.data.server.models.Question
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,9 +21,11 @@ class FlowRepository {
 
     private val _answer = MutableSharedFlow<Answer>(replay = 1)
     private var _questionsList = MutableStateFlow<MutableList<Question>>(mutableListOf())
+    private var _respondedUsers = MutableSharedFlow<MutableList<String>>(replay = 1)
 
     val answer: Flow<Answer> = _answer.asSharedFlow()
     val questionsList: StateFlow<MutableList<Question>> = _questionsList
+    val respondedUsers: Flow<MutableList<String>> = _respondedUsers.asSharedFlow()
 
     init {
         clearAnswer()
@@ -48,5 +50,16 @@ class FlowRepository {
         val currentAnswer = _answer.replayCache.firstOrNull() ?: Answer()
         currentAnswer.noCount++
         _answer.tryEmit(currentAnswer)
+    }
+
+    fun clearRespondedUsers() { _respondedUsers.tryEmit(mutableListOf()) }
+    fun addRespondedUser(user: String) {
+        val users = _respondedUsers.replayCache.firstOrNull() ?: mutableListOf()
+        users.add(user)
+        _respondedUsers.tryEmit(users)
+    }
+    fun exists(userIp: String): Boolean {
+        val users = _respondedUsers.replayCache.firstOrNull() ?: mutableListOf()
+        return users.contains(userIp)
     }
 }

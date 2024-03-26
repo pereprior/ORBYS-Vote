@@ -21,7 +21,7 @@ class HttpService: Service() {
             embeddedServer(Netty, port = 8888){
 
                 install(FreeMarker) {
-                    templateLoader = ClassTemplateLoader(this::class.java.classLoader, "static/templates")
+                    templateLoader = ClassTemplateLoader(this::class.java.classLoader, "assets")
                 }
 
                 routing {

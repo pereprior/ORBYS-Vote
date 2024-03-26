@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.Window
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
 
 /**

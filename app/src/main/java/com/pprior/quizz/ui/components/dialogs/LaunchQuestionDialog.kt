@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.Window
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.pprior.quizz.data.constants.ENDPOINT
-import com.pprior.quizz.data.constants.SERVER_PORT
-import com.pprior.quizz.data.constants.host
+import com.pprior.quizz.constants.ENDPOINT
+import com.pprior.quizz.constants.SERVER_PORT
+import com.pprior.quizz.constants.host
 import com.pprior.quizz.databinding.DialogLaunchQuestionBinding
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.ui.components.QRCodeGenerator
@@ -46,11 +46,16 @@ class LaunchQuestionDialog(
         bindQuestion(question)
     }
 
+    override fun dismiss() {
+        flowRepository.clearRespondedUsers()
+        super.dismiss()
+    }
+
     private fun bindQuestion(question: String) {
         with(binding) {
             // Establece la imagen del código QR.
             qrCode.setImageBitmap(
-                qrCodeGenerator.encodeAsBitmap(url = "$URL_ENTRY${host}:$SERVER_PORT$ENDPOINT")
+                qrCodeGenerator.encodeAsBitmap(url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT")
             )
 
             // Establece el texto de la pregunta.
@@ -67,4 +72,5 @@ class LaunchQuestionDialog(
             closeButton.setOnClickListener { dismiss() }
         }
     }
+
 }

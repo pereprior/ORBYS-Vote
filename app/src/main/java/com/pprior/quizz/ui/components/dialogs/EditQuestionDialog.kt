@@ -2,7 +2,7 @@ package com.pprior.quizz.ui.components.dialogs
 
 import android.content.Context
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.data.server.models.Question
 
 /**
  * Clase que representa un dialogo para editar preguntas de la lista.

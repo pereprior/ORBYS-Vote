@@ -1,8 +1,7 @@
 package com.pprior.quizz.data.server.repositories
 
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.models.Answer
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.toList
 import org.koin.java.KoinJavaComponent.inject
 
 class QuestionRepositoryImp: IQuestionRepository {
@@ -19,8 +18,9 @@ class QuestionRepositoryImp: IQuestionRepository {
         }
     }
 
-    fun getAnswer(): Flow<Answer> {
-        return this.repository.answer
+    override fun addUserToRespondedList(userIp: String) = repository.addRespondedUser(userIp)
+    fun userNotExists(userIp: String): Boolean {
+        return !repository.exists(userIp)
     }
 
 }

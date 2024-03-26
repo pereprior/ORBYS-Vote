@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.models.Question
+import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.ui.components.dialogs.EditQuestionDialog
 import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog

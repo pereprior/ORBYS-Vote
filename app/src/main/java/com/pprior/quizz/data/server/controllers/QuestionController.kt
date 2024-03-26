@@ -1,9 +1,6 @@
 package com.pprior.quizz.data.server.controllers
 
-import android.util.Log
-import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
 import io.ktor.http.ContentType
-import io.ktor.server.application.application
 import io.ktor.server.application.call
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respondRedirect
@@ -12,60 +9,50 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import org.koin.java.KoinJavaComponent.inject
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
+import io.ktor.server.plugins.origin
 
+/**
+ * Controlador de preguntas que define las rutas para obtener y enviar preguntas.
+ *
+ * @receiver Route La ruta en la que se definen las rutas del controlador.
+ */
 fun Route.questionController() {
 
+    // Repositorio para gestionar las respuestas de los usuarios.
     val repository: QuestionRepositoryImp by inject(QuestionRepositoryImp::class.java)
 
-    // Ruta para la página de respuesta de una pregunta
     get("/question") {
-        val fileContent = try {
-            InputStreamReader(application::class.java.getResourceAsStream("/assets/index.html")).use { reader ->
-                BufferedReader(reader).use { it.readText() }
-            }
-        } catch (e: Exception) {
-            Log.e("Quizz", "Error al leer el archivo index.html", e)
-            null
-        }
-
-        if (fileContent != null) {
-            call.respondText(
-                text = fileContent,
-                contentType = ContentType.Text.Html
-            )
-        } else {
-            call.respondText(
-                text = "Error: no se pudo leer el archivo index.html",
-                contentType = ContentType.Text.Html
-            )
-        }
+        val fileContent = this::class.java.getResource("/assets/index.html")?.readText()
+        // Responde con el contenido del archivo index.html o un mensaje de error si el archivo no se puede leer.
+        call.respondText(
+            text = fileContent ?: "Error: no se pudo leer el archivo index.html",
+            contentType = ContentType.Text.Html
+        )
     }
 
     post("/submit") {
-        Log.d("Quizz", "Entrando al método post")
-        val parameters = call.receiveParameters()
-        val choice = parameters["choice"]
-        Log.d("Quizz", "Parámetros recibidos: $parameters")
+        val userIP = call.request.origin.remoteHost
 
-        try {
+        // Comprueba si el usuario ya ha respondido.
+        if (repository.userNotExists(userIP)) {
+            val choice = call.receiveParameters()["choice"]
+
+            // Actualiza el recuento de respuestas en el repositorio.
             repository.setPostInAnswerCount(choice)
-            Log.d("Quizz", "Respuesta: $choice")
-            //Log.d("Quizz", "Numero de si: ${questionComponent.getAnswer().}")
-            //Log.d("Quizz", "Numero de no: ${questionComponent.getAnswer().noCount}")
-        } catch (e: Exception) {
-            Log.e("Quizz", "Error al obtener la respuesta", e)
+
+            // Añade la dirección IP del usuario a la lista de usuarios que ya han respondido.
+            repository.addUserToRespondedList(userIP)
         }
 
         call.respondRedirect("/success")
     }
 
     get("/success") {
+        // Responde con un mensaje de éxito al enviar la respuesta.
         call.respondText(
             text = "Gracias por tu respuesta",
             contentType = ContentType.Text.Html
         )
     }
-
 }

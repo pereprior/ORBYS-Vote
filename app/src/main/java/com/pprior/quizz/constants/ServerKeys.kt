@@ -1,4 +1,4 @@
-package com.pprior.quizz.data.constants
+package com.pprior.quizz.constants
 
 import java.net.Inet4Address
 import java.net.NetworkInterface
