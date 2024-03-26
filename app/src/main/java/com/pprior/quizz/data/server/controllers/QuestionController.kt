@@ -21,8 +21,11 @@ fun Route.questionController() {
 
     // Repositorio para gestionar las respuestas de los usuarios.
     val repository: QuestionRepositoryImp by inject(QuestionRepositoryImp::class.java)
+    lateinit var userIP: String
 
     get("/question") {
+        userIP = call.request.origin.remoteHost
+
         val fileContent = this::class.java.getResource("/assets/index.html")?.readText()
         // Responde con el contenido del archivo index.html o un mensaje de error si el archivo no se puede leer.
         call.respondText(
@@ -32,8 +35,6 @@ fun Route.questionController() {
     }
 
     post("/submit") {
-        val userIP = call.request.origin.remoteHost
-
         // Comprueba si el usuario ya ha respondido.
         if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
@@ -49,6 +50,8 @@ fun Route.questionController() {
     }
 
     get("/success") {
+
+        call.response.headers.append("Cache-Control", "no-store")
         // Responde con un mensaje de éxito al enviar la respuesta.
         call.respondText(
             text = "Gracias por tu respuesta",

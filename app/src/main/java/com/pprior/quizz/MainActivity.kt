@@ -1,10 +1,8 @@
 package com.pprior.quizz
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
@@ -35,10 +33,6 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
-
-        // inicamos el servidor http
-        startService(Intent(this, HttpService::class.java))
-
         // Agregamos los fragmentos al contenedor
         printFragments()
     }

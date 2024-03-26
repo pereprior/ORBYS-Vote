@@ -2,6 +2,7 @@ package com.pprior.quizz.ui.components.dialogs
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.lifecycle.LifecycleOwner
@@ -11,6 +12,7 @@ import com.pprior.quizz.constants.SERVER_PORT
 import com.pprior.quizz.constants.host
 import com.pprior.quizz.databinding.DialogLaunchQuestionBinding
 import com.pprior.quizz.data.flow.FlowRepository
+import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.ui.components.QRCodeGenerator
 import kotlinx.coroutines.launch
 
@@ -41,12 +43,18 @@ class LaunchQuestionDialog(
         _binding = DialogLaunchQuestionBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
 
+        // Inicia el servicio HTTP.
+        this.context.startService(Intent(this.context, HttpService::class.java))
+
         // Limpia la respuesta en el repositorio y vincula la pregunta a la interfaz de usuario.
         flowRepository.clearAnswer()
         bindQuestion(question)
     }
 
     override fun dismiss() {
+        // Detiene el servicio HTTP.
+        this.context.stopService(Intent(this.context, HttpService::class.java))
+
         flowRepository.clearRespondedUsers()
         super.dismiss()
     }
