@@ -3,6 +3,7 @@ package com.pprior.quizz.ui.components.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.lifecycle.LifecycleOwner
@@ -21,8 +22,8 @@ private const val URL_ENTRY = "http://"
 /**
  * Clase que representa un diálogo para lanzar una pregunta a ser contestada.
  *
- * @property question La pregunta a lanzar.
- * @property context El contexto del fragmento al que pertenece este dialogo.
+ * @param question La pregunta a lanzar.
+ * @param context El contexto del fragmento al que pertenece este dialogo.
  * @property flowRepository El repositorio para gestionar el flujo de datos.
  * @property lifecycleOwner El ciclo de vida del fragmento al que pertenece este diálogo.
  */
@@ -33,14 +34,13 @@ class LaunchQuestionDialog(
     private val lifecycleOwner: LifecycleOwner
 ): Dialog(context) {
 
-    private var _binding: DialogLaunchQuestionBinding? = null
-    val binding get() = _binding!!
+    private var binding: DialogLaunchQuestionBinding
 
     private val qrCodeGenerator = QRCodeGenerator()
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        _binding = DialogLaunchQuestionBinding.inflate(LayoutInflater.from(context))
+        binding = DialogLaunchQuestionBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
 
         // Inicia el servicio HTTP.
