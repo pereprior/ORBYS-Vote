@@ -1,4 +1,4 @@
-package com.pprior.quizz.domain.adapters
+package com.pprior.quizz.data.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
-import com.pprior.quizz.ui.components.dialogs.EditQuestionDialog
-import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
+import com.pprior.quizz.ui.dialogs.EditQuestionDialog
+import com.pprior.quizz.ui.dialogs.LaunchQuestionDialog
 
 /**
 * Adaptador para el RecyclerView que muestra la lista de preguntas.
@@ -20,7 +20,7 @@ import com.pprior.quizz.ui.components.dialogs.LaunchQuestionDialog
 class RecyclerAdapter(
     private var flowRepository: FlowRepository,
     private val lifecycleOwner: LifecycleOwner,
-    private val updateAction: () -> Unit  // Añade una acción de actualización
+    private val updateAction: () -> Unit
 ): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     // Crea un nuevo ViewHolder para una pregunta.

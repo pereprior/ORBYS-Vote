@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
-import com.pprior.quizz.domain.adapters.RecyclerAdapter
-import com.pprior.quizz.ui.components.dialogs.AddQuestionDialog
+import com.pprior.quizz.data.adapters.RecyclerAdapter
+import com.pprior.quizz.ui.dialogs.AddQuestionDialog
 import org.koin.java.KoinJavaComponent.inject
 
 /**

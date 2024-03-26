@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
+
         // Agregamos los fragmentos al contenedor
         printFragments()
     }

@@ -73,7 +73,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="nobackbutton();">
     <form id="myForm">
         <br><br>
         <div>
@@ -87,35 +87,31 @@
         <button type="submit">Enviar</button>
     </form>
 
+
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById('myForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+        // El codigo se ejecuta cuando pulso el boton enviar
+        document.getElementById('myForm').onsubmit = function(event) {
+            // Evita que se envien datos vacios o por defecto
+            event.preventDefault();
 
-                var choice = document.querySelector('input[name="choice"]:checked').value;
+            // Obtenemos el valor del boton seleccionado
+            var choice = document.querySelector('input[name="choice"]:checked').value;
 
-                fetch('/submit', {
+            // Realizamos la peticion POST al servidor
+            fetch(
+                '/submit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: 'choice=' + encodeURIComponent(choice),
-                })
-                .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error('Error en la respuesta del servidor');
-                    }
-                    return response.text();
-                })
-                .then(function(text) {
-                    console.log('Respuesta recibida: ', text);
-                    window.location.href = '/success'; // Redirige al usuario a la página /success
-                })
-                .catch(function(error) {
-                    console.error('Error: ', error);
-                });
-            });
-        });
+                }
+            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+            .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+            .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
+                console.log('Respuesta recibida: ', text);
+                window.location.href = '/success';
+            }) // Si ocurre algun error, lo mostramos en la consola
+            .catch(console.error);
+        };
     </script>
 </body>
 </html>

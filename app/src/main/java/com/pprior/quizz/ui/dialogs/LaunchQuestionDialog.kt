@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.components.dialogs
+package com.pprior.quizz.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context

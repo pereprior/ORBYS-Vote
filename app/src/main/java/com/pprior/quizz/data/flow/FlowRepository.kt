@@ -1,6 +1,5 @@
 package com.pprior.quizz.data.flow
 
-import android.util.Log
 import com.pprior.quizz.data.server.models.Answer
 import com.pprior.quizz.data.server.models.Question
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +24,6 @@ class FlowRepository {
 
     val answer: Flow<Answer> = _answer.asSharedFlow()
     val questionsList: StateFlow<MutableList<Question>> = _questionsList
-    val respondedUsers: Flow<MutableList<String>> = _respondedUsers.asSharedFlow()
 
     init {
         clearAnswer()
