@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="column_number">3</integer>
+    <integer name="column_number">1</integer>
 
     <dimen name="fab_icn_size">28dp</dimen>
     <dimen name="fab_size">56dp</dimen>

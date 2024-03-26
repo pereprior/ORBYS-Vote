@@ -1,7 +1,7 @@
 package com.pprior.quizz.data.server.controllers
 
 import android.util.Log
-import com.pprior.quizz.data.server.di.QuestionComponent
+import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
 import io.ktor.http.ContentType
 import io.ktor.server.application.application
 import io.ktor.server.application.call
@@ -17,7 +17,7 @@ import java.io.InputStreamReader
 
 fun Route.questionController() {
 
-    val questionComponent: QuestionComponent by inject(QuestionComponent::class.java)
+    val repository: QuestionRepositoryImp by inject(QuestionRepositoryImp::class.java)
 
     // Ruta para la página de respuesta de una pregunta
     get("/question") {
@@ -50,7 +50,7 @@ fun Route.questionController() {
         Log.d("Quizz", "Parámetros recibidos: $parameters")
 
         try {
-            questionComponent.setAnswer(choice)
+            repository.setPostInAnswerCount(choice)
             Log.d("Quizz", "Respuesta: $choice")
             //Log.d("Quizz", "Numero de si: ${questionComponent.getAnswer().}")
             //Log.d("Quizz", "Numero de no: ${questionComponent.getAnswer().noCount}")

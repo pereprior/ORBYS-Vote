@@ -8,7 +8,6 @@ import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
-import com.pprior.quizz.data.server.di.QuestionComponent
 import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         startKoin {
             modules(
                 module {
-                    single { QuestionComponent() }
                     single { QuestionRepositoryImp() }
                     single { FlowRepository() }
                 }

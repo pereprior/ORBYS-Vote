@@ -1,25 +1,32 @@
 package com.pprior.quizz.ui.components.dialogs
 
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.Window
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.models.Question
 import com.pprior.quizz.databinding.DialogAddQuestionBinding
 
-
 /**
  * Clase que representa un dialogo para añadir preguntas a la lista.
  *
- * @param viewModel El viewmodel que gestiona las preguntas.
+ * @param flowRepository El repositorio que gestiona las preguntas.
  * @param context El contexto del dialogo.
  */
-class AddQuestionDialog(
+open class AddQuestionDialog(
     private val flowRepository: FlowRepository,
     context: Context
-) : QuestionDialog<DialogAddQuestionBinding>(context) {
+) : Dialog(context) {
 
+    private var _binding: DialogAddQuestionBinding? = null
+    protected val binding get() = _binding!!
     init {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        _binding = DialogAddQuestionBinding.inflate(LayoutInflater.from(context))
+        setContentView(binding.root)
+
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion() }
@@ -27,9 +34,7 @@ class AddQuestionDialog(
         }
     }
 
-    override fun getViewBinding(inflater: LayoutInflater) = DialogAddQuestionBinding.inflate(inflater)
-
-    private fun saveQuestion() {
+    open fun saveQuestion() {
         val question = Question(
             binding.questionTitle.text.toString(),
             binding.questionQuestion.text.toString()
@@ -44,7 +49,7 @@ class AddQuestionDialog(
         if (flowRepository.exists(question)) {
             binding.errorMessage.text = context.getString(R.string.questions_exists)
         } else {
-            // GUardamos la pregunta en la lista y cerramos el dialogo
+            // Guardamos la pregunta en la lista y cerramos el dialogo
             flowRepository.addQuestion(question)
             dismiss()
             clear()

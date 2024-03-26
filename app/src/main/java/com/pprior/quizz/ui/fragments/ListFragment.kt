@@ -1,5 +1,6 @@
 package com.pprior.quizz.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,9 +52,10 @@ class ListFragment: Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecyclerView() {
         // Si aun no hay preguntas, no pintamos el recyclerView
-        if (flowRepository.getQuestionsList().isEmpty()) {
+        if (flowRepository.questionsList.value.isEmpty()) {
             return
         }
 
@@ -61,7 +63,10 @@ class ListFragment: Fragment() {
         binding.fragmentListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = RecyclerAdapter(flowRepository, viewLifecycleOwner)
+            adapter = RecyclerAdapter(flowRepository, viewLifecycleOwner) {
+                // Actualiza el RecyclerView cuando se cierra el diálogo de edición
+                this@apply.adapter?.notifyDataSetChanged()
+            }
         }
     }
 }
