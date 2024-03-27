@@ -20,7 +20,12 @@ android {
 
     buildTypes {
         release {
+            // optimizacion y ofuscacion de clases y funciones
             isMinifyEnabled = false
+            // optimizacion de los recursos
+            isShrinkResources = false
+
+            // @Keep para ignorar clases
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

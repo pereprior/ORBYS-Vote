@@ -74,6 +74,7 @@
     </style>
 </head>
 <body>
+
     <form id="myForm">
         <br><br>
         <div>
@@ -111,6 +112,12 @@
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };
+
+        // Impide que el usuario pueda volver despues de votar
+        window.onload = function() {
+            window.history.replaceState({}, document.title, "/success");
+        }
     </script>
+
 </body>
 </html>
