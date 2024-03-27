@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:orientation="vertical"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:background="@color/white"
-android:padding="20dp"
-android:elevation="10dp"
-android:gravity="center_horizontal">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="20dp"
+    android:elevation="10dp"
+    android:gravity="center_horizontal">
 
+    <!-- Botón de cerrar -->
     <ImageButton
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@ android:gravity="center_horizontal">
         android:contentDescription="@string/exit_button"
         tools:ignore="UseAppTint" />
 
+    <!-- Texto para la pregunta -->
     <TextView
         android:id="@+id/question"
         android:layout_width="400dp"
@@ -27,12 +29,14 @@ android:gravity="center_horizontal">
         android:gravity="center"
         android:textSize="20sp" />
 
+    <!-- Código QR -->
     <ImageView
         android:id="@+id/qrCode"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:contentDescription="@string/qr_code" />
 
+    <!-- Contador de respuestas -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,6 +44,7 @@ android:gravity="center_horizontal">
         android:gravity="center"
         android:layout_marginTop="10dp" >
 
+        <!-- Contador de respuestas "si" -->
         <TextView
             android:id="@+id/count_yes"
             android:layout_width="wrap_content"
@@ -48,6 +53,7 @@ android:gravity="center_horizontal">
             android:layout_marginStart="70dp"
             android:textSize="20sp" />
 
+        <!-- Contador de respuestas "no" -->
         <TextView
             android:id="@+id/count_no"
             android:layout_width="wrap_content"

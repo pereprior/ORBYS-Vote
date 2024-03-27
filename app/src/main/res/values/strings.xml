@@ -7,6 +7,8 @@
     <string name="fab_desc" translatable="false">Boton de añadir preguntas</string>
     <string name="exit_button" translatable="false">Exit from the dialog\n</string>
     <string name="qr_code" translatable="false">Imagen con el codigo qr</string>
+    <string name="launch_button" translatable="false">Boton para lanzar una pregunta a ser contestada</string>
+    <string name="edit_button" translatable="false">Boton para editar una pregunta</string>
 
     <!-- Add dialog hint -->
     <string name="question_title">"Title:"</string>

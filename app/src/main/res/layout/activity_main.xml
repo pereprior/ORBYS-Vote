@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Top App Bar -->
+    <!-- Top Bar Fragment -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/header_fragment"
         android:name="com.pprior.quizz.ui.fragments.HeadFragment"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Main Screen -->
+    <!-- Main Fragment -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_list_recycler_view"
         android:name="com.pprior.quizz.ui.fragments.ListFragment"

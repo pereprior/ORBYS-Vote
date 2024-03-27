@@ -9,6 +9,7 @@
     android:elevation="10dp"
     android:gravity="center_horizontal">
 
+    <!-- Botón de cerrar el dialogo -->
     <ImageButton
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         android:contentDescription="@string/exit_button"
         tools:ignore="UseAppTint" />
 
+    <!-- Text Field para el título de la pregunta -->
     <EditText
         android:id="@+id/question_title"
         android:layout_width="300dp"
@@ -28,6 +30,7 @@
         android:inputType="textPersonName"
         android:autofillHints="" />
 
+    <!-- Text Field para la pregunta -->
     <EditText
         android:id="@+id/question_question"
         android:layout_width="match_parent"
@@ -37,6 +40,7 @@
         android:autofillHints=""
         android:layout_marginTop="10dp" />
 
+    <!-- Mensaje de error -->
     <TextView
         android:id="@+id/error_message"
         android:layout_width="match_parent"
@@ -44,6 +48,7 @@
         android:gravity="center"
         android:textColor="@android:color/holo_red_light" />
 
+    <!-- Botón de guardar los cambios -->
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
