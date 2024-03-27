@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.dialogs
+package com.pprior.quizz.ui.activities
 
 import android.content.Context
 import com.pprior.quizz.data.flow.FlowRepository

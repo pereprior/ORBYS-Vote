@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.components
+package com.pprior.quizz.ui.components.utils
 
 import android.graphics.Bitmap
 import com.google.zxing.BarcodeFormat

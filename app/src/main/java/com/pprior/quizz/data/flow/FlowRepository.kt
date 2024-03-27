@@ -32,6 +32,7 @@ class FlowRepository {
     // Métodos para gestionar la lista de preguntas
     fun exists(question: Question): Boolean = _questionsList.value.any { it.title == question.title }
     fun addQuestion(question: Question) { _questionsList.value.add(question) }
+    fun deleteQuestion(question: Question) { _questionsList.value.remove(question) }
     fun updateQuestion(oldQuestion: Question, newQuestion: Question) {
         val index = _questionsList.value.indexOf(oldQuestion)
 

@@ -11,7 +11,7 @@ import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.data.adapters.RecyclerAdapter
-import com.pprior.quizz.ui.dialogs.AddQuestionDialog
+import com.pprior.quizz.ui.activities.AddQuestionDialog
 import org.koin.java.KoinJavaComponent.inject
 
 /**

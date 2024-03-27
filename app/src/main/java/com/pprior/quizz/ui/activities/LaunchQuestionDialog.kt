@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.dialogs
+package com.pprior.quizz.ui.activities
 
 import android.app.Dialog
 import android.content.Context
@@ -16,7 +16,7 @@ import com.pprior.quizz.core.host
 import com.pprior.quizz.databinding.DialogLaunchQuestionBinding
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.HttpService
-import com.pprior.quizz.ui.components.QRCodeGenerator
+import com.pprior.quizz.ui.components.utils.QRCodeGenerator
 import kotlinx.coroutines.launch
 
 /**

@@ -1,15 +1,18 @@
 package com.pprior.quizz.data.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
-import com.pprior.quizz.ui.dialogs.EditQuestionDialog
-import com.pprior.quizz.ui.dialogs.LaunchQuestionDialog
+import com.pprior.quizz.ui.components.dialogs.ConfirmDialog
+import com.pprior.quizz.ui.activities.EditQuestionDialog
+import com.pprior.quizz.ui.activities.LaunchQuestionDialog
 
 /**
 * Adaptador para el RecyclerView que muestra la lista de preguntas.
@@ -46,6 +49,10 @@ class RecyclerAdapter(
             // Vincula una pregunta a la vista
             titleQuestion.text = question.title
 
+            deleteButton.setOnClickListener {
+                deleteQuestion(it.context, question)
+            }
+
             // Muestra el dialogo para poder contestar esa pregunta
             launchButton.setOnClickListener {
                 showLaunchQuestionDialog(question, it)
@@ -54,6 +61,19 @@ class RecyclerAdapter(
             // Muestra el diálogo para editar la pregunta
             editButton.setOnClickListener {
                 showEditQuestionDialog(question, it)
+            }
+        }
+
+        private fun deleteQuestion(
+            context: Context,
+            question: Question
+        ) {
+            ConfirmDialog(
+                context,
+                message = context.getString(R.string.delete_question_message),
+            ) {
+                flowRepository.deleteQuestion(question)
+                updateAction()
             }
         }
 
