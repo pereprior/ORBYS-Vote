@@ -29,14 +29,14 @@ class QRCodeGenerator {
         width: Int = DEFAULT_SIZE,
         height: Int = DEFAULT_SIZE
     ): Bitmap? {
-        val result = try {
+        val bitMatrix = try {
             // Codifica la url en un BitMatrix.
             MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, null)
         } catch (e: IllegalArgumentException) {
             return null
         }
 
-        return createBitmapFromBitMatrix(result)
+        return createBitmapFromBitMatrix(bitMatrix)
     }
 
     /**

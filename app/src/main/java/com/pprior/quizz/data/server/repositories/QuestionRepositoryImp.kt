@@ -1,9 +1,13 @@
 package com.pprior.quizz.data.server.repositories
 
 import com.pprior.quizz.data.flow.FlowRepository
-import kotlinx.coroutines.flow.toList
 import org.koin.java.KoinJavaComponent.inject
 
+/**
+ * Implementación del repositorio de preguntas.
+ *
+ * Esta clase se encarga de gestionar las operaciones relacionadas con las respuestas.
+ */
 class QuestionRepositoryImp: IQuestionRepository {
 
     private val repository: FlowRepository by inject(FlowRepository::class.java)

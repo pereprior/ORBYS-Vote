@@ -26,10 +26,7 @@ class EditQuestionDialog(
     }
 
     override fun saveQuestion() {
-        val updatedQuestion = Question(
-            binding.questionTitle.text.toString(),
-            binding.questionQuestion.text.toString()
-        )
+        val updatedQuestion = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
         if (updatedQuestion.title.isEmpty() || updatedQuestion.question.isEmpty()) {
@@ -40,4 +37,5 @@ class EditQuestionDialog(
         flowRepository.updateQuestion(question, updatedQuestion)
         dismiss()
     }
+
 }

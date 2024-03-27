@@ -12,8 +12,6 @@ import org.koin.java.KoinJavaComponent.inject
 import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
 import io.ktor.server.plugins.origin
 
-private const val INDEX_HTML_PATH = "/assets/index.html"
-
 /**
  * Controlador de preguntas que define las rutas para obtener y enviar preguntas.
  *
@@ -28,7 +26,7 @@ fun Route.questionController() {
     get("/question") {
         userIP = call.request.origin.remoteHost
 
-        val fileContent = this::class.java.getResource(INDEX_HTML_PATH)?.readText()
+        val fileContent = this::class.java.getResource("/assets/index.html")?.readText()
         // Responde con el contenido del archivo index.html o un mensaje de error si el archivo no se puede leer.
         call.respondText(
             text = fileContent ?: "Error: no se pudo leer el archivo index.html",
@@ -52,6 +50,8 @@ fun Route.questionController() {
     }
 
     get("/success") {
+
+        call.response.headers.append("Cache-Control", "no-store")
         // Responde con un mensaje de éxito al enviar la respuesta.
         call.respondText(
             text = "Gracias por tu respuesta",

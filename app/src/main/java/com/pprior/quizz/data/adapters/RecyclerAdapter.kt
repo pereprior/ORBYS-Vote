@@ -1,6 +1,7 @@
 package com.pprior.quizz.data.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -23,52 +24,62 @@ class RecyclerAdapter(
     private val updateAction: () -> Unit
 ): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    // Crea un nuevo ViewHolder para una pregunta.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FragmentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding, lifecycleOwner)
     }
 
-    // Asigna los valores a los componentes de la vista
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(flowRepository.questionsList.value[position])
-
-    // Devuelve la cantidad de preguntas
     override fun getItemCount() = flowRepository.questionsList.value.size
 
     /**
-     * Vista para una pregunta.
+     * Vista para la tarjeta de cada pregunta.
      *
      * @property binding El vinculo para la vista de la pregunta.
      */
-    inner class ViewHolder(private val binding: FragmentListItemBinding, private val lifecycleOwner: LifecycleOwner): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(
+        private val binding: FragmentListItemBinding,
+        private val lifecycleOwner: LifecycleOwner
+    ): RecyclerView.ViewHolder(binding.root) {
+
         fun bind(question: Question) = with(binding) {
             // Vincula una pregunta a la vista
             titleQuestion.text = question.title
 
             // Muestra el dialogo para poder contestar esa pregunta
             launchButton.setOnClickListener {
-                LaunchQuestionDialog(
-                    question.question,
-                    it.context,
-                    flowRepository,
-                    lifecycleOwner
-                ).show()
+                showLaunchQuestionDialog(question, it)
             }
 
             // Muestra el diálogo para editar la pregunta
             editButton.setOnClickListener {
-                val editDialog = EditQuestionDialog(
-                    flowRepository,
-                    it.context,
-                    question
-                )
-
-                editDialog.setOnDismissListener {
-                    updateAction()
-                }
-
-                editDialog.show()
+                showEditQuestionDialog(question, it)
             }
         }
+
+        private fun showLaunchQuestionDialog(question: Question, view: View) {
+            LaunchQuestionDialog(
+                question.question,
+                view.context,
+                flowRepository,
+                lifecycleOwner
+            ).show()
+        }
+
+        private fun showEditQuestionDialog(question: Question, view: View) {
+            val editDialog = EditQuestionDialog(
+                flowRepository,
+                view.context,
+                question
+            )
+
+            editDialog.setOnDismissListener {
+                updateAction()
+            }
+
+            editDialog.show()
+        }
+
     }
+
 }

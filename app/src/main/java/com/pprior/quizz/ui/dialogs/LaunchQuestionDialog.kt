@@ -3,21 +3,21 @@ package com.pprior.quizz.ui.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.pprior.quizz.constants.ENDPOINT
-import com.pprior.quizz.constants.SERVER_PORT
-import com.pprior.quizz.constants.host
+import com.pprior.quizz.R
+import com.pprior.quizz.core.ENDPOINT
+import com.pprior.quizz.core.SERVER_PORT
+import com.pprior.quizz.core.URL_ENTRY
+import com.pprior.quizz.core.host
 import com.pprior.quizz.databinding.DialogLaunchQuestionBinding
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.ui.components.QRCodeGenerator
 import kotlinx.coroutines.launch
-
-private const val URL_ENTRY = "http://"
 
 /**
  * Clase que representa un diálogo para lanzar una pregunta a ser contestada.
@@ -35,8 +35,6 @@ class LaunchQuestionDialog(
 ): Dialog(context) {
 
     private var binding: DialogLaunchQuestionBinding
-
-    private val qrCodeGenerator = QRCodeGenerator()
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -62,9 +60,7 @@ class LaunchQuestionDialog(
     private fun bindQuestion(question: String) {
         with(binding) {
             // Establece la imagen del código QR.
-            qrCode.setImageBitmap(
-                qrCodeGenerator.encodeAsBitmap(url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT")
-            )
+            qrCode.setImageBitmap(generateQRCode())
 
             // Establece el texto de la pregunta.
             this.question.text = question
@@ -72,13 +68,24 @@ class LaunchQuestionDialog(
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
             lifecycleOwner.lifecycleScope.launch {
                 flowRepository.answer.collect { answer ->
-                    countYes.text = "Si: ${answer.yesCount}"
-                    countNo.text = "No: ${answer.noCount}"
+                    val yesAnswersText = "${context.getString(R.string.yes_aswers)} ${answer.yesCount}"
+                    val noAnswersText = "${context.getString(R.string.no_aswers)} ${answer.noCount}"
+
+                    countYes.text = yesAnswersText
+                    countNo.text = noAnswersText
                 }
             }
 
             closeButton.setOnClickListener { dismiss() }
         }
+    }
+
+    private fun generateQRCode(): Bitmap? {
+        val qrCodeGenerator = QRCodeGenerator()
+
+        return qrCodeGenerator.encodeAsBitmap(
+            url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT"
+        )
     }
 
 }

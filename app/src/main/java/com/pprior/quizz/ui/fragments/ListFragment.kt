@@ -35,6 +35,10 @@ class ListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAddQuestionDialog()
+    }
+
+    private fun setAddQuestionDialog() {
         // Dialogo para añadir preguntas a la lista
         val dialog = AddQuestionDialog(
             flowRepository = flowRepository,
@@ -69,4 +73,5 @@ class ListFragment: Fragment() {
             }
         }
     }
+
 }

@@ -29,6 +29,7 @@ class FlowRepository {
         clearAnswer()
     }
 
+    // Métodos para gestionar la lista de preguntas
     fun exists(question: Question): Boolean = _questionsList.value.any { it.title == question.title }
     fun addQuestion(question: Question) { _questionsList.value.add(question) }
     fun updateQuestion(oldQuestion: Question, newQuestion: Question) {
@@ -38,18 +39,18 @@ class FlowRepository {
         _questionsList.value.add(newQuestion)
     }
 
+    // Métodos para gestionar el contador de respuestas
     fun clearAnswer() { _answer.tryEmit(Answer()) }
-    fun incYesAnswer() {
+    fun incYesAnswer() { updateAnswerCount { it.yesCount++ } }
+    fun incNoAnswer() { updateAnswerCount { it.noCount++ } }
+
+    private fun updateAnswerCount(update: (Answer) -> Unit) {
         val currentAnswer = _answer.replayCache.firstOrNull() ?: Answer()
-        currentAnswer.yesCount++
-        _answer.tryEmit(currentAnswer)
-    }
-    fun incNoAnswer() {
-        val currentAnswer = _answer.replayCache.firstOrNull() ?: Answer()
-        currentAnswer.noCount++
+        update(currentAnswer)
         _answer.tryEmit(currentAnswer)
     }
 
+    // Métodos para gestionar la lista de usuarios que han respondido
     fun clearRespondedUsers() { _respondedUsers.tryEmit(mutableListOf()) }
     fun addRespondedUser(user: String) {
         val users = _respondedUsers.replayCache.firstOrNull() ?: mutableListOf()
@@ -60,4 +61,5 @@ class FlowRepository {
         val users = _respondedUsers.replayCache.firstOrNull() ?: mutableListOf()
         return users.contains(userIp)
     }
+
 }

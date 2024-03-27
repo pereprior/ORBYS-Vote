@@ -25,6 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Inyeccion de dependencias
+        setupDependencyInjection()
+
+        // Agregamos los fragmentos al contenedor
+        printFragments()
+    }
+
+    private fun setupDependencyInjection() {
         startKoin {
             modules(
                 module {
@@ -33,9 +40,6 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
-
-        // Agregamos los fragmentos al contenedor
-        printFragments()
     }
 
     private fun printFragments() {

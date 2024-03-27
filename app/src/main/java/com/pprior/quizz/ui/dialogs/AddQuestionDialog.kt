@@ -22,6 +22,7 @@ open class AddQuestionDialog(
 
     private var _binding: DialogAddQuestionBinding? = null
     protected val binding get() = _binding!!
+
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         _binding = DialogAddQuestionBinding.inflate(LayoutInflater.from(context))
@@ -35,10 +36,7 @@ open class AddQuestionDialog(
     }
 
     open fun saveQuestion() {
-        val question = Question(
-            binding.questionTitle.text.toString(),
-            binding.questionQuestion.text.toString()
-        )
+        val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
         if (question.title.isEmpty() || question.question.isEmpty()) {
@@ -56,6 +54,11 @@ open class AddQuestionDialog(
         }
     }
 
+    protected fun createQuestionFromInput() = Question(
+        binding.questionTitle.text.toString(),
+        binding.questionQuestion.text.toString()
+    )
+
     private fun clear() {
         with(binding) {
             // Limpiar los campos de texto y el mensaje de error
@@ -64,4 +67,5 @@ open class AddQuestionDialog(
             errorMessage.text = ""
         }
     }
+
 }

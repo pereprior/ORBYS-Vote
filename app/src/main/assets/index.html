@@ -73,7 +73,7 @@
         }
     </style>
 </head>
-<body onload="nobackbutton();">
+<body>
     <form id="myForm">
         <br><br>
         <div>
@@ -86,7 +86,6 @@
 
         <button type="submit">Enviar</button>
     </form>
-
 
     <script>
         // El codigo se ejecuta cuando pulso el boton enviar
@@ -105,12 +104,12 @@
                     body: 'choice=' + encodeURIComponent(choice),
                 }
             ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
-            .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
-            .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
+                .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+                .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
                 console.log('Respuesta recibida: ', text);
                 window.location.href = '/success';
             }) // Si ocurre algun error, lo mostramos en la consola
-            .catch(console.error);
+                .catch(console.error);
         };
     </script>
 </body>
