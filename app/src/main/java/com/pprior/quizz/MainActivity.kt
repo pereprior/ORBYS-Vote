@@ -2,6 +2,7 @@ package com.pprior.quizz
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment

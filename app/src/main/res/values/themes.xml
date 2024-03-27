@@ -1,10 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SchoolQuizz" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.SchoolQuizz" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.SchoolQuizz" parent="Base.Theme.SchoolQuizz" />
+
+    <style name="ThemeDialog" parent="Theme.Material3.DayNight.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 
 </resources>

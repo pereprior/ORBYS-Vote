@@ -25,7 +25,7 @@
     <EditText
         android:id="@+id/question_title"
         android:layout_width="300dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/question_title"
         android:inputType="textPersonName"
         android:autofillHints="" />
@@ -34,7 +34,7 @@
     <EditText
         android:id="@+id/question_question"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/question_question"
         android:inputType="textEmailAddress"
         android:autofillHints=""

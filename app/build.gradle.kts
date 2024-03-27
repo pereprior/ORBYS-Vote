@@ -78,6 +78,8 @@ dependencies {
     implementation(libs.koin.ktor)
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     //noinspection UseTomlInstead
     testImplementation("io.ktor:ktor-server-tests-jvm")

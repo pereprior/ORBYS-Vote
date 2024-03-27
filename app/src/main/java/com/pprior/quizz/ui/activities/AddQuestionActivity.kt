@@ -1,41 +1,37 @@
 package com.pprior.quizz.ui.activities
 
-import android.app.Dialog
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.Window
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.models.Question
-import com.pprior.quizz.databinding.DialogAddQuestionBinding
+import com.pprior.quizz.databinding.ActivityAddQuestionBinding
+import org.koin.java.KoinJavaComponent.inject
 
 /**
- * Clase que representa un dialogo para añadir preguntas a la lista.
+ * Clase que representa una actividad para añadir preguntas a la lista.
  *
  * @param flowRepository El repositorio que gestiona las preguntas.
- * @param context El contexto del dialogo.
  */
-open class AddQuestionDialog(
-    private val flowRepository: FlowRepository,
-    context: Context
-) : Dialog(context) {
+open class AddQuestionActivity: AppCompatActivity() {
 
-    private var _binding: DialogAddQuestionBinding? = null
-    protected val binding get() = _binding!!
+    private val repository: FlowRepository by inject(FlowRepository::class.java)
 
-    init {
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        _binding = DialogAddQuestionBinding.inflate(LayoutInflater.from(context))
+    protected lateinit var binding: ActivityAddQuestionBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityAddQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion() }
-            closeButton.setOnClickListener { dismiss() }
+            closeButton.setOnClickListener { finish() }
         }
     }
 
-    open fun saveQuestion() {
+    private fun saveQuestion() {
         val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
@@ -44,12 +40,12 @@ open class AddQuestionDialog(
         }
 
         // Si ya existe la pregunta, mostrar un mensaje de error
-        if (flowRepository.exists(question)) {
-            binding.errorMessage.text = context.getString(R.string.questions_exists)
+        if (repository.exists(question)) {
+            binding.errorMessage.text = getString(R.string.questions_exists)
         } else {
-            // Guardamos la pregunta en la lista y cerramos el dialogo
-            flowRepository.addQuestion(question)
-            dismiss()
+            // Guardamos la pregunta en la lista y cerramos la actividad
+            repository.addQuestion(question)
+            finish()
             clear()
         }
     }

@@ -1,6 +1,7 @@
 package com.pprior.quizz.data.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,7 @@ import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.ui.components.dialogs.ConfirmDialog
-import com.pprior.quizz.ui.activities.EditQuestionDialog
-import com.pprior.quizz.ui.activities.LaunchQuestionDialog
+import com.pprior.quizz.ui.activities.LaunchQuestionActivity
 
 /**
 * Adaptador para el RecyclerView que muestra la lista de preguntas.
@@ -78,16 +78,13 @@ class RecyclerAdapter(
         }
 
         private fun showLaunchQuestionDialog(question: Question, view: View) {
-            LaunchQuestionDialog(
-                question.question,
-                view.context,
-                flowRepository,
-                lifecycleOwner
-            ).show()
+            val intent = Intent(view.context, LaunchQuestionActivity::class.java)
+            intent.putExtra("question", question.question)
+            view.context.startActivity(intent)
         }
 
         private fun showEditQuestionDialog(question: Question, view: View) {
-            val editDialog = EditQuestionDialog(
+            /*val editDialog = EditQuestionActivity(
                 flowRepository,
                 view.context,
                 question
@@ -97,7 +94,7 @@ class RecyclerAdapter(
                 updateAction()
             }
 
-            editDialog.show()
+            editDialog.show()*/
         }
 
     }

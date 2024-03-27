@@ -1,6 +1,7 @@
 package com.pprior.quizz.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.data.adapters.RecyclerAdapter
-import com.pprior.quizz.ui.activities.AddQuestionDialog
+import com.pprior.quizz.ui.activities.AddQuestionActivity
 import org.koin.java.KoinJavaComponent.inject
 
 /**
@@ -39,21 +40,14 @@ class ListFragment: Fragment() {
     }
 
     private fun setAddQuestionDialog() {
-        // Dialogo para añadir preguntas a la lista
-        val dialog = AddQuestionDialog(
-            flowRepository = flowRepository,
-            context = requireContext()
-        )
+        // Boton flotante para mostrar la actividad de añadir preguntas
+        binding.fab.setOnClickListener {
+            val intent = Intent(it.context, AddQuestionActivity::class.java)
+            startActivity(intent)
 
-        // Cuando se cierre el dialogo, actualizamos la lista de preguntas
-        dialog.setOnDismissListener {
             setUpRecyclerView()
         }
 
-        // Boton flotante para mostrar el dialogo de añadir preguntas
-        binding.fab.setOnClickListener {
-            dialog.show()
-        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
