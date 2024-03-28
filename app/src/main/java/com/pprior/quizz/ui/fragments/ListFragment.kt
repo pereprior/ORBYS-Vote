@@ -13,6 +13,7 @@ import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.data.adapters.RecyclerAdapter
+import com.pprior.quizz.ui.activities.QuestionTypeActivity
 import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
@@ -55,7 +56,8 @@ class ListFragment: Fragment() {
     private fun setAddQuestionDialog() {
         // Boton flotante para mostrar la actividad de añadir preguntas
         binding.fab.setOnClickListener {
-            val intent = Intent(it.context, AddQuestionActivity::class.java)
+            //val intent = Intent(it.context, AddQuestionActivity::class.java)
+            val intent = Intent(it.context, QuestionTypeActivity::class.java)
             startActivity(intent)
         }
     }

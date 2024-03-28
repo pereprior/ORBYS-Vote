@@ -14,5 +14,6 @@
     <string name="delete_question_message">¿Estás seguro de que quieres eliminar esta pregunta?</string>
     <string name="positive_button_message">Confirmar</string>
     <string name="negative_button_message">Cancelar</string>
+    <string name="activity_question_type_title">Selecciona el tipo de pregunta:</string>
 
 </resources>

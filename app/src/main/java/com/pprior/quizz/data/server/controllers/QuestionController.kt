@@ -45,19 +45,14 @@ fun Route.questionController() {
             // Añade la dirección IP del usuario a la lista de usuarios que ya han respondido.
             repository.addUserToRespondedList(userIP)
         }*/
-
         val choice = call.receiveParameters()["choice"]
-
-        // Actualiza el recuento de respuestas en el repositorio.
         repository.setPostInAnswerCount(choice)
-
-        // Añade la dirección IP del usuario a la lista de usuarios que ya han respondido.
         repository.addUserToRespondedList(userIP)
 
-        call.respondRedirect("/success")
+        call.respondRedirect("/question/success")
     }
 
-    get("/success") {
+    get("/question/success") {
 
         call.response.headers.append("Cache-Control", "no-store")
         // Responde con un mensaje de éxito al enviar la respuesta.

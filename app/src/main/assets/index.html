@@ -108,14 +108,14 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
                 console.log('Respuesta recibida: ', text);
-                window.location.href = '/success';
+                window.location.href = '/question/success';
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };
 
         // Impide que el usuario pueda volver despues de votar
         window.onload = function() {
-            window.history.replaceState({}, document.title, "/success");
+            window.history.replaceState({}, document.title, "/question/success");
         }
     </script>
 
