@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.activities
+package com.pprior.quizz.ui.activities.dialogs
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,8 +15,7 @@ import org.koin.java.KoinJavaComponent.inject
  */
 open class AddQuestionActivity: AppCompatActivity() {
 
-    private val repository: FlowRepository by inject(FlowRepository::class.java)
-
+    protected val repository: FlowRepository by inject(FlowRepository::class.java)
     protected lateinit var binding: ActivityAddQuestionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,7 @@ open class AddQuestionActivity: AppCompatActivity() {
         }
     }
 
-    private fun saveQuestion() {
+    protected open fun saveQuestion() {
         val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos

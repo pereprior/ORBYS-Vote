@@ -1,9 +1,8 @@
-package com.pprior.quizz.ui.activities
+package com.pprior.quizz.ui.activities.dialogs
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.pprior.quizz.R

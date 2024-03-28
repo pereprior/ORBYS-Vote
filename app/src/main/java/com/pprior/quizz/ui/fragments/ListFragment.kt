@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
 import com.pprior.quizz.data.adapters.RecyclerAdapter
-import com.pprior.quizz.ui.activities.AddQuestionActivity
+import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
 /**
@@ -33,10 +35,21 @@ class ListFragment: Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setAddQuestionDialog()
+        setUpRecyclerView()
+
+        // Corrutina para observar los cambios en la lista de preguntas
+        viewLifecycleOwner.lifecycleScope.launch {
+            flowRepository.questionUpdated.collect { _ ->
+                // Actualizar el RecyclerView cuando la lista de preguntas cambia
+                binding.fragmentListRecyclerView.adapter?.notifyDataSetChanged()
+            }
+        }
+
     }
 
     private fun setAddQuestionDialog() {
@@ -44,27 +57,15 @@ class ListFragment: Fragment() {
         binding.fab.setOnClickListener {
             val intent = Intent(it.context, AddQuestionActivity::class.java)
             startActivity(intent)
-
-            setUpRecyclerView()
         }
-
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecyclerView() {
-        // Si aun no hay preguntas, no pintamos el recyclerView
-        if (flowRepository.questionsList.value.isEmpty()) {
-            return
-        }
-
         // Configuramos el recyclerView con la lista de preguntas
         binding.fragmentListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = RecyclerAdapter(flowRepository, viewLifecycleOwner) {
-                // Actualiza el RecyclerView cuando se cierra el diálogo de edición
-                this@apply.adapter?.notifyDataSetChanged()
-            }
+            adapter = RecyclerAdapter(flowRepository)
         }
     }
 

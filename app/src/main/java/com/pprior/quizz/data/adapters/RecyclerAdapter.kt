@@ -5,31 +5,27 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
+import com.pprior.quizz.ui.activities.dialogs.EditQuestionActivity
 import com.pprior.quizz.ui.components.dialogs.ConfirmDialog
-import com.pprior.quizz.ui.activities.LaunchQuestionActivity
+import com.pprior.quizz.ui.activities.dialogs.LaunchQuestionActivity
 
 /**
 * Adaptador para el RecyclerView que muestra la lista de preguntas.
 *
 * @param flowRepository repositorio que contiene la lista de preguntas.
-* @param lifecycleOwner propietario del ciclo de vida del adaptador.
-* @param updateAction acción que se ejecuta para actualizar la vista cuando se cierra el diálogo de edición.
 */
 class RecyclerAdapter(
-    private var flowRepository: FlowRepository,
-    private val lifecycleOwner: LifecycleOwner,
-    private val updateAction: () -> Unit
+    private var flowRepository: FlowRepository
 ): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FragmentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, lifecycleOwner)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(flowRepository.questionsList.value[position])
@@ -41,8 +37,7 @@ class RecyclerAdapter(
      * @property binding El vinculo para la vista de la pregunta.
      */
     inner class ViewHolder(
-        private val binding: FragmentListItemBinding,
-        private val lifecycleOwner: LifecycleOwner
+        private val binding: FragmentListItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(question: Question) = with(binding) {
@@ -68,12 +63,8 @@ class RecyclerAdapter(
             context: Context,
             question: Question
         ) {
-            ConfirmDialog(
-                context,
-                message = context.getString(R.string.delete_question_message),
-            ) {
+            ConfirmDialog(context, message = context.getString(R.string.delete_question_message)) {
                 flowRepository.deleteQuestion(question)
-                updateAction()
             }
         }
 
@@ -84,17 +75,10 @@ class RecyclerAdapter(
         }
 
         private fun showEditQuestionDialog(question: Question, view: View) {
-            /*val editDialog = EditQuestionActivity(
-                flowRepository,
-                view.context,
-                question
-            )
-
-            editDialog.setOnDismissListener {
-                updateAction()
-            }
-
-            editDialog.show()*/
+            val intent = Intent(view.context, EditQuestionActivity::class.java)
+            intent.putExtra("questionTitle", question.title)
+            intent.putExtra("questionQuestion", question.question)
+            view.context.startActivity(intent)
         }
 
     }

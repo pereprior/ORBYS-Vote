@@ -5,6 +5,7 @@ import com.pprior.quizz.data.server.models.Question
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
@@ -21,9 +22,11 @@ class FlowRepository {
     private val _answer = MutableSharedFlow<Answer>(replay = 1)
     private var _questionsList = MutableStateFlow<MutableList<Question>>(mutableListOf())
     private var _respondedUsers = MutableSharedFlow<MutableList<String>>(replay = 1)
+    private val _questionUpdated = MutableSharedFlow<Unit>(replay = 1)
 
     val answer: Flow<Answer> = _answer.asSharedFlow()
     val questionsList: StateFlow<MutableList<Question>> = _questionsList
+    val questionUpdated: SharedFlow<Unit> = _questionUpdated
 
     init {
         clearAnswer()
@@ -31,13 +34,20 @@ class FlowRepository {
 
     // Métodos para gestionar la lista de preguntas
     fun exists(question: Question): Boolean = _questionsList.value.any { it.title == question.title }
-    fun addQuestion(question: Question) { _questionsList.value.add(question) }
-    fun deleteQuestion(question: Question) { _questionsList.value.remove(question) }
+    fun addQuestion(question: Question) {
+        _questionsList.value.add(question)
+        _questionUpdated.tryEmit(Unit)
+    }
+    fun deleteQuestion(question: Question) {
+        _questionsList.value.remove(question)
+        _questionUpdated.tryEmit(Unit)
+    }
     fun updateQuestion(oldQuestion: Question, newQuestion: Question) {
         val index = _questionsList.value.indexOf(oldQuestion)
 
         _questionsList.value.removeAt(index)
         _questionsList.value.add(newQuestion)
+        _questionUpdated.tryEmit(Unit)
     }
 
     // Métodos para gestionar el contador de respuestas
