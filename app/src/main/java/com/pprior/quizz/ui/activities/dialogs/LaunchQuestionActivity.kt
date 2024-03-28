@@ -2,10 +2,10 @@ package com.pprior.quizz.ui.activities.dialogs
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.pprior.quizz.R
 import com.pprior.quizz.core.ENDPOINT
 import com.pprior.quizz.core.SERVER_PORT
 import com.pprior.quizz.core.URL_ENTRY
@@ -13,6 +13,7 @@ import com.pprior.quizz.core.host
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityLaunchQuestionBinding
+import com.pprior.quizz.domain.models.Bar
 import com.pprior.quizz.ui.components.utils.QRCodeGenerator
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
@@ -64,11 +65,13 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
             repository.answer.collect { answer ->
-                val yesAnswersText = "${getString(R.string.yes_aswers)} ${answer.yesCount}"
-                val noAnswersText = "${getString(R.string.no_aswers)} ${answer.noCount}"
+                barView.clearBars()
 
-                countYes.text = yesAnswersText
-                countNo.text = noAnswersText
+                val yesBar = Bar("Si", height = answer.yesCount.toFloat(), color = Color.RED)
+                val noBar = Bar("No", height = answer.noCount.toFloat(), color = Color.BLUE)
+
+                barView.addBar(yesBar)
+                barView.addBar(noBar)
             }
 
         }

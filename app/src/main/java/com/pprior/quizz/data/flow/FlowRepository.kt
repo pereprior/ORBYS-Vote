@@ -1,7 +1,7 @@
 package com.pprior.quizz.data.flow
 
-import com.pprior.quizz.data.server.models.Answer
-import com.pprior.quizz.data.server.models.Question
+import com.pprior.quizz.domain.models.Answer
+import com.pprior.quizz.domain.models.Question
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -36,7 +36,7 @@ fun Route.questionController() {
 
     post("/submit") {
         // Comprueba si el usuario ya ha respondido.
-        if (repository.userNotExists(userIP)) {
+        /*if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
 
             // Actualiza el recuento de respuestas en el repositorio.
@@ -44,7 +44,15 @@ fun Route.questionController() {
 
             // Añade la dirección IP del usuario a la lista de usuarios que ya han respondido.
             repository.addUserToRespondedList(userIP)
-        }
+        }*/
+
+        val choice = call.receiveParameters()["choice"]
+
+        // Actualiza el recuento de respuestas en el repositorio.
+        repository.setPostInAnswerCount(choice)
+
+        // Añade la dirección IP del usuario a la lista de usuarios que ya han respondido.
+        repository.addUserToRespondedList(userIP)
 
         call.respondRedirect("/success")
     }

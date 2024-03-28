@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.server.models.Question
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.ActivityAddQuestionBinding
 import org.koin.java.KoinJavaComponent.inject
 

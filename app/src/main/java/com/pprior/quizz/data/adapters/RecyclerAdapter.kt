@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.server.models.Question
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.ui.activities.dialogs.EditQuestionActivity
 import com.pprior.quizz.ui.components.dialogs.ConfirmDialog

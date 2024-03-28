@@ -1,7 +1,7 @@
 package com.pprior.quizz.ui.activities.dialogs
 
 import android.os.Bundle
-import com.pprior.quizz.data.server.models.Question
+import com.pprior.quizz.domain.models.Question
 
 class EditQuestionActivity: AddQuestionActivity() {
 
