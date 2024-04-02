@@ -9,9 +9,10 @@
     <string name="qr_code" translatable="false">Imagen con el codigo qr</string>
     <string name="launch_button" translatable="false">Boton para lanzar una pregunta a ser contestada</string>
     <string name="edit_button" translatable="false">Boton para editar una pregunta</string>
+    <string name="card_type_icon" translatable="false">Icono de cada tipo de pregunta</string>
 
     <!-- Add dialog hint -->
-    <string name="question_title">"Title:"</string>
+    <string name="question_answer">Answer:</string>
     <string name="question_question">Question:</string>
     <string name="save_button">Save</string>
 
@@ -19,8 +20,8 @@
     <string name="questions_exists">"Question already exists"</string>
 
     <!-- Dialog launch question -->
-    <string name="yes_aswers">Yes:</string>
-    <string name="no_aswers" translatable="false">No:</string>
+    <string name="yes_aswers">Yes</string>
+    <string name="no_aswers" translatable="false">No</string>
     <string name="delete_question_message"> Are you sure you want to delete this question? </string>
     <string name="positive_button_message">Confirm</string>
     <string name="negative_button_message">Cancel</string>
@@ -35,6 +36,5 @@
     <string name="bar_desc">Score type of questions to mark a point on a progression bar</string>
     <string name="other_title">Others</string>
     <string name="other_desc">Custom type of questions with three possible answers</string>
-    <string name="card_type_icon">Icono de cada tipo de pregunta</string>
 
 </resources>

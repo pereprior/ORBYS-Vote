@@ -33,7 +33,7 @@ class FlowRepository {
     }
 
     // Métodos para gestionar la lista de preguntas
-    fun exists(question: Question): Boolean = _questionsList.value.any { it.title == question.title }
+    fun exists(question: Question): Boolean = _questionsList.value.any { it.question == question.question }
     fun addQuestion(question: Question) {
         _questionsList.value.add(question)
         _questionUpdated.tryEmit(Unit)
@@ -43,17 +43,19 @@ class FlowRepository {
         _questionUpdated.tryEmit(Unit)
     }
     fun updateQuestion(oldQuestion: Question, newQuestion: Question) {
-        val index = _questionsList.value.indexOf(oldQuestion)
+        val index = _questionsList.value.indexOfFirst { it.question == oldQuestion.question }
 
-        _questionsList.value.removeAt(index)
-        _questionsList.value.add(newQuestion)
-        _questionUpdated.tryEmit(Unit)
+        // Si la pregunta existe, actualizamos la pregunta
+        if (index != -1) {
+            _questionsList.value[index].question = newQuestion.question
+            _questionUpdated.tryEmit(Unit)
+        }
     }
 
     // Métodos para gestionar el contador de respuestas
     fun clearAnswer() { _answer.tryEmit(Answer()) }
-    fun incYesAnswer() { updateAnswerCount { it.yesCount++ } }
-    fun incNoAnswer() { updateAnswerCount { it.noCount++ } }
+    fun incYesAnswer() { updateAnswerCount { it.count++ } }
+    fun incNoAnswer() { updateAnswerCount { it.count++ } }
 
     private fun updateAnswerCount(update: (Answer) -> Unit) {
         val currentAnswer = _answer.replayCache.firstOrNull() ?: Answer()

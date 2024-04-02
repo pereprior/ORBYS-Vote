@@ -55,6 +55,36 @@
         android:gravity="center"
         android:textColor="@android:color/holo_red_light" />
 
+    <!-- Text Field para la primera respuesta -->
+    <EditText
+        android:id="@+id/question_answer1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/question_answer"
+        android:inputType="text"
+        android:autofillHints=""
+        android:layout_marginTop="10dp" />
+
+    <!-- Text Field para la segunda respuesta -->
+    <EditText
+        android:id="@+id/question_answer2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/question_answer"
+        android:inputType="text"
+        android:autofillHints=""
+        android:layout_marginTop="10dp" />
+
+    <!-- Text Field para la tercera respuesta -->
+    <EditText
+        android:id="@+id/question_answer3"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/question_answer"
+        android:inputType="text"
+        android:autofillHints=""
+        android:layout_marginTop="10dp" />
+
     <!-- Botón de guardar los cambios -->
     <Button
         android:id="@+id/save_button"

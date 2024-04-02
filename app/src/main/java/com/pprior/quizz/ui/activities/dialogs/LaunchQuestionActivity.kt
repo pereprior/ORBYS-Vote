@@ -67,8 +67,8 @@ class LaunchQuestionActivity: AppCompatActivity() {
             repository.answer.collect { answer ->
                 barView.clearBars()
 
-                val yesBar = Bar("Si", height = answer.yesCount.toFloat(), color = Color.RED)
-                val noBar = Bar("No", height = answer.noCount.toFloat(), color = Color.BLUE)
+                val yesBar = Bar("Si", height = answer.count.toFloat(), color = Color.RED)
+                val noBar = Bar("No", height = answer.count.toFloat(), color = Color.BLUE)
 
                 barView.addBar(yesBar)
                 barView.addBar(noBar)

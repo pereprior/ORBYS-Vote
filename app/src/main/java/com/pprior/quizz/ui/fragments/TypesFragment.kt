@@ -8,6 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.pprior.quizz.databinding.FragmentTypesBinding
 import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
+import com.pprior.quizz.ui.activities.dialogs.types.AddBarQuestion
+import com.pprior.quizz.ui.activities.dialogs.types.AddOtherQuestion
+import com.pprior.quizz.ui.activities.dialogs.types.AddStarsQuestion
+import com.pprior.quizz.ui.activities.dialogs.types.AddYesNoQuestion
 
 class TypesFragment : Fragment() {
 
@@ -28,16 +32,28 @@ class TypesFragment : Fragment() {
     }
 
     private fun setQuestionTypesCards() {
-        binding.yesNoCard.setOnClickListener { startAddQuestionActivity() }
-        binding.starCard.setOnClickListener { startAddQuestionActivity() }
-        binding.barCard.setOnClickListener { startAddQuestionActivity() }
-        binding.otherCard.setOnClickListener { startAddQuestionActivity() }
-    }
+        binding.yesNoCard.setOnClickListener {
+            val intent = Intent(context, AddYesNoQuestion::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
 
-    private fun startAddQuestionActivity() {
-        val intent = Intent(context, AddQuestionActivity::class.java)
-        startActivity(intent)
-        activity?.finish()
+        binding.starCard.setOnClickListener {
+            val intent = Intent(context, AddStarsQuestion::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+        binding.barCard.setOnClickListener {
+            val intent = Intent(context, AddBarQuestion::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+
+        binding.otherCard.setOnClickListener {
+            val intent = Intent(context, AddOtherQuestion::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
     }
 
 }

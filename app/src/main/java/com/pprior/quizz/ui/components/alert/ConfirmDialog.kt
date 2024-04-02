@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.components.dialogs
+package com.pprior.quizz.ui.components.alert
 
 import android.app.AlertDialog
 import android.content.Context

@@ -1,26 +1,22 @@
-package com.pprior.quizz.ui.activities.dialogs
+package com.pprior.quizz.ui.activities.dialogs.types
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
+import com.pprior.quizz.databinding.ActivityAddOtherQuestionBinding
+import com.pprior.quizz.domain.models.Answer
 import com.pprior.quizz.domain.models.Question
-import com.pprior.quizz.databinding.ActivityAddQuestionBinding
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent
 
-/**
- * Clase que representa una actividad para añadir preguntas a la lista.
- *
- * @param flowRepository El repositorio que gestiona las preguntas.
- */
-open class AddQuestionActivity: AppCompatActivity() {
+class AddOtherQuestion: AppCompatActivity() {
 
-    protected val repository: FlowRepository by inject(FlowRepository::class.java)
-    protected lateinit var binding: ActivityAddQuestionBinding
+    private val repository: FlowRepository by KoinJavaComponent.inject(FlowRepository::class.java)
+    private lateinit var binding: ActivityAddOtherQuestionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddQuestionBinding.inflate(layoutInflater)
+        binding = ActivityAddOtherQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding) {
@@ -30,7 +26,7 @@ open class AddQuestionActivity: AppCompatActivity() {
         }
     }
 
-    protected open fun saveQuestion() {
+    private fun saveQuestion() {
         val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
@@ -49,14 +45,23 @@ open class AddQuestionActivity: AppCompatActivity() {
         }
     }
 
-    protected open fun createQuestionFromInput() = Question(
-        binding.questionQuestion.text.toString()
+    private fun createQuestionFromInput() = Question(
+        question = binding.questionQuestion.text.toString(),
+        icon = R.drawable.baseline_menu_24,
+        answers = listOf(
+            Answer(binding.questionQuestion.text),
+            Answer(binding.questionQuestion.text),
+            Answer(binding.questionQuestion.text)
+        )
     )
 
     private fun clear() {
         with(binding) {
             // Limpiar los campos de texto y el mensaje de error
             questionQuestion.text.clear()
+            questionAnswer1.text.clear()
+            questionAnswer2.text.clear()
+            questionAnswer3.text.clear()
             errorMessage.text = ""
         }
     }

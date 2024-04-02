@@ -12,16 +12,13 @@ class EditQuestionActivity: AddQuestionActivity() {
 
         createQuestionFromIntents()
 
-        with(binding) {
-            questionTitle.setText(question.title)
-            questionQuestion.setText(question.question)
-        }
+        binding.questionQuestion.setText(question.question)
     }
 
     override fun saveQuestion() {
         val updatedQuestion = createQuestionFromInput()
 
-        if (updatedQuestion.title.isEmpty() || updatedQuestion.question.isEmpty()) {
+        if (updatedQuestion.question.isEmpty()) {
             return
         }
 
@@ -30,9 +27,8 @@ class EditQuestionActivity: AddQuestionActivity() {
     }
 
     private fun createQuestionFromIntents() {
-        val questionTitle = intent.getStringExtra("questionTitle") ?: ""
         val questionQuestion = intent.getStringExtra("questionQuestion") ?: ""
-        question = Question(questionTitle, questionQuestion)
+        question = Question(questionQuestion)
     }
 
 }

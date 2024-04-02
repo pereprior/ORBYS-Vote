@@ -3,7 +3,8 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_margin="48dp"
+    android:layout_marginHorizontal="48dp"
+    android:layout_marginVertical="24dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:elevation="10dp" >
@@ -13,15 +14,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Título de la pregunta -->
-        <TextView
-            android:id="@+id/title_question"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="20sp" />
+            android:orientation="horizontal"
+            android:layout_margin="24dp" >
+
+            <!-- Icono del tipo de la pregunta -->
+            <ImageView
+                android:id="@+id/question_type_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_gravity="start"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button" />
+
+            <!-- Título de la pregunta -->
+            <TextView
+                android:id="@+id/title_question"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+        </LinearLayout>
 
         <!-- Contenedor para las gestionar las acciones -->
         <LinearLayout

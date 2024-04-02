@@ -41,9 +41,33 @@
             android:exported="false"
             android:theme="@style/ThemeDialog" />
 
-        <!-- Actividad dialogo para añadir preguntas -->
+        <!-- Actividad generica de dialogo para añadir preguntas -->
         <activity
             android:name=".ui.activities.dialogs.AddQuestionActivity"
+            android:exported="false"
+            android:theme="@style/ThemeDialog" />
+
+        <!-- Actividad dialogo para añadir preguntas de si o no -->
+        <activity
+            android:name=".ui.activities.dialogs.types.AddYesNoQuestion"
+            android:exported="false"
+            android:theme="@style/ThemeDialog" />
+
+        <!-- Actividad dialogo para añadir preguntas de estrellas -->
+        <activity
+            android:name=".ui.activities.dialogs.types.AddStarsQuestion"
+            android:exported="false"
+            android:theme="@style/ThemeDialog" />
+
+        <!-- Actividad dialogo para añadir preguntas de barra progresiva -->
+        <activity
+            android:name=".ui.activities.dialogs.types.AddBarQuestion"
+            android:exported="false"
+            android:theme="@style/ThemeDialog" />
+
+        <!-- Actividad dialogo para añadir preguntas de otro tipo -->
+        <activity
+            android:name=".ui.activities.dialogs.types.AddOtherQuestion"
             android:exported="false"
             android:theme="@style/ThemeDialog" />
 

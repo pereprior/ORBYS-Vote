@@ -1,7 +1,10 @@
 package com.pprior.quizz.domain.models
 
+import com.pprior.quizz.R
+
 // Clase que representa una pregunta.
 data class Question(
-    val title: String,
-    val question: String,
+    var question: String,
+    val answers: List<Answer> = emptyList(),
+    val icon: Int = R.drawable.baseline_help_24
 )
