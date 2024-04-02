@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="column_number">3</integer>
+    <dimen name="type_fragment_values">16dp</dimen>
+    <dimen name="type_fragment_title_size">36sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -21,11 +21,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/yes_no_card"
-        android:name="com.pprior.quizz.ui.fragments.TypesItemFragment"
+        android:name="com.pprior.quizz.ui.fragments.types.YesNoItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="16dp"
+        android:layout_margin="@dimen/type_fragment_values"
+        android:padding="@dimen/type_fragment_values"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal"
@@ -35,11 +35,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/star_card"
-        android:name="com.pprior.quizz.ui.fragments.TypesItemFragment"
+        android:name="com.pprior.quizz.ui.fragments.types.StarsItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="16dp"
+        android:layout_margin="@dimen/type_fragment_values"
+        android:padding="@dimen/type_fragment_values"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@+id/guideline_horizontal"
@@ -49,11 +49,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bar_card"
-        android:name="com.pprior.quizz.ui.fragments.TypesItemFragment"
+        android:name="com.pprior.quizz.ui.fragments.types.BarItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="16dp"
+        android:layout_margin="@dimen/type_fragment_values"
+        android:padding="@dimen/type_fragment_values"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,11 +63,11 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/other_card"
-        android:name="com.pprior.quizz.ui.fragments.TypesItemFragment"
+        android:name="com.pprior.quizz.ui.fragments.types.OtherItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="16dp"
+        android:layout_margin="@dimen/type_fragment_values"
+        android:padding="@dimen/type_fragment_values"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"

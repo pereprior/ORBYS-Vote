@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.components.graphics
+package com.pprior.quizz.ui.components.utils
 
 import android.content.Context
 import android.graphics.Canvas

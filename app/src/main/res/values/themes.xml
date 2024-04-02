@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.SchoolQuizz" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
@@ -7,7 +7,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.SchoolQuizz" parent="Base.Theme.SchoolQuizz" />
+    <style name="Theme.SchoolQuizz" parent="Base.Theme.SchoolQuizz">
+    </style>
 
     <style name="ThemeDialog" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:backgroundDimEnabled">true</item>

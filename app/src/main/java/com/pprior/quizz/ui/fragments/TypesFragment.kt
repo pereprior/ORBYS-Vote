@@ -6,15 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentTypesBinding
 import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
-import org.koin.java.KoinJavaComponent.inject
 
 class TypesFragment : Fragment() {
 
     private lateinit var binding: FragmentTypesBinding
-    private val flowRepository: FlowRepository by inject(FlowRepository::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,25 +28,16 @@ class TypesFragment : Fragment() {
     }
 
     private fun setQuestionTypesCards() {
-        binding.yesNoCard.setOnClickListener {
-            val intent = Intent(context, AddQuestionActivity::class.java)
-            startActivity(intent)
-        }
+        binding.yesNoCard.setOnClickListener { startAddQuestionActivity() }
+        binding.starCard.setOnClickListener { startAddQuestionActivity() }
+        binding.barCard.setOnClickListener { startAddQuestionActivity() }
+        binding.otherCard.setOnClickListener { startAddQuestionActivity() }
+    }
 
-        binding.starCard.setOnClickListener {
-            val intent = Intent(context, AddQuestionActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.barCard.setOnClickListener {
-            val intent = Intent(context, AddQuestionActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.otherCard.setOnClickListener {
-            val intent = Intent(context, AddQuestionActivity::class.java)
-            startActivity(intent)
-        }
+    private fun startAddQuestionActivity() {
+        val intent = Intent(context, AddQuestionActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.pprior.quizz.ui.fragments
+package com.pprior.quizz.ui.fragments.types
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.pprior.quizz.databinding.FragmentTypesItemBinding
 
-class TypesItemFragment : Fragment() {
+abstract class TypesItemFragment : Fragment() {
 
-    private lateinit var binding: FragmentTypesItemBinding
+    protected lateinit var binding: FragmentTypesItemBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,13 +17,6 @@ class TypesItemFragment : Fragment() {
     ): View {
         binding = FragmentTypesItemBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.cardTitle.text = "Yes/No"
-        binding.cardDescription.text = "Preguntas de respuesta binaria"
     }
 
 }

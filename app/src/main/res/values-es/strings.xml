@@ -16,4 +16,14 @@
     <string name="negative_button_message">Cancelar</string>
     <string name="activity_question_type_title">Selecciona el tipo de pregunta:</string>
 
+    <!-- Question types -->
+    <string name="yes_no_title">Si/No</string>
+    <string name="yes_no_desc">Tipo de preguntas sencillo más sencillo con dos tipos de respuestas</string>
+    <string name="stars_title">Estrellas</string>
+    <string name="stars_desc">Tipo de preguntas de puntuación para seleccionar una cierta cantidad de estrellas</string>
+    <string name="bar_title">Barra Progresiva</string>
+    <string name="bar_desc">Tipo de preguntas de puntuación para marcar un punto en una barra de progresión</string>
+    <string name="other_title">Otros</string>
+    <string name="other_desc">Tipo de preguntas personalizado con hasta tres respuestas posibles</string>
+
 </resources>

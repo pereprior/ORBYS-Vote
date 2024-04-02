@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
-import com.pprior.quizz.data.adapters.RecyclerAdapter
+import com.pprior.quizz.ui.components.recyclerview.QuestionAdapter
 import com.pprior.quizz.ui.activities.QuestionTypeActivity
-import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
@@ -67,7 +66,7 @@ class ListFragment: Fragment() {
         binding.fragmentListRecyclerView.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = RecyclerAdapter(flowRepository)
+            adapter = QuestionAdapter(flowRepository.questionsList.value)
         }
     }
 
