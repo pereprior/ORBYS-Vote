@@ -1,6 +1,7 @@
 package com.pprior.quizz.ui.activities.dialogs.types
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
@@ -18,6 +19,7 @@ class AddOtherQuestion: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOtherQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Log.d("AddOtherQuestion", "AAAAAAAA")
 
         with(binding) {
             // Asignar los listeners a los botones
@@ -41,7 +43,6 @@ class AddOtherQuestion: AppCompatActivity() {
             // Guardamos la pregunta en la lista y cerramos la actividad
             repository.addQuestion(question)
             finish()
-            clear()
         }
     }
 
@@ -49,21 +50,10 @@ class AddOtherQuestion: AppCompatActivity() {
         question = binding.questionQuestion.text.toString(),
         icon = R.drawable.baseline_menu_24,
         answers = listOf(
-            Answer(binding.questionQuestion.text),
-            Answer(binding.questionQuestion.text),
-            Answer(binding.questionQuestion.text)
+            Answer(binding.questionAnswer1.text),
+            Answer(binding.questionAnswer2.text),
+            Answer(binding.questionAnswer3.text)
         )
     )
-
-    private fun clear() {
-        with(binding) {
-            // Limpiar los campos de texto y el mensaje de error
-            questionQuestion.text.clear()
-            questionAnswer1.text.clear()
-            questionAnswer2.text.clear()
-            questionAnswer3.text.clear()
-            errorMessage.text = ""
-        }
-    }
 
 }

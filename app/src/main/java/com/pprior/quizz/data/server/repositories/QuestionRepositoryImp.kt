@@ -14,17 +14,14 @@ class QuestionRepositoryImp: IQuestionRepository {
 
     override fun setPostInAnswerCount(answer: String?) {
         if (answer == "Si") {
-            this.repository.incYesAnswer()
+            this.repository.incAnswer()
         }
 
         if (answer == "No") {
-            this.repository.incNoAnswer()
+            this.repository.incAnswer()
         }
     }
 
     override fun addUserToRespondedList(userIp: String) = repository.addRespondedUser(userIp)
-    fun userNotExists(userIp: String): Boolean {
-        return !repository.exists(userIp)
-    }
 
 }

@@ -19,7 +19,7 @@ class AddYesNoQuestion: AddQuestionActivity() {
         icon = R.drawable.baseline_done_all_24,
         answers = listOf(
             Answer(this.getString(R.string.yes_aswers)),
-            Answer(this.getString(R.string.yes_aswers))
+            Answer(this.getString(R.string.no_aswers))
         )
     )
 

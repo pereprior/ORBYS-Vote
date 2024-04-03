@@ -1,18 +1,15 @@
 package com.pprior.quizz.ui.activities.dialogs
 
 import android.os.Bundle
-import com.pprior.quizz.domain.models.Question
 
 class EditQuestionActivity: AddQuestionActivity() {
 
-    private lateinit var question: Question
+    private val question = intent.getStringExtra("questionQuestion") ?: ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        createQuestionFromIntents()
-
-        binding.questionQuestion.setText(question.question)
+        binding.questionQuestion.setText(question)
     }
 
     override fun saveQuestion() {
@@ -24,11 +21,6 @@ class EditQuestionActivity: AddQuestionActivity() {
 
         repository.updateQuestion(question, updatedQuestion)
         finish()
-    }
-
-    private fun createQuestionFromIntents() {
-        val questionQuestion = intent.getStringExtra("questionQuestion") ?: ""
-        question = Question(questionQuestion)
     }
 
 }

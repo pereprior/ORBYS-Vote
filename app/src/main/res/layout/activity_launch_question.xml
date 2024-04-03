@@ -9,17 +9,34 @@
     android:elevation="10dp"
     android:gravity="center_horizontal">
 
-    <!-- Botón de cerrar -->
-    <ImageButton
-        android:id="@+id/close_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:src="@drawable/baseline_arrow_forward_24"
-        android:tint="@color/design_default_color_primary"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/exit_button"
-        tools:ignore="UseAppTint" />
+        android:orientation="horizontal" >
+
+        <!-- Icono con el tipo de la pregunta a crear -->
+        <ImageView
+            android:id="@+id/question_type_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="start"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/exit_button" />
+
+        <!-- Botón de cerrar el dialogo -->
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/exit_button"
+            android:src="@drawable/baseline_arrow_forward_24"
+            android:tint="@color/design_default_color_primary"
+            tools:ignore="UseAppTint" />
+
+    </LinearLayout>
 
     <!-- Texto para la pregunta -->
     <TextView
@@ -27,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"/>
 
     <!-- Código QR -->
     <ImageView

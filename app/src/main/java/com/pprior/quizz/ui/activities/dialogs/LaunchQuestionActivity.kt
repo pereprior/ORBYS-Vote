@@ -4,8 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.pprior.quizz.core.ENDPOINT
 import com.pprior.quizz.core.SERVER_PORT
 import com.pprior.quizz.core.URL_ENTRY
@@ -14,8 +14,8 @@ import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.data.server.HttpService
 import com.pprior.quizz.databinding.ActivityLaunchQuestionBinding
 import com.pprior.quizz.domain.models.Bar
+import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.components.utils.QRCodeGenerator
-import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
 /**
@@ -28,6 +28,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityLaunchQuestionBinding
     private val repository: FlowRepository by inject(FlowRepository::class.java)
+    private lateinit var question: Question
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +39,10 @@ class LaunchQuestionActivity: AppCompatActivity() {
         startService(Intent(this, HttpService::class.java))
 
         // Limpia la respuesta en el repositorio y vincula la pregunta a la interfaz de usuario.
-        repository.clearAnswer()
-        this.lifecycleScope.launch {
-            bindQuestion(intent.getStringExtra("question") ?: "")
-        }
+        question = repository.findQuestionByText(intent.getStringExtra("question") ?: "")
+        repository.clearAnswer(question)
+
+        bindQuestion(question)
     }
 
     override fun onDestroy() {
@@ -52,26 +53,25 @@ class LaunchQuestionActivity: AppCompatActivity() {
         super.onDestroy()
     }
 
-    private suspend fun bindQuestion(question: String) {
+    private fun bindQuestion(question: Question) {
         with(binding) {
+            questionTypeIcon.setImageResource(question.icon)
+
             // Establece la imagen del código QR.
             qrCode.setImageBitmap(generateQRCode())
 
             // Establece el texto de la pregunta.
-            this.question.text = question
+            this.question.text = question.question
 
             // Establece el evento de clic en el botón de cerrar.
             closeButton.setOnClickListener { finish() }
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
-            repository.answer.collect { answer ->
-                barView.clearBars()
-
-                val yesBar = Bar("Si", height = answer.count.toFloat(), color = Color.RED)
-                val noBar = Bar("No", height = answer.count.toFloat(), color = Color.BLUE)
-
-                barView.addBar(yesBar)
-                barView.addBar(noBar)
+            barView.clearBars()
+            question.answers.forEach { answer ->
+                Log.d("LaunchQuestionActivity", "Answer: ${answer.answer} - ${answer.count}")
+                val bar = Bar(answer.answer.toString(), height = answer.count.toFloat(), color = Color.RED)
+                barView.addBar(bar)
             }
 
         }

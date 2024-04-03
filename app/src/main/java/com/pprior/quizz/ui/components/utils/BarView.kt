@@ -44,7 +44,7 @@ class BarView(
         barTop: Float,
         barBottom: Float
     ) {
-        paint.color = Color.WHITE
+        paint.color = Color.BLACK
         paint.textSize = 30f
         paint.typeface = Typeface.DEFAULT_BOLD
 
