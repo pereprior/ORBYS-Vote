@@ -17,6 +17,7 @@ import com.pprior.quizz.domain.models.Bar
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.components.utils.QRCodeGenerator
 import org.koin.java.KoinJavaComponent.inject
+import java.net.URLEncoder
 
 /**
  * Clase que representa una actividad para lanzar una pregunta a ser contestada.
@@ -35,11 +36,13 @@ class LaunchQuestionActivity: AppCompatActivity() {
         binding = ActivityLaunchQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Obtiene la pregunta seleccionada.
+        question = repository.findQuestionByText(intent.getStringExtra("question") ?: "")
+
         // Inicia el servicio HTTP.
         startService(Intent(this, HttpService::class.java))
 
         // Limpia la respuesta en el repositorio y vincula la pregunta a la interfaz de usuario.
-        question = repository.findQuestionByText(intent.getStringExtra("question") ?: "")
         repository.clearAnswer(question)
 
         bindQuestion(question)
@@ -79,9 +82,10 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
     private fun generateQRCode(): Bitmap? {
         val qrCodeGenerator = QRCodeGenerator()
+        val encodedQuestion = URLEncoder.encode(question.question, "UTF-8")
 
         return qrCodeGenerator.encodeAsBitmap(
-            url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT"
+            url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/$encodedQuestion"
         )
     }
 

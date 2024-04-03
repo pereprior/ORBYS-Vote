@@ -22,6 +22,8 @@ class QuestionRepositoryImp: IQuestionRepository {
         }
     }
 
+    fun findQuestion(question: String) = repository.findQuestionByText(question)
+
     override fun addUserToRespondedList(userIp: String) = repository.addRespondedUser(userIp)
 
 }

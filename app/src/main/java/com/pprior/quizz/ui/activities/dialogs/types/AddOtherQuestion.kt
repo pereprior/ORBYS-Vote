@@ -7,6 +7,7 @@ import com.pprior.quizz.R
 import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.ActivityAddOtherQuestionBinding
 import com.pprior.quizz.domain.models.Answer
+import com.pprior.quizz.domain.models.AnswerType
 import com.pprior.quizz.domain.models.Question
 import org.koin.java.KoinJavaComponent
 
@@ -53,7 +54,8 @@ class AddOtherQuestion: AppCompatActivity() {
             Answer(binding.questionAnswer1.text),
             Answer(binding.questionAnswer2.text),
             Answer(binding.questionAnswer3.text)
-        )
+        ),
+        answerType = AnswerType.OTHER
     )
 
 }

@@ -61,7 +61,7 @@ class QuestionViewHolder(
 
     private fun showEditQuestionDialog(question: Question, view: View) {
         val intent = Intent(view.context, EditQuestionActivity::class.java)
-        intent.putExtra("questionQuestion", question.question)
+        intent.putExtra("question", question.question)
         view.context.startActivity(intent)
     }
 

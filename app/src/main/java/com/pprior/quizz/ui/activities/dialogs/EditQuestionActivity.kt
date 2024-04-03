@@ -4,11 +4,12 @@ import android.os.Bundle
 
 class EditQuestionActivity: AddQuestionActivity() {
 
-    private val question = intent.getStringExtra("questionQuestion") ?: ""
+    private lateinit var question: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        question = intent.getStringExtra("question") ?: ""
         binding.questionQuestion.setText(question)
     }
 

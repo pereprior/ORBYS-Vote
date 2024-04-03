@@ -23,15 +23,38 @@ fun Route.questionController() {
     val repository: QuestionRepositoryImp by inject(QuestionRepositoryImp::class.java)
     lateinit var userIP: String
 
-    get("/question") {
+    get("/question/{questionName}") {
         userIP = call.request.origin.remoteHost
+        val questionName = call.parameters["questionName"]
+        val question = repository.findQuestion(questionName ?: "")
+        var fileContent: String? = null
 
-        val fileContent = this::class.java.getResource("/assets/index.html")?.readText()
-        // Responde con el contenido del archivo index.html o un mensaje de error si el archivo no se puede leer.
+        // Obtenemos el contenido del archivo html correspondiente al tipo de respuesta de la pregunta.
+        when (question.answerType?.name) {
+            "YESNO" -> {
+                fileContent = this::class.java.getResource("/assets/yesno_index.html")?.readText()
+                fileContent = fileContent?.replace("[YES]", question.answers[0].answer.toString())
+                fileContent = fileContent?.replace("[NO]", question.answers[1].answer.toString())
+            }
+            "STARS" -> fileContent = this::class.java.getResource("/assets/stars_index.html")?.readText()
+            "BAR" -> fileContent = this::class.java.getResource("/assets/bar_index.html")?.readText()
+            "OTHER" -> {
+                fileContent = this::class.java.getResource("/assets/other_index.html")?.readText()
+                fileContent = fileContent?.replace("[FIRST]", question.answers[0].answer.toString())
+                fileContent = fileContent?.replace("[SECOND]", question.answers[1].answer.toString())
+                fileContent = fileContent?.replace("[THIRD]", question.answers[2].answer.toString())
+            }
+        }
+
+        // Reemplaza el marcador de posición con la pregunta real
+        fileContent = fileContent?.replace("[QUESTION]", question.question)
+
+        // Responde con el contenido del archivo yesno_index.html o un mensaje de error si el archivo no se puede leer.
         call.respondText(
-            text = fileContent ?: "Error: no se pudo leer el archivo index.html",
+            text = fileContent ?: "Error: no se pudo leer el archivo html",
             contentType = ContentType.Text.Html
         )
+
     }
 
     post("/submit") {

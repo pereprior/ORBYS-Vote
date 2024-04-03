@@ -13,7 +13,7 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.routing.routing
 
 class HttpService: Service() {
-    var server: ApplicationEngine? = null
+    private var server: ApplicationEngine? = null
 
     override fun onCreate() {
         super.onCreate()

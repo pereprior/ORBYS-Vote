@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Other Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button, input[type="radio"] + label {
+            width: 50%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: black;
+            cursor: pointer;
+            font-size: 2em;
+        }
+
+        button:hover {
+            background-color: #b5b5b5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 5em;
+        }
+
+        /* Eliminamos el circulo que los marca como seleccionados */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Estilo para las etiquetas de los botones de seleccion */
+        input[type="radio"] + label {
+            padding: 20px 40px;
+            background-color: #ccc;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 50px;
+            font-size: 2em;
+        }
+
+        /* Color para el boton seleccionado "Primero" */
+        input[type="radio"]#btn1:checked + label {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        /* Color para el boton seleccionado "Segundo" */
+        input[type="radio"]#btn2:checked + label {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        /* Color para el boton seleccionado "Tercero" */
+        input[type="radio"]#btn3:checked + label {
+            background-color: #0000ff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<form id="myForm">
+    <h1 id="questionText">[QUESTION]</h1>
+    <br><br>
+
+    <div>
+        <input type="radio" id="btn1" name="choice" value="[FIRST]">
+        <label for="btn1">[FIRST]</label>
+        <input type="radio" id="btn2" name="choice" value="[SECOND]">
+        <label for="btn2">[SECOND]</label>
+        <input type="radio" id="btn3" name="choice" value="[THIRD]">
+        <label for="btn3">[THIRD]</label>
+    </div>
+    <br><br><br>
+
+    <button type="submit">Enviar</button>
+</form>
+
+<script>
+    // El codigo se ejecuta cuando pulso el boton enviar
+    document.getElementById('myForm').onsubmit = function(event) {
+        // Evita que se envien datos vacios o por defecto
+        event.preventDefault();
+
+        // Obtenemos el valor del boton seleccionado
+        var choice = document.querySelector('input[name="choice"]:checked').value;
+
+        // Realizamos la peticion POST al servidor
+        fetch(
+            '/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'choice=' + encodeURIComponent(choice),
+            }
+        ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+            .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+            .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
+            console.log('Respuesta recibida: ', text);
+            window.location.href = '/question/success';
+        }) // Si ocurre algun error, lo mostramos en la consola
+            .catch(console.error);
+    };
+
+    // Impide que el usuario pueda volver despues de votar
+    window.onload = function() {
+        window.history.replaceState({}, document.title, "/question/success");
+    }
+</script>
+
+</body>
+</html>
