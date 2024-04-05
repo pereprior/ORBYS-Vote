@@ -85,7 +85,8 @@
             event.preventDefault();
 
             // Obtenemos el valor de las estrellas seleccionadas
-            var choice = document.querySelector('.star.selected').getAttribute('data-value');
+            var stars = document.querySelectorAll('.star.selected');
+            var choice = stars[stars.length - 1].getAttribute('data-value');
 
             // Realizamos la peticion POST al servidor
             fetch(
@@ -98,7 +99,7 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
                 console.log('Respuesta recibida: ', text);
-                window.location.href = '/question/success';
+                window.location.href = '/question';
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };
@@ -120,7 +121,7 @@
 
         // Impide que el usuario pueda volver despues de votar
         window.onload = function() {
-            window.history.replaceState({}, document.title, "/question/success");
+            window.history.replaceState({}, document.title, "/question");
         }
     </script>
 

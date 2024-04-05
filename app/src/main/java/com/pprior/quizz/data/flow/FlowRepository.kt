@@ -1,7 +1,6 @@
 package com.pprior.quizz.data.flow
 
-import com.pprior.quizz.domain.models.Answer
-import com.pprior.quizz.domain.models.AnswerType
+import android.util.Log
 import com.pprior.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,15 +49,18 @@ class FlowRepository {
     fun clearAnswer(question: Question) {
         if (exists(question)) {
             val existingQuestion = _questionsList.value.first { it.question == question.question }
-            existingQuestion.answers.forEach { it.count = 0 }
+            existingQuestion.answers.forEach { it.count.tryEmit(0) }
         }
     }
-    fun incAnswer() { updateAnswerCount { it.count++ } }
-
-    private fun updateAnswerCount(update: (Answer) -> Unit) {
-        /*val currentAnswer = _answer.replayCache.firstOrNull() ?: Answer()
-        update(currentAnswer)
-        _answer.tryEmit(currentAnswer)*/
+    suspend fun incAnswer(question: Question, answer: String) {
+        if(exists(question)) {
+            for (ans in question.answers) {
+                if (ans.answer?.toString()?.equals(answer) == true) {
+                    ans.count.emit(ans.count.value + 1)
+                    Log.d("FlowRepository", "Answer: ${ans.answer}, Count: ${ans.count.value}")
+                }
+            }
+        }
     }
 
     // Métodos para gestionar la lista de usuarios que han respondido

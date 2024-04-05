@@ -1,5 +1,6 @@
 package com.pprior.quizz.data.server.controllers
 
+import android.util.Log
 import io.ktor.http.ContentType
 import io.ktor.server.application.call
 import io.ktor.server.request.receiveParameters
@@ -10,6 +11,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import org.koin.java.KoinJavaComponent.inject
 import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
+import com.pprior.quizz.domain.models.Question
 import io.ktor.server.plugins.origin
 
 /**
@@ -22,11 +24,12 @@ fun Route.questionController() {
     // Repositorio para gestionar las respuestas de los usuarios.
     val repository: QuestionRepositoryImp by inject(QuestionRepositoryImp::class.java)
     lateinit var userIP: String
+    lateinit var question: Question
 
     get("/question/{questionName}") {
         userIP = call.request.origin.remoteHost
         val questionName = call.parameters["questionName"]
-        val question = repository.findQuestion(questionName ?: "")
+        question = repository.findQuestion(questionName ?: "")
         var fileContent: String? = null
 
         // Obtenemos el contenido del archivo html correspondiente al tipo de respuesta de la pregunta.
@@ -69,13 +72,21 @@ fun Route.questionController() {
             repository.addUserToRespondedList(userIP)
         }*/
         val choice = call.receiveParameters()["choice"]
-        repository.setPostInAnswerCount(choice)
+
+        repository.setPostInAnswerCount(question, choice.toString())
         repository.addUserToRespondedList(userIP)
 
-        call.respondRedirect("/question/success")
+        Log.d("QuestionController", "Choice: $choice")
+        Log.d("QuestionController", "Question: $question")
+
+        question.answers.forEach { answer ->
+            Log.d("QuestionController", "Answer: ${answer.answer}, Count: ${answer.count.value}")
+        }
+
+        call.respondRedirect("/question")
     }
 
-    get("/question/success") {
+    get("/question") {
 
         call.response.headers.append("Cache-Control", "no-store")
         // Responde con un mensaje de éxito al enviar la respuesta.

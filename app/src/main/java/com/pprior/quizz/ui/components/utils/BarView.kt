@@ -25,11 +25,12 @@ class BarView(
     private fun drawHorizontalBars(canvas: Canvas) {
         val barMargin = 50f
         val barHeight = (height - barMargin * (bars.size - 1)) / bars.size
+        val maxCount = bars.maxOf { it.height }
 
         bars.forEachIndexed { index, bar ->
             val top = index * (barHeight + barMargin)
             val bottom = top + barHeight
-            val right = width.toFloat() * (bar.height / 10)
+            val right = if (maxCount > 0) width.toFloat() * (bar.height / maxCount) else 0f
 
             paint.color = bar.color
             canvas.drawRect(0f, top, right, bottom, paint)
@@ -58,11 +59,6 @@ class BarView(
 
     fun addBar(bar: Bar) {
         bars.add(bar)
-        invalidate()
-    }
-
-    fun clearBars() {
-        bars.clear()
         invalidate()
     }
 

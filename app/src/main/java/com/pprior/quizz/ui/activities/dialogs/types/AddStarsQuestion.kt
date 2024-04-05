@@ -19,11 +19,11 @@ class AddStarsQuestion: AddQuestionActivity() {
         question = binding.questionQuestion.text.toString(),
         icon = R.drawable.baseline_star_rate_24,
         answers = listOf(
-            Answer(1f),
-            Answer(2f),
-            Answer(3f),
-            Answer(4f),
-            Answer(5f),
+            Answer(1),
+            Answer(2),
+            Answer(3),
+            Answer(4),
+            Answer(5),
         ),
         answerType = AnswerType.STARS
     )

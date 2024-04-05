@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.pprior.quizz.core.ENDPOINT
 import com.pprior.quizz.core.SERVER_PORT
 import com.pprior.quizz.core.URL_ENTRY
@@ -16,6 +17,7 @@ import com.pprior.quizz.databinding.ActivityLaunchQuestionBinding
 import com.pprior.quizz.domain.models.Bar
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.components.utils.QRCodeGenerator
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 import java.net.URLEncoder
 
@@ -45,7 +47,9 @@ class LaunchQuestionActivity: AppCompatActivity() {
         // Limpia la respuesta en el repositorio y vincula la pregunta a la interfaz de usuario.
         repository.clearAnswer(question)
 
-        bindQuestion(question)
+        lifecycleScope.launch {
+            bindQuestion(question)
+        }
     }
 
     override fun onDestroy() {
@@ -56,7 +60,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun bindQuestion(question: Question) {
+    private suspend fun bindQuestion(question: Question) {
         with(binding) {
             questionTypeIcon.setImageResource(question.icon)
 
@@ -70,11 +74,17 @@ class LaunchQuestionActivity: AppCompatActivity() {
             closeButton.setOnClickListener { finish() }
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
-            barView.clearBars()
             question.answers.forEach { answer ->
-                Log.d("LaunchQuestionActivity", "Answer: ${answer.answer} - ${answer.count}")
-                val bar = Bar(answer.answer.toString(), height = answer.count.toFloat(), color = Color.RED)
+                val bar = Bar(answer.answer.toString(), height = answer.count.value.toFloat(), color = Color.RED)
                 barView.addBar(bar)
+
+                lifecycleScope.launch {
+                    // Recoge los cambios en count para cada respuesta
+                    answer.count.collect { newCount ->
+                        bar.height = newCount.toFloat()
+                        barView.invalidate()
+                    }
+                }
             }
 
         }
