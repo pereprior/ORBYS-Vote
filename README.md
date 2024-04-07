@@ -1,4 +1,4 @@
-# Pokédex
+# Android School Quizz
 
 ![Badge](https://img.shields.io/badge/LICENCE-FREE-blue)
 ![Badge](https://img.shields.io/badge/STATUS-FINISHED-green)
