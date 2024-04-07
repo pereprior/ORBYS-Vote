@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import javax.inject.Singleton
 
 /**
  * Clase que gestiona el flujo de datos relacionados con las preguntas y respuestas.

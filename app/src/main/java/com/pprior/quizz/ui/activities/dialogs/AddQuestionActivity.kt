@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
-import com.pprior.quizz.domain.repositories.QuestionRepositoryImpl
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.ActivityAddQuestionBinding
 import com.pprior.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * Clase que representa una actividad para añadir preguntas a la lista.
