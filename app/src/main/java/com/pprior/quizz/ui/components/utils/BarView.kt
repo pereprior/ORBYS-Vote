@@ -4,59 +4,65 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import com.pprior.quizz.domain.models.Bar
 
+// Constantes para el tamaño de la barra
+private const val TEXT_SIZE = 30f
+private const val BAR_MARGIN = 50f
+
+/**
+ * BarView es una clase que extiende de View y se utiliza para dibujar barras de graficos en un Canvas.
+ *
+ * @param context El contexto en el que se utiliza la vista.
+ * @param attributes Los atributos del XML que se han establecido en la vista.
+ * @property bars Lista de barras que se van a dibujar en el grafico.
+ * @property paint Plantilla que se utiliza para dibujar las barras.
+ */
 class BarView(
     context: Context,
     attributes: AttributeSet
 ) : View(context, attributes) {
 
-    private val bars: MutableList<Bar> = mutableListOf()
-    private val paint = Paint()
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        drawHorizontalBars(canvas)
+    private val bars = mutableListOf<Bar>()
+    private val paint = Paint().apply {
+        textSize = TEXT_SIZE
+        color = Color.BLACK
     }
 
-    private fun drawHorizontalBars(canvas: Canvas) {
-        val barMargin = 50f
-        val barHeight = (height - barMargin * (bars.size - 1)) / bars.size
+    override fun onDraw(canvas: Canvas) {
+        // Margen entre barras
+        val barMargin = BAR_MARGIN
+        // Calculamos el ancho de cada barra
+        val barWidth = (height - barMargin * (bars.size - 1)) / bars.size
+        // Obtenemos el valor maximo del contador entre todas las barras del grafico
         val maxCount = bars.maxOf { it.height }
 
         bars.forEachIndexed { index, bar ->
-            val top = index * (barHeight + barMargin)
-            val bottom = top + barHeight
+            // Calculamos las coordenadas en las que se dibuja la barra
+            val top = index * (barWidth + barMargin)
+            val bottom = top + barWidth
+
+            // Calculamos la longitud de la barra en funcion del contador y el ancho de la vista
             val right = if (maxCount > 0) width.toFloat() * (bar.height / maxCount) else 0f
 
+            // Pintamos la barra del grafico
             paint.color = bar.color
             canvas.drawRect(0f, top, right, bottom, paint)
 
-            drawText(canvas, "${bar.answer}: ${bar.height.toInt()}", top, bottom)
+            // Calculamos la posicion del texto en el centro de la barra
+            val x = 5f
+            val y = (top + bottom) / 2 - (paint.descent() + paint.ascent()) / 2
+            // Pintamos el texto en la barra segun este vacia o llena
+            paint.color = if (right == 0f) Color.BLACK else Color.WHITE
+            // Pintamos el texto en la barra
+            canvas.drawText("${bar.answer}: ${bar.height.toInt()}", x, y, paint)
         }
+
     }
 
-    private fun drawText(
-        canvas: Canvas,
-        text: String,
-        barTop: Float,
-        barBottom: Float
-    ) {
-        paint.color = Color.BLACK
-        paint.textSize = 30f
-        paint.typeface = Typeface.DEFAULT_BOLD
-
-        val x = 5f
-        val y = (barTop + barBottom) / 2
-
-        val yOffset = (paint.descent() + paint.ascent()) / 2
-
-        canvas.drawText(text, x, y - yOffset, paint)
-    }
-
+    // Añade una nueva barra al grafico
     fun addBar(bar: Bar) {
         bars.add(bar)
         invalidate()

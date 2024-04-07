@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".QuizzApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -79,7 +80,7 @@
 
         <!-- Servicio http -->
         <service
-            android:name=".data.server.HttpService"
+            android:name=".data.services.HttpService"
             android:enabled="true" />
 
     </application>

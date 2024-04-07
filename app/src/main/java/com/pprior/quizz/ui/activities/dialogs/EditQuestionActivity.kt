@@ -2,6 +2,11 @@ package com.pprior.quizz.ui.activities.dialogs
 
 import android.os.Bundle
 
+/**
+ * Clase que representa una actividad para editar una pregunta existente.
+ *
+ * @property question La pregunta que se va a editar.
+ */
 class EditQuestionActivity: AddQuestionActivity() {
 
     private lateinit var question: String
@@ -20,7 +25,7 @@ class EditQuestionActivity: AddQuestionActivity() {
             return
         }
 
-        repository.updateQuestion(question, updatedQuestion)
+        viewModel.updateQuestion(question, updatedQuestion)
         finish()
     }
 

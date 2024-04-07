@@ -1,26 +1,32 @@
 package com.pprior.quizz.ui.activities.dialogs.types
 
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
-import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.ActivityAddOtherQuestionBinding
 import com.pprior.quizz.domain.models.Answer
 import com.pprior.quizz.domain.models.AnswerType
 import com.pprior.quizz.domain.models.Question
-import org.koin.java.KoinJavaComponent
+import com.pprior.quizz.ui.viewModels.QuestionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Clase que representa una actividad para añadir preguntas de tipo "Otros".
+ *
+ * @property viewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
+ * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
+ */
+@AndroidEntryPoint
 class AddOtherQuestion: AppCompatActivity() {
 
-    private val repository: FlowRepository by KoinJavaComponent.inject(FlowRepository::class.java)
+    private val viewModel by viewModels<QuestionViewModel>()
     private lateinit var binding: ActivityAddOtherQuestionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOtherQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.d("AddOtherQuestion", "AAAAAAAA")
 
         with(binding) {
             // Asignar los listeners a los botones
@@ -38,11 +44,11 @@ class AddOtherQuestion: AppCompatActivity() {
         }
 
         // Si ya existe la pregunta, mostrar un mensaje de error
-        if (repository.exists(question)) {
+        if (viewModel.existsQuestion(question)) {
             binding.errorMessage.text = getString(R.string.questions_exists)
         } else {
             // Guardamos la pregunta en la lista y cerramos la actividad
-            repository.addQuestion(question)
+            viewModel.addQuestion(question)
             finish()
         }
     }

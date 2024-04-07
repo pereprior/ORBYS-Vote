@@ -7,6 +7,9 @@ import com.pprior.quizz.domain.models.AnswerType
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
 
+/**
+ * Clase que representa una actividad para añadir preguntas de tipo "Barra progresiva".
+ */
 class AddBarQuestion: AddQuestionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

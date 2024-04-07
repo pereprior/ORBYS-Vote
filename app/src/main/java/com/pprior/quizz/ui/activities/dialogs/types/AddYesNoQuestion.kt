@@ -7,6 +7,9 @@ import com.pprior.quizz.domain.models.AnswerType
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
 
+/**
+ * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
+ */
 class AddYesNoQuestion: AddQuestionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

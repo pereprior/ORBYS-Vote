@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.View
 import com.pprior.quizz.R
 
+/**
+ * Clase que representa la tarjeta para crear preguntas de tipo barra progresiva.
+ */
 class BarItemFragment : TypesItemFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

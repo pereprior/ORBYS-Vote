@@ -1,25 +1,31 @@
 package com.pprior.quizz.ui.activities.dialogs
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
-import com.pprior.quizz.data.flow.FlowRepository
+import com.pprior.quizz.domain.repositories.QuestionRepositoryImpl
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.databinding.ActivityAddQuestionBinding
-import org.koin.java.KoinJavaComponent.inject
+import com.pprior.quizz.ui.viewModels.QuestionViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Clase que representa una actividad para añadir preguntas a la lista.
  *
- * @param flowRepository El repositorio que gestiona las preguntas.
+ * @property viewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
+ * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  */
+@AndroidEntryPoint
 open class AddQuestionActivity: AppCompatActivity() {
 
-    protected val repository: FlowRepository by inject(FlowRepository::class.java)
+    protected val viewModel by viewModels<QuestionViewModel>()
     protected lateinit var binding: ActivityAddQuestionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityAddQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -39,11 +45,11 @@ open class AddQuestionActivity: AppCompatActivity() {
         }
 
         // Si ya existe la pregunta, mostrar un mensaje de error
-        if (repository.exists(question)) {
+        if (viewModel.existsQuestion(question)) {
             binding.errorMessage.text = getString(R.string.questions_exists)
         } else {
             // Guardamos la pregunta en la lista y cerramos la actividad
-            repository.addQuestion(question)
+            viewModel.addQuestion(question)
             finish()
             clear()
         }

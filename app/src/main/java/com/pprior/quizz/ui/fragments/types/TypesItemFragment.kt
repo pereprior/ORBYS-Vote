@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.pprior.quizz.databinding.FragmentTypesItemBinding
 
+/**
+ * Clase que sirve como base para los fragmentos que representan a las tarjetas de tipos de preguntas.
+ *
+ * @property binding Enlace común a la vista que comparten todas las clases que extienden.
+ */
 abstract class TypesItemFragment : Fragment() {
 
     protected lateinit var binding: FragmentTypesItemBinding

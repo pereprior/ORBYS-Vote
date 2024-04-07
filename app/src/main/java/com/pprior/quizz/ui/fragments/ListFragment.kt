@@ -7,30 +7,36 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pprior.quizz.R
-import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListBinding
-import com.pprior.quizz.ui.components.recyclerview.QuestionAdapter
+import com.pprior.quizz.ui.components.recyclerview.QuestionListAdapter
 import com.pprior.quizz.ui.activities.QuestionTypeActivity
+import com.pprior.quizz.ui.viewModels.QuestionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.java.KoinJavaComponent.inject
 
 /**
- * Fragmento que muestra la lista de preguntas.
+ * Fragmento que muestra una lista de preguntas.
+ * Cada pregunta se representa con una tarjeta en un RecyclerView.
  *
- * Se inicializa el ViewModel que gestiona la lista de preguntas y se configura
+ * @property viewModel ViewModel que contiene los datos de las preguntas.
+ * @property binding Enlace con los elementos de la vista del fragmento.
  */
+@AndroidEntryPoint
 class ListFragment: Fragment() {
 
+    private lateinit var viewModel: QuestionViewModel
     private lateinit var binding: FragmentListBinding
-    private val flowRepository: FlowRepository by inject(FlowRepository::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Recogemos la instancia del ViewModel
+        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -38,35 +44,30 @@ class ListFragment: Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindingApply()
 
-        setAddQuestionDialog()
-        setUpRecyclerView()
-
-        // Corrutina para observar los cambios en la lista de preguntas
+        // Cuando se actualiza la lista de preguntas, se notifica al RecyclerView para que se actualice.
         viewLifecycleOwner.lifecycleScope.launch {
-            flowRepository.questionUpdated.collect { _ ->
-                // Actualizar el RecyclerView cuando la lista de preguntas cambia
+            viewModel.getUpdates().collect { _ ->
                 binding.fragmentListRecyclerView.adapter?.notifyDataSetChanged()
             }
         }
 
     }
 
-    private fun setAddQuestionDialog() {
-        // Boton flotante para mostrar la actividad de añadir preguntas
-        binding.fab.setOnClickListener {
-            //val intent = Intent(it.context, AddQuestionActivity::class.java)
-            val intent = Intent(it.context, QuestionTypeActivity::class.java)
-            startActivity(intent)
-        }
-    }
+    private fun bindingApply() {
+        binding.apply {
+            // Al hacer clic en el botón flotante, se inicia la actividad para crear una pregunta.
+            fab.setOnClickListener {
+                startActivity(Intent(it.context, QuestionTypeActivity::class.java))
+            }
 
-    private fun setUpRecyclerView() {
-        // Configuramos el recyclerView con la lista de preguntas
-        binding.fragmentListRecyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
-            adapter = QuestionAdapter(flowRepository.questionsList.value)
+            // Configuración del RecyclerView
+            fragmentListRecyclerView.apply {
+                setHasFixedSize(true)
+                layoutManager = GridLayoutManager(context, resources.getInteger(R.integer.column_number))
+                adapter = QuestionListAdapter(viewModel)
+            }
         }
     }
 

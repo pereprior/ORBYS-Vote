@@ -2,19 +2,17 @@ package com.pprior.quizz.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.ActivityMainBinding
 import com.pprior.quizz.ui.fragments.HeadFragment
 import com.pprior.quizz.ui.fragments.ListFragment
-import com.pprior.quizz.data.server.repositories.QuestionRepositoryImp
-import org.koin.core.context.startKoin
-import org.koin.dsl.module
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * MainActivity es la actividad principal de la aplicación.
  *
- * Se encarga de la creación de los fragmentos y del servidor HTTP.
+ * Contiene la lista de las preguntas.
  */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -24,22 +22,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inyeccion de dependencias
-        setupDependencyInjection()
-
         // Agregamos los fragmentos al contenedor
         printFragments()
-    }
-
-    private fun setupDependencyInjection() {
-        startKoin {
-            modules(
-                module {
-                    single { QuestionRepositoryImp() }
-                    single { FlowRepository() }
-                }
-            )
-        }
     }
 
     private fun printFragments() {

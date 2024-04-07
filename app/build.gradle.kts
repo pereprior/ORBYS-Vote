@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsDokka)
+    alias(libs.plugins.ksp)
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -32,10 +34,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -59,32 +63,31 @@ android {
 
 dependencies {
 
+    // Kotlin Basics
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.constraintlayout)
-
-    implementation(libs.androidx.recyclerview)
-
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.runtime.livedata)
-
-    implementation(libs.zxing)
-
-    implementation(libs.ktor.core)
-    implementation(libs.ktor.server)
-    implementation(libs.koin.ktor)
-    implementation(libs.ktor.server.netty)
-    implementation(libs.logback.classic)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-
-    //noinspection UseTomlInstead
-    testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // RecyclerView
+    implementation(libs.androidx.recyclerview)
+
+    // QrCode
+    implementation(libs.zxing)
+
+    // Ktor server
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.server)
+    implementation(libs.ktor.server.netty)
+
+    // Inyeccion de dependencias
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
 }

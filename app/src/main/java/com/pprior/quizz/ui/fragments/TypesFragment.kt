@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pprior.quizz.databinding.FragmentTypesBinding
-import com.pprior.quizz.ui.activities.dialogs.AddQuestionActivity
 import com.pprior.quizz.ui.activities.dialogs.types.AddBarQuestion
 import com.pprior.quizz.ui.activities.dialogs.types.AddOtherQuestion
 import com.pprior.quizz.ui.activities.dialogs.types.AddStarsQuestion
 import com.pprior.quizz.ui.activities.dialogs.types.AddYesNoQuestion
 
+/**
+ * Fragmento que muestra los diferentes tipos de preguntas que se pueden crear.
+ * Cada tipo de pregunta se representa con una tarjeta que, al hacer clic en ella, inicia la actividad correspondiente para crear una pregunta de ese tipo.
+ *
+ * @property binding Enlace con los elementos de la vista del fragmento.
+ */
 class TypesFragment : Fragment() {
 
     private lateinit var binding: FragmentTypesBinding
@@ -32,27 +37,20 @@ class TypesFragment : Fragment() {
     }
 
     private fun setQuestionTypesCards() {
-        binding.yesNoCard.setOnClickListener {
-            val intent = Intent(context, AddYesNoQuestion::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
+        // Mapa con las tarjetas de los diferentes tipos de preguntas.
+        val questionTypesCards = mapOf(
+            binding.yesNoCard to AddYesNoQuestion::class.java,
+            binding.starCard to AddStarsQuestion::class.java,
+            binding.barCard to AddBarQuestion::class.java,
+            binding.otherCard to AddOtherQuestion::class.java
+        )
 
-        binding.starCard.setOnClickListener {
-            val intent = Intent(context, AddStarsQuestion::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
-        binding.barCard.setOnClickListener {
-            val intent = Intent(context, AddBarQuestion::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
-
-        binding.otherCard.setOnClickListener {
-            val intent = Intent(context, AddOtherQuestion::class.java)
-            startActivity(intent)
-            activity?.finish()
+        // Al clickar, se inicia la actividad correspondiente para crear una pregunta de ese tipo.
+        questionTypesCards.forEach { (view, addQuestionActivity) ->
+            view.setOnClickListener {
+                startActivity(Intent(context, addQuestionActivity))
+                activity?.finish()
+            }
         }
     }
 

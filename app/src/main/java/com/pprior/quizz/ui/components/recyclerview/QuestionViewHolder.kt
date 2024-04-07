@@ -5,30 +5,30 @@ import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.pprior.quizz.R
-import com.pprior.quizz.data.flow.FlowRepository
 import com.pprior.quizz.databinding.FragmentListItemBinding
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.activities.dialogs.EditQuestionActivity
 import com.pprior.quizz.ui.activities.dialogs.LaunchQuestionActivity
 import com.pprior.quizz.ui.components.alert.ConfirmDialog
-import org.koin.java.KoinJavaComponent.inject
+import com.pprior.quizz.ui.viewModels.QuestionViewModel
 
 /**
- * Vista para la tarjeta de cada pregunta.
+ * Extiende de RecyclerView.ViewHolder y se utiliza para representar una tarjeta de pregunta.
  *
- * @property binding El vinculo para la vista de la pregunta.
+ * @property viewModel El ViewModel que se utiliza para interactuar con los datos de la aplicación.
+ * @property binding El objeto de binding que se utiliza para acceder a los elementos de la interfaz de usuario.
  */
 class QuestionViewHolder(
+    private val viewModel: QuestionViewModel,
     private val binding: FragmentListItemBinding
 ): RecyclerView.ViewHolder(binding.root) {
-
-    private val repository: FlowRepository by inject(FlowRepository::class.java)
 
     fun bind(question: Question) = with(binding) {
         // Vincula una pregunta a la vista
         questionTypeIcon.setImageResource(question.icon)
         titleQuestion.text = question.question
 
+        // Muestra el diálogo para eliminar la pregunta
         deleteButton.setOnClickListener {
             deleteQuestion(it.context, question)
         }
@@ -49,7 +49,7 @@ class QuestionViewHolder(
         question: Question
     ) {
         ConfirmDialog(context, message = context.getString(R.string.delete_question_message)) {
-            repository.deleteQuestion(question)
+            viewModel.deleteQuestion(question)
         }
     }
 

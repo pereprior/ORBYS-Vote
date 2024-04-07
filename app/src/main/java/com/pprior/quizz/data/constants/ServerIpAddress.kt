@@ -1,13 +1,15 @@
-package com.pprior.quizz.core
+package com.pprior.quizz.data.constants
 
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.util.Collections
 
+val host = getLocalIpAddress()
+
 fun getLocalIpAddress(): String? {
     return try {
-        // Devuelve la dirección IP local del dispositivo
+        // Devuelve la dirección IP local del dispositivo que ejecuta la app
         getLocalIpFromNetworkInterfaces()
     } catch (ex: Exception) {
         ex.printStackTrace()

@@ -2,35 +2,40 @@ package com.pprior.quizz.ui.activities.dialogs
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.pprior.quizz.core.ENDPOINT
-import com.pprior.quizz.core.SERVER_PORT
-import com.pprior.quizz.core.URL_ENTRY
-import com.pprior.quizz.core.host
-import com.pprior.quizz.data.flow.FlowRepository
-import com.pprior.quizz.data.server.HttpService
+import com.pprior.quizz.data.constants.ENDPOINT
+import com.pprior.quizz.data.constants.SERVER_PORT
+import com.pprior.quizz.data.constants.URL_ENTRY
+import com.pprior.quizz.data.constants.host
+import com.pprior.quizz.data.services.HttpService
 import com.pprior.quizz.databinding.ActivityLaunchQuestionBinding
 import com.pprior.quizz.domain.models.Bar
 import com.pprior.quizz.domain.models.Question
 import com.pprior.quizz.ui.components.utils.QRCodeGenerator
+import com.pprior.quizz.ui.viewModels.QuestionViewModel
+import com.pprior.quizz.ui.viewModels.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.java.KoinJavaComponent.inject
 import java.net.URLEncoder
 
 /**
  * Clase que representa una actividad para lanzar una pregunta a ser contestada.
  *
- * @property flowRepository El repositorio para gestionar el flujo de datos.
- * @property lifecycleOwner El ciclo de vida del fragmento al que pertenece esta actividad.
+ * @property questionViewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
+ * @property userViewModel ViewModel para gestionar las operaciones relacionadas con los usuarios.
+ * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
+ * @property question La pregunta que se va a lanzar.
  */
+@AndroidEntryPoint
 class LaunchQuestionActivity: AppCompatActivity() {
 
+    private val questionViewModel by viewModels<QuestionViewModel>()
+    private val userViewModel by viewModels<UserViewModel>()
+
     private lateinit var binding: ActivityLaunchQuestionBinding
-    private val repository: FlowRepository by inject(FlowRepository::class.java)
     private lateinit var question: Question
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,25 +44,15 @@ class LaunchQuestionActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         // Obtiene la pregunta seleccionada.
-        question = repository.findQuestionByText(intent.getStringExtra("question") ?: "")
+        question = questionViewModel.findQuestion(intent.getStringExtra("question") ?: "")
+        questionViewModel.clearAnswer(question)
 
         // Inicia el servicio HTTP.
         startService(Intent(this, HttpService::class.java))
 
-        // Limpia la respuesta en el repositorio y vincula la pregunta a la interfaz de usuario.
-        repository.clearAnswer(question)
-
         lifecycleScope.launch {
             bindQuestion(question)
         }
-    }
-
-    override fun onDestroy() {
-        // Detiene el servicio HTTP.
-        stopService(Intent(this, HttpService::class.java))
-
-        repository.clearRespondedUsers()
-        super.onDestroy()
     }
 
     private suspend fun bindQuestion(question: Question) {
@@ -75,7 +70,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
             question.answers.forEach { answer ->
-                val bar = Bar(answer.answer.toString(), height = answer.count.value.toFloat(), color = Color.RED)
+                val bar = Bar(answer.answer.toString(), height = answer.count.value.toFloat())
                 barView.addBar(bar)
 
                 lifecycleScope.launch {
@@ -97,6 +92,14 @@ class LaunchQuestionActivity: AppCompatActivity() {
         return qrCodeGenerator.encodeAsBitmap(
             url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/$encodedQuestion"
         )
+    }
+
+    override fun onDestroy() {
+        // Detiene el servicio HTTP.
+        stopService(Intent(this, HttpService::class.java))
+
+        userViewModel.clearRespondedUsers()
+        super.onDestroy()
     }
 
 }
