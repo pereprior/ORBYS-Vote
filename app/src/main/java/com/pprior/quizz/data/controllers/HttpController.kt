@@ -56,11 +56,11 @@ class HttpController @Inject constructor(
 
     // Ruta que recibe la respuesta a la pregunta
     private fun Route.handleSubmitRoute() = post("/submit") {
-        //if (repository.userNotExists(userIP)) {
+        if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
             repository.setPostInAnswerCount(question, choice)
             repository.addUserToRespondedList(userIP)
-        //}
+        }
 
         call.respondRedirect(ENDPOINT)
     }
@@ -101,6 +101,11 @@ class HttpController @Inject constructor(
         question.answers.forEachIndexed { index, answer ->
             content = content?.replace("$ANSWER_PLACEHOLDER${index}]", answer.answer.toString())
         }
+
+        // Convertir la lista de respuestas a formato csv
+        val answersToString = question.answers.joinToString(",") { it.answer.toString() }
+        //  Reemplazar el marcador de posición en el script de la web
+        content = content?.replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
 
         return content
     }

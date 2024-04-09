@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
+import com.pprior.quizz.domain.models.barColors
 
 /**
  * Vista de grafico horizontal.
@@ -32,7 +33,7 @@ class HorizontalGraphicView(
             val right = width.toFloat() * countPercent
 
             // Pintamos la barra del grafico
-            paint.color = bar.color
+            paint.color = barColors[index]
             canvas.drawRect(0f, top, right, bottom, paint)
 
             // Calculamos la posicion del texto en el centro de la barra

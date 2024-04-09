@@ -63,21 +63,29 @@
             font-size: 2em;
         }
 
-        /* Color para el boton seleccionado "Primero" */
+        /* Color para los botones cuando se seleccionan" */
+        input[type="radio"]#btn0:checked + label {
+            background-color: #8B0000;
+            color: white;
+        }
+
         input[type="radio"]#btn1:checked + label {
-            background-color: #ff0000;
+            background-color: #B8860B;
             color: white;
         }
 
-        /* Color para el boton seleccionado "Segundo" */
         input[type="radio"]#btn2:checked + label {
-            background-color: #4caf50;
+            background-color: #006400;
             color: white;
         }
 
-        /* Color para el boton seleccionado "Tercero" */
         input[type="radio"]#btn3:checked + label {
-            background-color: #0000ff;
+            background-color: #00008B;
+            color: white;
+        }
+
+        input[type="radio"]#btn4:checked + label {
+            background-color: #4B0082;
             color: white;
         }
     </style>
@@ -88,13 +96,8 @@
     <h1 id="questionText">[QUESTION]</h1>
     <br><br>
 
-    <div>
-        <input type="radio" id="btn1" name="choice" value="[ANSWER0]">
-        <label for="btn1">[ANSWER0]</label>
-        <input type="radio" id="btn2" name="choice" value="[ANSWER1]">
-        <label for="btn2">[ANSWER1]</label>
-        <input type="radio" id="btn3" name="choice" value="[ANSWER2]">
-        <label for="btn3">[ANSWER2]</label>
+    <div id="answers">
+        <!-- Los botones de radio se generarán aquí con el script -->
     </div>
     <br><br><br>
 
@@ -102,6 +105,29 @@
 </form>
 
 <script>
+    // Lista con las respuestas de la pregunta
+    var answers = "ANSWERS_STRING_PLACEHOLDER".split(",");
+    // El div donde se van a poner los botones
+    var div = document.getElementById('answers');
+
+    // Para cada respuesta, crea un boton y se añade al div
+    for (var i = 0; i < answers.length; i++) {
+        // Crea el boton
+        var radioButton = document.createElement('input');
+        radioButton.type = 'radio';
+        radioButton.name = 'choice';
+        radioButton.value = answers[i];
+        radioButton.id = 'btn' + i;
+
+        // Crea el texto del boton
+        var label = document.createElement('label');
+        label.htmlFor = radioButton.id;
+        label.textContent = answers[i];
+
+        div.appendChild(radioButton);
+        div.appendChild(label);
+    }
+
     // El codigo se ejecuta cuando pulso el boton enviar
     document.getElementById('myForm').onsubmit = function(event) {
         // Evita que se envien datos vacios o por defecto
