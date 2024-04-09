@@ -1,39 +1,21 @@
-package com.pprior.quizz.ui.components.utils
+package com.pprior.quizz.ui.components.graphics
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.View
-import com.pprior.quizz.domain.models.Bar
-
-// Constantes para el tamaño de la barra
-private const val TEXT_SIZE = 30f
-private const val BAR_MARGIN = 20f
 
 /**
- * BarView es una clase que extiende de View y se utiliza para dibujar barras de graficos en un Canvas.
- *
- * @param context El contexto en el que se utiliza la vista.
- * @param attributes Los atributos del XML que se han establecido en la vista.
- * @property bars Lista de barras que se van a dibujar en el grafico.
- * @property paint Plantilla que se utiliza para dibujar las barras.
+ * Vista de grafico horizontal.
  */
-class BarView(
+class HorizontalGraphicView(
     context: Context,
     attributes: AttributeSet
-) : View(context, attributes) {
-
-    private val bars = mutableListOf<Bar>()
-    private val paint = Paint().apply {
-        textSize = TEXT_SIZE
-        color = Color.BLACK
-    }
+): BarView(context, attributes) {
 
     override fun onDraw(canvas: Canvas) {
         // Margen entre barras
-        val barMargin = BAR_MARGIN
+        val barMargin = 20f
         // Calculamos el ancho de cada barra
         val barWidth = (height - barMargin * (bars.size - 1)) / bars.size
         // Obtenemos el valor maximo del contador entre todas las barras del grafico
@@ -60,12 +42,6 @@ class BarView(
             canvas.drawText("${bar.answer}: ${bar.height.toInt()}", x, y, paint)
         }
 
-    }
-
-    // Añade una nueva barra al grafico
-    fun addBar(bar: Bar) {
-        bars.add(bar)
-        invalidate()
     }
 
 }

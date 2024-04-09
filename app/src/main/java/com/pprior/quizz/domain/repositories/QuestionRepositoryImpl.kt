@@ -1,5 +1,6 @@
 package com.pprior.quizz.domain.repositories
 
+import android.util.Log
 import com.pprior.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,6 +73,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
                 ans.count.tryEmit(ans.count.value + 1)
             }
         }
+
     }
 
 }
