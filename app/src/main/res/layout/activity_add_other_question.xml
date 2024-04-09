@@ -55,35 +55,24 @@
         android:gravity="center"
         android:textColor="@android:color/holo_red_light" />
 
-    <!-- Text Field para la primera respuesta -->
-    <EditText
-        android:id="@+id/question_answer1"
-        android:layout_width="300dp"
+    <!-- Layout para las respuestas -->
+    <LinearLayout
+        android:id="@+id/answersLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/question_answer"
-        android:inputType="text"
-        android:autofillHints=""
-        android:layout_marginTop="10dp" />
+        android:orientation="vertical" />
 
-    <!-- Text Field para la segunda respuesta -->
-    <EditText
-        android:id="@+id/question_answer2"
-        android:layout_width="300dp"
+    <!-- Boton para añadir mas respuestas -->
+    <ImageButton
+        android:id="@+id/add_answer_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/question_answer"
-        android:inputType="text"
-        android:autofillHints=""
-        android:layout_marginTop="10dp" />
-
-    <!-- Text Field para la tercera respuesta -->
-    <EditText
-        android:id="@+id/question_answer3"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/question_answer"
-        android:inputType="text"
-        android:autofillHints=""
-        android:layout_marginTop="10dp" />
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/exit_button"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/design_default_color_primary"
+        tools:ignore="UseAppTint" />
 
     <!-- Botón de guardar los cambios -->
     <Button

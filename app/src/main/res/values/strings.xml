@@ -17,7 +17,8 @@
     <string name="save_button">Save</string>
 
     <!-- Error messages -->
-    <string name="questions_exists">"Question already exists"</string>
+    <string name="error_questions_exists">Question already exists</string>
+    <string name="error_max_answers">You can not put more tha 5 answers</string>
 
     <!-- Dialog launch question -->
     <string name="yes_aswers">Yes</string>

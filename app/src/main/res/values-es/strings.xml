@@ -6,7 +6,8 @@
     <string name="save_button">Guardar</string>
 
     <!-- Mensajes de error -->
-    <string name="questions_exists">Esa pregunta ya existe</string>
+    <string name="error_questions_exists">Esa pregunta ya existe</string>
+    <string name="error_max_answers">No puedes poner más de 5 respuestas</string>
 
     <!-- Dialog launch question -->
     <string name="yes_aswers">Si</string>

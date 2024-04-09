@@ -44,7 +44,7 @@ open class AddQuestionActivity: AppCompatActivity() {
 
         // Si ya existe la pregunta, mostrar un mensaje de error
         if (viewModel.existsQuestion(question)) {
-            binding.errorMessage.text = getString(R.string.questions_exists)
+            binding.errorMessage.text = getString(R.string.error_questions_exists)
         } else {
             // Guardamos la pregunta en la lista y cerramos la actividad
             viewModel.addQuestion(question)

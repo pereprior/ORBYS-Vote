@@ -1,6 +1,10 @@
 package com.pprior.quizz.ui.activities.dialogs.types
 
 import android.os.Bundle
+import android.text.InputType
+import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pprior.quizz.R
@@ -22,17 +26,50 @@ class AddOtherQuestion: AppCompatActivity() {
 
     private val viewModel by viewModels<QuestionViewModel>()
     private lateinit var binding: ActivityAddOtherQuestionBinding
+    private val answerFields = mutableListOf<EditText>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddOtherQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setDefaultAnswers()
+
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion() }
             closeButton.setOnClickListener { finish() }
+            addAnswerButton.setOnClickListener {
+                if (answerFields.size < 5) {
+                    addNewAnswerToQuestion()
+                } else {
+                    errorMessage.text = getString(R.string.error_max_answers)
+                }
+            }
         }
+
+    }
+
+    private fun setDefaultAnswers() {
+        addNewAnswerToQuestion()
+        addNewAnswerToQuestion()
+    }
+
+    private fun addNewAnswerToQuestion() {
+        // Crear un nuevo campo de texto para una respuesta
+        val newAnswerField = EditText(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            hint = getString(R.string.question_answer)
+            inputType = InputType.TYPE_CLASS_TEXT
+            id = View.generateViewId()
+        }
+
+        // Agregar el nuevo campo de texto al layout y a la lista de campos de texto
+        binding.answersLayout.addView(newAnswerField)
+        answerFields.add(newAnswerField)
     }
 
     private fun saveQuestion() {
@@ -45,7 +82,7 @@ class AddOtherQuestion: AppCompatActivity() {
 
         // Si ya existe la pregunta, mostrar un mensaje de error
         if (viewModel.existsQuestion(question)) {
-            binding.errorMessage.text = getString(R.string.questions_exists)
+            binding.errorMessage.text = getString(R.string.error_questions_exists)
         } else {
             // Guardamos la pregunta en la lista y cerramos la actividad
             viewModel.addQuestion(question)
@@ -53,15 +90,16 @@ class AddOtherQuestion: AppCompatActivity() {
         }
     }
 
-    private fun createQuestionFromInput() = Question(
-        question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.baseline_menu_24,
-        answers = listOf(
-            Answer(binding.questionAnswer1.text),
-            Answer(binding.questionAnswer2.text),
-            Answer(binding.questionAnswer3.text)
-        ),
-        answerType = AnswerType.OTHER
-    )
+    private fun createQuestionFromInput(): Question {
+        val questionText = binding.questionQuestion.text.toString()
+        val answers = answerFields.map { Answer(it.text.toString()) }
+
+        return Question(
+            question = questionText,
+            icon = R.drawable.baseline_menu_24,
+            answers = answers,
+            answerType = AnswerType.OTHER
+        )
+    }
 
 }
