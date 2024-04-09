@@ -1,3 +1,4 @@
 <resources>
+    <dimen name="bar_margin">20f</dimen>
     <dimen name="fab_margin">200dp</dimen>
 </resources>

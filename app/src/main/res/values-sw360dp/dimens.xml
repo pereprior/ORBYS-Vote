@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="column_number">1</integer>
+    <dimen name="bar_margin">50f</dimen>
     <dimen name="type_fragment_title_size">24sp</dimen>
     <dimen name="type_fragment_values">8dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

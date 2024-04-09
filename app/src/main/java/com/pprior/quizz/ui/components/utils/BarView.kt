@@ -10,7 +10,7 @@ import com.pprior.quizz.domain.models.Bar
 
 // Constantes para el tamaño de la barra
 private const val TEXT_SIZE = 30f
-private const val BAR_MARGIN = 50f
+private const val BAR_MARGIN = 20f
 
 /**
  * BarView es una clase que extiende de View y se utiliza para dibujar barras de graficos en un Canvas.
