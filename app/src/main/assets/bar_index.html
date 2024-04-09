@@ -65,6 +65,22 @@
             transition: opacity .2s;
         }
 
+        .slider-point {
+            height: 10px;
+            width: 10px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .slider-container {
+            display: flex;
+            justify-content: space-between;
+            width: 97%;
+            padding: 0 10px;
+        }
+
         .slider::-webkit-slider-thumb {
             appearance: none;
             width: 25px;
@@ -90,10 +106,14 @@
         <br>
 
         <div style="text-align: center">
-            <p>
-                <label id="sliderValue">3</label>
-                <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
-            </p>
+            <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
+            <div class="slider-container">
+                <div class="slider-point"><p>[ANSWER0]</p></div>
+                <div class="slider-point"><p>[ANSWER1]</p></div>
+                <div class="slider-point"><p>[ANSWER2]</p></div>
+                <div class="slider-point"><p>[ANSWER3]</p></div>
+                <div class="slider-point"><p>[ANSWER4]</p></div>
+            </div>
         </div>
         <br><br>
 
@@ -101,15 +121,6 @@
     </form>
 
     <script>
-        // Obtenemos el slider y el valor del slider
-        var slider = document.getElementById('myRange');
-        var sliderValue = document.getElementById('sliderValue');
-
-        // Mostramos el valor del slider en un label
-        slider.oninput = function() {
-            sliderValue.textContent = this.value;
-        }
-
         // El codigo se ejecuta cuando pulso el boton enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envien datos vacios o por defecto
