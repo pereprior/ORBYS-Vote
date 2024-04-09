@@ -43,10 +43,14 @@ class HttpController @Inject constructor(
     }
 
     // Ruta para responder la pregunta lanzada por el servidor
-    private fun Route.handleGetQuestionRoute() = get("$ENDPOINT/{questionName}") {
+    private fun Route.handleGetQuestionRoute() = get("$ENDPOINT/{id}") {
         userIP = call.request.origin.remoteHost
-        question = repository.findQuestion(call.parameters["questionName"] ?: "")
-        val fileContent = loadHtmlFile(question.answerType.name)
+        question = repository.findQuestion(call.parameters["id"] ?: "")
+        val fileContent = if(repository.userNotExists(userIP)) {
+            loadHtmlFile(question.answerType.name)
+        } else {
+            SUCCESS_MESSAGE
+        }
 
         call.respondText(
             text = fileContent ?: ERROR_MESSAGE,

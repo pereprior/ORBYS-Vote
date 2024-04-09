@@ -17,7 +17,7 @@ class HttpRepositoryImpl @Inject constructor(
     // Incrementa el contador de respuestas
     override fun setPostInAnswerCount(question: Question, answer: String?) { questionRepository.incAnswer(question, answer ?: "") }
     // Obtiene un objeto pregunta del repositorio a partir del texto de la pregunta
-    override fun findQuestion(question: String) = questionRepository.findQuestion(question)
+    override fun findQuestion(questionID: String) = questionRepository.findQuestion(questionID.toInt())
     // Añade un usuario a la lista de usuarios que han respondido
     override fun addUserToRespondedList(userIp: String) = usersRepository.addRespondedUser(userIp)
     // Comprueba si un usuario ya ha respondido

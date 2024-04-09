@@ -42,6 +42,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     // Metodos para buscar preguntas dentro de la lista
     override fun exists(question: Question) = _questionsList.value.any { it.question == question.question }
     override fun findQuestion(question: String) = _questionsList.value.find { it.question == question } ?: Question("")
+    override fun findQuestion(questionID: Int) = _questionsList.value.find { it.id == questionID } ?: Question("")
 
     // Metodos para gestionar las preguntas dentro de la lista
     override fun addQuestion(question: Question) {

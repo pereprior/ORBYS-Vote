@@ -9,6 +9,9 @@ interface IQuestionRepository {
     // Devuelve la pregunta de la lista que coincide con el texto recibido por parametro
     fun findQuestion(question: String): Question
 
+    // Devuelve la pregunta de la lista que coincide con el id recibido por parametro
+    fun findQuestion(questionID: Int): Question
+
     // Añade una pregunta a la lista
     fun addQuestion(question: Question)
 

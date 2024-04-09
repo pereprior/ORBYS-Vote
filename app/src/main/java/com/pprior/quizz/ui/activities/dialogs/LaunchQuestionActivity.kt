@@ -37,6 +37,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityLaunchQuestionBinding
     private lateinit var question: Question
+    private val url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
             // Establece el texto de la pregunta.
             this.question.text = question.question
+            
 
             // Establece el evento de clic en el botón de cerrar.
             closeButton.setOnClickListener { finish() }
@@ -85,14 +87,7 @@ class LaunchQuestionActivity: AppCompatActivity() {
         }
     }
 
-    private fun generateQRCode(): Bitmap? {
-        val qrCodeGenerator = QRCodeGenerator()
-        val encodedQuestion = URLEncoder.encode(question.question, "UTF-8")
-
-        return qrCodeGenerator.encodeAsBitmap(
-            url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/$encodedQuestion"
-        )
-    }
+    private fun generateQRCode(): Bitmap? = QRCodeGenerator().encodeAsBitmap(url)
 
     override fun onDestroy() {
         // Detiene el servicio HTTP.
