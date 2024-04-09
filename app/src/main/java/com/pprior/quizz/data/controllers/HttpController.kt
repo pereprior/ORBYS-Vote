@@ -56,11 +56,11 @@ class HttpController @Inject constructor(
 
     // Ruta que recibe la respuesta a la pregunta
     private fun Route.handleSubmitRoute() = post("/submit") {
-        if (repository.userNotExists(userIP)) {
+        //if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
             repository.setPostInAnswerCount(question, choice)
             repository.addUserToRespondedList(userIP)
-        }
+        //}
 
         call.respondRedirect(ENDPOINT)
     }

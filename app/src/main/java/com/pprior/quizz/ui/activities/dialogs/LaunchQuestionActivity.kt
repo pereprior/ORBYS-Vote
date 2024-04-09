@@ -70,13 +70,13 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
             question.answers.forEach { answer ->
-                val bar = Bar(answer.answer.toString(), height = answer.count.value.toFloat())
+                val bar = Bar(answer.answer.toString(), height = answer.count.value)
                 barView.addBar(bar)
 
                 lifecycleScope.launch {
                     // Recoge los cambios en count para cada respuesta
                     answer.count.collect { newCount ->
-                        bar.height = newCount.toFloat()
+                        bar.height = newCount
                         barView.invalidate()
                     }
                 }

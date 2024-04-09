@@ -18,16 +18,18 @@ class HorizontalGraphicView(
         val barMargin = 20f
         // Calculamos el ancho de cada barra
         val barWidth = (height - barMargin * (bars.size - 1)) / bars.size
-        // Obtenemos el valor maximo del contador entre todas las barras del grafico
-        val maxCount = bars.maxOf { it.height }
+        // Obtenemos el total de todas las respuestas
+        val totalCount = bars.sumOf { it.height }
 
         bars.forEachIndexed { index, bar ->
             // Calculamos las coordenadas en las que se dibuja la barra
             val top = index * (barWidth + barMargin)
             val bottom = top + barWidth
 
+            // Porcentaje del contador de esta barra en funcion del total
+            val countPercent: Float = if(totalCount > 0) (bar.height.toFloat() / totalCount) else 0f
             // Calculamos la longitud de la barra en funcion del contador y el ancho de la vista
-            val right = if (maxCount > 0) width.toFloat() * (bar.height / maxCount) else 0f
+            val right = width.toFloat() * countPercent
 
             // Pintamos la barra del grafico
             paint.color = bar.color
@@ -39,7 +41,7 @@ class HorizontalGraphicView(
             // Pintamos el texto en la barra segun este vacia o llena
             paint.color = if (right == 0f) Color.BLACK else Color.WHITE
             // Pintamos el texto en la barra
-            canvas.drawText("${bar.answer}: ${bar.height.toInt()}", x, y, paint)
+            canvas.drawText("${bar.answer}: ${bar.height}", x, y, paint)
         }
 
     }
