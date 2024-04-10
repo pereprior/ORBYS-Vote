@@ -1,11 +1,14 @@
-package com.orbys.quizz.ui.activities.dialogs
+package com.orbys.quizz.ui.fragments.add
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
+import com.orbys.quizz.ui.MainActivity
+import com.orbys.quizz.ui.services.LaunchService
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,9 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  */
 @AndroidEntryPoint
-open class AddQuestionActivity: AppCompatActivity() {
+abstract class AddActivity: AppCompatActivity() {
 
-    protected val viewModel by viewModels<QuestionViewModel>()
+    private val viewModel by viewModels<QuestionViewModel>()
     protected lateinit var binding: ActivityAddQuestionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +33,16 @@ open class AddQuestionActivity: AppCompatActivity() {
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion() }
-            closeButton.setOnClickListener { finish() }
+            closeButton.setOnClickListener {
+                startActivity(Intent(it.context, MainActivity::class.java))
+                finish()
+            }
         }
     }
 
-    protected open fun saveQuestion() {
+    abstract fun createQuestionFromInput(): Question
+
+    private fun saveQuestion() {
         val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
@@ -48,14 +56,16 @@ open class AddQuestionActivity: AppCompatActivity() {
         } else {
             // Guardamos la pregunta en la lista y cerramos la actividad
             viewModel.addQuestion(question)
+
+            // Lanzar la actividad para añadir respuestas
+            val intent = Intent(this, LaunchService::class.java)
+            intent.putExtra("question", question.question)
+            startService(intent)
+
             finish()
             clear()
         }
     }
-
-    protected open fun createQuestionFromInput() = Question(
-        binding.questionQuestion.text.toString()
-    )
 
     private fun clear() {
         with(binding) {

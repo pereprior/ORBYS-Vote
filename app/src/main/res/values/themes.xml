@@ -15,8 +15,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.OrbysQuizz" parent="Base.Theme.OrbysQuizz">
-    </style>
+    <style name="Theme.OrbysQuizz" parent="Base.Theme.OrbysQuizz"/>
 
     <style name="ThemeDialog" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:fontFamily">@font/montserrat_family</item>

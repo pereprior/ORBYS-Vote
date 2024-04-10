@@ -1,16 +1,15 @@
-package com.orbys.quizz.ui.activities.dialogs.types
+package com.orbys.quizz.ui.fragments.add
 
 import android.os.Bundle
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.activities.dialogs.AddQuestionActivity
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Estrellas".
  */
-class AddStarsQuestion: AddQuestionActivity() {
+class AddStarsQuestion: AddActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

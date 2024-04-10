@@ -1,5 +1,6 @@
-package com.orbys.quizz.ui.activities.dialogs.types
+package com.orbys.quizz.ui.fragments.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -12,6 +13,7 @@ import com.orbys.quizz.databinding.ActivityAddOtherQuestionBinding
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.MainActivity
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +40,10 @@ class AddOtherQuestion: AppCompatActivity() {
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion() }
-            closeButton.setOnClickListener { finish() }
+            closeButton.setOnClickListener {
+                startActivity(Intent(it.context, MainActivity::class.java))
+                finish()
+            }
             addAnswerButton.setOnClickListener {
                 if (answerFields.size < 5) {
                     addNewAnswerToQuestion()

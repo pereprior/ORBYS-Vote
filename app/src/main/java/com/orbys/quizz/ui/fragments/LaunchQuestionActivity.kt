@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.activities.dialogs
+package com.orbys.quizz.ui.fragments
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,9 +11,10 @@ import com.orbys.quizz.data.constants.SERVER_PORT
 import com.orbys.quizz.data.constants.URL_ENTRY
 import com.orbys.quizz.data.constants.host
 import com.orbys.quizz.data.services.HttpService
-import com.orbys.quizz.databinding.ActivityLaunchQuestionBinding
+import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.MainActivity
 import com.orbys.quizz.ui.components.utils.QRCodeGenerator
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import com.orbys.quizz.ui.viewModels.UserViewModel
@@ -34,21 +35,21 @@ class LaunchQuestionActivity: AppCompatActivity() {
     private val questionViewModel by viewModels<QuestionViewModel>()
     private val userViewModel by viewModels<UserViewModel>()
 
-    private lateinit var binding: ActivityLaunchQuestionBinding
-    private lateinit var question: Question
-    private val url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
+    private lateinit var binding: ServiceLaunchQuestionBinding
+    private lateinit var url: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLaunchQuestionBinding.inflate(layoutInflater)
+        binding = ServiceLaunchQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Obtiene la pregunta seleccionada.
-        question = questionViewModel.findQuestion(intent.getStringExtra("question") ?: "")
+        val question = questionViewModel.findQuestion(intent.getStringExtra("question") ?: "")
         questionViewModel.clearAnswer(question)
 
         // Inicia el servicio HTTP.
         startService(Intent(this, HttpService::class.java))
+        url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
 
         lifecycleScope.launch {
             bindQuestion(question)
@@ -64,10 +65,12 @@ class LaunchQuestionActivity: AppCompatActivity() {
 
             // Establece el texto de la pregunta.
             this.question.text = question.question
-            
 
             // Establece el evento de clic en el botón de cerrar.
-            closeButton.setOnClickListener { finish() }
+            closeButton.setOnClickListener {
+                startActivity(Intent(it.context, MainActivity::class.java))
+                finish()
+            }
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
             question.answers.forEach { answer ->

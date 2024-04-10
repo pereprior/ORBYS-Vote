@@ -32,6 +32,13 @@ class HttpService: Service() {
     override fun onCreate() {
         super.onCreate()
         startServer()
+
+       /*val view = LayoutInflater.from(this).inflate()
+       val btn = view*/
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return super.onStartCommand(intent, flags, startId)
     }
 
     // Inicia el servidor HTTP en un hilo separado.

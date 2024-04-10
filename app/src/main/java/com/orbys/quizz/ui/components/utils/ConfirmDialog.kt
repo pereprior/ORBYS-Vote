@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components.alert
+package com.orbys.quizz.ui.components.utils
 
 import android.app.AlertDialog
 import android.content.Context

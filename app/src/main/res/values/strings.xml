@@ -37,5 +37,8 @@
     <string name="bar_desc">Score type of questions to mark a point on a progression bar</string>
     <string name="other_title">Others</string>
     <string name="other_desc">Custom type of questions with three possible answers</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 
 </resources>

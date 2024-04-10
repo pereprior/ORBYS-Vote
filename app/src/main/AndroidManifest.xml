@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Permisos de internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Permisos para el Widget -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".QuizzApp"
@@ -20,69 +22,49 @@
 
         <!-- Actividad principal -->
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
-            android:screenOrientation="locked"
-            tools:ignore="DiscouragedApi">
+            android:theme="@style/ThemeDialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Actividad para seleccionar el tipo de pregunta -->
+        </activity> <!-- Actividad dialogo para lanzar preguntas -->
         <activity
-            android:name=".ui.activities.QuestionTypeActivity"
-            android:exported="false" />
-
-        <!-- Actividad dialogo para lanzar preguntas -->
-        <activity
-            android:name=".ui.activities.dialogs.LaunchQuestionActivity"
+            android:name=".ui.fragments.LaunchQuestionActivity"
             android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad generica de dialogo para añadir preguntas -->
+            android:theme="@style/ThemeDialog" /> <!-- Actividad generica de dialogo para añadir preguntas -->
         <activity
-            android:name=".ui.activities.dialogs.AddQuestionActivity"
+            android:name=".ui.fragments.add.AddActivity"
             android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad dialogo para añadir preguntas de si o no -->
+            android:theme="@style/ThemeDialog" /> <!-- Actividad dialogo para añadir preguntas de si o no -->
         <activity
-            android:name=".ui.activities.dialogs.types.AddYesNoQuestion"
+            android:name=".ui.fragments.add.AddYesNoQuestion"
             android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad dialogo para añadir preguntas de estrellas -->
+            android:theme="@style/ThemeDialog" /> <!-- Actividad dialogo para añadir preguntas de estrellas -->
         <activity
-            android:name=".ui.activities.dialogs.types.AddStarsQuestion"
+            android:name=".ui.fragments.add.AddStarsQuestion"
             android:exported="false"
             android:theme="@style/ThemeDialog" />
 
         <!-- Actividad dialogo para añadir preguntas de barra progresiva -->
         <activity
-            android:name=".ui.activities.dialogs.types.AddBarQuestion"
+            android:name=".ui.fragments.add.AddSliderQuestion"
             android:exported="false"
             android:theme="@style/ThemeDialog" />
 
-        <!-- Actividad dialogo para añadir preguntas de otro tipo -->
+        <!-- Actividad dialogo para añadir preguntas de tipo otro -->
         <activity
-            android:name=".ui.activities.dialogs.types.AddOtherQuestion"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad dialogo para editar preguntas -->
-        <activity
-            android:name=".ui.activities.dialogs.EditQuestionActivity"
+            android:name=".ui.fragments.add.AddOtherQuestion"
             android:exported="false"
             android:theme="@style/ThemeDialog" />
 
         <!-- Servicio http -->
-        <service
-            android:name=".data.services.HttpService"
-            android:enabled="true" />
+        <service android:name=".data.services.HttpService" android:enabled="true" />
 
+        <!-- Servicio de widgets -->
+        <service android:name=".ui.services.LaunchService" android:enabled="true"/>
     </application>
 
 </manifest>
