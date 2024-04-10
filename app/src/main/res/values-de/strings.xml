@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Antwort:</string>
+    <string name="question_question" translatable="true">Frage:</string>
+    <string name="save_button" translatable="true">Speichern</string>
+    <string name="error_questions_exists" translatable="true">Frage existiert bereits</string>
+    <string name="error_max_answers" translatable="true">Sie können nicht mehr als 5 Antworten eingeben</string>
+    <string name="yes_aswers" translatable="true">Ja</string>
+    <string name="no_aswers" translatable="true">Nein</string>
+    <string name="delete_question_message" translatable="true">Sind Sie sicher, dass Sie diese Frage löschen möchten?</string>
+    <string name="positive_button_message" translatable="true">Bestätigen</string>
+    <string name="negative_button_message" translatable="true">Abbrechen</string>
+    <string name="activity_question_type_title" translatable="true">Wählen Sie den Fragetyp aus:</string>
+    <string name="yes_no_title" translatable="true">Ja/Nein</string>
+    <string name="yes_no_desc" translatable="true">Einfache Fragen mit zwei Arten von Antworten</string>
+    <string name="stars_title" translatable="true">Sterne</string>
+    <string name="stars_desc" translatable="true">Fragen mit Punktzahl zur Auswahl einer bestimmten Anzahl von Sternen</string>
+    <string name="bar_title" translatable="true">Fortschrittsbalken</string>
+    <string name="bar_desc" translatable="true">Fragen mit Punktzahl zum Markieren eines Punktes auf einem Fortschrittsbalken</string>
+    <string name="other_title" translatable="true">Andere</string>
+    <string name="other_desc" translatable="true">Benutzerdefinierte Fragen mit drei möglichen Antworten</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Antwoord:</string>
+    <string name="question_question" translatable="true">Vraag:</string>
+    <string name="save_button" translatable="true">Opslaan</string>
+    <string name="error_questions_exists" translatable="true">Vraag bestaat al</string>
+    <string name="error_max_answers" translatable="true">Je kunt niet meer dan 5 antwoorden geven</string>
+    <string name="yes_aswers" translatable="true">Ja</string>
+    <string name="no_aswers" translatable="true">Nee</string>
+    <string name="delete_question_message" translatable="true">Weet je zeker dat je deze vraag wilt verwijderen?</string>
+    <string name="positive_button_message" translatable="true">Bevestigen</string>
+    <string name="negative_button_message" translatable="true">Annuleren</string>
+    <string name="activity_question_type_title" translatable="true">Selecteer het vraagtype:</string>
+    <string name="yes_no_title" translatable="true">Ja/Nee</string>
+    <string name="yes_no_desc" translatable="true">Eenvoudige vragen met twee soorten antwoorden</string>
+    <string name="stars_title" translatable="true">Sterren</string>
+    <string name="stars_desc" translatable="true">Scorevragen om een bepaald aantal sterren te selecteren</string>
+    <string name="bar_title" translatable="true">Progressieve balk</string>
+    <string name="bar_desc" translatable="true">Scorevragen om een punt op een voortgangsbalk aan te geven</string>
+    <string name="other_title" translatable="true">Overige</string>
+    <string name="other_desc" translatable="true">Aangepaste vragen met drie mogelijke antwoorden</string>
+</resources>

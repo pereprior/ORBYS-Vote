@@ -21,7 +21,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/yes_no_card"
-        android:name="com.pprior.quizz.ui.fragments.types.YesNoItemFragment"
+        android:name="com.orbys.quizz.ui.fragments.types.YesNoItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/type_fragment_values"
@@ -35,7 +35,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/star_card"
-        android:name="com.pprior.quizz.ui.fragments.types.StarsItemFragment"
+        android:name="com.orbys.quizz.ui.fragments.types.StarsItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/type_fragment_values"
@@ -49,7 +49,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/bar_card"
-        android:name="com.pprior.quizz.ui.fragments.types.BarItemFragment"
+        android:name="com.orbys.quizz.ui.fragments.types.BarItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/type_fragment_values"
@@ -63,7 +63,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/other_card"
-        android:name="com.pprior.quizz.ui.fragments.types.OtherItemFragment"
+        android:name="com.orbys.quizz.ui.fragments.types.OtherItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/type_fragment_values"

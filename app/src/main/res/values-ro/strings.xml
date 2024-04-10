@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Răspuns:</string>
+    <string name="question_question" translatable="true">Întrebare:</string>
+    <string name="save_button" translatable="true">Salvează</string>
+    <string name="error_questions_exists" translatable="true">Întrebarea există deja</string>
+    <string name="error_max_answers" translatable="true">Nu puteți introduce mai mult de 5 răspunsuri</string>
+    <string name="yes_aswers" translatable="true">Da</string>
+    <string name="no_aswers" translatable="true">Nu</string>
+    <string name="delete_question_message" translatable="true">Sigur doriți să ștergeți această întrebare?</string>
+    <string name="positive_button_message" translatable="true">Confirmare</string>
+    <string name="negative_button_message" translatable="true">Anulare</string>
+    <string name="activity_question_type_title" translatable="true">Selectați tipul de întrebare:</string>
+    <string name="yes_no_title" translatable="true">Da/Nu</string>
+    <string name="yes_no_desc" translatable="true">Tipuri simple de întrebări cu două tipuri de răspunsuri</string>
+    <string name="stars_title" translatable="true">Stele</string>
+    <string name="stars_desc" translatable="true">Tipuri de întrebări de evaluare pentru a selecta o anumită cantitate de stele</string>
+    <string name="bar_title" translatable="true">Bară progresivă</string>
+    <string name="bar_desc" translatable="true">Tipuri de întrebări de evaluare pentru a marca un punct pe o bară de progres</string>
+    <string name="other_title" translatable="true">Altele</string>
+    <string name="other_desc" translatable="true">Tipuri de întrebări personalizate cu trei răspunsuri posibile</string>
+</resources>

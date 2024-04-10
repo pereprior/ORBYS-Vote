@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Ответ:</string>
+    <string name="question_question" translatable="true">Вопрос:</string>
+    <string name="save_button" translatable="true">Сохранить</string>
+    <string name="error_questions_exists" translatable="true">Вопрос уже существует</string>
+    <string name="error_max_answers" translatable="true">Вы не можете ввести более 5 ответов</string>
+    <string name="yes_aswers" translatable="true">Да</string>
+    <string name="no_aswers" translatable="true">Нет</string>
+    <string name="delete_question_message" translatable="true">Вы уверены, что хотите удалить этот вопрос?</string>
+    <string name="positive_button_message" translatable="true">Подтвердить</string>
+    <string name="negative_button_message" translatable="true">Отмена</string>
+    <string name="activity_question_type_title" translatable="true">Выберите тип вопроса:</string>
+    <string name="yes_no_title" translatable="true">Да/Нет</string>
+    <string name="yes_no_desc" translatable="true">Простые вопросы с двумя типами ответов</string>
+    <string name="stars_title" translatable="true">Звезды</string>
+    <string name="stars_desc" translatable="true">Оценочные вопросы для выбора определенного количества звезд</string>
+    <string name="bar_title" translatable="true">Прогрессивная шкала</string>
+    <string name="bar_desc" translatable="true">Оценочные вопросы для отметки точки на прогрессивной шкале</string>
+    <string name="other_title" translatable="true">Другие</string>
+    <string name="other_desc" translatable="true">Пользовательские вопросы с тремя возможными ответами</string>
+</resources>

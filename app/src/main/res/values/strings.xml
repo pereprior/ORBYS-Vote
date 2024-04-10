@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name" translatable="false">School Quizz</string>
+    <string name="app_name" translatable="false">Orbys Quizz</string>
 
     <!-- Elements description -->
     <string name="menu_button_desc" translatable="false">Boton de menu del top bar</string>
@@ -22,7 +22,7 @@
 
     <!-- Dialog launch question -->
     <string name="yes_aswers">Yes</string>
-    <string name="no_aswers" translatable="false">No</string>
+    <string name="no_aswers">No</string>
     <string name="delete_question_message"> Are you sure you want to delete this question? </string>
     <string name="positive_button_message">Confirm</string>
     <string name="negative_button_message">Cancel</string>

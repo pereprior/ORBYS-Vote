@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Ayudas del dialogo para añadir elementos -->
+    <string name="question_answer">الإجابة:</string>
+    <string name="question_question">السؤال:</string>
+    <string name="save_button">حفظ</string>
+
+    <!-- Mensajes de error -->
+    <string name="error_questions_exists">هذا السؤال موجود بالفعل</string>
+    <string name="error_max_answers">لا يمكنك وضع أكثر من 5 إجابات</string>
+
+    <!-- Dialog launch question -->
+    <string name="yes_aswers">نعم</string>
+    <string name="no_aswers">لا</string>
+
+    <string name="delete_question_message">هل أنت متأكد أنك تريد حذف هذا السؤال؟</string>
+    <string name="positive_button_message">تأكيد</string>
+    <string name="negative_button_message">إلغاء</string>
+    <string name="activity_question_type_title">اختر نوع السؤال:</string>
+
+    <!-- Question types -->
+    <string name="yes_no_title">نعم/لا</string>
+    <string name="yes_no_desc">نوع بسيط من الأسئلة مع نوعين من الإجابات</string>
+    <string name="stars_title">النجوم</string>
+    <string name="stars_desc">نوع من الأسئلة التقييمية لتحديد عدد معين من النجوم</string>
+    <string name="bar_title">شريط التقدم</string>
+    <string name="bar_desc">نوع من الأسئلة التقييمية لتحديد نقطة على شريط التقدم</string>
+    <string name="other_title">أخرى</string>
+    <string name="other_desc">نوع مخصص من الأسئلة مع ثلاث إجابات ممكنة</string>
+
+</resources>

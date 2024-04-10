@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Réponse :</string>
+    <string name="question_question" translatable="true">Question :</string>
+    <string name="save_button" translatable="true">Enregistrer</string>
+    <string name="error_questions_exists" translatable="true">La question existe déjà</string>
+    <string name="error_max_answers" translatable="true">Vous ne pouvez pas mettre plus de 5 réponses</string>
+    <string name="yes_aswers" translatable="true">Oui</string>
+    <string name="no_aswers" translatable="true">Non</string>
+    <string name="delete_question_message" translatable="true">Êtes-vous sûr de vouloir supprimer cette question ?</string>
+    <string name="positive_button_message" translatable="true">Confirmer</string>
+    <string name="negative_button_message" translatable="true">Annuler</string>
+    <string name="activity_question_type_title" translatable="true">Sélectionnez le type de question :</string>
+    <string name="yes_no_title" translatable="true">Oui/Non</string>
+    <string name="yes_no_desc" translatable="true">Questions simples avec deux types de réponses</string>
+    <string name="stars_title" translatable="true">Étoiles</string>
+    <string name="stars_desc" translatable="true">Questions de notation pour sélectionner un certain nombre d\'étoiles</string>
+    <string name="bar_title" translatable="true">Barre de progression</string>
+    <string name="bar_desc" translatable="true">Questions de notation pour marquer un point sur une barre de progression</string>
+    <string name="other_title" translatable="true">Autres</string>
+    <string name="other_desc" translatable="true">Questions personnalisées avec trois réponses possibles</string>
+</resources>

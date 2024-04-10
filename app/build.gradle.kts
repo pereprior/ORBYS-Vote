@@ -1,17 +1,17 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.jetbrainsDokka)
     alias(libs.plugins.ksp)
     id("dagger.hilt.android.plugin")
+    id("org.jetbrains.dokka")
 }
 
 android {
-    namespace = "com.pprior.quizz"
+    namespace = "com.orbys.quizz"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.pprior.quizz"
+        applicationId = "com.orbys.quizz"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -35,28 +35,23 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude("META-INF/INDEX.LIST")
+        exclude("META-INF/io.netty.versions.properties")
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     // ViewBinding
     buildFeatures {
         viewBinding = true
-    }
-
-    // Documentacion
-    subprojects {
-        apply(plugin = "org.jetbrains.dokka")
-    }
-
-    packagingOptions {
-        exclude("META-INF/INDEX.LIST")
-        exclude("META-INF/io.netty.versions.properties")
     }
 
 }

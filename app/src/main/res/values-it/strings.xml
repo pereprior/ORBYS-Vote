@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Risposta:</string>
+    <string name="question_question" translatable="true">Domanda:</string>
+    <string name="save_button" translatable="true">Salva</string>
+    <string name="error_questions_exists" translatable="true">La domanda esiste già</string>
+    <string name="error_max_answers" translatable="true">Non puoi inserire più di 5 risposte</string>
+    <string name="yes_aswers" translatable="true">Sì</string>
+    <string name="no_aswers" translatable="true">No</string>
+    <string name="delete_question_message" translatable="true">Sei sicuro di voler eliminare questa domanda?</string>
+    <string name="positive_button_message" translatable="true">Conferma</string>
+    <string name="negative_button_message" translatable="true">Annulla</string>
+    <string name="activity_question_type_title" translatable="true">Seleziona il tipo di domanda:</string>
+    <string name="yes_no_title" translatable="true">Sì/No</string>
+    <string name="yes_no_desc" translatable="true">Domande semplici con due tipi di risposte</string>
+    <string name="stars_title" translatable="true">Stelle</string>
+    <string name="stars_desc" translatable="true">Domande di valutazione per selezionare un certo numero di stelle</string>
+    <string name="bar_title" translatable="true">Barra progressiva</string>
+    <string name="bar_desc" translatable="true">Domande di valutazione per segnare un punto su una barra di avanzamento</string>
+    <string name="other_title" translatable="true">Altri</string>
+    <string name="other_desc" translatable="true">Domande personalizzate con tre risposte possibili</string>
+</resources>

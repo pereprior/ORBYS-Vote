@@ -10,7 +10,7 @@
     <!-- Top Bar Fragment -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/header_fragment"
-        android:name="com.pprior.quizz.ui.fragments.HeadFragment"
+        android:name="com.orbys.quizz.ui.fragments.HeadFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
     <!-- Fragmento con las tarjetas de los tipos de preguntas -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/cards_types"
-        android:name="com.pprior.quizz.ui.fragments.TypesFragment"
+        android:name="com.orbys.quizz.ui.fragments.TypesFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/title"

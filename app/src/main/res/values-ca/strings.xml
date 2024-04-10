@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Resposta:</string>
+    <string name="question_question" translatable="true">Pregunta:</string>
+    <string name="save_button" translatable="true">Desar</string>
+    <string name="error_questions_exists" translatable="true">La pregunta ja existeix</string>
+    <string name="error_max_answers" translatable="true">No pots posar més de 5 respostes</string>
+    <string name="yes_aswers" translatable="true">Sí</string>
+    <string name="no_aswers" translatable="true">No</string>
+    <string name="delete_question_message" translatable="true">Esteu segur que voleu eliminar aquesta pregunta?</string>
+    <string name="positive_button_message" translatable="true">Confirmar</string>
+    <string name="negative_button_message" translatable="true">Cancel·lar</string>
+    <string name="activity_question_type_title" translatable="true">Seleccioneu el tipus de pregunta:</string>
+    <string name="yes_no_title" translatable="true">Sí/No</string>
+    <string name="yes_no_desc" translatable="true">Preguntes simples amb dos tipus de respostes</string>
+    <string name="stars_title" translatable="true">Estrelles</string>
+    <string name="stars_desc" translatable="true">Preguntes de puntuació per seleccionar una certa quantitat d\'estrelles</string>
+    <string name="bar_title" translatable="true">Barra de progrés</string>
+    <string name="bar_desc" translatable="true">Preguntes de puntuació per marcar un punt en una barra de progrés</string>
+    <string name="other_title" translatable="true">Altres</string>
+    <string name="other_desc" translatable="true">Preguntes personalitzades amb tres possibles respostes</string>
+</resources>

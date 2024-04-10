@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Erantzuna:</string>
+    <string name="question_question" translatable="true">Galdera:</string>
+    <string name="save_button" translatable="true">Gorde</string>
+    <string name="error_questions_exists" translatable="true">Galdera dagoeneko existitzen da</string>
+    <string name="error_max_answers" translatable="true">Ezinezkoa da 5 baino gehiago erantzun</string>
+    <string name="yes_aswers" translatable="true">Bai</string>
+    <string name="no_aswers" translatable="true">Ez</string>
+    <string name="delete_question_message" translatable="true">Zihur zaude galdera hau ezabatu nahi duzula?</string>
+    <string name="positive_button_message" translatable="true">Berretsi</string>
+    <string name="negative_button_message" translatable="true">Utzi</string>
+    <string name="activity_question_type_title" translatable="true">Aukeratu galdera mota:</string>
+    <string name="yes_no_title" translatable="true">Bai/Ez</string>
+    <string name="yes_no_desc" translatable="true">Galdera sinpleak bi erantzun motekin</string>
+    <string name="stars_title" translatable="true">Izar</string>
+    <string name="stars_desc" translatable="true">Galdera puntuazioa izateko izarrak zenbatu behar dituzu</string>
+    <string name="bar_title" translatable="true">Aurrerapen barra</string>
+    <string name="bar_desc" translatable="true">Galdera puntuazioa izateko aurrerapen barra batean puntu bat markatu behar duzun</string>
+    <string name="other_title" translatable="true">Bestelakoa</string>
+    <string name="other_desc" translatable="true">Galdera pertsonalizatuak hiru erantzun posiblekin</string>
+</resources>

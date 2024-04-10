@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="question_answer" translatable="true">Resposta:</string>
+    <string name="question_question" translatable="true">Pergunta:</string>
+    <string name="save_button" translatable="true">Salvar</string>
+    <string name="error_questions_exists" translatable="true">A pergunta já existe</string>
+    <string name="error_max_answers" translatable="true">Não é possível colocar mais de 5 respostas</string>
+    <string name="yes_aswers" translatable="true">Sim</string>
+    <string name="no_aswers" translatable="true">Não</string>
+    <string name="delete_question_message" translatable="true">Tem certeza de que deseja excluir esta pergunta?</string>
+    <string name="positive_button_message" translatable="true">Confirmar</string>
+    <string name="negative_button_message" translatable="true">Cancelar</string>
+    <string name="activity_question_type_title" translatable="true">Selecione o tipo de pergunta:</string>
+    <string name="yes_no_title" translatable="true">Sim/Não</string>
+    <string name="yes_no_desc" translatable="true">Tipos simples de perguntas com dois tipos de respostas</string>
+    <string name="stars_title" translatable="true">Estrelas</string>
+    <string name="stars_desc" translatable="true">Tipos de perguntas de pontuação para selecionar uma certa quantidade de estrelas</string>
+    <string name="bar_title" translatable="true">Barra Progressiva</string>
+    <string name="bar_desc" translatable="true">Tipos de perguntas de pontuação para marcar um ponto em uma barra de progresso</string>
+    <string name="other_title" translatable="true">Outros</string>
+    <string name="other_desc" translatable="true">Tipos de perguntas personalizadas com três respostas possíveis</string>
+</resources>

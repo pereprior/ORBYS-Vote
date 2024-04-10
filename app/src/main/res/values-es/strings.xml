@@ -11,6 +11,7 @@
 
     <!-- Dialog launch question -->
     <string name="yes_aswers">Si</string>
+    <string name="no_aswers">No</string>
 
     <string name="delete_question_message">¿Estás seguro de que quieres eliminar esta pregunta?</string>
     <string name="positive_button_message">Confirmar</string>
