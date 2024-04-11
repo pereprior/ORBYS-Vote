@@ -8,10 +8,20 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
+import com.orbys.quizz.data.constants.ENDPOINT
+import com.orbys.quizz.data.constants.SERVER_PORT
+import com.orbys.quizz.data.constants.URL_ENTRY
+import com.orbys.quizz.data.constants.host
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
+import com.orbys.quizz.domain.models.Bar
+import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.ui.MainActivity
+import com.orbys.quizz.ui.components.utils.QRCodeGenerator
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     // Variables para gestionar la vista
@@ -19,7 +29,8 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     private lateinit var layoutParams: WindowManager.LayoutParams
     private var binding: ServiceLaunchQuestionBinding
 
-    private var question: String = ""
+    private var questionText: String = "a"
+    private val repository = QuestionRepositoryImpl.getInstance()
 
     // Coordenadas del widget
     private var x: Int = 0
@@ -30,7 +41,6 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    constructor(context: Context, question:String): super(context) { this.question = question }
 
     init {
         inflateLayoutParamsAsFloatingLayout()
@@ -84,16 +94,42 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     }
 
     private fun bindOnQuestion() {
-        if (question.isEmpty()) return
+        //if (questionText == "") return
+        Log.d("LaunchQuestionView", "bindOnQuestion: $questionText")
+        val question = repository.findQuestion(questionText)
+        val  url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
 
         with(binding) {
 
+            questionTypeIcon.setImageResource(question.icon)
+
+            // Establece la imagen del código QR.
+            qrCode.setImageBitmap(QRCodeGenerator().encodeAsBitmap(url))
+
+            // Establece el texto de la pregunta.
+            this.question.text = question.question
+
+            // Establece el evento de clic en el botón de cerrar.
             closeButton.setOnClickListener {
                 windowManager.removeView(this@LaunchQuestionView)
 
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
+            }
+
+            // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
+            question.answers.forEach { answer ->
+                val bar = Bar(answer.answer.toString(), height = answer.count.value)
+                barView.addBar(bar)
+
+                GlobalScope.launch {
+                    // Recoge los cambios en count para cada respuesta
+                    answer.count.collect { newCount ->
+                        bar.height = newCount
+                        barView.invalidate()
+                    }
+                }
             }
 
         }
