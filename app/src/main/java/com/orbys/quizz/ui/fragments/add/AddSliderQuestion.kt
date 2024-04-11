@@ -1,6 +1,7 @@
 package com.orbys.quizz.ui.fragments.add
 
 import android.os.Bundle
+import android.view.View
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
@@ -9,10 +10,10 @@ import com.orbys.quizz.domain.models.Question
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Barra progresiva".
  */
-class AddSliderQuestion: AddActivity() {
+class AddSliderQuestion: AddFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.questionTypeIcon.setImageResource(R.drawable.baseline_space_bar_24)
     }

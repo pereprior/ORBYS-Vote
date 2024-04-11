@@ -1,6 +1,5 @@
-package com.orbys.quizz.ui.components.cards
+package com.orbys.quizz.ui.fragments.cards
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.orbys.quizz.R
@@ -15,8 +14,11 @@ class SliderCard : QuestionTypesCard() {
         super.onViewCreated(view, savedInstanceState)
 
         view.setOnClickListener {
-            startActivity(Intent(context, AddSliderQuestion::class.java))
-            activity?.finish()
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, AddSliderQuestion())
+                addToBackStack(null)
+                commit()
+            }
         }
 
         with(binding) {

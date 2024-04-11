@@ -36,7 +36,7 @@
             android:exported="false"
             android:theme="@style/ThemeDialog" /> <!-- Actividad generica de dialogo para añadir preguntas -->
         <activity
-            android:name=".ui.fragments.add.AddActivity"
+            android:name=".ui.fragments.add.AddFragment"
             android:exported="false"
             android:theme="@style/ThemeDialog" /> <!-- Actividad dialogo para añadir preguntas de si o no -->
         <activity
@@ -64,7 +64,7 @@
         <service android:name=".data.services.HttpService" android:enabled="true" />
 
         <!-- Servicio de widgets -->
-        <service android:name=".ui.services.LaunchService" android:enabled="true"/>
+        <service android:name=".ui.services.FloatingViewService" android:enabled="true"/>
     </application>
 
 </manifest>

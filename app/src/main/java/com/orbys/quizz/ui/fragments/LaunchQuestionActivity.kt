@@ -1,5 +1,5 @@
 package com.orbys.quizz.ui.fragments
-
+/*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -99,4 +99,4 @@ class LaunchQuestionActivity: AppCompatActivity() {
         super.onDestroy()
     }
 
-}
+}*/

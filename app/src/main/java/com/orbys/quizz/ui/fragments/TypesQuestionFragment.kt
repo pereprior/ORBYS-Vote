@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
-import com.orbys.quizz.ui.components.cards.OtherCard
-import com.orbys.quizz.ui.components.cards.SliderCard
-import com.orbys.quizz.ui.components.cards.StarsCard
-import com.orbys.quizz.ui.components.cards.YesNoCard
+import com.orbys.quizz.ui.fragments.cards.OtherCard
+import com.orbys.quizz.ui.fragments.cards.SliderCard
+import com.orbys.quizz.ui.fragments.cards.StarsCard
+import com.orbys.quizz.ui.fragments.cards.YesNoCard
 
 class TypesQuestionFragment: Fragment() {
 
@@ -28,10 +28,10 @@ class TypesQuestionFragment: Fragment() {
 
     private fun addFragments() {
         parentFragmentManager.beginTransaction()
-            .add(binding.fragmentContainer.id, YesNoCard())
-            .add(binding.fragmentContainer.id, StarsCard())
-            .add(binding.fragmentContainer.id, SliderCard())
-            .add(binding.fragmentContainer.id, OtherCard())
+            .add(binding.yesNoCardContainer.id, YesNoCard())
+            .add(binding.starsCardContainer.id, StarsCard())
+            .add(binding.sliderCardContainer.id, SliderCard())
+            .add(binding.otherCardContainer.id, OtherCard())
             .commit()
     }
 

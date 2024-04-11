@@ -1,20 +1,17 @@
 package com.orbys.quizz.ui.fragments.add
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
-import com.orbys.quizz.databinding.ActivityAddOtherQuestionBinding
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.MainActivity
-import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,45 +21,26 @@ import dagger.hilt.android.AndroidEntryPoint
  * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  */
 @AndroidEntryPoint
-class AddOtherQuestion: AppCompatActivity() {
+class AddOtherQuestion: AddFragment() {
 
-    private val viewModel by viewModels<QuestionViewModel>()
-    private lateinit var binding: ActivityAddOtherQuestionBinding
     private val answerFields = mutableListOf<EditText>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAddOtherQuestionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         setDefaultAnswers()
-
-        with(binding) {
-            // Asignar los listeners a los botones
-            saveButton.setOnClickListener { saveQuestion() }
-            closeButton.setOnClickListener {
-                startActivity(Intent(it.context, MainActivity::class.java))
-                finish()
-            }
-            addAnswerButton.setOnClickListener {
-                if (answerFields.size < 5) {
-                    addNewAnswerToQuestion()
-                } else {
-                    errorMessage.text = getString(R.string.error_max_answers)
-                }
-            }
-        }
-
     }
 
     private fun setDefaultAnswers() {
+        addNewAnswerButton()
+
         addNewAnswerToQuestion()
         addNewAnswerToQuestion()
     }
 
     private fun addNewAnswerToQuestion() {
         // Crear un nuevo campo de texto para una respuesta
-        val newAnswerField = EditText(this).apply {
+        val newAnswerField = EditText(context).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -77,25 +55,30 @@ class AddOtherQuestion: AppCompatActivity() {
         answerFields.add(newAnswerField)
     }
 
-    private fun saveQuestion() {
-        val question = createQuestionFromInput()
-
-        // Comprobar si la pregunta o el título están vacíos
-        if (question.question.isEmpty()) {
-            return
+    private fun addNewAnswerButton() {
+        // Crear el boton para añadir nuevas respuestas
+        val newButton = ImageButton(context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            foregroundGravity = Gravity.CENTER
+            background = ContextCompat.getDrawable(context, android.R.color.transparent)
+            contentDescription = getString(R.string.exit_button)
+            setImageResource(android.R.drawable.ic_input_add)
+            setOnClickListener {
+                if (answerFields.size < 5) {
+                    addNewAnswerToQuestion()
+                } else {
+                    binding.errorMessage.text = getString(R.string.error_max_answers)
+                }
+            }
         }
 
-        // Si ya existe la pregunta, mostrar un mensaje de error
-        if (viewModel.existsQuestion(question)) {
-            binding.errorMessage.text = getString(R.string.error_questions_exists)
-        } else {
-            // Guardamos la pregunta en la lista y cerramos la actividad
-            viewModel.addQuestion(question)
-            finish()
-        }
+        binding.answersLayout.addView(newButton)
     }
 
-    private fun createQuestionFromInput(): Question {
+    override fun createQuestionFromInput(): Question {
         val questionText = binding.questionQuestion.text.toString()
         val answers = answerFields.map { Answer(it.text.toString()) }
 

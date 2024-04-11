@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.databinding.ActivityMainBinding
-import com.orbys.quizz.ui.components.cards.OtherCard
-import com.orbys.quizz.ui.components.cards.SliderCard
-import com.orbys.quizz.ui.components.cards.StarsCard
-import com.orbys.quizz.ui.components.cards.YesNoCard
+import com.orbys.quizz.ui.fragments.TypesQuestionFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,8 +26,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun printFragments() {
         supportFragmentManager.beginTransaction().apply {
-            // Lista de preguntas
-            //replace(binding.fragmentListRecyclerView.id, ListFragment())
+            // Fragmento con los tipos de preguntas
+            replace(binding.fragmentContainer.id, TypesQuestionFragment())
             commit()
         }
     }

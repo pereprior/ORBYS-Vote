@@ -38,7 +38,7 @@ class HttpService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
+        return START_NOT_STICKY
     }
 
     // Inicia el servidor HTTP en un hilo separado.

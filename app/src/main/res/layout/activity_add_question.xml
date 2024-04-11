@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -31,9 +30,7 @@
             android:layout_gravity="end"
             android:background="@android:color/transparent"
             android:contentDescription="@string/exit_button"
-            android:src="@drawable/baseline_arrow_forward_24"
-            android:tint="@color/design_default_color_primary"
-            tools:ignore="UseAppTint" />
+            android:src="@drawable/baseline_arrow_forward_24" />
 
     </LinearLayout>
 
@@ -54,6 +51,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@android:color/holo_red_light" />
+
+    <!-- Layout para las respuestas -->
+    <LinearLayout
+        android:id="@+id/answersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <!-- Botón de guardar los cambios -->
     <Button
