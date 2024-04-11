@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import com.orbys.quizz.data.constants.ENDPOINT
@@ -29,7 +28,6 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     private lateinit var layoutParams: WindowManager.LayoutParams
     private var binding: ServiceLaunchQuestionBinding
 
-    private var questionText: String = "a"
     private val repository = QuestionRepositoryImpl.getInstance()
 
     // Coordenadas del widget
@@ -94,9 +92,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     }
 
     private fun bindOnQuestion() {
-        //if (questionText == "") return
-        Log.d("LaunchQuestionView", "bindOnQuestion: $questionText")
-        val question = repository.findQuestion(questionText)
+        val question = repository.question.value
         val  url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
 
         with(binding) {

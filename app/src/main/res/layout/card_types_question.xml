@@ -28,13 +28,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_margin="8dp"
-                android:contentDescription="@string/card_type_icon" />
+                android:contentDescription="@string/card_type_icon"
+                app:tint="@color/blue_selected" />
 
             <TextView
                 android:id="@+id/card_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/card_icon"
+                android:layout_toEndOf="@id/card_icon"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
                 android:textSize="18sp" />

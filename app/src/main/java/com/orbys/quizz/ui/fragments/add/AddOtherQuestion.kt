@@ -1,5 +1,6 @@
 package com.orbys.quizz.ui.fragments.add
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
@@ -66,6 +67,7 @@ class AddOtherQuestion: AddFragment() {
             background = ContextCompat.getDrawable(context, android.R.color.transparent)
             contentDescription = getString(R.string.exit_button)
             setImageResource(android.R.drawable.ic_input_add)
+            setColorFilter(ContextCompat.getColor(context, R.color.blue_selected), PorterDuff.Mode.SRC_IN)
             setOnClickListener {
                 if (answerFields.size < 5) {
                     addNewAnswerToQuestion()

@@ -3,6 +3,7 @@ package com.orbys.quizz.ui.fragments.add
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,20 +63,18 @@ abstract class AddFragment: Fragment() {
         }
 
         // Si ya existe la pregunta, mostrar un mensaje de error
-        if (viewModel.existsQuestion(question)) {
-            binding.errorMessage.text = getString(R.string.error_questions_exists)
-        } else {
+        //if (viewModel.existsQuestion(question)) {
+            //binding.errorMessage.text = getString(R.string.error_questions_exists)
+        //} else {
             // Guardamos la pregunta en la lista y cerramos la actividad
             viewModel.addQuestion(question)
 
             // Lanzar la actividad para añadir respuestas
-            val intent = Intent(context, FloatingViewService::class.java)
-            intent.putExtra("question", question.question)
-            context.startService(intent)
+            context.startService(Intent(context, FloatingViewService::class.java))
 
             activity?.finish()
             clear()
-        }
+        //}
     }
 
     private fun clear() {

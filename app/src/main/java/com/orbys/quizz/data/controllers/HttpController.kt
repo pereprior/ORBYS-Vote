@@ -45,7 +45,7 @@ class HttpController @Inject constructor(
     // Ruta para responder la pregunta lanzada por el servidor
     private fun Route.handleGetQuestionRoute() = get("$ENDPOINT/{id}") {
         userIP = call.request.origin.remoteHost
-        question = repository.findQuestion(call.parameters["id"] ?: "")
+        question = repository.getQuestion()
         val fileContent = if(repository.userNotExists(userIP)) {
             loadHtmlFile(question.answerType.name)
         } else {
@@ -62,7 +62,7 @@ class HttpController @Inject constructor(
     private fun Route.handleSubmitRoute() = post("/submit") {
         if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
-            repository.setPostInAnswerCount(question, choice)
+            repository.setPostInAnswerCount(choice)
             repository.addUserToRespondedList(userIP)
         }
 

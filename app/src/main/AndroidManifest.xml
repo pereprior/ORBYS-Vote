@@ -17,54 +17,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OrbysQuizz"
+        android:theme="@style/Base.Theme.OrbysQuizz"
         tools:targetApi="31">
 
         <!-- Actividad principal -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:theme="@style/ThemeDialog">
+            android:theme="@style/Base.Theme.OrbysQuizz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Actividad dialogo para lanzar preguntas -->
-        <activity
-            android:name=".ui.fragments.LaunchQuestionActivity"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" /> <!-- Actividad generica de dialogo para añadir preguntas -->
-        <activity
-            android:name=".ui.fragments.add.AddFragment"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" /> <!-- Actividad dialogo para añadir preguntas de si o no -->
-        <activity
-            android:name=".ui.fragments.add.AddYesNoQuestion"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" /> <!-- Actividad dialogo para añadir preguntas de estrellas -->
-        <activity
-            android:name=".ui.fragments.add.AddStarsQuestion"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad dialogo para añadir preguntas de barra progresiva -->
-        <activity
-            android:name=".ui.fragments.add.AddSliderQuestion"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" />
-
-        <!-- Actividad dialogo para añadir preguntas de tipo otro -->
-        <activity
-            android:name=".ui.fragments.add.AddOtherQuestion"
-            android:exported="false"
-            android:theme="@style/ThemeDialog" />
+        </activity>
 
         <!-- Servicio http -->
-        <service android:name=".data.services.HttpService" android:enabled="true" />
+        <service
+            android:name=".data.services.HttpService"
+            android:enabled="true" />
 
         <!-- Servicio de widgets -->
-        <service android:name=".ui.services.FloatingViewService" android:enabled="true"/>
+        <service
+            android:name=".ui.services.FloatingViewService"
+            android:enabled="true" />
+
     </application>
 
 </manifest>

@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
+import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.barColors
 
 /**
@@ -33,14 +35,15 @@ class HorizontalGraphicView(
             val right = width.toFloat() * countPercent
 
             // Pintamos la barra del grafico
-            paint.color = barColors[index]
+            val blueSelected = ContextCompat.getColor(context, R.color.blue_selected)
+            paint.color = blueSelected
             canvas.drawRect(0f, top, right, bottom, paint)
 
             // Calculamos la posicion del texto en el centro de la barra
             val x = 5f
             val y = (top + bottom) / 2 - (paint.descent() + paint.ascent()) / 2
             // Pintamos el texto en la barra segun este vacia o llena
-            paint.color = if (right == 0f) Color.BLACK else Color.WHITE
+            paint.color = if (right == 0f) Color.WHITE else Color.BLACK
             // Pintamos el texto en la barra
             canvas.drawText("${bar.answer}: ${bar.height}", x, y, paint)
         }

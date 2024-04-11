@@ -18,15 +18,14 @@ class FloatingViewService: Service() {
     override fun onCreate() {
         super.onCreate()
 
+        // Iniciamos el servicio Http de la pregunta
         startService(Intent(this, HttpService::class.java))
+
+        // Iniciamos la vista de la pregunta
+        LaunchQuestionView(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val question = intent?.getStringExtra("question") ?: ""
-
-        Log.d("FloatingViewService", "onStartCommand: $question")
-        LaunchQuestionView(this, question)
-
         return START_NOT_STICKY
     }
 

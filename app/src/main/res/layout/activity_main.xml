@@ -4,7 +4,8 @@
     android:id="@+id/main"
     android:layout_width="460dp"
     android:layout_height="560dp"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    android:background="@drawable/rounded_background" >
 
     <!-- Contenedor de los fragmentos -->
     <LinearLayout

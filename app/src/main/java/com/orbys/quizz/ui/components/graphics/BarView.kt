@@ -26,7 +26,7 @@ abstract class BarView(
     protected val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {
         textSize = TEXT_SIZE
-        color = Color.BLACK
+        color = Color.WHITE
     }
 
     // Añade una nueva barra al grafico

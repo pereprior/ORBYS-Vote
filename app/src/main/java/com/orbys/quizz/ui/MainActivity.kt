@@ -7,6 +7,7 @@ import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.fragments.TypesQuestionFragment
+import com.orbys.quizz.ui.services.FloatingViewService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        stopService(Intent(this, FloatingViewService::class.java))
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

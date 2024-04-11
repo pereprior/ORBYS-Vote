@@ -13,12 +13,12 @@ import javax.inject.Inject
 class QuestionViewModel @Inject constructor(
     private val repositoryImpl: QuestionRepositoryImpl
 ): ViewModel() {
-    fun getQuestions() = repositoryImpl.questionsList.value
+    fun getQuestions() = repositoryImpl.question.value
     fun getUpdates() = repositoryImpl.questionUpdated
-    fun existsQuestion(question: Question) = repositoryImpl.exists(question)
-    fun findQuestion(question: String) = repositoryImpl.findQuestion(question)
+    //fun existsQuestion(question: Question) = repositoryImpl.exists(question)
+    //fun findQuestion(question: String) = repositoryImpl.findQuestion(question)
     fun addQuestion(question: Question) = repositoryImpl.addQuestion(question)
-    fun deleteQuestion(question: Question) = repositoryImpl.deleteQuestion(question)
-    fun updateQuestion(oldQuestion: String, newQuestion: Question) = repositoryImpl.updateQuestion(oldQuestion, newQuestion)
+    //fun deleteQuestion(question: Question) = repositoryImpl.deleteQuestion(question)
+    //fun updateQuestion(oldQuestion: String, newQuestion: Question) = repositoryImpl.updateQuestion(oldQuestion, newQuestion)
     fun clearAnswer(question: Question) = repositoryImpl.clearAnswer(question)
 }
