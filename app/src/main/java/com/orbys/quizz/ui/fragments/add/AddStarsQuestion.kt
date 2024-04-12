@@ -29,7 +29,8 @@ class AddStarsQuestion: AddFragment() {
             Answer(4),
             Answer(5),
         ),
-        answerType = AnswerType.STARS
+        answerType = AnswerType.STARS,
+        anonymous = false
     )
 
 }

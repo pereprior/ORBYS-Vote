@@ -25,7 +25,8 @@ class AddYesNoQuestion: AddFragment() {
             Answer(this.getString(R.string.yes_aswers)),
             Answer(this.getString(R.string.no_aswers))
         ),
-        answerType = AnswerType.YESNO
+        answerType = AnswerType.YESNO,
+        multipleAnswers = true
     )
 
 }

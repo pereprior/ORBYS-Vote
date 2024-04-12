@@ -8,11 +8,9 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
-import com.orbys.quizz.R
-import com.orbys.quizz.data.constants.ENDPOINT
+import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
 import com.orbys.quizz.data.constants.SERVER_PORT
 import com.orbys.quizz.data.constants.URL_ENTRY
 import com.orbys.quizz.data.constants.host
@@ -101,7 +99,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     @OptIn(DelicateCoroutinesApi::class)
     private fun bindOnQuestion() {
         val question = questionRepository.question.value
-        val  url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
+        val  url = "$URL_ENTRY$host:$SERVER_PORT$QUESTION_ENDPOINT/${question.id}"
 
         with(binding) {
 

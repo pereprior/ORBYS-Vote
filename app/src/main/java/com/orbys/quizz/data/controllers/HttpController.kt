@@ -1,13 +1,14 @@
 package com.orbys.quizz.data.controllers
 
 import com.orbys.quizz.data.constants.ANSWER_PLACEHOLDER
-import com.orbys.quizz.data.constants.ENDPOINT
+import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
 import com.orbys.quizz.data.constants.ERROR_MESSAGE
 import com.orbys.quizz.data.constants.FILES_EXTENSION
 import com.orbys.quizz.data.constants.FILES_FOLDER
 import com.orbys.quizz.data.constants.FILES_NAME
 import com.orbys.quizz.data.constants.QUESTION_PLACEHOLDER
 import com.orbys.quizz.data.constants.SUCCESS_MESSAGE
+import com.orbys.quizz.data.constants.USER_ENDPOINT
 import com.orbys.quizz.data.constants.USER_RESPONDED_MESSAGE
 import io.ktor.http.ContentType
 import io.ktor.server.request.receiveParameters
@@ -41,12 +42,18 @@ class HttpController @Inject constructor(
         route.handleGetQuestionRoute()
         route.handleSubmitRoute()
         route.handleSuccessRoute()
+        route.handleLoginRoute()
     }
 
     // Ruta para responder la pregunta lanzada por el servidor
-    private fun Route.handleGetQuestionRoute() = get("$ENDPOINT/{id}") {
+    private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
         userIP = call.request.origin.remoteHost
         question = repository.getQuestion()
+
+        if (!question.anonymous) {
+            call.respondRedirect(USER_ENDPOINT)
+        }
+
         val fileContent = if(repository.userNotExists(userIP)) {
             loadHtmlFile(question.answerType.name)
         } else {
@@ -64,18 +71,34 @@ class HttpController @Inject constructor(
         if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["choice"]
             repository.setPostInAnswerCount(choice)
-            repository.addUserToRespondedList(userIP)
+
+            if (!question.multipleAnswers) {
+                repository.addUserToRespondedList(userIP)
+            }
         }
 
-        call.respondRedirect(ENDPOINT)
+        call.respondRedirect(QUESTION_ENDPOINT)
     }
 
     // Ruta que se muestra al usuario cuando ha respondido a la pregunta
-    private fun Route.handleSuccessRoute() = get(ENDPOINT) {
+    private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
 
         call.respondText(
             text = SUCCESS_MESSAGE,
+            contentType = ContentType.Text.Html
+        )
+    }
+
+    private fun Route.handleLoginRoute() = get(USER_ENDPOINT) {
+        if (question.anonymous) {
+            call.respondRedirect(QUESTION_ENDPOINT)
+        }
+
+        val fileContent = loadHtmlFile("login")
+
+        call.respondText(
+            text = fileContent ?: ERROR_MESSAGE,
             contentType = ContentType.Text.Html
         )
     }
@@ -111,6 +134,9 @@ class HttpController @Inject constructor(
         val answersToString = question.answers.joinToString(",") { it.answer.toString() }
         //  Reemplazar el marcador de posición en el script de la web
         content = content?.replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
+
+        val multipleChoices = if (question.multipleAnswers) "multiple" else "single"
+        content = content?.replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
 
         return content
     }

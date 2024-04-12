@@ -110,7 +110,8 @@ class AddOtherQuestion: AddFragment() {
             question = questionText,
             icon = R.drawable.baseline_menu_24,
             answers = answers,
-            answerType = AnswerType.OTHER
+            answerType = AnswerType.OTHER,
+            multipleChoice = true
         )
     }
 
