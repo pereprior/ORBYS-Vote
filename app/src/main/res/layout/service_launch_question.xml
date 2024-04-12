@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:elevation="10dp"
+    android:padding="@dimen/small_margin"
+    android:elevation="@dimen/small_margin"
     android:gravity="center_horizontal"
     android:background="@drawable/rounded_background"
     android:theme="@style/Base.Theme.OrbysQuizz">
@@ -19,24 +19,24 @@
         <ImageView
             android:id="@+id/question_type_icon"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/icon_size"
             android:layout_weight="1"
             android:layout_gravity="start"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/medium_margin"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/exit_button"
+            android:contentDescription="@string/question_type_icon"
             android:tint="@color/blue_selected"
             tools:ignore="UseAppTint" />
 
         <!-- Botón de cerrar el dialogo -->
         <ImageButton
             android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
             android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/small_margin"
             android:background="@android:color/transparent"
             android:contentDescription="@string/exit_button"
-            android:src="@drawable/baseline_arrow_forward_24"
             android:tint="@color/blue_selected"
             tools:ignore="UseAppTint" />
 
@@ -48,21 +48,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"/>
+        android:textSize="@dimen/title_font_size"
+        android:layout_marginTop="@dimen/small_margin"/>
 
     <!-- Código QR -->
     <ImageView
         android:id="@+id/qrCode"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/qr_code_size"
+        android:layout_height="@dimen/qr_code_size"
         android:contentDescription="@string/qr_code"
-        android:layout_margin="20dp" />
+        android:layout_margin="@dimen/small_margin" />
 
     <!-- Grafico con las respuestas -->
     <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
         android:id="@+id/barView"
         android:layout_width="wrap_content"
-        android:layout_height="200dp" />
+        android:layout_height="@dimen/graphic_height" />
 
 </LinearLayout>

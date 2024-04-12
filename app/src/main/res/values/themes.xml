@@ -10,7 +10,9 @@
 
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/montserrat_family</item>
+        <item name="android:textSize">@dimen/font_size</item>
 
+        <item name="android:windowCloseOnTouchOutside">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

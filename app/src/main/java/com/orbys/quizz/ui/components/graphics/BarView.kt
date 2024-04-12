@@ -5,10 +5,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Bar
-
-// Constantes para el tamaño de la barra
-private const val TEXT_SIZE = 30f
 
 /**
  * BarView es una clase que extiende de View y se utiliza para dibujar barras de graficos en un Canvas.
@@ -23,9 +21,11 @@ abstract class BarView(
     attributes: AttributeSet
 ) : View(context, attributes) {
 
+    private val fontSize = context.resources.getDimensionPixelSize(R.dimen.font_size).toFloat()
+
     protected val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {
-        textSize = TEXT_SIZE
+        textSize = fontSize
         color = Color.WHITE
     }
 

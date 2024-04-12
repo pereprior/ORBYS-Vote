@@ -10,6 +10,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.WindowManager
+import com.orbys.quizz.R
 import com.orbys.quizz.data.constants.ENDPOINT
 import com.orbys.quizz.data.constants.SERVER_PORT
 import com.orbys.quizz.data.constants.URL_ENTRY
@@ -106,6 +107,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
             this.question.text = question.question
 
             // Establece el evento de clic en el botón de cerrar.
+            closeButton.setImageResource(R.drawable.baseline_arrow_forward_24)
             closeButton.setOnClickListener {
                 windowManager.removeView(this@LaunchQuestionView)
 

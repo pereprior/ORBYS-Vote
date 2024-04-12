@@ -2,9 +2,19 @@
 <resources>
     <dimen name="rounded_background">20dp</dimen>
 
-    <integer name="column_number">3</integer>
-    <dimen name="bar_margin">20f</dimen>
-    <dimen name="type_fragment_values">16dp</dimen>
-    <dimen name="type_fragment_title_size">36sp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="activity_layout_width">260dp</dimen>
+    <dimen name="activity_layout_height">360dp</dimen>
+
+    <dimen name="icon_size">14dp</dimen>
+    <dimen name="qr_code_size">100dp</dimen>
+    <dimen name="graphic_height">100dp</dimen>
+
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="medium_margin">16dp</dimen>
+    <dimen name="large_margin">36dp</dimen>
+    <dimen name="qr_code_padding">10dp</dimen>
+
+    <dimen name="font_size">8sp</dimen>
+    <dimen name="title_font_size">12sp</dimen>
+    <dimen name="type_fragment_title_size">16sp</dimen>
 </resources>

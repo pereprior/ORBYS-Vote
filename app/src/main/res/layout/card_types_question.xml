@@ -2,51 +2,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/question_type_card"
-    android:layout_width="400dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp"
+    android:layout_marginHorizontal="@dimen/large_margin"
+    android:layout_marginVertical="@dimen/small_margin"
+    app:cardCornerRadius="@dimen/small_margin"
+    app:cardElevation="@dimen/small_margin"
     android:layout_gravity="center"
     tools:context=".ui.MainActivity" >
 
+    <!-- Layout que contiene la informacion de cada tarjeta de tipos -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+        android:orientation="vertical" >
 
+        <!-- Layout que representa el icono y el tipo de la tarjeta -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginEnd="32dp" >
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_gravity="center" >
 
+            <!-- Icono del tipo de la pregunta que representa la tarjeta -->
             <ImageView
                 android:id="@+id/card_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_centerInParent="true"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/small_margin"
                 android:contentDescription="@string/card_type_icon"
                 app:tint="@color/blue_selected" />
 
+            <!-- Nombre del tipo de pregunta que representa la tarjeta -->
             <TextView
                 android:id="@+id/card_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/card_icon"
                 android:layout_centerVertical="true"
                 android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="@dimen/title_font_size" />
 
         </RelativeLayout>
 
+        <!-- Descripcion breve del tipo de pregunta -->
         <TextView
             android:id="@+id/card_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="@dimen/font_size"
+            android:layout_marginHorizontal="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/small_margin" />
 
     </LinearLayout>
 

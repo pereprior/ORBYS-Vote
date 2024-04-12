@@ -17,7 +17,6 @@ class AddStarsQuestion: AddFragment() {
 
         binding.questionTypeIcon.setImageResource(R.drawable.baseline_star_rate_24)
 
-
     }
 
     override fun createQuestionFromInput() = Question(

@@ -2,16 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="460dp"
-    android:layout_height="560dp"
+    android:layout_width="@dimen/activity_layout_width"
+    android:layout_height="@dimen/activity_layout_height"
     tools:context=".ui.MainActivity"
     android:background="@drawable/rounded_background" >
 
-    <!-- Contenedor de los fragmentos -->
+    <!-- Contenedor de los fragmentos de la actividad-->
     <LinearLayout
         android:id="@+id/fragment_container"
-        android:layout_width="460dp"
-        android:layout_height="560dp"
+        android:layout_width="@dimen/activity_layout_width"
+        android:layout_height="@dimen/activity_layout_height"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

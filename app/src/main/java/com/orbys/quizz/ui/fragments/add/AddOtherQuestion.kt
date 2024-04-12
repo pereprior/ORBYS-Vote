@@ -63,10 +63,20 @@ class AddOtherQuestion: AddFragment() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
+
             foregroundGravity = Gravity.CENTER
             background = ContextCompat.getDrawable(context, android.R.color.transparent)
             contentDescription = getString(R.string.exit_button)
-            setImageResource(android.R.drawable.ic_input_add)
+
+            val drawable = ContextCompat.getDrawable(context, android.R.drawable.ic_input_add)
+            val originalIconSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
+            val desiredIconSize = context.resources.getDimensionPixelSize(R.dimen.icon_size)
+            val scale = desiredIconSize.toFloat() / originalIconSize
+
+            setImageDrawable(drawable)
+            scaleX = scale
+            scaleY = scale
+
             setColorFilter(ContextCompat.getColor(context, R.color.blue_selected), PorterDuff.Mode.SRC_IN)
             setOnClickListener {
                 if (answerFields.size < 5) {
