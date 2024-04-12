@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import com.orbys.quizz.R
@@ -18,10 +19,14 @@ import com.orbys.quizz.data.constants.host
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
+import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.ui.MainActivity
 import com.orbys.quizz.ui.components.utils.QRCodeGenerator
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     // Variables para gestionar la vista
@@ -29,7 +34,8 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     private lateinit var layoutParams: WindowManager.LayoutParams
     private var binding: ServiceLaunchQuestionBinding
 
-    private val repository = QuestionRepositoryImpl.getInstance()
+    private val questionRepository = QuestionRepositoryImpl.getInstance()
+    private val usersRepository = UsersRepositoryImpl.getInstance()
 
     // Coordenadas del widget
     private var x: Int = 0
@@ -92,8 +98,9 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
         )
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun bindOnQuestion() {
-        val question = repository.question.value
+        val question = questionRepository.question.value
         val  url = "$URL_ENTRY$host:$SERVER_PORT$ENDPOINT/${question.id}"
 
         with(binding) {
@@ -105,15 +112,24 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
             // Establece el texto de la pregunta.
             this.question.text = question.question
+            questionUrl.text = "URL: $url"
 
             // Establece el evento de clic en el botón de cerrar.
-            closeButton.setImageResource(R.drawable.baseline_arrow_forward_24)
             closeButton.setOnClickListener {
                 windowManager.removeView(this@LaunchQuestionView)
 
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
+            }
+
+            // Lanza una corrutina para recoger los cambios en el número de usuarios que han respondido
+            GlobalScope.launch {
+                usersRepository.getRespondedUsersCount().collect { usersList ->
+                    withContext(Dispatchers.Main) {
+                        respondedUsersCount.text = "Usuarios que han respondido: ${usersList.size}"
+                    }
+                }
             }
 
             // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en la interfaz de usuario.
@@ -123,8 +139,8 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
                 GlobalScope.launch {
                     // Recoge los cambios en count para cada respuesta
-                    answer.count.collect { newCount ->
-                        bar.height = newCount
+                    answer.count.collect { count ->
+                        bar.height = count
                         barView.invalidate()
                     }
                 }

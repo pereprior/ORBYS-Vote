@@ -41,5 +41,13 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="question_type_icon">Icono que representa el tipo de la pregunta</string>
+    <string name="error_empty_answers">No puedes guardar si hay campos vacios</string>
+    <string name="non_anonymous_question_option_text">Pregunta con usuario requerido</string>
+    <string name="anonymous_question_option_text">Pregunta anónima</string>
+    <string name="filter_users_question_option_text">Una respuesta por usuario</string>
+    <string name="non_filter_users_question_option_text">Varias respuestas por usuario</string>
+    <string name="single_answer_question_option_text">Respuesta única</string>
+    <string name="multi_answer_question_option_text">Respuesta múltiple</string>
+    <string name="timeout_question_option_text">Tiempo límite</string>
 
 </resources>

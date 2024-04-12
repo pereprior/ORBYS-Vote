@@ -1,6 +1,6 @@
 package com.orbys.quizz.domain.repositories
 
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Clase que gestiona los usuarios que han respondido las preguntas.
@@ -25,14 +25,15 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
     }
 
     // Flujo de usuarios que han respondido
-    private var respondedUsers = MutableSharedFlow<MutableList<String>>(replay = 1)
+    private var respondedUsers = MutableStateFlow(listOf<String>())
 
     override fun exists(user: String) = respondedUsers.replayCache.firstOrNull()?.contains(user) ?: false
-    override fun clearRespondedUsers() { respondedUsers.tryEmit(mutableListOf()) }
+    override fun clearRespondedUsers() { respondedUsers.tryEmit(listOf()) }
+    override fun getRespondedUsersCount() = respondedUsers
     override fun addRespondedUser(user: String) {
-        val users = respondedUsers.replayCache.firstOrNull() ?: mutableListOf()
+        val users = respondedUsers.value.toMutableList()
         users.add(user)
-        respondedUsers.tryEmit(users)
+        respondedUsers.value = users.toList()
     }
 
 }

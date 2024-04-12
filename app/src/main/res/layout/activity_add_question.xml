@@ -1,80 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/medium_margin"
-    android:elevation="@dimen/small_margin"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:padding="@dimen/medium_margin"
+        android:elevation="@dimen/small_margin"
+        android:gravity="center">
 
-        <!-- Icono con el tipo de la pregunta a crear -->
-        <ImageView
-            android:id="@+id/question_type_icon"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/icon_size"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_gravity="start"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/exit_button"
-            app:tint="@color/blue_selected"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-        <!-- Botón de cerrar el dialogo -->
-        <ImageButton
-            android:id="@+id/close_button"
-            android:layout_width="@dimen/icon_size"
-            android:layout_height="@dimen/icon_size"
-            android:layout_gravity="end"
-            app:tint="@color/blue_selected"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/exit_button"
-            android:src="@drawable/baseline_arrow_forward_24" />
+            <!-- Icono con el tipo de la pregunta a crear -->
+            <ImageView
+                android:id="@+id/question_type_icon"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/icon_size"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_gravity="start"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button"
+                app:tint="@color/blue_selected"/>
+
+            <!-- Botón de cerrar el dialogo -->
+            <ImageButton
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/exit_button"
+                android:src="@drawable/baseline_arrow_forward_24"
+                app:tint="@color/blue_selected" />
+
+        </LinearLayout>
+
+        <!-- Text Field para la pregunta -->
+        <EditText
+            android:id="@+id/question_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/question_question"
+            android:inputType="text"
+            android:autofillHints=""
+            android:textSize="@dimen/font_size"
+            android:layout_marginTop="@dimen/small_margin"
+            android:maxLength="50" />
+
+        <!-- Mensaje de error -->
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size"
+            android:textColor="@android:color/holo_red_light" />
+
+        <!-- Layout para añadir respuestas personalizadas -->
+        <LinearLayout
+            android:id="@+id/answersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Radio button para hacer las preguntas anonimas -->
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <RadioButton android:id="@+id/non_anonymous_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/non_anonymous_question_option_text"/>
+            <RadioButton android:id="@+id/anonymous_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/anonymous_question_option_text"/>
+        </RadioGroup>
+
+        <!-- Linea para dividir los distintos grupos de radio button -->
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Radio button para hacer que se pueda responder varias veces -->
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/filter_users_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_users_question_option_text"/>
+            <RadioButton android:id="@+id/non_filter_users_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/non_filter_users_question_option_text"/>
+        </RadioGroup>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Radio button para hacer que las preguntas sean de multiple respuesta -->
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/single_answer_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/single_answer_question_option_text"/>
+            <RadioButton android:id="@+id/multi_answer_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/multi_answer_question_option_text"/>
+        </RadioGroup>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Casilla para hacer establecer tiempo limite para responder -->
+        <CheckBox android:id="@+id/timeout_question_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/timeout_question_option_text" />
+
+        <!-- Botón de guardar los cambios -->
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:textSize="@dimen/title_font_size"
+            android:text="@string/save_button"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <!-- Text Field para la pregunta -->
-    <EditText
-        android:id="@+id/question_question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/question_question"
-        android:inputType="text"
-        android:autofillHints=""
-        android:textSize="@dimen/title_font_size"
-        android:layout_marginTop="@dimen/small_margin" />
-
-    <!-- Mensaje de error -->
-    <TextView
-        android:id="@+id/error_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/font_size"
-        android:textColor="@android:color/holo_red_light" />
-
-    <!-- Layout para las respuestas -->
-    <LinearLayout
-        android:id="@+id/answersLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-
-    <!-- Botón de guardar los cambios -->
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/large_margin"
-        android:textSize="@dimen/title_font_size"
-        android:text="@string/save_button"
-        android:textAlignment="center"
-        android:textStyle="bold" />
-
-</LinearLayout>
+</ScrollView>

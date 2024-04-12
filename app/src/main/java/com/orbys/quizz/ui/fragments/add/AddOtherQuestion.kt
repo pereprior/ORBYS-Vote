@@ -1,7 +1,9 @@
 package com.orbys.quizz.ui.fragments.add
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.InputType
 import android.view.Gravity
 import android.view.View
@@ -49,6 +51,7 @@ class AddOtherQuestion: AddFragment() {
             hint = getString(R.string.question_answer)
             inputType = InputType.TYPE_CLASS_TEXT
             id = View.generateViewId()
+            filters = arrayOf(InputFilter.LengthFilter(50))
         }
 
         // Agregar el nuevo campo de texto al layout y a la lista de campos de texto
@@ -88,6 +91,15 @@ class AddOtherQuestion: AddFragment() {
         }
 
         binding.answersLayout.addView(newButton)
+    }
+
+    override fun saveQuestion(context: Context) {
+        if (answerFields.any { it.text.isEmpty() }) {
+            binding.errorMessage.text = getString(R.string.error_empty_answers)
+            return
+        }
+
+        super.saveQuestion(context)
     }
 
     override fun createQuestionFromInput(): Question {

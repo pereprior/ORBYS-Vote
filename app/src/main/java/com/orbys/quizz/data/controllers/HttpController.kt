@@ -8,6 +8,7 @@ import com.orbys.quizz.data.constants.FILES_FOLDER
 import com.orbys.quizz.data.constants.FILES_NAME
 import com.orbys.quizz.data.constants.QUESTION_PLACEHOLDER
 import com.orbys.quizz.data.constants.SUCCESS_MESSAGE
+import com.orbys.quizz.data.constants.USER_RESPONDED_MESSAGE
 import io.ktor.http.ContentType
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respondRedirect
@@ -49,7 +50,7 @@ class HttpController @Inject constructor(
         val fileContent = if(repository.userNotExists(userIP)) {
             loadHtmlFile(question.answerType.name)
         } else {
-            SUCCESS_MESSAGE
+            USER_RESPONDED_MESSAGE
         }
 
         call.respondText(
