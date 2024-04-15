@@ -16,7 +16,7 @@ class AddSliderQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            binding.questionTypeIcon.setImageResource(R.drawable.baseline_space_bar_24)
+            binding.questionTypeIcon.setImageResource(R.drawable.ic_slider)
             multiAnswerGroup.visibility = View.GONE
             multiAnswerDivider.visibility = View.GONE
         }
@@ -24,7 +24,7 @@ class AddSliderQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.baseline_space_bar_24,
+        icon = R.drawable.ic_slider,
         answers = listOf(
             Answer(1),
             Answer(2),

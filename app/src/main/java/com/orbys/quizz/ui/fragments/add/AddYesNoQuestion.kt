@@ -16,7 +16,7 @@ class AddYesNoQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            questionTypeIcon.setImageResource(R.drawable.baseline_done_all_24)
+            questionTypeIcon.setImageResource(R.drawable.ic_yesno)
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
@@ -26,7 +26,7 @@ class AddYesNoQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.baseline_done_all_24,
+        icon = R.drawable.ic_yesno,
         answers = listOf(
             Answer(this.getString(R.string.yes_aswers)),
             Answer(this.getString(R.string.no_aswers))

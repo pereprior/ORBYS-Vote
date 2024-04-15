@@ -37,6 +37,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
 
     val question: StateFlow<Question> = _question
     val questionUpdated: SharedFlow<Unit> = _questionUpdated
+    val timeOut: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     // Metodos para buscar preguntas dentro de la lista
     /*override fun exists(question: Question) = _questionsList.value.any { it.question == question.question }
@@ -48,19 +49,6 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
         _question.value = question
         _questionUpdated.tryEmit(Unit)
     }
-    /*override fun deleteQuestion(question: Question) {
-        _question.value.remove(question)
-        _questionUpdated.tryEmit(Unit)
-    }
-    fun updateQuestion(oldQuestion: String, newQuestion: Question) {
-        val index = _question.value.indexOfFirst { it.question == oldQuestion }
-
-        // Si la pregunta existe, actualizamos la pregunta
-        if (index != -1) {
-            _question.value[index].question = newQuestion.question
-            _questionUpdated.tryEmit(Unit)
-        }
-    }*/
 
     // Métodos para gestionar el contador de respuestas de una pregunta
     override fun clearAnswer(question: Question) {
@@ -73,6 +61,14 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
             }
         }
 
+    }
+
+    fun timeOut() {
+        timeOut.tryEmit(true)
+    }
+
+    fun resetTimeOut() {
+        timeOut.tryEmit(false)
     }
 
 }

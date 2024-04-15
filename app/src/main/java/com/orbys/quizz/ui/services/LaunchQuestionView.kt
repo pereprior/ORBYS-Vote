@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
-import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -59,6 +58,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.addView(this, layoutParams)
+        questionRepository.resetTimeOut()
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {

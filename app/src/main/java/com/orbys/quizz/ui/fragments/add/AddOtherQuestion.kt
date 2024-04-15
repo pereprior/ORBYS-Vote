@@ -108,7 +108,7 @@ class AddOtherQuestion: AddFragment() {
 
         return Question(
             question = questionText,
-            icon = R.drawable.baseline_menu_24,
+            icon = R.drawable.ic_others,
             answers = answers,
             answerType = AnswerType.OTHER,
             isAnonymous = binding.anonymousQuestionOption.isChecked,

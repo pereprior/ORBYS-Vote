@@ -6,9 +6,15 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.Chronometer
+import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.data.services.HttpService
+import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
+import com.orbys.quizz.ui.viewModels.QuestionViewModel
+import javax.inject.Inject
 
 class CountDownChronometer : Chronometer {
+
+    private val repository = QuestionRepositoryImpl.getInstance()
 
     private var timeInMillis: Long = 0
     private var countDownTimer: CountDownTimer? = null
@@ -23,6 +29,7 @@ class CountDownChronometer : Chronometer {
 
     fun startCountDown() {
         base = SystemClock.elapsedRealtime() + timeInMillis
+        repository.resetTimeOut()
 
         countDownTimer = object : CountDownTimer(timeInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -32,7 +39,7 @@ class CountDownChronometer : Chronometer {
             override fun onFinish() {
                 stop()
                 text = ": TIME OUT"
-                context.stopService(Intent(context, HttpService::class.java))
+                repository.timeOut()
             }
         }.start()
     }

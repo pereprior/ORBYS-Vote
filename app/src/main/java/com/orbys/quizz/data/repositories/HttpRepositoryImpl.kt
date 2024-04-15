@@ -16,7 +16,7 @@ class HttpRepositoryImpl @Inject constructor(
 ): IHttpRepository {
     fun getQuestion() = questionRepository.question.value
     fun setUserResponded(ip: String) = usersRepository.setUserResponded(ip)
-
+    fun timeOut() = questionRepository.timeOut
 
     // Incrementa el contador de respuestas
     override fun setPostInAnswerCount(answer: String?) {

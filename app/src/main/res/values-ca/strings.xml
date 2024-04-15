@@ -19,4 +19,17 @@
     <string name="bar_desc" translatable="true">Preguntes de puntuació per marcar un punt en una barra de progrés</string>
     <string name="other_title" translatable="true">Altres</string>
     <string name="other_desc" translatable="true">Preguntes personalitzades amb tres possibles respostes</string>
+
+    <string name="error_empty_answers">No pots desar si hi ha camps buits</string>
+    <string name="non_anonymous_question_option_text">Pregunta amb usuari requerit</string>
+    <string name="anonymous_question_option_text">Pregunta anònima</string>
+    <string name="filter_users_question_option_text">Una resposta per usuari</string>
+    <string name="non_filter_users_question_option_text">Vàries respostes per usuari</string>
+    <string name="single_answer_question_option_text">Resposta única</string>
+    <string name="multi_answer_question_option_text">Respostes múltiples</string>
+    <string name="timeout_question_option_text">Temps límit</string>
+    <string name="timeout_hint">Temps en minuts:</string>
+    <string name="chronometer_title">Temps restant</string>
+
+
 </resources>

@@ -37,7 +37,7 @@
                 android:layout_gravity="end"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/exit_button"
-                android:src="@drawable/baseline_arrow_forward_24"
+                android:src="@drawable/ic_close"
                 app:tint="@color/blue_selected" />
 
         </LinearLayout>

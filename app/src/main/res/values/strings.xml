@@ -10,6 +10,8 @@
     <string name="launch_button" translatable="false">Boton para lanzar una pregunta a ser contestada</string>
     <string name="edit_button" translatable="false">Boton para editar una pregunta</string>
     <string name="card_type_icon" translatable="false">Icono de cada tipo de pregunta</string>
+    <string name="question_type_icon" translatable="false">Icono que representa el tipo de la pregunta</string>
+
 
     <!-- Add dialog hint -->
     <string name="question_answer">Answer:</string>
@@ -37,19 +39,16 @@
     <string name="bar_desc">Score type of questions to mark a point on a progression bar</string>
     <string name="other_title">Others</string>
     <string name="other_desc">Custom type of questions with three possible answers</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="app_widget_description">This is an app widget description</string>
-    <string name="question_type_icon">Icono que representa el tipo de la pregunta</string>
-    <string name="error_empty_answers">No puedes guardar si hay campos vacios</string>
-    <string name="non_anonymous_question_option_text">Pregunta con usuario requerido</string>
-    <string name="anonymous_question_option_text">Pregunta anónima</string>
-    <string name="filter_users_question_option_text">Una respuesta por usuario</string>
-    <string name="non_filter_users_question_option_text">Varias respuestas por usuario</string>
-    <string name="single_answer_question_option_text">Respuesta única</string>
-    <string name="multi_answer_question_option_text">Respuesta múltiple</string>
-    <string name="timeout_question_option_text">Tiempo límite</string>
-    <string name="timeout_hint">Tiempo en minutos:</string>
-    <string name="chronometer_title">Tiempo restante</string>
+
+    <string name="error_empty_answers">You can\'t save if there are empty fields</string>
+    <string name="non_anonymous_question_option_text">Question with required user</string>
+    <string name="anonymous_question_option_text">Anonymous question</string>
+    <string name="filter_users_question_option_text">One response per user</string>
+    <string name="non_filter_users_question_option_text">Multiple responses per user</string>
+    <string name="single_answer_question_option_text">Single answer</string>
+    <string name="multi_answer_question_option_text">Multiple answers</string>
+    <string name="timeout_question_option_text">Time limit</string>
+    <string name="timeout_hint">Time in minutes:</string>
+    <string name="chronometer_title">Time remaining</string>
 
 </resources>

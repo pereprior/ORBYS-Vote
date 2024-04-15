@@ -16,7 +16,7 @@ class AddStarsQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            binding.questionTypeIcon.setImageResource(R.drawable.baseline_star_rate_24)
+            binding.questionTypeIcon.setImageResource(R.drawable.ic_star)
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
@@ -26,7 +26,7 @@ class AddStarsQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.baseline_star_rate_24,
+        icon = R.drawable.ic_star,
         answers = listOf(
             Answer(1),
             Answer(2),

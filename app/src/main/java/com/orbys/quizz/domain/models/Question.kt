@@ -7,7 +7,7 @@ data class Question(
     var question: String,
     val answerType: AnswerType = AnswerType.NONE,
     val answers: List<Answer> = emptyList(),
-    val icon: Int = R.drawable.baseline_help_24,
+    val icon: Int = R.drawable.ic_help,
     val isAnonymous: Boolean = true,
     val isMultipleAnswers: Boolean = false,
     val isMultipleChoices: Boolean = false,
