@@ -8,9 +8,9 @@ data class Question(
     val answerType: AnswerType = AnswerType.NONE,
     val answers: List<Answer> = emptyList(),
     val icon: Int = R.drawable.baseline_help_24,
-    val anonymous: Boolean = true,
-    val multipleAnswers: Boolean = false,
-    val multipleChoice: Boolean = false,
+    val isAnonymous: Boolean = true,
+    val isMultipleAnswers: Boolean = false,
+    val isMultipleChoices: Boolean = false,
     val timeOut: Int? = null,
 ) {
     // Id autonumerico de la pregunta.

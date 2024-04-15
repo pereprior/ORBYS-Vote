@@ -15,7 +15,11 @@ class AddSliderQuestion: AddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.questionTypeIcon.setImageResource(R.drawable.baseline_space_bar_24)
+        with(binding) {
+            binding.questionTypeIcon.setImageResource(R.drawable.baseline_space_bar_24)
+            multiAnswerGroup.visibility = View.GONE
+            multiAnswerDivider.visibility = View.GONE
+        }
     }
 
     override fun createQuestionFromInput() = Question(
@@ -29,8 +33,9 @@ class AddSliderQuestion: AddFragment() {
             Answer(5),
         ),
         answerType = AnswerType.BAR,
-        anonymous = binding.anonymousQuestionOption.isChecked,
-        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
+        isAnonymous = binding.anonymousQuestionOption.isChecked,
+        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
+        isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
     )
 
 }

@@ -56,7 +56,7 @@ class HttpController @Inject constructor(
         question = repository.getQuestion()
 
         // Si la pregunta no es anonima y el usuario aun no existe, redirigir a la ruta de login
-        if (!question.anonymous) {
+        if (!question.isAnonymous) {
 
             if (repository.userNotExists(userIP)) {
                 call.respondRedirect(USER_ENDPOINT)
@@ -64,7 +64,7 @@ class HttpController @Inject constructor(
 
         }
 
-        val fileContent = if(repository.userResponded(userIP)) {
+        val fileContent = if(repository.userResponded(userIP) && !question.isMultipleAnswers) {
             USER_RESPONDED_MESSAGE
         } else {
             loadHtmlFile(question.answerType.name)
@@ -79,9 +79,14 @@ class HttpController @Inject constructor(
     // Ruta que recibe la respuesta a la pregunta
     private fun Route.handleSubmitRoute() = post("/submit") {
         val choice = call.receiveParameters()["choice"]
-        Log.d("Submit Choice", choice.toString())
+        Log.d("HttpController:", "Choice: $choice")
         repository.setPostInAnswerCount(choice)
-        repository.setUserResponded(userIP)
+
+        if (repository.userNotExists(userIP)) {
+            repository.addUserToRespondedList(User(userIP, username, true))
+        } else {
+            repository.setUserResponded(userIP)
+        }
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
@@ -90,6 +95,10 @@ class HttpController @Inject constructor(
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
 
+        if (question.isMultipleAnswers) {
+            call.respondRedirect("$QUESTION_ENDPOINT/{id}")
+        }
+
         call.respondText(
             text = SUCCESS_MESSAGE,
             contentType = ContentType.Text.Html
@@ -97,7 +106,7 @@ class HttpController @Inject constructor(
     }
 
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
-        if (question.anonymous) {
+        if (question.isAnonymous) {
             call.respondRedirect(QUESTION_ENDPOINT)
         }
 
@@ -153,8 +162,8 @@ class HttpController @Inject constructor(
         //  Reemplazar el marcador de posición en el script de la web
         content = content?.replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
 
-        val multipleChoices = if (question.multipleAnswers) "multiple" else "single"
-        content = content?.replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
+        val multipleChoices = if (question.isMultipleChoices) "multiple" else "single"
+        Log.d("HttpController:", "Type choice: $multipleChoices")
 
         return content
     }

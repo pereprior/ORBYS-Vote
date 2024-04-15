@@ -15,7 +15,13 @@ class AddYesNoQuestion: AddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.questionTypeIcon.setImageResource(R.drawable.baseline_done_all_24)
+        with(binding) {
+            questionTypeIcon.setImageResource(R.drawable.baseline_done_all_24)
+            filterUsersGroup.visibility = View.GONE
+            filterUsersDivider.visibility = View.GONE
+            multiAnswerGroup.visibility = View.GONE
+            multiAnswerDivider.visibility = View.GONE
+        }
     }
 
     override fun createQuestionFromInput() = Question(
@@ -26,7 +32,7 @@ class AddYesNoQuestion: AddFragment() {
             Answer(this.getString(R.string.no_aswers))
         ),
         answerType = AnswerType.YESNO,
-        anonymous = binding.anonymousQuestionOption.isChecked,
+        isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )
 

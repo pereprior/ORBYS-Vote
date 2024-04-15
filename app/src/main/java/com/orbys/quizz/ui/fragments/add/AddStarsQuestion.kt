@@ -15,8 +15,13 @@ class AddStarsQuestion: AddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.questionTypeIcon.setImageResource(R.drawable.baseline_star_rate_24)
-
+        with(binding) {
+            binding.questionTypeIcon.setImageResource(R.drawable.baseline_star_rate_24)
+            filterUsersGroup.visibility = View.GONE
+            filterUsersDivider.visibility = View.GONE
+            multiAnswerGroup.visibility = View.GONE
+            multiAnswerDivider.visibility = View.GONE
+        }
     }
 
     override fun createQuestionFromInput() = Question(
@@ -30,7 +35,7 @@ class AddStarsQuestion: AddFragment() {
             Answer(5),
         ),
         answerType = AnswerType.STARS,
-        anonymous = binding.anonymousQuestionOption.isChecked,
+        isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )
 

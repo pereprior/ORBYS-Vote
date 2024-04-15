@@ -88,6 +88,16 @@
             background-color: #4B0082;
             color: white;
         }
+
+        input[type="checkbox"] + label {
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 3em;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.5);
+        }
     </style>
 </head>
 <body>
@@ -104,71 +114,89 @@
     <button type="submit">Enviar</button>
 </form>
 
-<script>
-    // Lista con las respuestas de la pregunta
-    var answers = "ANSWERS_STRING_PLACEHOLDER".split(",");
-    var choices = "MULTIPLE_CHOICES_PLACEHOLDER"
-    // El div donde se van a poner los botones
-    var div = document.getElementById('answers');
+    <script>
+        // Lista con las respuestas de la pregunta
+        var answers = "ANSWERS_STRING_PLACEHOLDER".split(",");
+        var choices = "MULTIPLE_CHOICES_PLACEHOLDER"
+        // El div donde se van a poner los botones
+        var div = document.getElementById('answers');
 
-    // Para cada respuesta, crea un boton y se añade al div
-    for (var i = 0; i < answers.length; i++) {
-        // Crea el boton
-        var radioButton = document.createElement('input');
-        radioButton.type = 'radio';
-        radioButton.name = 'choice';
-        radioButton.value = answers[i];
-        radioButton.id = 'btn' + i;
+        if (choices == "single") {
 
-        // Crea el texto del boton
-        var label = document.createElement('label');
-        label.htmlFor = radioButton.id;
-        label.textContent = answers[i];
+            for (var i = 0; i < answers.length; i++) {
+                // Crea el boton
+                var radioButton = document.createElement('input');
+                radioButton.type = 'radio';
+                radioButton.name = 'choice';
+                radioButton.value = answers[i];
+                radioButton.id = 'btn' + i;
 
-        div.appendChild(radioButton);
-        div.appendChild(label);
-    }
+                // Crea el texto del boton
+                var label = document.createElement('label');
+                label.htmlFor = radioButton.id;
+                label.textContent = answers[i];
 
-    // Si es multiple choice, permite seleccionar multiples botones de radio
-    if (choices === "multiple") {
-        var radios = document.querySelectorAll('input[type="radio"]');
-        radios.forEach(function(radio) {
-            radio.addEventListener('click', function() {
-                this.checked = !this.dataset.checked;
-                this.dataset.checked = this.checked;
-            });
-        });
-    }
-
-    // El codigo se ejecuta cuando pulso el boton enviar
-    document.getElementById('myForm').onsubmit = function(event) {
-        // Evita que se envien datos vacios o por defecto
-        event.preventDefault();
-
-        // Obtenemos el valor del boton seleccionado
-        var choices = Array.from(document.querySelectorAll('input[name="choice"][data-checked="true"]')).map(input => input.value);
-
-        // Realizamos la peticion POST al servidor
-        fetch(
-            '/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'choice=' + encodeURIComponent(choices.join(',')),
+                div.appendChild(radioButton);
+                div.appendChild(label);
             }
-        ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
-            .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
-            .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-            console.log('Respuesta recibida: ', text);
-            window.location.href = '/question';
-        }) // Si ocurre algun error, lo mostramos en la consola
-            .catch(console.error);
-    };
 
-    // Impide que el usuario pueda volver despues de votar
-    window.onload = function() {
-        window.history.replaceState({}, document.title, "/question");
-    }
-</script>
+            var radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(function(radio) {
+                radio.addEventListener('click', function() {
+                    this.dataset.checked = this.checked ? 'true' : 'false';
+                });
+            });
+
+        } else {
+
+            for (var i = 0; i < answers.length; i++) {
+                // Crea el boton
+                var checkboxButton = document.createElement('input');
+                checkboxButton.type = 'checkbox';
+                checkboxButton.name = 'choice';
+                checkboxButton.value = answers[i];
+                checkboxButton.id = 'btn' + i;
+
+                // Crea el texto del boton
+                var label = document.createElement('label');
+                label.htmlFor = checkboxButton.id;
+                label.textContent = answers[i];
+
+                div.appendChild(checkboxButton);
+                div.appendChild(label);
+            }
+
+        }
+
+        // El codigo se ejecuta cuando pulso el boton enviar
+        document.getElementById('myForm').onsubmit = function(event) {
+            // Evita que se envien datos vacios o por defecto
+            event.preventDefault();
+
+            // Obtenemos el valor del boton seleccionado
+            var choices = Array.from(document.querySelectorAll('input[name="choice"]:checked')).map(input => input.value);
+
+            // Realizamos la peticion POST al servidor
+            fetch(
+                '/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'choice=' + encodeURIComponent(choices.join(',')),
+                }
+            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+                .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+                .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
+                console.log('Respuesta recibida: ', text);
+                window.location.href = '/question';
+            }) // Si ocurre algun error, lo mostramos en la consola
+                .catch(console.error);
+        };
+
+        // Impide que el usuario pueda volver despues de votar
+        window.onload = function() {
+            window.history.replaceState({}, document.title, "/question");
+        }
+    </script>
 
 </body>
 </html>
