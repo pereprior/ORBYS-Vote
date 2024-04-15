@@ -1,5 +1,6 @@
 package com.orbys.quizz.data.controllers
 
+import android.util.Log
 import com.orbys.quizz.data.constants.ANSWER_PLACEHOLDER
 import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
 import com.orbys.quizz.data.constants.ERROR_MESSAGE
@@ -19,6 +20,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.domain.models.User
 import io.ktor.server.application.call
 import io.ktor.server.plugins.origin
 import java.util.Locale
@@ -36,12 +38,15 @@ class HttpController @Inject constructor(
     private lateinit var userIP: String
     // Pregunta lanzada por el servidor
     private lateinit var question: Question
+    private var username = ""
 
     // Configuración de las rutas del servidor
     fun setupRoutes(route: Route) {
         route.handleGetQuestionRoute()
         route.handleSubmitRoute()
         route.handleSuccessRoute()
+
+        route.handleNewUserRoute()
         route.handleLoginRoute()
     }
 
@@ -50,14 +55,19 @@ class HttpController @Inject constructor(
         userIP = call.request.origin.remoteHost
         question = repository.getQuestion()
 
+        // Si la pregunta no es anonima y el usuario aun no existe, redirigir a la ruta de login
         if (!question.anonymous) {
-            call.respondRedirect(USER_ENDPOINT)
+
+            if (repository.userNotExists(userIP)) {
+                call.respondRedirect(USER_ENDPOINT)
+            }
+
         }
 
-        val fileContent = if(repository.userNotExists(userIP)) {
-            loadHtmlFile(question.answerType.name)
-        } else {
+        val fileContent = if(repository.userResponded(userIP)) {
             USER_RESPONDED_MESSAGE
+        } else {
+            loadHtmlFile(question.answerType.name)
         }
 
         call.respondText(
@@ -68,14 +78,10 @@ class HttpController @Inject constructor(
 
     // Ruta que recibe la respuesta a la pregunta
     private fun Route.handleSubmitRoute() = post("/submit") {
-        if (repository.userNotExists(userIP)) {
-            val choice = call.receiveParameters()["choice"]
-            repository.setPostInAnswerCount(choice)
-
-            if (!question.multipleAnswers) {
-                repository.addUserToRespondedList(userIP)
-            }
-        }
+        val choice = call.receiveParameters()["choice"]
+        Log.d("Submit Choice", choice.toString())
+        repository.setPostInAnswerCount(choice)
+        repository.setUserResponded(userIP)
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
@@ -90,7 +96,7 @@ class HttpController @Inject constructor(
         )
     }
 
-    private fun Route.handleLoginRoute() = get(USER_ENDPOINT) {
+    private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
         if (question.anonymous) {
             call.respondRedirect(QUESTION_ENDPOINT)
         }
@@ -101,6 +107,18 @@ class HttpController @Inject constructor(
             text = fileContent ?: ERROR_MESSAGE,
             contentType = ContentType.Text.Html
         )
+    }
+
+    private fun Route.handleLoginRoute() = post("/login") {
+        if (repository.userNotExists(userIP)) {
+            val choice = call.receiveParameters()["user"]
+
+            username = choice ?: ""
+            repository.addUserToRespondedList(User(userIP, username))
+            username = ""
+        }
+
+        call.respondRedirect("$QUESTION_ENDPOINT/{id}")
     }
 
     /**

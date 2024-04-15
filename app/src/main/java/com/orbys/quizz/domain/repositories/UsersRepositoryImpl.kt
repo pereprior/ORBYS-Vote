@@ -1,5 +1,6 @@
 package com.orbys.quizz.domain.repositories
 
+import com.orbys.quizz.domain.models.User
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -25,12 +26,20 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
     }
 
     // Flujo de usuarios que han respondido
-    private var respondedUsers = MutableStateFlow(listOf<String>())
+    private var respondedUsers = MutableStateFlow(listOf<User>())
 
-    override fun exists(user: String) = respondedUsers.replayCache.firstOrNull()?.contains(user) ?: false
+    override fun exists(ip: String) = respondedUsers.value.any { it.ip == ip }
+    fun usersResponded(ip: String): Boolean = respondedUsers.value.any { it.ip == ip && it.responded }
     override fun clearRespondedUsers() { respondedUsers.tryEmit(listOf()) }
     override fun getRespondedUsersCount() = respondedUsers
-    override fun addRespondedUser(user: String) {
+    fun setUserResponded(ip: String) {
+        val users = respondedUsers.value.toMutableList()
+        users.find { it.ip == ip }?.responded = true
+        respondedUsers.value = users.toList()
+    }
+    override fun addRespondedUser(user: User) {
+        if (exists(user.ip)) return
+
         val users = respondedUsers.value.toMutableList()
         users.add(user)
         respondedUsers.value = users.toList()

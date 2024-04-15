@@ -75,55 +75,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+            <RadioButton android:id="@+id/anonymous_question_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/anonymous_question_option_text"/>
+
             <RadioButton android:id="@+id/non_anonymous_question_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/non_anonymous_question_option_text"/>
-            <RadioButton android:id="@+id/anonymous_question_option"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/anonymous_question_option_text"/>
         </RadioGroup>
 
         <!-- Linea para dividir los distintos grupos de radio button -->
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Radio button para hacer que se pueda responder varias veces -->
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/filter_users_question_option"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_users_question_option_text"/>
-            <RadioButton android:id="@+id/non_filter_users_question_option"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/non_filter_users_question_option_text"/>
-        </RadioGroup>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Radio button para hacer que las preguntas sean de multiple respuesta -->
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/single_answer_question_option"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/single_answer_question_option_text"/>
-            <RadioButton android:id="@+id/multi_answer_question_option"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/multi_answer_question_option_text"/>
-        </RadioGroup>
-
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

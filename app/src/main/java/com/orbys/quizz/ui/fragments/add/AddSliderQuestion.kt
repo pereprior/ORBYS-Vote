@@ -28,7 +28,8 @@ class AddSliderQuestion: AddFragment() {
             Answer(4),
             Answer(5),
         ),
-        answerType = AnswerType.BAR
+        answerType = AnswerType.BAR,
+        anonymous = binding.anonymousQuestionOption.isChecked
     )
 
 }

@@ -26,7 +26,7 @@ class AddYesNoQuestion: AddFragment() {
             Answer(this.getString(R.string.no_aswers))
         ),
         answerType = AnswerType.YESNO,
-        multipleAnswers = true
+        anonymous = binding.anonymousQuestionOption.isChecked
     )
 
 }

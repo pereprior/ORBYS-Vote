@@ -129,20 +129,31 @@
         div.appendChild(label);
     }
 
+    // Si es multiple choice, permite seleccionar multiples botones de radio
+    if (choices === "multiple") {
+        var radios = document.querySelectorAll('input[type="radio"]');
+        radios.forEach(function(radio) {
+            radio.addEventListener('click', function() {
+                this.checked = !this.dataset.checked;
+                this.dataset.checked = this.checked;
+            });
+        });
+    }
+
     // El codigo se ejecuta cuando pulso el boton enviar
     document.getElementById('myForm').onsubmit = function(event) {
         // Evita que se envien datos vacios o por defecto
         event.preventDefault();
 
         // Obtenemos el valor del boton seleccionado
-        var choice = document.querySelector('input[name="choice"]:checked').value;
+        var choices = Array.from(document.querySelectorAll('input[name="choice"][data-checked="true"]')).map(input => input.value);
 
         // Realizamos la peticion POST al servidor
         fetch(
             '/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'choice=' + encodeURIComponent(choice),
+                body: 'choice=' + encodeURIComponent(choices.join(',')),
             }
         ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
             .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))

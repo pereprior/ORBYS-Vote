@@ -30,7 +30,7 @@ class AddStarsQuestion: AddFragment() {
             Answer(5),
         ),
         answerType = AnswerType.STARS,
-        anonymous = false
+        anonymous = binding.anonymousQuestionOption.isChecked
     )
 
 }
