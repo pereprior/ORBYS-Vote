@@ -1,32 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/small_margin"
     android:elevation="@dimen/small_margin"
     android:gravity="center_horizontal"
-    android:background="@drawable/rounded_background"
+    android:background="@android:color/transparent"
     android:theme="@style/Base.Theme.OrbysQuizz">
 
+    <!-- Layout que contiene la información para entrar al servidor -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="@dimen/small_margin"
+        android:background="@drawable/rounded_background" >
 
         <!-- Icono con el tipo de la pregunta a crear -->
         <ImageView
             android:id="@+id/question_type_icon"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/icon_size"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="start"
+            android:layout_gravity="end"
             android:layout_marginStart="@dimen/medium_margin"
             android:background="@android:color/transparent"
             android:contentDescription="@string/question_type_icon"
             android:tint="@color/blue_selected"
             tools:ignore="UseAppTint" />
+
+        <!-- Texto para la pregunta -->
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/title_font_size"
+            android:layout_marginTop="@dimen/small_margin"/>
+
+        <!-- Código QR -->
+        <ImageView
+            android:id="@+id/qrCode"
+            android:layout_width="@dimen/qr_code_size"
+            android:layout_height="@dimen/qr_code_size"
+            android:contentDescription="@string/qr_code"
+            android:layout_margin="@dimen/small_margin" />
+
+        <!-- Texto para la url para acceder al servicio http -->
+        <TextView
+            android:id="@+id/question_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="@dimen/font_size"
+            android:layout_marginVertical="@dimen/small_margin"/>
+
+    </LinearLayout>
+
+
+    <!-- Layout que contiene la información de las respuestas enviadas al servidor -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background"
+        android:layout_margin="@dimen/small_margin" >
 
         <!-- Botón de cerrar el dialogo -->
         <ImageButton
@@ -40,47 +81,46 @@
             android:tint="@color/blue_selected"
             tools:ignore="UseAppTint" />
 
+        <!-- Grafico con las respuestas -->
+        <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
+            android:id="@+id/barView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/graphic_height" />
+
+        <!-- Texto para el contador de los usuarios que han respondido -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/responded_users_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/font_size"
+                android:layout_marginVertical="@dimen/small_margin" />
+
+            <TextView
+                android:id="@+id/chronometer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/font_size"
+                android:visibility="gone"
+                android:text="@string/chronometer_title"
+                android:layout_marginVertical="@dimen/small_margin"
+                android:layout_marginStart="@dimen/large_margin"/>
+
+            <com.orbys.quizz.ui.components.views.CountDownChronometer
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
     </LinearLayout>
-
-    <!-- Texto para la pregunta -->
-    <TextView
-        android:id="@+id/question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/title_font_size"
-        android:layout_marginTop="@dimen/small_margin"/>
-
-    <!-- Código QR -->
-    <ImageView
-        android:id="@+id/qrCode"
-        android:layout_width="@dimen/qr_code_size"
-        android:layout_height="@dimen/qr_code_size"
-        android:contentDescription="@string/qr_code"
-        android:layout_margin="@dimen/small_margin" />
-
-    <!-- Texto para la url para acceder al servicio http -->
-    <TextView
-        android:id="@+id/question_url"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/font_size"
-        android:layout_marginVertical="@dimen/small_margin"/>
-
-    <!-- Grafico con las respuestas -->
-    <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
-        android:id="@+id/barView"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/graphic_height" />
-
-    <!-- Texto para el contador de los usuarios que han respondido -->
-    <TextView
-        android:id="@+id/responded_users_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="@dimen/font_size"
-        android:layout_marginTop="@dimen/small_margin"/>
 
 </LinearLayout>

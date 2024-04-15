@@ -49,5 +49,7 @@
     <string name="single_answer_question_option_text">Respuesta única</string>
     <string name="multi_answer_question_option_text">Respuesta múltiple</string>
     <string name="timeout_question_option_text">Tiempo límite</string>
+    <string name="timeout_hint">Tiempo en minutos:</string>
+    <string name="chronometer_title">Tiempo restante</string>
 
 </resources>

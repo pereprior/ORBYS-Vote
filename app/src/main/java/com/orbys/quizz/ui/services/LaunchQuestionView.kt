@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
+import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -119,6 +120,17 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
+            }
+
+            if(question.timeOut!! > 0) {
+                chronometerTitle.visibility = View.VISIBLE
+                chronometer.visibility = View.VISIBLE
+
+                val timeInSeconds = question.timeOut * 60
+                val timeInMillis = timeInSeconds * 1000L
+
+                chronometer.setTimeInMillis(timeInMillis)
+                chronometer.startCountDown()
             }
 
             // Lanza una corrutina para recoger los cambios en el número de usuarios que han respondido

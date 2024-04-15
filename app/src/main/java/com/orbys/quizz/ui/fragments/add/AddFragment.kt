@@ -46,6 +46,15 @@ abstract class AddFragment: Fragment() {
                     commit()
                 }
             }
+
+            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    timeoutInput.visibility = View.VISIBLE
+                } else {
+                    timeoutInput.visibility = View.GONE
+                }
+            }
+
         }
 
         return binding.root

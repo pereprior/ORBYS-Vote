@@ -26,7 +26,8 @@ class AddYesNoQuestion: AddFragment() {
             Answer(this.getString(R.string.no_aswers))
         ),
         answerType = AnswerType.YESNO,
-        anonymous = binding.anonymousQuestionOption.isChecked
+        anonymous = binding.anonymousQuestionOption.isChecked,
+        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )
 
 }

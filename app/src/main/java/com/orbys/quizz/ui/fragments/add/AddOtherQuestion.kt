@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
@@ -111,7 +112,8 @@ class AddOtherQuestion: AddFragment() {
             icon = R.drawable.baseline_menu_24,
             answers = answers,
             answerType = AnswerType.OTHER,
-            anonymous = binding.anonymousQuestionOption.isChecked
+            anonymous = binding.anonymousQuestionOption.isChecked,
+            timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
         )
     }
 

@@ -98,6 +98,16 @@
             android:layout_height="wrap_content"
             android:text="@string/timeout_question_option_text" />
 
+        <EditText
+            android:id="@+id/timeout_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/timeout_hint"
+            android:inputType="number"
+            android:visibility="gone"
+            android:autofillHints=""
+            android:maxLength="3" />
+
         <!-- Botón de guardar los cambios -->
         <Button
             android:id="@+id/save_button"
