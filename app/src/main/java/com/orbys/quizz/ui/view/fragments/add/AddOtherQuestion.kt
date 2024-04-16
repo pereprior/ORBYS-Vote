@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.fragments.add
+package com.orbys.quizz.ui.view.fragments.add
 
 import android.content.Context
 import android.graphics.PorterDuff

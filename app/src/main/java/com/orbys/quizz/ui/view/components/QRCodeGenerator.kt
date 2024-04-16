@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components.utils
+package com.orbys.quizz.ui.view.components
 
 import android.graphics.Bitmap
 import com.google.zxing.BarcodeFormat

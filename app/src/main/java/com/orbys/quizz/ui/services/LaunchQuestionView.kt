@@ -18,8 +18,9 @@ import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
-import com.orbys.quizz.ui.MainActivity
-import com.orbys.quizz.ui.components.utils.QRCodeGenerator
+import com.orbys.quizz.ui.view.activities.DownloadActivity
+import com.orbys.quizz.ui.view.activities.MainActivity
+import com.orbys.quizz.ui.view.components.QRCodeGenerator
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -116,8 +117,17 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
             // Establece el evento de clic en el botón de cerrar.
             closeButton.setOnClickListener {
                 windowManager.removeView(this@LaunchQuestionView)
+                usersRepository.clearRespondedUsers()
 
                 val intent = Intent(context, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            }
+
+            downloadButton.setOnClickListener {
+                windowManager.removeView(this@LaunchQuestionView)
+
+                val intent = Intent(context, DownloadActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             }

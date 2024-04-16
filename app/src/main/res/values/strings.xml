@@ -11,7 +11,7 @@
     <string name="edit_button" translatable="false">Boton para editar una pregunta</string>
     <string name="card_type_icon" translatable="false">Icono de cada tipo de pregunta</string>
     <string name="question_type_icon" translatable="false">Icono que representa el tipo de la pregunta</string>
-
+    <string name="app_logo_description" translatable="false">Logo de la empresa</string>
 
     <!-- Add dialog hint -->
     <string name="question_answer">Answer:</string>
@@ -50,5 +50,7 @@
     <string name="timeout_question_option_text">Time limit</string>
     <string name="timeout_hint">Time in minutes:</string>
     <string name="chronometer_title">Time remaining</string>
+    <string name="download_title">Escanear para descargar:</string>
+    <string name="download_format_description">Formato: .xlsx</string>
 
 </resources>

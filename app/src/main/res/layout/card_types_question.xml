@@ -9,7 +9,7 @@
     app:cardCornerRadius="@dimen/small_margin"
     app:cardElevation="@dimen/small_margin"
     android:layout_gravity="center"
-    tools:context=".ui.MainActivity" >
+    tools:context=".ui.view.activities.MainActivity" >
 
     <!-- Layout que contiene la informacion de cada tarjeta de tipos -->
     <LinearLayout

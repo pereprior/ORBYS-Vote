@@ -2,6 +2,7 @@ package com.orbys.quizz.data.controllers
 
 import android.util.Log
 import com.orbys.quizz.data.constants.ANSWER_PLACEHOLDER
+import com.orbys.quizz.data.constants.DATA_FILE_NAME
 import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
 import com.orbys.quizz.data.constants.ERROR_MESSAGE
 import com.orbys.quizz.data.constants.FILES_EXTENSION
@@ -12,6 +13,7 @@ import com.orbys.quizz.data.constants.SUCCESS_MESSAGE
 import com.orbys.quizz.data.constants.TIME_OUT_MESSAGE
 import com.orbys.quizz.data.constants.USER_ENDPOINT
 import com.orbys.quizz.data.constants.USER_RESPONDED_MESSAGE
+import com.orbys.quizz.data.repositories.FileRepository
 import io.ktor.http.ContentType
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respondRedirect
@@ -33,11 +35,12 @@ import javax.inject.Inject
  * @property repository Repositorio para interactuar con los datos de las preguntas.
  */
 class HttpController @Inject constructor(
-    private val repository: HttpRepositoryImpl
+    private val repository: HttpRepositoryImpl,
+    private val fileRepository: FileRepository
 ) {
     // datos del usuario que accede al servidor
     private lateinit var userIP: String
-    private var username = ""
+    private var username = "Anonymous"
 
     // Pregunta lanzada por el servidor
     private lateinit var question: Question
@@ -93,6 +96,16 @@ class HttpController @Inject constructor(
         // Actualizamos el contador de respuestas
         repository.setPostInAnswerCount(choice)
 
+        fileRepository.createFile(DATA_FILE_NAME)
+        fileRepository.writeFile(
+            date = "",
+            time = "",
+            ip = userIP,
+            username = username,
+            question = question.question,
+            answer = choice ?: ""
+        )
+
         if (repository.userNotExists(userIP)) {
             // Si el usuario no existe, lo añadimos a la lista
             repository.addUser(User(userIP, username, true))
@@ -107,6 +120,7 @@ class HttpController @Inject constructor(
     // Ruta que se muestra al usuario cuando ha respondido a la pregunta
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
+        username = "Anonymous"
 
         if (question.isMultipleAnswers) {
             // Si la pregunta se puede contestar varias veces, redirigir a la misma pregunta
@@ -142,7 +156,6 @@ class HttpController @Inject constructor(
             // Si el usuario no existe, lo añadimos a la lista
             username = choice ?: ""
             repository.addUser(User(userIP, username))
-            username = ""
         }
 
         call.respondRedirect("$QUESTION_ENDPOINT/{id}")

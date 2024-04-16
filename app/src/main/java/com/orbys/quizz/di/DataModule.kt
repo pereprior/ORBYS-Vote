@@ -1,12 +1,16 @@
 package com.orbys.quizz.di
 
+import android.content.Context
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.data.controllers.HttpController
+import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
+import com.orbys.quizz.data.repositories.IFileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -19,10 +23,15 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideQuestionController() = HttpController(HttpRepositoryImpl(QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance()))
+    fun provideQuestionController(@ApplicationContext context: Context) = HttpController(
+        HttpRepositoryImpl(
+            QuestionRepositoryImpl.getInstance(),
+            UsersRepositoryImpl.getInstance()
+        ),
+        FileRepository(context)
+    )
 
     @Provides
     @Singleton
     fun provideServerRepository() = HttpRepositoryImpl(QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance())
-
 }

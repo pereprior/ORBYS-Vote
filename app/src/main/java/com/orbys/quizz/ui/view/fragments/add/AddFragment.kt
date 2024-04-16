@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.fragments.add
+package com.orbys.quizz.ui.view.fragments.add
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
-import com.orbys.quizz.ui.fragments.TypesQuestionFragment
+import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint

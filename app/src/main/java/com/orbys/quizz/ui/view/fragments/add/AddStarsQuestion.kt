@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.fragments.add
+package com.orbys.quizz.ui.view.fragments.add
 
 import android.os.Bundle
 import android.view.View
@@ -8,15 +8,15 @@ import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 
 /**
- * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
+ * Clase que representa una actividad para añadir preguntas de tipo "Estrellas".
  */
-class AddYesNoQuestion: AddFragment() {
+class AddStarsQuestion: AddFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            questionTypeIcon.setImageResource(R.drawable.ic_yesno)
+            binding.questionTypeIcon.setImageResource(R.drawable.ic_star)
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
@@ -26,12 +26,15 @@ class AddYesNoQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.ic_yesno,
+        icon = R.drawable.ic_star,
         answers = listOf(
-            Answer(this.getString(R.string.yes_aswers)),
-            Answer(this.getString(R.string.no_aswers))
+            Answer(1),
+            Answer(2),
+            Answer(3),
+            Answer(4),
+            Answer(5),
         ),
-        answerType = AnswerType.YESNO,
+        answerType = AnswerType.STARS,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )

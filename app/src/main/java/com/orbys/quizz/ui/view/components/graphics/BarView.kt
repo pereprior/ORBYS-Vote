@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components.graphics
+package com.orbys.quizz.ui.view.components.graphics
 
 import android.content.Context
 import android.graphics.Color

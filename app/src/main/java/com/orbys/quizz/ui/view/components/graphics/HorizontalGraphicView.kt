@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components.graphics
+package com.orbys.quizz.ui.view.components.graphics
 
 import android.content.Context
 import android.graphics.Canvas
@@ -17,7 +17,7 @@ class HorizontalGraphicView(
 
     override fun onDraw(canvas: Canvas) {
         // Margen entre barras
-        val barMargin = 20f
+        val barMargin = 40f / bars.size
         // Calculamos el ancho de cada barra
         val barWidth = (height - barMargin * (bars.size - 1)) / bars.size
         // Obtenemos el total de todas las respuestas

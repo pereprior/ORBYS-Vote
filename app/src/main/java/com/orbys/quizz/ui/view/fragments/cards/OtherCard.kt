@@ -1,9 +1,9 @@
-package com.orbys.quizz.ui.fragments.cards
+package com.orbys.quizz.ui.view.fragments.cards
 
 import android.os.Bundle
 import android.view.View
 import com.orbys.quizz.R
-import com.orbys.quizz.ui.fragments.add.AddOtherQuestion
+import com.orbys.quizz.ui.view.fragments.add.AddOtherQuestion
 
 /**
  * Clase que representa la tarjeta para crear preguntas de tipo otros.

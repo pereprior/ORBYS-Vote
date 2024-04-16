@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui
+package com.orbys.quizz.ui.view.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.databinding.ActivityMainBinding
-import com.orbys.quizz.ui.fragments.TypesQuestionFragment
+import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
 import dagger.hilt.android.AndroidEntryPoint
 

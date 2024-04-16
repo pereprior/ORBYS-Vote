@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components.views
+package com.orbys.quizz.ui.view.components
 
 import android.content.Context
 import android.os.CountDownTimer

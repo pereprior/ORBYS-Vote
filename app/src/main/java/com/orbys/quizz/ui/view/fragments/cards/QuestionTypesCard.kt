@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.fragments.cards
+package com.orbys.quizz.ui.view.fragments.cards
 
 import android.os.Bundle
 import android.view.LayoutInflater

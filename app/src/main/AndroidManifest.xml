@@ -5,8 +5,11 @@
     <!-- Permisos de internet -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Permisos para el Widget -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- Permisos para el Widget -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- Permiso de almacenamiento -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".QuizzApp"
@@ -22,7 +25,7 @@
 
         <!-- Actividad principal -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.view.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.OrbysQuizz">
             <intent-filter>
@@ -31,6 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.view.activities.DownloadActivity"
+            android:exported="false"
+            android:theme="@style/Base.Theme.OrbysQuizz" />
 
         <!-- Servicio http -->
         <service

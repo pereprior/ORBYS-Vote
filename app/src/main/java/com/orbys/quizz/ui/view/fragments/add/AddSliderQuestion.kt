@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.fragments.add
+package com.orbys.quizz.ui.view.fragments.add
 
 import android.os.Bundle
 import android.view.View
@@ -8,17 +8,15 @@ import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 
 /**
- * Clase que representa una actividad para añadir preguntas de tipo "Estrellas".
+ * Clase que representa una actividad para añadir preguntas de tipo "Barra progresiva".
  */
-class AddStarsQuestion: AddFragment() {
+class AddSliderQuestion: AddFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            binding.questionTypeIcon.setImageResource(R.drawable.ic_star)
-            filterUsersGroup.visibility = View.GONE
-            filterUsersDivider.visibility = View.GONE
+            binding.questionTypeIcon.setImageResource(R.drawable.ic_slider)
             multiAnswerGroup.visibility = View.GONE
             multiAnswerDivider.visibility = View.GONE
         }
@@ -26,7 +24,7 @@ class AddStarsQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.ic_star,
+        icon = R.drawable.ic_slider,
         answers = listOf(
             Answer(1),
             Answer(2),
@@ -34,9 +32,10 @@ class AddStarsQuestion: AddFragment() {
             Answer(4),
             Answer(5),
         ),
-        answerType = AnswerType.STARS,
+        answerType = AnswerType.BAR,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
+        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
+        isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
     )
 
 }
