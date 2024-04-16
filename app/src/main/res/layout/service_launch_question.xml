@@ -12,21 +12,21 @@
 
     <!-- Layout que contiene la información para entrar al servidor -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_main"
         android:gravity="center"
-        android:layout_margin="@dimen/small_margin"
-        android:background="@drawable/bg_main" >
+        android:orientation="vertical">
 
         <!-- Icono con el tipo de la pregunta a crear -->
         <ImageView
             android:id="@+id/question_type_icon"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="end"
             android:layout_marginStart="@dimen/medium_margin"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
             android:contentDescription="@string/question_type_icon"
             android:tint="@color/blue_selected"
@@ -35,39 +35,38 @@
         <!-- Texto para la pregunta -->
         <TextView
             android:id="@+id/question"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
             android:gravity="center"
-            android:textSize="@dimen/title_font_size"
-            android:layout_marginTop="@dimen/small_margin" />
+            android:textSize="@dimen/title_font_size" />
 
         <!-- Código QR -->
         <ImageView
             android:id="@+id/qrCode"
             android:layout_width="@dimen/qr_code_size"
             android:layout_height="@dimen/qr_code_size"
-            android:contentDescription="@string/qr_code"
-            android:layout_margin="@dimen/small_margin" />
+            android:layout_margin="@dimen/small_margin"
+            android:contentDescription="@string/qr_code" />
 
         <!-- Texto para la url para acceder al servicio http -->
         <TextView
             android:id="@+id/question_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"
             android:gravity="center"
-            android:textSize="@dimen/font_size"
-            android:layout_marginVertical="@dimen/small_margin"/>
+            android:textSize="@dimen/font_size" />
 
     </LinearLayout>
 
-
     <!-- Layout que contiene la información de las respuestas enviadas al servidor -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_margin="4dp"
         android:background="@drawable/bg_main"
-        android:layout_margin="@dimen/small_margin" >
+        android:orientation="vertical">
 
         <!-- Botón de cerrar el dialogo -->
         <ImageButton
@@ -91,27 +90,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/responded_users_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/small_margin"
                 android:gravity="center"
-                android:textSize="@dimen/font_size"
-                android:layout_marginVertical="@dimen/small_margin" />
+                android:textSize="@dimen/font_size" />
 
             <TextView
                 android:id="@+id/chronometer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="@dimen/font_size"
-                android:visibility="gone"
-                android:text="@string/chronometer_title"
                 android:layout_marginVertical="@dimen/small_margin"
-                android:layout_marginStart="@dimen/large_margin"/>
+                android:layout_marginStart="@dimen/large_margin"
+                android:gravity="center"
+                android:text="@string/chronometer_title"
+                android:textSize="@dimen/font_size"
+                android:visibility="gone" />
 
             <com.orbys.quizz.ui.components.views.CountDownChronometer
                 android:id="@+id/chronometer"

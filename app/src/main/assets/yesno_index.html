@@ -46,6 +46,9 @@
             text-align: center;
             color: #333;
             font-size: 5em;
+            max-width: 100%;
+            word-wrap: break-word;
+            margin: 0 20px;
         }
 
         /* Eliminamos el circulo que los marca como seleccionados */
@@ -115,6 +118,8 @@
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
                 console.log('Respuesta recibida: ', text);
                 window.location.href = '/question';
+
+                history.pushState(null, null, '/question');
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };

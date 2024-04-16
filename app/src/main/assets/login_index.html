@@ -45,7 +45,10 @@
         h1 {
             text-align: center;
             color: #333;
-            font-size: 4em;
+            font-size: 5em;
+            max-width: 100%;
+            word-wrap: break-word;
+            margin: 0 20px;
         }
 
         input[type="text"] {
@@ -85,13 +88,15 @@
                 .then(text => { // Si la respuesta es correcta, redirigimos a la página de la pregunta
                 console.log('Respuesta recibida: ', text);
                 window.location.href = '/question/{id}';
+                // Agregamos una entrada al historial del navegador
+                history.pushState(null, null, '/question/{id}');
             }) // Si ocurre algún error, lo mostramos en la consola
                 .catch(console.error);
         };
 
         // Impide que el usuario pueda volver después de enviar el formulario
         window.onload = function() {
-            window.history.replaceState({}, document.title, "/login");
+            window.history.replaceState({}, document.title, "/question");
         }
     </script>
 

@@ -111,7 +111,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
             // Establece el texto de la pregunta.
             this.question.text = question.question
-            questionUrl.text = "URL: $url"
+            questionUrl.text = url
 
             // Establece el evento de clic en el botón de cerrar.
             closeButton.setOnClickListener {
@@ -137,7 +137,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
             GlobalScope.launch {
                 usersRepository.getRespondedUsersCount().collect { usersList ->
                     withContext(Dispatchers.Main) {
-                        respondedUsersCount.text = "Usuarios que han respondido: ${usersList.size}"
+                        respondedUsersCount.text = "Usuarios: ${usersList.size}"
                     }
                 }
             }
