@@ -58,7 +58,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.addView(this, layoutParams)
-        questionRepository.resetTimeOut()
+        questionRepository.resetTimer()
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -135,7 +135,7 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
 
             // Lanza una corrutina para recoger los cambios en el número de usuarios que han respondido
             GlobalScope.launch {
-                usersRepository.getRespondedUsersCount().collect { usersList ->
+                usersRepository.respondedUsers.collect { usersList ->
                     withContext(Dispatchers.Main) {
                         respondedUsersCount.text = "Usuarios: ${usersList.size}"
                     }

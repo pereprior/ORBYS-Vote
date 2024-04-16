@@ -39,21 +39,21 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     val questionUpdated: SharedFlow<Unit> = _questionUpdated
     val timeOut: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    // Metodos para buscar preguntas dentro de la lista
-    /*override fun exists(question: Question) = _questionsList.value.any { it.question == question.question }
-    override fun findQuestion(question: String) = _questionsList.value.find { it.question == question } ?: Question("")
-    override fun findQuestion(questionID: Int) = _questionsList.value.find { it.id == questionID } ?: Question("")
-*/
-    // Metodos para gestionar las preguntas dentro de la lista
+
+    // Metodos para gestionar el temporizador
+    override fun timeOut() { timeOut.tryEmit(true) }
+    override fun resetTimer() { timeOut.tryEmit(false) }
+
+
+    // Metodos para gestionar la pregunta lanzada
     override fun addQuestion(question: Question) {
         _question.value = question
         _questionUpdated.tryEmit(Unit)
     }
 
+
     // Métodos para gestionar el contador de respuestas de una pregunta
-    override fun clearAnswer(question: Question) {
-        _question.value.answers.forEach { it.count.tryEmit(0) }
-    }
+    override fun clearAnswer(question: Question) { _question.value.answers.forEach { it.count.tryEmit(0) } }
     override fun incAnswer(answer: String) {
         for (ans in _question.value.answers) {
             if (ans.answer?.toString()?.equals(answer) == true) {
@@ -61,14 +61,6 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
             }
         }
 
-    }
-
-    fun timeOut() {
-        timeOut.tryEmit(true)
-    }
-
-    fun resetTimeOut() {
-        timeOut.tryEmit(false)
     }
 
 }

@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
-import com.orbys.quizz.domain.models.barColors
 
 /**
  * Vista de grafico horizontal.

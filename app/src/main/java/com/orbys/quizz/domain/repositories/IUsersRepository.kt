@@ -4,15 +4,18 @@ import com.orbys.quizz.domain.models.User
 import kotlinx.coroutines.flow.StateFlow
 
 interface IUsersRepository {
-    // Eliminar todos los usuarios registrados como que han respondido
+    // Eliminar todos los usuarios de la lista
     fun clearRespondedUsers()
 
-    // Añadir un usuario a la lista de usuarios que han respondido
+    // Añadir un usuario a la lista
     fun addRespondedUser(user: User)
 
-    // Comprobar si un usuario ya ha respondido
+    // Comprobar si un usuario ya esta en la lista
     fun exists(ip: String): Boolean
 
-    // Numero de usuarios que han respondido
-    fun getRespondedUsersCount(): StateFlow<List<User>>
+    // Comprobar si un usuario ya ha respondido
+    fun usersResponded(ip: String): Boolean
+
+    // Marcar al usuario como que ya ha respondido
+    fun setUserResponded(ip: String)
 }

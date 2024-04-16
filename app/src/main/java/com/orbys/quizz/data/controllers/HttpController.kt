@@ -35,11 +35,12 @@ import javax.inject.Inject
 class HttpController @Inject constructor(
     private val repository: HttpRepositoryImpl
 ) {
-    // Ip del usuario que accede al servidor
+    // datos del usuario que accede al servidor
     private lateinit var userIP: String
+    private var username = ""
+
     // Pregunta lanzada por el servidor
     private lateinit var question: Question
-    private var username = ""
 
     // Configuración de las rutas del servidor
     fun setupRoutes(route: Route) {
@@ -53,11 +54,12 @@ class HttpController @Inject constructor(
 
     // Ruta para responder la pregunta lanzada por el servidor
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
+        // Obtenemos la IP del usuario que accede al servidor y la pregunta que va a contestar
         userIP = call.request.origin.remoteHost
         question = repository.getQuestion()
 
         val fileContent =
-            if (repository.timeOut().value) {
+            if (repository.timeState().value) {
                 // Si el tiempo para responder la pregunta se ha agotado
                 TIME_OUT_MESSAGE
             } else if(repository.userResponded(userIP) && !question.isMultipleAnswers) {
@@ -85,13 +87,17 @@ class HttpController @Inject constructor(
 
     // Ruta que recibe la respuesta a la pregunta
     private fun Route.handleSubmitRoute() = post("/submit") {
+        // Recibimos la respuesta del usuario
         val choice = call.receiveParameters()["choice"]
-        Log.d("HttpController:", "Choice: $choice")
+
+        // Actualizamos el contador de respuestas
         repository.setPostInAnswerCount(choice)
 
         if (repository.userNotExists(userIP)) {
-            repository.addUserToRespondedList(User(userIP, username, true))
+            // Si el usuario no existe, lo añadimos a la lista
+            repository.addUser(User(userIP, username, true))
         } else {
+            // Si ya existe, actualizamos su estado de respuesta
             repository.setUserResponded(userIP)
         }
 
@@ -103,6 +109,7 @@ class HttpController @Inject constructor(
         call.response.headers.append("Cache-Control", "no-store")
 
         if (question.isMultipleAnswers) {
+            // Si la pregunta se puede contestar varias veces, redirigir a la misma pregunta
             call.respondRedirect("$QUESTION_ENDPOINT/{id}")
         }
 
@@ -112,8 +119,10 @@ class HttpController @Inject constructor(
         )
     }
 
+    // Ruta para que el usuario se registre
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
         if (question.isAnonymous) {
+            // Si la pregunta es anonima, redirigir a la ruta de la pregunta sin login
             call.respondRedirect(QUESTION_ENDPOINT)
         }
 
@@ -125,12 +134,14 @@ class HttpController @Inject constructor(
         )
     }
 
+    // Ruta para que el usuario se loguee
     private fun Route.handleLoginRoute() = post("/login") {
         if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["user"]
 
+            // Si el usuario no existe, lo añadimos a la lista
             username = choice ?: ""
-            repository.addUserToRespondedList(User(userIP, username))
+            repository.addUser(User(userIP, username))
             username = ""
         }
 

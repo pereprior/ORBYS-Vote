@@ -1,16 +1,11 @@
 package com.orbys.quizz.ui.components.views
 
 import android.content.Context
-import android.content.Intent
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.Chronometer
-import androidx.lifecycle.ViewModelProvider
-import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
-import com.orbys.quizz.ui.viewModels.QuestionViewModel
-import javax.inject.Inject
 
 class CountDownChronometer : Chronometer {
 
@@ -29,7 +24,7 @@ class CountDownChronometer : Chronometer {
 
     fun startCountDown() {
         base = SystemClock.elapsedRealtime() + timeInMillis
-        repository.resetTimeOut()
+        repository.resetTimer()
 
         countDownTimer = object : CountDownTimer(timeInMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {

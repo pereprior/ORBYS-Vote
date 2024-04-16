@@ -2,11 +2,12 @@ package com.orbys.quizz.domain.repositories
 
 import com.orbys.quizz.domain.models.User
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Clase que gestiona los usuarios que han respondido las preguntas.
  *
- * @property respondedUsers Un flujo mutable que contiene una lista de usuarios que han respondido.
+ * @property _respondedUsers Un flujo mutable que contiene una lista de usuarios que han respondido.
  */
 class UsersRepositoryImpl private constructor(): IUsersRepository {
     companion object {
@@ -26,23 +27,23 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
     }
 
     // Flujo de usuarios que han respondido
-    private var respondedUsers = MutableStateFlow(listOf<User>())
+    private var _respondedUsers = MutableStateFlow(listOf<User>())
+    val respondedUsers: StateFlow<List<User>> = _respondedUsers
 
-    override fun exists(ip: String) = respondedUsers.value.any { it.ip == ip }
-    fun usersResponded(ip: String): Boolean = respondedUsers.value.any { it.ip == ip && it.responded }
-    override fun clearRespondedUsers() { respondedUsers.tryEmit(listOf()) }
-    override fun getRespondedUsersCount() = respondedUsers
-    fun setUserResponded(ip: String) {
-        val users = respondedUsers.value.toMutableList()
+    override fun exists(ip: String) = _respondedUsers.value.any { it.ip == ip }
+    override fun usersResponded(ip: String): Boolean = _respondedUsers.value.any { it.ip == ip && it.responded }
+    override fun clearRespondedUsers() { _respondedUsers.tryEmit(listOf()) }
+    override fun setUserResponded(ip: String) {
+        val users = _respondedUsers.value.toMutableList()
         users.find { it.ip == ip }?.responded = true
-        respondedUsers.value = users.toList()
+        _respondedUsers.value = users.toList()
     }
     override fun addRespondedUser(user: User) {
         if (exists(user.ip)) return
 
-        val users = respondedUsers.value.toMutableList()
+        val users = _respondedUsers.value.toMutableList()
         users.add(user)
-        respondedUsers.value = users.toList()
+        _respondedUsers.value = users.toList()
     }
 
 }

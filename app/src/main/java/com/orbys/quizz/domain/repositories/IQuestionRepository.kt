@@ -11,4 +11,10 @@ interface IQuestionRepository {
 
     // Reinicia el contador de respuestas de una pregunta
     fun clearAnswer(question: Question)
+
+    // Indica que el tiempo limite ha terminado
+    fun timeOut()
+
+    // Reinicia el temporizador
+    fun resetTimer()
 }
