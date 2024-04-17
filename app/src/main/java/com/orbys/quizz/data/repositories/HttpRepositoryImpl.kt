@@ -15,7 +15,7 @@ class HttpRepositoryImpl @Inject constructor(
     private val usersRepository: UsersRepositoryImpl
 ): IHttpRepository {
     // Obtiene el estado del temporizador
-    override fun timeState() = questionRepository.timeOut
+    override fun timeOut() = questionRepository.timeOut
 
     // Obtiene la pregunta que lanza el servidor
     override fun getQuestion() = questionRepository.question.value
@@ -44,4 +44,6 @@ class HttpRepositoryImpl @Inject constructor(
 
     // Comprueba si un usuario ya ha respondido
     override fun userResponded(ip: String): Boolean = usersRepository.usersResponded(ip)
+
+    override fun getUsernameByIp(ip: String): String = usersRepository.getUsernameByIp(ip)
 }

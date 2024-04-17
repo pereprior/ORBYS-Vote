@@ -70,9 +70,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // RecyclerView
-    implementation(libs.androidx.recyclerview)
-
     // QrCode
     implementation(libs.zxing)
 
@@ -84,5 +81,8 @@ dependencies {
     // Inyeccion de dependencias
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    // Workbook
+    //implementation(libs.poi.ooxml)
 
 }

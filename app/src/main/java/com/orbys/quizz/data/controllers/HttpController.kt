@@ -26,7 +26,6 @@ class HttpController @Inject constructor(
 ) {
     private lateinit var userIP: String
     private var username = "Anonymous"
-    private lateinit var question: Question
 
     fun setupRoutes(route: Route) {
         route.apply {
@@ -41,11 +40,10 @@ class HttpController @Inject constructor(
 
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
         userIP = call.request.origin.remoteHost
-        question = repository.getQuestion()
 
         val fileContent = getFileContent()
 
-        if (!question.isAnonymous && repository.userNotExists(userIP)) {
+        if (!repository.getQuestion().isAnonymous && repository.userNotExists(userIP)) {
             call.respondRedirect(USER_ENDPOINT)
         }
 
@@ -58,8 +56,10 @@ class HttpController @Inject constructor(
     private fun Route.handleSubmitRoute() = post("/submit") {
         val choice = call.receiveParameters()["choice"]
 
-        repository.setPostInAnswerCount(choice)
-        updateUserStatus(choice ?: "")
+        if(!repository.timeOut().value) {
+            repository.setPostInAnswerCount(choice)
+            updateUserStatus(choice ?: "")
+        }
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
@@ -68,7 +68,7 @@ class HttpController @Inject constructor(
         call.response.headers.append("Cache-Control", "no-store")
         username = "Anonymous"
 
-        if (question.isMultipleAnswers) {
+        if (repository.getQuestion().isMultipleAnswers) {
             call.respondRedirect("$QUESTION_ENDPOINT/{id}")
         }
 
@@ -79,7 +79,7 @@ class HttpController @Inject constructor(
     }
 
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
-        if (question.isAnonymous) {
+        if (repository.getQuestion().isAnonymous) {
             call.respondRedirect(QUESTION_ENDPOINT)
         }
 
@@ -106,9 +106,9 @@ class HttpController @Inject constructor(
 
     private fun getFileContent(): String? {
         return when {
-            repository.timeState().value -> TIME_OUT_MESSAGE
-            repository.userResponded(userIP) && !question.isMultipleAnswers -> USER_RESPONDED_MESSAGE
-            else -> loadHtmlFile(question.answerType.name)
+            repository.timeOut().value -> TIME_OUT_MESSAGE
+            repository.userResponded(userIP) && !repository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
+            else -> loadHtmlFile(repository.getQuestion().answerType.name)
         }
     }
 
@@ -125,7 +125,7 @@ class HttpController @Inject constructor(
     private fun loadHtmlFile(answerType: String): String? {
         val filePath = "${answerType.lowercase(Locale.ROOT)}$FILES_NAME$FILES_EXTENSION"
         return this::class.java.getResource("$FILES_FOLDER$filePath")?.readText()?.let {
-            replacePlaceholders(it, question)
+            replacePlaceholders(it, repository.getQuestion())
         }
     }
 
@@ -149,16 +149,18 @@ class HttpController @Inject constructor(
     private fun createDataFile(choice: String) {
         val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
+        val dateTimeFormatter = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
+        val dateTime = dateTimeFormatter.format(Calendar.getInstance().time)
 
-        fileRepository.createFile(DATA_FILE_NAME)
+        fileRepository.createFile("$DATA_FILE_NAME$dateTime")
         fileRepository.writeFile(
             date = date,
             time = time,
             ip = userIP,
-            username = username,
-            question = question.question,
+            username = repository.getUsernameByIp(userIP),
+            question = repository.getQuestion().question,
             answer = choice
         )
     }

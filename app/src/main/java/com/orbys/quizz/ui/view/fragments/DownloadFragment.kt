@@ -27,7 +27,6 @@ class DownloadFragment: Fragment() {
     ): View {
         binding = FragmentDownloadBinding.inflate(inflater, container, false)
         val url = "$URL_ENTRY$hostIP:$SERVER_PORT$DOWNLOAD_ENDPOINT"
-        Log.d("URL QR", url)
 
         with(binding) {
             qrCode.setImageBitmap(

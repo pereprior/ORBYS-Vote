@@ -18,4 +18,5 @@ interface IUsersRepository {
 
     // Marcar al usuario como que ya ha respondido
     fun setUserResponded(ip: String)
+    fun getUsernameByIp(ip: String): String?
 }

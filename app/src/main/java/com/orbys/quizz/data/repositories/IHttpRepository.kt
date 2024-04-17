@@ -7,9 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 interface IHttpRepository {
     fun getQuestion(): Question
     fun setUserResponded(ip: String)
-    fun timeState(): MutableStateFlow<Boolean>
+    fun timeOut(): MutableStateFlow<Boolean>
     fun setPostInAnswerCount(answer: String?)
     fun userNotExists(userIp: String): Boolean
     fun addUser(user: User)
     fun userResponded(ip: String): Boolean
+    fun getUsernameByIp(ip: String): String
 }

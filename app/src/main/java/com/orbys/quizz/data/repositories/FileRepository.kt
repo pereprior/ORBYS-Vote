@@ -38,7 +38,7 @@ class FileRepository(
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
 
-            val csvData = "$date,$time,$ip,$username,$question,$answer\n"
+            val csvData = "$date;$time;$ip;$username;$question;$answer\n"
 
             bufferedWriter.write(csvData)
             bufferedWriter.close()
@@ -55,7 +55,11 @@ class FileRepository(
 
     override fun deleteFile() {
         if (file.exists()) {
-            file.delete()
+            val fileWriter = FileWriter(file, false)
+            val bufferedWriter = BufferedWriter(fileWriter)
+
+            bufferedWriter.write("")
+            bufferedWriter.close()
         }
     }
 
