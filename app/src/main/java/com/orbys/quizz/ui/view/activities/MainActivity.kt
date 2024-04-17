@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
+import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        stopService(Intent(this, HttpService::class.java))
         stopService(Intent(this, FloatingViewService::class.java))
 
         binding = ActivityMainBinding.inflate(layoutInflater)

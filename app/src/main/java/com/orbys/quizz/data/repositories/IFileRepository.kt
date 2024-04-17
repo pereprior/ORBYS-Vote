@@ -11,4 +11,5 @@ interface IFileRepository {
         question: String,
         answer: String
     )
+    fun deleteFile()
 }

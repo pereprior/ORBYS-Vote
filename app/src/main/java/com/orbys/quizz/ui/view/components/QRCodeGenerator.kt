@@ -56,4 +56,5 @@ class QRCodeGenerator {
             setPixels(pixels, 0, bitMatrix.width, 0, 0, bitMatrix.width, bitMatrix.height)
         }
     }
+
 }

@@ -21,11 +21,5 @@ class FloatingViewService: Service() {
         return START_NOT_STICKY
     }
 
-    override fun onDestroy() {
-        stopService(Intent(this, HttpService::class.java))
-
-        super.onDestroy()
-    }
-
     override fun onBind(intent: Intent?): IBinder? = null
 }

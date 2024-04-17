@@ -26,8 +26,4 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideUsersRepository() = UsersRepositoryImpl.getInstance()
-
-    @Provides
-    @Singleton
-    fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository(context)
 }

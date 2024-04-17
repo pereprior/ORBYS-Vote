@@ -34,4 +34,8 @@ object DataModule {
     @Provides
     @Singleton
     fun provideServerRepository() = HttpRepositoryImpl(QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance())
+
+    @Provides
+    @Singleton
+    fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository(context)
 }

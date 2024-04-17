@@ -58,6 +58,8 @@ class HttpService: Service() {
     }
 
     override fun onDestroy() {
+        controller.fileRepository.deleteFile()
+
         super.onDestroy()
         server?.stop(1000, 5000)
     }

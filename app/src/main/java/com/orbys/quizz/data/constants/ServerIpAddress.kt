@@ -5,7 +5,7 @@ import java.net.InetAddress
 import java.net.NetworkInterface
 import java.util.Collections
 
-val host = getLocalIpAddress()
+val hostIP = getLocalIpAddress()
 
 fun getLocalIpAddress(): String? {
     return try {

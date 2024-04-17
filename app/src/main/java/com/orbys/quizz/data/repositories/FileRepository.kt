@@ -2,7 +2,6 @@ package com.orbys.quizz.data.repositories
 
 import android.content.Context
 import android.os.Environment
-import android.widget.Toast
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -11,19 +10,20 @@ class FileRepository(
     private val context: Context
 ) : IFileRepository {
 
-    private lateinit var file: File
+    private var file: File = File("")
+
+    fun getFile(): File {
+        return file
+    }
 
     override fun createFile(fileName: String) {
-        val filePath = Environment
-            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            .toString() + "/" + "$fileName.csv"
+        val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
         file = File(filePath)
 
         if (!file.exists()) {
             file.createNewFile()
+            writeFile("Date", "Time", "IP Address", "Username", "Question", "Answer")
         }
-
-        Toast.makeText(context, "File created in $filePath", Toast.LENGTH_SHORT).show()
     }
 
     override fun writeFile(
@@ -51,6 +51,12 @@ class FileRepository(
         }
 
         return ""
+    }
+
+    override fun deleteFile() {
+        if (file.exists()) {
+            file.delete()
+        }
     }
 
 }

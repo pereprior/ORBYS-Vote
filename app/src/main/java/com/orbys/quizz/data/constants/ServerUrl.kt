@@ -4,5 +4,5 @@ package com.orbys.quizz.data.constants
 const val URL_ENTRY = "http://"
 const val SERVER_PORT = 8888
 const val QUESTION_ENDPOINT = "/question"
-
+const val DOWNLOAD_ENDPOINT = "/download"
 const val USER_ENDPOINT = "/user"
