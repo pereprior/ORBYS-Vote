@@ -1,28 +1,23 @@
 package com.orbys.quizz.data.controllers
 
 import com.orbys.quizz.data.constants.*
-import com.orbys.quizz.data.repositories.FileRepository
+import com.orbys.quizz.data.controllers.handlers.FileHandler
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
 import io.ktor.server.application.call
 import io.ktor.server.plugins.origin
 import io.ktor.server.request.receiveParameters
-import io.ktor.server.response.respondFile
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
 
 class HttpController @Inject constructor(
     private val repository: HttpRepositoryImpl,
-    private val controller: PlaceholderController,
-    val fileRepository: FileRepository
+    private val fileHandler: FileHandler
 ) {
     private lateinit var userIP: String
     private var username = "Anonymous"
@@ -37,7 +32,7 @@ class HttpController @Inject constructor(
             handleNewUserRoute()
             handleLoginRoute()
 
-            handleDownloadRoute()
+            fileHandler.setupRoutes(this)
         }
 
     }
@@ -45,7 +40,7 @@ class HttpController @Inject constructor(
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
         userIP = call.request.origin.remoteHost
 
-        val fileContent = getFileContent()
+        val fileContent = fileHandler.getFileContent(userIP)
 
         if (!repository.getQuestion().isAnonymous && repository.userNotExists(userIP)) {
             call.respondRedirect(USER_ENDPOINT)
@@ -87,7 +82,7 @@ class HttpController @Inject constructor(
             call.respondRedirect(QUESTION_ENDPOINT)
         }
 
-        val fileContent = loadHtmlFile("login")
+        val fileContent = fileHandler.loadHtmlFile("login")
         call.respondText(
             text = fileContent ?: ERROR_MESSAGE,
             contentType = ContentType.Text.Html
@@ -104,18 +99,6 @@ class HttpController @Inject constructor(
         call.respondRedirect("$QUESTION_ENDPOINT/{id}")
     }
 
-    private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
-        call.respondFile(fileRepository.getFile())
-    }
-
-    private fun getFileContent(): String? {
-        return when {
-            repository.timeOut().value -> TIME_OUT_MESSAGE
-            repository.userResponded(userIP) && !repository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
-            else -> loadHtmlFile(repository.getQuestion().answerType.name)
-        }
-    }
-
     private fun updateUserStatus(choice: String) {
         if (repository.userNotExists(userIP)) {
             repository.addUser(User(userIP, username, true))
@@ -123,33 +106,7 @@ class HttpController @Inject constructor(
             repository.setUserResponded(userIP)
         }
 
-        createDataFile(choice)
-    }
-
-    private fun loadHtmlFile(answerType: String): String? {
-        val filePath = "${answerType.lowercase(Locale.ROOT)}$FILES_NAME$FILES_EXTENSION"
-        return this::class.java.getResource("$FILES_FOLDER$filePath")?.readText()?.let {
-            controller.replace(it, repository.getQuestion())
-        }
-    }
-
-    private fun createDataFile(choice: String) {
-        val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-        val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        val dateTimeFormatter = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
-        val date = dateFormatter.format(Calendar.getInstance().time)
-        val time = timeFormatter.format(Calendar.getInstance().time)
-        val dateTime = dateTimeFormatter.format(Calendar.getInstance().time)
-
-        fileRepository.createFile("$DATA_FILE_NAME$dateTime")
-        fileRepository.writeFile(
-            date = date,
-            time = time,
-            ip = userIP,
-            username = repository.getUsernameByIp(userIP),
-            question = repository.getQuestion().question,
-            answer = choice
-        )
+        fileHandler.createDataFile(choice, userIP)
     }
 
 }

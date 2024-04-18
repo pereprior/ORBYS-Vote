@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * Módulo Dagger que proporciona las dependencias para los repositorios de datos.
+ * Módulo Dagger que proporciona las dependencias para los repositorios del dominio.
  */
 @Module
 @InstallIn(SingletonComponent::class)

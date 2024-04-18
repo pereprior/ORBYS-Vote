@@ -32,7 +32,7 @@ class HttpService: Service() {
     override fun onCreate() {
         super.onCreate()
 
-        controller.fileRepository.deleteFile()
+        //controller.fileRepository.deleteFile()
         startServer()
     }
 
