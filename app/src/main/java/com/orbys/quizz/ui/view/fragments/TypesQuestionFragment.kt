@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import com.orbys.quizz.R
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
 import com.orbys.quizz.ui.view.fragments.cards.OtherCard
 import com.orbys.quizz.ui.view.fragments.cards.SliderCard
 import com.orbys.quizz.ui.view.fragments.cards.StarsCard
 import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
+import kotlin.system.exitProcess
 
 class TypesQuestionFragment: Fragment() {
 
@@ -20,6 +23,13 @@ class TypesQuestionFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
+
+        val button: ImageButton = activity?.findViewById(R.id.close_button) ?: return binding.root
+
+        button.setOnClickListener {
+            activity?.finishAffinity()
+            exitProcess(0)
+        }
 
         addFragments()
 

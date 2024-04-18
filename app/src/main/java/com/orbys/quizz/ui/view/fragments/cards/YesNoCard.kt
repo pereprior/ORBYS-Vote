@@ -24,7 +24,6 @@ class YesNoCard: QuestionTypesCard() {
         with(binding) {
             cardTitle.text = context?.getText(R.string.yes_no_title)
             cardIcon.setImageResource(R.drawable.ic_yesno)
-            cardDescription.text = context?.getText(R.string.yes_no_desc)
         }
     }
 

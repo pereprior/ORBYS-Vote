@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Layout que contiene las terjetas de cada tipo de pregunta -->
+    <!-- Layout que contiene las tarjetas de cada tipo de pregunta -->
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -32,29 +32,47 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical">
 
-        <!-- Layout que representa la tarjeta de las pregunta de si/no -->
-        <FrameLayout
-            android:id="@+id/yes_no_card_container"
+        <!-- Primera línea de tarjetas -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <!-- Layout que representa la tarjeta de las pregunta de estrellas -->
-        <FrameLayout
-            android:id="@+id/stars_card_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <!-- Layout que representa la tarjeta de las pregunta de si/no -->
+            <FrameLayout
+                android:id="@+id/yes_no_card_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-        <!-- Layout que representa la tarjeta de las pregunta de slider -->
-        <FrameLayout
-            android:id="@+id/slider_card_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <!-- Layout que representa la tarjeta de las pregunta de estrellas -->
+            <FrameLayout
+                android:id="@+id/stars_card_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-        <!-- Layout que representa la tarjeta de las pregunta de otros -->
-        <FrameLayout
-            android:id="@+id/other_card_container"
+        <!-- Segunda línea de tarjetas -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Layout que representa la tarjeta de las pregunta de slider -->
+            <FrameLayout
+                android:id="@+id/slider_card_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <!-- Layout que representa la tarjeta de las pregunta de otros -->
+            <FrameLayout
+                android:id="@+id/other_card_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
 
     </LinearLayout>
 

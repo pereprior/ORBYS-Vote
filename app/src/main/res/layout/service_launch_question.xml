@@ -4,7 +4,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/small_margin"
     android:elevation="@dimen/small_margin"
     android:gravity="center_horizontal"
     android:background="@android:color/transparent"
@@ -27,6 +26,8 @@
             android:layout_gravity="end"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_weight="1"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
             android:background="@android:color/transparent"
             android:contentDescription="@string/question_type_icon"
             android:tint="@color/blue_selected"
@@ -81,6 +82,8 @@
                 android:layout_gravity="start|center_vertical"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/exit_button"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
                 android:src="@drawable/ic_download"
                 android:tint="@color/blue_selected"
                 tools:ignore="UseAppTint" />
@@ -88,12 +91,14 @@
             <!-- Botón de cerrar el dialogo -->
             <ImageButton
                 android:id="@+id/close_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginStart="@dimen/close_button_margin"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/exit_button"
+                android:scaleX="0.6"
+                android:scaleY="0.6"
                 android:src="@drawable/ic_close"
                 android:tint="@color/blue_selected"
                 tools:ignore="UseAppTint" />

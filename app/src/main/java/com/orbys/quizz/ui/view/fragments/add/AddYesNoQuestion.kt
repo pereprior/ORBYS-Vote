@@ -17,8 +17,10 @@ class AddYesNoQuestion: AddFragment() {
 
         with(binding) {
             questionTypeIcon.setImageResource(R.drawable.ic_yesno)
+            filterUsersTitle.visibility = View.GONE
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE
+            multiAnswerTitle.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
             multiAnswerDivider.visibility = View.GONE
         }

@@ -28,14 +28,18 @@ class HttpController @Inject constructor(
     private var username = "Anonymous"
 
     fun setupRoutes(route: Route) {
+
         route.apply {
             handleGetQuestionRoute()
             handleSubmitRoute()
             handleSuccessRoute()
+
             handleNewUserRoute()
             handleLoginRoute()
+
             handleDownloadRoute()
         }
+
     }
 
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
@@ -149,7 +153,7 @@ class HttpController @Inject constructor(
     private fun createDataFile(choice: String) {
         val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        val dateTimeFormatter = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault())
+        val dateTimeFormatter = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
         val dateTime = dateTimeFormatter.format(Calendar.getInstance().time)

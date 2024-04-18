@@ -31,6 +31,7 @@ class AddOtherQuestion: AddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.questionTypeIcon.setImageResource(R.drawable.ic_others)
         setDefaultAnswers()
     }
 

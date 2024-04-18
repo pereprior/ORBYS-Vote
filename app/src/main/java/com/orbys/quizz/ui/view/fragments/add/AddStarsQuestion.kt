@@ -17,8 +17,10 @@ class AddStarsQuestion: AddFragment() {
 
         with(binding) {
             binding.questionTypeIcon.setImageResource(R.drawable.ic_star)
+            filterUsersTitle.visibility = View.GONE
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE
+            multiAnswerTitle.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
             multiAnswerDivider.visibility = View.GONE
         }

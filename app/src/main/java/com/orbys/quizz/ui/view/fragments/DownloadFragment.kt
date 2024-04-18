@@ -2,20 +2,20 @@ package com.orbys.quizz.ui.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import com.orbys.quizz.R
 import com.orbys.quizz.data.constants.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.constants.SERVER_PORT
 import com.orbys.quizz.data.constants.URL_ENTRY
 import com.orbys.quizz.data.constants.hostIP
-import com.orbys.quizz.databinding.FragmentDownloadBinding
 import com.orbys.quizz.ui.view.components.QRCodeGenerator
+import com.orbys.quizz.databinding.FragmentDownloadBinding
 import com.orbys.quizz.ui.services.FloatingViewService
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import kotlin.system.exitProcess
 
 class DownloadFragment: Fragment() {
 
@@ -28,16 +28,17 @@ class DownloadFragment: Fragment() {
         binding = FragmentDownloadBinding.inflate(inflater, container, false)
         val url = "$URL_ENTRY$hostIP:$SERVER_PORT$DOWNLOAD_ENDPOINT"
 
+        val button: ImageButton = activity?.findViewById(R.id.close_button) ?: return binding.root
+
+        button.setOnClickListener {
+            context?.startService(Intent(context, FloatingViewService::class.java))
+            activity?.finish()
+        }
+
         with(binding) {
             qrCode.setImageBitmap(
                 QRCodeGenerator().encodeAsBitmap(url)
             )
-
-            closeButton.setOnClickListener {
-                context?.startService(Intent(context, FloatingViewService::class.java))
-
-                activity?.finish()
-            }
 
             return root
         }

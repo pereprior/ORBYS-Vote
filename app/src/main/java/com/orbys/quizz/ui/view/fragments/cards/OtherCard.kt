@@ -24,7 +24,6 @@ class OtherCard : QuestionTypesCard() {
         with(binding) {
             cardTitle.text = context?.getText(R.string.other_title)
             cardIcon.setImageResource(R.drawable.ic_others)
-            cardDescription.text = context?.getText(R.string.other_desc)
         }
     }
 

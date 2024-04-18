@@ -24,7 +24,6 @@ class StarsCard : QuestionTypesCard() {
         with(binding) {
             cardTitle.text = context?.getText(R.string.stars_title)
             cardIcon.setImageResource(R.drawable.ic_star)
-            cardDescription.text = context?.getText(R.string.stars_desc)
         }
     }
 

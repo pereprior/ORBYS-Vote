@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
+import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
@@ -34,24 +36,30 @@ abstract class AddFragment: Fragment() {
     ): View {
         // Recogemos la instancia del ViewModel
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
+
+        val button: ImageButton = activity?.findViewById(R.id.close_button) ?: return binding.root
+
+        button.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, TypesQuestionFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
         binding = ActivityAddQuestionBinding.inflate(inflater, container, false)
 
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion(it.context) }
-            closeButton.setOnClickListener {
-                parentFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, TypesQuestionFragment())
-                    addToBackStack(null)
-                    commit()
-                }
-            }
 
             timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     timeoutInput.visibility = View.VISIBLE
+                    minutesHelpText.visibility = View.VISIBLE
                 } else {
                     timeoutInput.visibility = View.GONE
+                    minutesHelpText.visibility = View.GONE
                 }
             }
 

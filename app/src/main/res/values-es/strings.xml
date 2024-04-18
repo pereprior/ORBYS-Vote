@@ -29,10 +29,10 @@
     <string name="other_desc">Personalizado con hasta cinco respuestas posibles</string>
 
     <string name="error_empty_answers">No puedes guardar si hay campos vacios</string>
-    <string name="non_anonymous_question_option_text">Pregunta con usuario requerido</string>
-    <string name="anonymous_question_option_text">Pregunta anónima</string>
-    <string name="filter_users_question_option_text">Una respuesta por usuario</string>
-    <string name="non_filter_users_question_option_text">Varias respuestas por usuario</string>
+    <string name="non_anonymous_question_option_text">Usuario requerido</string>
+    <string name="anonymous_question_option_text">Anónimo</string>
+    <string name="filter_users_question_option_text">Una respuesta</string>
+    <string name="non_filter_users_question_option_text">Varias respuestas</string>
     <string name="single_answer_question_option_text">Respuesta única</string>
     <string name="multi_answer_question_option_text">Respuesta múltiple</string>
     <string name="timeout_question_option_text">Tiempo límite</string>

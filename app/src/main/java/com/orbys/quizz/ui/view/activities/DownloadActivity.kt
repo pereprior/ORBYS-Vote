@@ -13,6 +13,7 @@ import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.DownloadFragment
 import com.orbys.quizz.ui.services.FloatingViewService
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 class DownloadActivity: AppCompatActivity() {
 
@@ -57,6 +58,7 @@ class DownloadActivity: AppCompatActivity() {
         // Inflar la vista y mostrar los fragmentos después de que se haya concedido el permiso
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         supportFragmentManager.beginTransaction().apply {
             // Fragmento con los tipos de preguntas
             replace(binding.fragmentContainer.id, DownloadFragment())
