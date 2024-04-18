@@ -3,7 +3,6 @@ package com.orbys.quizz.data.controllers
 import com.orbys.quizz.data.constants.*
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
 import io.ktor.server.application.call
@@ -22,6 +21,7 @@ import javax.inject.Inject
 
 class HttpController @Inject constructor(
     private val repository: HttpRepositoryImpl,
+    private val controller: PlaceholderController,
     val fileRepository: FileRepository
 ) {
     private lateinit var userIP: String
@@ -129,25 +129,8 @@ class HttpController @Inject constructor(
     private fun loadHtmlFile(answerType: String): String? {
         val filePath = "${answerType.lowercase(Locale.ROOT)}$FILES_NAME$FILES_EXTENSION"
         return this::class.java.getResource("$FILES_FOLDER$filePath")?.readText()?.let {
-            replacePlaceholders(it, repository.getQuestion())
+            controller.replace(it, repository.getQuestion())
         }
-    }
-
-    private fun replacePlaceholders(fileContent: String?, question: Question): String? {
-        var content = fileContent
-
-        content = content?.replace(QUESTION_PLACEHOLDER, question.question)
-        question.answers.forEachIndexed { index, answer ->
-            content = content?.replace("$ANSWER_PLACEHOLDER${index}]", answer.answer.toString())
-        }
-
-        val answersToString = question.answers.joinToString(",") { it.answer.toString() }
-        content = content?.replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
-
-        val multipleChoices = if (question.isMultipleChoices) "multiple" else "single"
-        content = content?.replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
-
-        return content
     }
 
     private fun createDataFile(choice: String) {

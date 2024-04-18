@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_answer" translatable="true">Resposta:</string>
-    <string name="question_question" translatable="true">Pregunta:</string>
-    <string name="save_button" translatable="true">Gardar</string>
-    <string name="error_questions_exists" translatable="true">A pregunta xa existe</string>
-    <string name="error_max_answers" translatable="true">Non podes poñer máis de 5 respostas</string>
-    <string name="yes_aswers" translatable="true">Sí</string>
-    <string name="no_aswers" translatable="true">Non</string>
-    <string name="delete_question_message" translatable="true">Estás seguro de querer eliminar esta pregunta?</string>
-    <string name="positive_button_message" translatable="true">Confirmar</string>
-    <string name="negative_button_message" translatable="true">Cancelar</string>
-    <string name="activity_question_type_title" translatable="true">Selecciona o tipo de pregunta:</string>
-    <string name="yes_no_title" translatable="true">Si/Non</string>
-    <string name="yes_no_desc" translatable="true">Preguntas simples con dous tipos de respostas</string>
-    <string name="stars_title" translatable="true">Estrelas</string>
-    <string name="stars_desc" translatable="true">Preguntas de puntuación para seleccionar unha cantidade determinada de estrelas</string>
-    <string name="bar_title" translatable="true">Barra progresiva</string>
-    <string name="bar_desc" translatable="true">Preguntas de puntuación para marcar un punto nunha barra de progreso</string>
-    <string name="other_title" translatable="true">Outras</string>
-    <string name="other_desc" translatable="true">Preguntas personalizadas con tres posibles respostas</string>
-
-    <string name="error_empty_answers">Non podes gardar se hai campos baleiros</string>
-    <string name="non_anonymous_question_option_text">Pregunta con usuario requirido</string>
-    <string name="anonymous_question_option_text">Pregunta anónima</string>
-    <string name="filter_users_question_option_text">Unha resposta por usuario</string>
-    <string name="non_filter_users_question_option_text">Varias respostas por usuario</string>
+    <string name="question_question_hint">Pregunta:</string>
+    <string name="question_answer_hint">Resposta:</string>
+    <string name="save_button_placeholder">Gardar</string>
+    <string name="yes_answer_placeholder">Si</string>
+    <string name="no_answers_placeholder">Non</string>
+    <string name="login_title_placeholder">Introduce un nome de usuario:</string>
+    <string name="multiple_voting_alert_placeholder">Respondeste con éxito! Podes responder unha vez máis se o desexas</string>
+    <string name="questions_exists_error">A pregunta xa existe</string>
+    <string name="max_answers_error">Non podes poñer máis de 5 respostas</string>
+    <string name="empty_answers_error">Non podes gardar se hai campos baleiros</string>
+    <string name="same_question_error">Non podes gardar preguntas co mesmo contido</string>
+    <string name="activity_question_type_title">Selecciona o tipo de pregunta:</string>
+    <string name="yesno_question_type_title">Si/Non</string>
+    <string name="stars_question_type_title">Estrelas</string>
+    <string name="slider_question_type_title">Barra progresiva</string>
+    <string name="other_question_type_title">Outras</string>
+    <string name="anonymous_radio_title">Configurar usuarios:</string>
+    <string name="anonymous_question_option_text">Anónima</string>
+    <string name="non_anonymous_question_option_text">Usuario requerido</string>
+    <string name="filter_users_radio_title">Configurar número de respostas por usuario:</string>
+    <string name="filter_users_question_option_text">Unha resposta</string>
+    <string name="non_filter_users_question_option_text">Varias respostas</string>
+    <string name="answers_radio_title">Configurar número de respostas posibles:</string>
     <string name="single_answer_question_option_text">Resposta única</string>
     <string name="multi_answer_question_option_text">Respostas múltiples</string>
-    <string name="timeout_question_option_text">Límite de tempo</string>
-    <string name="timeout_hint">Tempo en minutos:</string>
+    <string name="time_checkbox_title">Configurar cronómetro:</string>
+    <string name="timeout_question_option_text">Tempo límite</string>
+    <string name="minutes_help_text">minutos</string>
     <string name="chronometer_title">Tempo restante</string>
-
+    <string name="download_title">Escanear para descargar:</string>
+    <string name="download_format_description">Formato: .csv</string>
 </resources>

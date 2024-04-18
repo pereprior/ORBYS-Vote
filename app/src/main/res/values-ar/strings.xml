@@ -1,43 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Ayudas del dialogo para añadir elementos -->
-    <string name="question_answer">الإجابة:</string>
-    <string name="question_question">السؤال:</string>
-    <string name="save_button">حفظ</string>
-
-    <!-- Mensajes de error -->
-    <string name="error_questions_exists">هذا السؤال موجود بالفعل</string>
-    <string name="error_max_answers">لا يمكنك وضع أكثر من 5 إجابات</string>
-
-    <!-- Dialog launch question -->
-    <string name="yes_aswers">نعم</string>
-    <string name="no_aswers">لا</string>
-
-    <string name="delete_question_message">هل أنت متأكد أنك تريد حذف هذا السؤال؟</string>
-    <string name="positive_button_message">تأكيد</string>
-    <string name="negative_button_message">إلغاء</string>
+    <string name="question_question_hint">السؤال:</string>
+    <string name="question_answer_hint">الإجابة:</string>
+    <string name="save_button_placeholder">حفظ</string>
+    <string name="yes_answer_placeholder">نعم</string>
+    <string name="no_answers_placeholder">لا</string>
+    <string name="login_title_placeholder">أدخل اسم مستخدم:</string>
+    <string name="multiple_voting_alert_placeholder">لقد قمت بالرد بنجاح! يمكنك الرد مرة أخرى إذا كنت ترغب في ذلك</string>
+    <string name="questions_exists_error">السؤال موجود بالفعل</string>
+    <string name="max_answers_error">لا يمكنك وضع أكثر من 5 إجابات</string>
+    <string name="empty_answers_error">لا يمكنك الحفظ إذا كانت هناك حقول فارغة</string>
+    <string name="same_question_error">لا يمكنك حفظ الأسئلة بنفس المحتوى</string>
     <string name="activity_question_type_title">اختر نوع السؤال:</string>
-
-    <!-- Question types -->
-    <string name="yes_no_title">نعم/لا</string>
-    <string name="yes_no_desc">نوع بسيط من الأسئلة مع نوعين من الإجابات</string>
-    <string name="stars_title">النجوم</string>
-    <string name="stars_desc">نوع من الأسئلة التقييمية لتحديد عدد معين من النجوم</string>
-    <string name="bar_title">شريط التقدم</string>
-    <string name="bar_desc">نوع من الأسئلة التقييمية لتحديد نقطة على شريط التقدم</string>
-    <string name="other_title">أخرى</string>
-    <string name="other_desc">نوع مخصص من الأسئلة مع ثلاث إجابات ممكنة</string>
-
-
-    <string name="error_empty_answers">لا يمكنك حفظه إذا كانت هناك حقول فارغة</string>
-    <string name="non_anonymous_question_option_text">سؤال بمستخدم مطلوب</string>
-    <string name="anonymous_question_option_text">سؤال مجهول</string>
-    <string name="filter_users_question_option_text">إجابة واحدة لكل مستخدم</string>
-    <string name="non_filter_users_question_option_text">إجابات متعددة لكل مستخدم</string>
+    <string name="yesno_question_type_title">نعم/لا</string>
+    <string name="stars_question_type_title">نجوم</string>
+    <string name="slider_question_type_title">شريط تقدمي</string>
+    <string name="other_question_type_title">أخرى</string>
+    <string name="anonymous_radio_title">ضبط المستخدمين:</string>
+    <string name="anonymous_question_option_text">مجهول</string>
+    <string name="non_anonymous_question_option_text">مطلوب مستخدم</string>
+    <string name="filter_users_radio_title">ضبط عدد الإجابات لكل مستخدم:</string>
+    <string name="filter_users_question_option_text">إجابة واحدة</string>
+    <string name="non_filter_users_question_option_text">إجابات متعددة</string>
+    <string name="answers_radio_title">ضبط عدد الإجابات الممكنة:</string>
     <string name="single_answer_question_option_text">إجابة واحدة</string>
     <string name="multi_answer_question_option_text">إجابات متعددة</string>
+    <string name="time_checkbox_title">ضبط المؤقت:</string>
     <string name="timeout_question_option_text">حد زمني</string>
-    <string name="timeout_hint">الوقت بالدقائق:</string>
+    <string name="minutes_help_text">دقائق</string>
     <string name="chronometer_title">الوقت المتبقي</string>
-
+    <string name="download_title">مسح للتنزيل:</string>
+    <string name="download_format_description">التنسيق: .csv</string>
 </resources>

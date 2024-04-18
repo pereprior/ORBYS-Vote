@@ -11,7 +11,7 @@
 
     <!-- Layout que contiene la información para entrar al servidor -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="@drawable/bg_main"
@@ -29,7 +29,7 @@
             android:scaleX="0.6"
             android:scaleY="0.6"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/question_type_icon"
+            android:contentDescription="@string/question_type_icon_desc"
             android:tint="@color/blue_selected"
             tools:ignore="UseAppTint" />
 
@@ -40,7 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
             android:gravity="center"
-            android:textSize="@dimen/title_font_size" />
+            android:textSize="@dimen/title_font_size"
+            android:maxWidth="@dimen/qr_code_size"
+            android:ellipsize="none" />
 
         <!-- Código QR -->
         <ImageView
@@ -48,7 +50,7 @@
             android:layout_width="@dimen/qr_code_size"
             android:layout_height="@dimen/qr_code_size"
             android:layout_margin="@dimen/small_margin"
-            android:contentDescription="@string/qr_code" />
+            android:contentDescription="@string/qr_code_desc" />
 
         <!-- Texto para la url para acceder al servicio http -->
         <TextView
@@ -81,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center_vertical"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button"
+                android:contentDescription="@string/exit_button_desc"
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:src="@drawable/ic_download"
@@ -96,7 +98,7 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginStart="@dimen/close_button_margin"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button"
+                android:contentDescription="@string/exit_button_desc"
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:src="@drawable/ic_close"

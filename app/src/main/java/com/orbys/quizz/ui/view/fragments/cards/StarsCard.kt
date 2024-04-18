@@ -22,7 +22,7 @@ class StarsCard : QuestionTypesCard() {
         }
 
         with(binding) {
-            cardTitle.text = context?.getText(R.string.stars_title)
+            cardTitle.text = context?.getText(R.string.stars_question_type_title)
             cardIcon.setImageResource(R.drawable.ic_star)
         }
     }

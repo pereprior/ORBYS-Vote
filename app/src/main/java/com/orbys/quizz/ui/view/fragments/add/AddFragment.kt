@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
-import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.viewModels.QuestionViewModel
@@ -75,7 +74,7 @@ abstract class AddFragment: Fragment() {
 
         // Comprobar si la pregunta o el título están vacíos
         if (question.question.isEmpty()) {
-            binding.errorMessage.text = getString(R.string.error_empty_answers)
+            binding.errorMessage.text = getString(R.string.empty_answers_error)
             return
         }
 

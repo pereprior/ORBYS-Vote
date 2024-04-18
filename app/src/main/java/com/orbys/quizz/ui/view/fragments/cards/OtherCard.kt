@@ -22,7 +22,7 @@ class OtherCard : QuestionTypesCard() {
         }
 
         with(binding) {
-            cardTitle.text = context?.getText(R.string.other_title)
+            cardTitle.text = context?.getText(R.string.other_question_type_title)
             cardIcon.setImageResource(R.drawable.ic_others)
         }
     }

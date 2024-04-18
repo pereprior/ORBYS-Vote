@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Other Question</title>
+    <title>Orbys Quizz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
-            height: 60%;
+            height: 80%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -29,7 +29,7 @@
         }
 
         button, input[type="radio"] + label {
-            width: 50%;
+            width: auto;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
@@ -68,6 +68,13 @@
             font-size: 2em;
         }
 
+        #answers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 100%;
+        }
+
         /* Color para los botones cuando se seleccionan" */
         input[type="radio"]#btn0:checked + label {
             background-color: #8B0000;
@@ -94,14 +101,18 @@
             color: white;
         }
 
+        input[type="radio"] + label, input[type="checkbox"] + label {
+            white-space: nowrap;
+        }
+
         input[type="checkbox"] + label {
-            padding: 20px 40px;
+            padding: 20px 20px 20px 0px;
             margin: 10px;
             font-size: 3em;
         }
 
         input[type="checkbox"] {
-            transform: scale(1.5);
+            transform: scale(0.6);
         }
     </style>
 </head>
@@ -116,7 +127,7 @@
     </div>
     <br><br><br>
 
-    <button type="submit">Enviar</button>
+    <button type="submit">[SEND]</button>
 </form>
 
     <script>
@@ -191,7 +202,10 @@
             ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                console.log('Respuesta recibida: ', text);
+                if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
+                    alert("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
+                }
+
                 window.location.href = '/question';
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);

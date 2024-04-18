@@ -30,8 +30,8 @@ class AddYesNoQuestion: AddFragment() {
         question = binding.questionQuestion.text.toString(),
         icon = R.drawable.ic_yesno,
         answers = listOf(
-            Answer(this.getString(R.string.yes_aswers)),
-            Answer(this.getString(R.string.no_aswers))
+            Answer(this.getString(R.string.yes_answer_placeholder)),
+            Answer(this.getString(R.string.no_answers_placeholder))
         ),
         answerType = AnswerType.YESNO,
         isAnonymous = binding.anonymousQuestionOption.isChecked,

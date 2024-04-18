@@ -22,7 +22,7 @@ class SliderCard : QuestionTypesCard() {
         }
 
         with(binding) {
-            cardTitle.text = context?.getText(R.string.bar_title)
+            cardTitle.text = context?.getText(R.string.slider_question_type_title)
             cardIcon.setImageResource(R.drawable.ic_slider)
         }
     }

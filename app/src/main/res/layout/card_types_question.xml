@@ -24,7 +24,7 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginBottom="@dimen/small_margin"
-            android:contentDescription="@string/card_type_icon"
+            android:contentDescription="@string/card_type_icon_desc"
             app:tint="@color/blue_selected" />
 
         <!-- Nombre del tipo de pregunta que representa la tarjeta -->

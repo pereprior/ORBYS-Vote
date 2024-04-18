@@ -4,6 +4,7 @@ import android.content.Context
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.data.controllers.HttpController
+import com.orbys.quizz.data.controllers.PlaceholderController
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.repositories.IFileRepository
@@ -28,6 +29,7 @@ object DataModule {
             QuestionRepositoryImpl.getInstance(),
             UsersRepositoryImpl.getInstance()
         ),
+        PlaceholderController(context),
         FileRepository(context)
     )
 
@@ -38,4 +40,9 @@ object DataModule {
     @Provides
     @Singleton
     fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository(context)
+
+    @Provides
+    @Singleton
+    fun providePlaceholderController(@ApplicationContext context: Context) = PlaceholderController(context)
+
 }

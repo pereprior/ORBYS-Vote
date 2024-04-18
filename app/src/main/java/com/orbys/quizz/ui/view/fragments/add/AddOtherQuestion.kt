@@ -49,10 +49,10 @@ class AddOtherQuestion: AddFragment() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            hint = getString(R.string.question_answer)
+            hint = getString(R.string.question_answer_hint)
             inputType = InputType.TYPE_CLASS_TEXT
             id = View.generateViewId()
-            filters = arrayOf(InputFilter.LengthFilter(50))
+            filters = arrayOf(InputFilter.LengthFilter(20))
         }
 
         // Agregar el nuevo campo de texto al layout y a la lista de campos de texto
@@ -70,7 +70,7 @@ class AddOtherQuestion: AddFragment() {
 
             foregroundGravity = Gravity.CENTER
             background = ContextCompat.getDrawable(context, android.R.color.transparent)
-            contentDescription = getString(R.string.exit_button)
+            contentDescription = getString(R.string.exit_button_desc)
 
             val drawable = ContextCompat.getDrawable(context, android.R.drawable.ic_input_add)
             val originalIconSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
@@ -86,7 +86,7 @@ class AddOtherQuestion: AddFragment() {
                 if (answerFields.size < 5) {
                     addNewAnswerToQuestion()
                 } else {
-                    binding.errorMessage.text = getString(R.string.error_max_answers)
+                    binding.errorMessage.text = getString(R.string.max_answers_error)
                 }
             }
         }
@@ -96,7 +96,13 @@ class AddOtherQuestion: AddFragment() {
 
     override fun saveQuestion(context: Context) {
         if (answerFields.any { it.text.isEmpty() }) {
-            binding.errorMessage.text = getString(R.string.error_empty_answers)
+            binding.errorMessage.text = getString(R.string.empty_answers_error)
+            return
+        }
+
+        val answerTexts = answerFields.map { it.text.toString() }
+        if (answerTexts.size != answerTexts.toSet().size) {
+            binding.errorMessage.text = getString(R.string.same_question_error)
             return
         }
 

@@ -28,7 +28,7 @@
                 android:layout_gravity="start|bottom"
                 android:layout_marginBottom="4dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button"
+                android:contentDescription="@string/exit_button_desc"
                 app:tint="@color/blue_selected"/>
 
             <!-- Text Field para la pregunta -->
@@ -37,12 +37,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/question_question"
+                android:hint="@string/question_question_hint"
                 android:inputType="text"
                 android:autofillHints=""
                 android:textSize="@dimen/font_size"
                 android:layout_marginTop="@dimen/small_margin"
-                android:maxLength="50" />
+                android:maxLength="40" />
 
         </LinearLayout>
 
@@ -210,7 +210,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/checkbox_title"
+            android:text="@string/time_checkbox_title"
             android:layout_marginTop="@dimen/medium_margin"
             android:layout_marginBottom="@dimen/small_margin"
             android:textSize="@dimen/font_size" />
@@ -282,7 +282,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/medium_margin"
             android:textSize="@dimen/title_font_size"
-            android:text="@string/save_button"
+            android:text="@string/save_button_placeholder"
             android:textAlignment="center"
             android:textStyle="bold" />
 

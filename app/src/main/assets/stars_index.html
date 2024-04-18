@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Star Question</title>
+    <title>Orbys Quizz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -79,7 +79,7 @@
         </div>
         <br><br>
 
-        <button type="submit">Enviar</button>
+        <button type="submit">[SEND]</button>
     </form>
 
     <script>
@@ -102,7 +102,6 @@
             ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                console.log('Respuesta recibida: ', text);
                 window.location.href = '/question';
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);

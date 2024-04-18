@@ -5,57 +5,53 @@
     <!-- Elements description -->
     <string name="menu_button_desc" translatable="false">Boton de menu del top bar</string>
     <string name="fab_desc" translatable="false">Boton de añadir preguntas</string>
-    <string name="exit_button" translatable="false">Exit from the dialog\n</string>
-    <string name="qr_code" translatable="false">Imagen con el codigo qr</string>
-    <string name="launch_button" translatable="false">Boton para lanzar una pregunta a ser contestada</string>
-    <string name="edit_button" translatable="false">Boton para editar una pregunta</string>
-    <string name="card_type_icon" translatable="false">Icono de cada tipo de pregunta</string>
-    <string name="question_type_icon" translatable="false">Icono que representa el tipo de la pregunta</string>
-    <string name="app_logo_description" translatable="false">Logo de la empresa</string>
+    <string name="exit_button_desc" translatable="false">Exit from the dialog\n</string>
+    <string name="qr_code_desc" translatable="false">Imagen con el codigo qr</string>
+    <string name="card_type_icon_desc" translatable="false">Icono de cada tipo de pregunta</string>
+    <string name="question_type_icon_desc" translatable="false">Icono que representa el tipo de la pregunta</string>
+    <string name="app_logo_desc" translatable="false">Logo de la empresa</string>
 
     <!-- Add dialog hint -->
-    <string name="question_answer">Answer:</string>
-    <string name="question_question">Question:</string>
-    <string name="save_button">Save</string>
+    <string name="question_question_hint">Question:</string>
+    <string name="question_answer_hint">Answer:</string>
+
+    <!-- HTML placeholders -->
+    <string name="save_button_placeholder">Save</string>
+    <string name="yes_answer_placeholder">Yes</string>
+    <string name="no_answers_placeholder">No</string>
+    <string name="login_title_placeholder">Enter a username:</string>
+    <string name="multiple_voting_alert_placeholder">You have successfully answered! You can answer one more time if you wish</string>
 
     <!-- Error messages -->
-    <string name="error_questions_exists">Question already exists</string>
-    <string name="error_max_answers">You can not put more tha 5 answers</string>
+    <string name="questions_exists_error">Question already exists</string>
+    <string name="max_answers_error">You can\'t put more than 5 answers</string>
+    <string name="empty_answers_error">You can\'t save if there are empty fields</string>
+    <string name="same_question_error">You can\'t save questions with the same content</string>
 
-    <!-- Dialog launch question -->
-    <string name="yes_aswers">Yes</string>
-    <string name="no_aswers">No</string>
-    <string name="delete_question_message"> Are you sure you want to delete this question? </string>
-    <string name="positive_button_message">Confirm</string>
-    <string name="negative_button_message">Cancel</string>
+    <!-- Main Activity messages -->
     <string name="activity_question_type_title">Select the type of question:</string>
+    <string name="yesno_question_type_title">Yes/No</string>
+    <string name="stars_question_type_title">Stars</string>
+    <string name="slider_question_type_title">Progressive Bar</string>
+    <string name="other_question_type_title">Others</string>
 
-    <!-- Question types -->
-    <string name="yes_no_title">Yes/No</string>
-    <string name="yes_no_desc">Simple type of questions with two types of answers</string>
-    <string name="stars_title">Stars</string>
-    <string name="stars_desc">Score type of questions to select a certain amount of stars</string>
-    <string name="bar_title">Progressive Bar</string>
-    <string name="bar_desc">Score type of questions to mark a point on a progression bar</string>
-    <string name="other_title">Others</string>
-    <string name="other_desc">Custom type of questions with three possible answers</string>
-
-    <string name="error_empty_answers">You can\'t save if there are empty fields</string>
-    <string name="non_anonymous_question_option_text">User required</string>
+    <!-- New Question Activity messages -->
+    <string name="anonymous_radio_title">Set up users:</string>
     <string name="anonymous_question_option_text">Anonymous</string>
+    <string name="non_anonymous_question_option_text">User required</string>
+    <string name="filter_users_radio_title">Set up number of responses per user:</string>
     <string name="filter_users_question_option_text">One response</string>
     <string name="non_filter_users_question_option_text">Multiple responses</string>
+    <string name="answers_radio_title">Set up number of possible responses:</string>
     <string name="single_answer_question_option_text">Single answer</string>
     <string name="multi_answer_question_option_text">Multiple answers</string>
+    <string name="time_checkbox_title">Set up stopwatch:</string>
     <string name="timeout_question_option_text">Time limit</string>
-    <string name="timeout_hint">Time in minutes:</string>
-    <string name="chronometer_title">Time remaining</string>
-    <string name="download_title">Escanear para descargar:</string>
-    <string name="download_format_description">Formato: .csv</string>
-    <string name="checkbox_title">Configurar cronómetro:</string>
     <string name="minutes_help_text">minutes</string>
-    <string name="anonymous_radio_title">Configurar usuarios:</string>
-    <string name="filter_users_radio_title">Configurar número de respuestas por usuario:</string>
-    <string name="answers_radio_title">Configurar número de respuestas posibles:</string>
+
+    <!-- Launch Service messages -->
+    <string name="chronometer_title">Time remaining</string>
+    <string name="download_title">Scan to download:</string>
+    <string name="download_format_description">Format: .csv</string>
 
 </resources>
