@@ -101,14 +101,14 @@
                 android:contentDescription="@string/exit_button_desc"
                 android:scaleX="0.6"
                 android:scaleY="0.6"
-                android:src="@drawable/ic_close"
+                android:src="@drawable/ic_back"
                 android:tint="@color/blue_selected"
                 tools:ignore="UseAppTint" />
 
         </LinearLayout>
 
         <!-- Grafico con las respuestas -->
-        <com.orbys.quizz.ui.view.components.graphics.HorizontalGraphicView
+        <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
             android:id="@+id/barView"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/graphic_height" />
@@ -139,7 +139,7 @@
                 android:textSize="@dimen/font_size"
                 android:visibility="gone" />
 
-            <com.orbys.quizz.ui.view.components.CountDownChronometer
+            <com.orbys.quizz.ui.components.CountDownChronometer
                 android:id="@+id/chronometer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -56,217 +56,251 @@
             android:textSize="@dimen/font_size"
             android:textColor="@android:color/holo_red_light" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/anonymous_radio_title"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:textSize="@dimen/font_size" />
-
-        <!-- Radio button para hacer las preguntas anonimas -->
-        <RadioGroup
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/anonymous_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:text="@string/anonymous_question_option_text" />
-
-            <RadioButton
-                android:id="@+id/non_anonymous_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/non_anonymous_question_option_text" />
-
-        </RadioGroup>
-
-        <!-- Linea para dividir los distintos grupos de radio button -->
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Radio button para hacer que se pueda responder varias veces -->
-        <TextView
-            android:id="@+id/filter_users_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_users_radio_title"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:textSize="@dimen/font_size" />
-
-        <RadioGroup
-            android:id="@+id/filter_users_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
-
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/filter_users_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:text="@string/filter_users_question_option_text" />
-
-            <RadioButton
-                android:id="@+id/non_filter_users_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/non_filter_users_question_option_text" />
-
-        </RadioGroup>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/filter_users_divider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Radio button para hacer que las preguntas sean de multiple respuesta -->
-        <TextView
-            android:id="@+id/multi_answer_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/answers_radio_title"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:textSize="@dimen/font_size" />
-
-        <RadioGroup
-            android:id="@+id/multi_answer_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
-
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/single_answer_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:text="@string/single_answer_question_option_text" />
-
-            <RadioButton
-                android:id="@+id/multi_answer_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/multi_answer_question_option_text" />
-
-        </RadioGroup>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/multi_answer_divider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- Casilla para hacer establecer tiempo limite para responder -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_checkbox_title"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:textSize="@dimen/font_size" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin">
-
-            <CheckBox
-                android:id="@+id/timeout_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:scaleX="0.6"
+            <ImageButton
+                android:id="@+id/configurations_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:scaleY="0.6"
-                android:textSize="@dimen/type_fragment_title_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:scaleX="0.6"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_config_show"/>
 
             <TextView
-                android:id="@+id/timeout_question_option_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/timeout_question_option_text"
-                android:textSize="@dimen/font_size"
-                app:layout_constraintStart_toEndOf="@id/timeout_question_option"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <EditText
-                android:id="@+id/timeout_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:visibility="gone"
-                android:layout_marginStart="@dimen/medium_margin"
-                app:layout_constraintStart_toEndOf="@id/timeout_question_option_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:text="@string/configurations_text"/>
+
+        </LinearLayout>
+
+        <!-- Layout para mostar las opciones de configuración de la pregunta -->
+        <LinearLayout
+            android:id="@+id/configurations_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/minutes_help_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/minutes_help_text"
-                android:textSize="@dimen/font_size"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@id/timeout_input"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:text="@string/anonymous_radio_title"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textSize="@dimen/font_size" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Radio button para hacer las preguntas anonimas -->
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/anonymous_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="true"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/anonymous_question_option_text" />
+
+                <RadioButton
+                    android:id="@+id/non_anonymous_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="false"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/non_anonymous_question_option_text" />
+
+            </RadioGroup>
+
+            <!-- Linea para dividir los distintos grupos de radio button -->
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Radio button para hacer que se pueda responder varias veces -->
+            <TextView
+                android:id="@+id/filter_users_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_users_radio_title"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textSize="@dimen/font_size" />
+
+            <RadioGroup
+                android:id="@+id/filter_users_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/filter_users_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="true"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_users_question_option_text" />
+
+                <RadioButton
+                    android:id="@+id/non_filter_users_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="false"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/non_filter_users_question_option_text" />
+
+            </RadioGroup>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/filter_users_divider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Radio button para hacer que las preguntas sean de multiple respuesta -->
+            <TextView
+                android:id="@+id/multi_answer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/answers_radio_title"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textSize="@dimen/font_size" />
+
+            <RadioGroup
+                android:id="@+id/multi_answer_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_margin"
+
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/single_answer_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="true"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/single_answer_question_option_text" />
+
+                <RadioButton
+                    android:id="@+id/multi_answer_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:checked="false"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/multi_answer_question_option_text" />
+
+            </RadioGroup>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/multi_answer_divider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Casilla para hacer establecer tiempo limite para responder -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_checkbox_title"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:textSize="@dimen/font_size" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin">
+
+                <CheckBox
+                    android:id="@+id/timeout_question_option"
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:scaleX="0.6"
+                    android:scaleY="0.6"
+                    android:textSize="@dimen/type_fragment_title_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/timeout_question_option_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/timeout_question_option_text"
+                    android:textSize="@dimen/font_size"
+                    app:layout_constraintStart_toEndOf="@id/timeout_question_option"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <EditText
+                    android:id="@+id/timeout_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    app:layout_constraintStart_toEndOf="@id/timeout_question_option_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <TextView
+                    android:id="@+id/minutes_help_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minutes_help_text"
+                    android:textSize="@dimen/font_size"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/timeout_input"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
         <!-- Layout para añadir respuestas personalizadas -->
         <LinearLayout
             android:id="@+id/answersLayout"

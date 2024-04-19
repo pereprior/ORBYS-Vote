@@ -53,8 +53,6 @@ class DownloadActivity: AppCompatActivity() {
     }
 
     private fun storagePermissionGranted() {
-        Toast.makeText(this, "Storage permission granted", Toast.LENGTH_SHORT).show()
-
         // Inflar la vista y mostrar los fragmentos después de que se haya concedido el permiso
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

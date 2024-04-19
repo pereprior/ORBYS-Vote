@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
+import com.orbys.quizz.domain.usecases.AddQuestionUseCase
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
-import com.orbys.quizz.ui.viewModels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Clase que representa una actividad para añadir preguntas a la lista.
@@ -26,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 abstract class AddFragment: Fragment() {
 
-    private lateinit var viewModel: QuestionViewModel
+    @Inject
+    lateinit var addQuestionUseCase: AddQuestionUseCase
     protected lateinit var binding: ActivityAddQuestionBinding
 
     override fun onCreateView(
@@ -34,10 +35,9 @@ abstract class AddFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Recogemos la instancia del ViewModel
-        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
+        val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return binding.root
 
-        val button: ImageButton = activity?.findViewById(R.id.close_button) ?: return binding.root
-
+        button.visibility = View.VISIBLE
         button.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, TypesQuestionFragment())
@@ -51,6 +51,16 @@ abstract class AddFragment: Fragment() {
         with(binding) {
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion(it.context) }
+
+            configurationsIcon.setOnClickListener {
+                if (configurationsLayout.visibility == View.VISIBLE) {
+                    configurationsIcon.setImageResource(R.drawable.ic_config_show)
+                    configurationsLayout.visibility = View.GONE
+                } else {
+                    configurationsIcon.setImageResource(R.drawable.ic_config_show)
+                    configurationsLayout.visibility = View.VISIBLE
+                }
+            }
 
             timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
@@ -78,7 +88,7 @@ abstract class AddFragment: Fragment() {
             return
         }
 
-        viewModel.addQuestion(question)
+        addQuestionUseCase(question)
 
         // Lanzar la actividad para añadir respuestas
         context.startService(Intent(context, FloatingViewService::class.java))

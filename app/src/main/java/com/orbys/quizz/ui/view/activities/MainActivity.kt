@@ -1,9 +1,7 @@
 package com.orbys.quizz.ui.view.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
@@ -25,27 +23,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getPermission()
-
         printFragments()
     }
 
     private fun printFragments() {
-        supportFragmentManager.beginTransaction().apply {
-            // Fragmento con los tipos de preguntas
-            replace(binding.fragmentContainer.id, TypesQuestionFragment())
-            commit()
-        }
-    }
 
-    private fun getPermission() {
+        with(binding) {
 
-        if(!Settings.canDrawOverlays(this)) {
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")
-            )
-            startActivity(intent)
+            closeButton.setOnClickListener {
+                finish()
+                exitProcess(0)
+            }
+
+            supportFragmentManager.beginTransaction().apply {
+                // Fragmento con los tipos de preguntas
+                replace(fragmentContainer.id, TypesQuestionFragment())
+                commit()
+            }
         }
 
     }

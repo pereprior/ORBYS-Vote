@@ -2,7 +2,6 @@ package com.orbys.quizz.data.repositories
 
 interface IFileRepository {
     fun createFile(fileName: String)
-    fun readFile(): String
     fun writeFile(
         date: String,
         time: String,
@@ -11,5 +10,4 @@ interface IFileRepository {
         question: String,
         answer: String
     )
-    fun deleteFile()
 }

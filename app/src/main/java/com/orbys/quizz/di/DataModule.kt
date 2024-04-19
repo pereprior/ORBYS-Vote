@@ -5,6 +5,7 @@ import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.data.controllers.HttpController
 import com.orbys.quizz.data.controllers.handlers.FileHandler
+import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.repositories.IFileRepository
@@ -44,9 +45,19 @@ object DataModule {
     @Provides
     @Singleton
     fun provideQuestionController(@ApplicationContext context: Context) = HttpController(
-        HttpRepositoryImpl(
-            QuestionRepositoryImpl.getInstance(),
-            UsersRepositoryImpl.getInstance()
+        ResponseHandler(
+            HttpRepositoryImpl(
+                QuestionRepositoryImpl.getInstance(),
+                UsersRepositoryImpl.getInstance()
+            ),
+            FileHandler(
+                HttpRepositoryImpl(
+                    QuestionRepositoryImpl.getInstance(),
+                    UsersRepositoryImpl.getInstance()
+                ),
+                FileRepository(context),
+                context
+            )
         ),
 
         FileHandler(

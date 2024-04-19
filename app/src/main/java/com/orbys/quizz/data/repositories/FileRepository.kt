@@ -45,22 +45,4 @@ class FileRepository(
         }
     }
 
-    override fun readFile(): String {
-        if (file.exists()) {
-            return file.readText()
-        }
-
-        return ""
-    }
-
-    override fun deleteFile() {
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, false)
-            val bufferedWriter = BufferedWriter(fileWriter)
-
-            bufferedWriter.write("")
-            bufferedWriter.close()
-        }
-    }
-
 }

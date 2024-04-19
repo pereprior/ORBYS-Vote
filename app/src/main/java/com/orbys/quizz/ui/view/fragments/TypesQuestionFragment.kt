@@ -24,12 +24,8 @@ class TypesQuestionFragment: Fragment() {
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
 
-        val button: ImageButton = activity?.findViewById(R.id.close_button) ?: return binding.root
-
-        button.setOnClickListener {
-            activity?.finishAffinity()
-            exitProcess(0)
-        }
+        val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return binding.root
+        button.visibility = View.GONE
 
         addFragments()
 

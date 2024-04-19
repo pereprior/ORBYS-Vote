@@ -1,14 +1,11 @@
 package com.orbys.quizz.di
 
-import android.content.Context
-import com.orbys.quizz.data.repositories.FileRepository
-import com.orbys.quizz.data.repositories.IFileRepository
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
+import com.orbys.quizz.domain.usecases.AddQuestionUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -26,4 +23,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideUsersRepository() = UsersRepositoryImpl.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideAddQuestionUseCase() = AddQuestionUseCase(QuestionRepositoryImpl.getInstance())
+
 }
