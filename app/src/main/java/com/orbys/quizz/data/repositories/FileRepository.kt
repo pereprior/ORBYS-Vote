@@ -6,6 +6,11 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 
+/**
+ * Repositorio para manejar las operaciones de archivos.
+ *
+ * @property context Contexto de la aplicación.
+ */
 class FileRepository(
     private val context: Context
 ) : IFileRepository {

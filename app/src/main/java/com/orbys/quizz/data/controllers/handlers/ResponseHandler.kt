@@ -17,12 +17,16 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import javax.inject.Inject
 
+/**
+ * Clase para manejar las respuestas del servidor.
+ *
+ * @property repository Repositorio para operaciones HTTP.
+ * @property fileHandler Manejador de archivos.
+ */
 class ResponseHandler@Inject constructor(
     private val repository: HttpRepositoryImpl,
     private val fileHandler: FileHandler
 ) {
-
-    private var username = "Anonymous"
 
     fun setupRoutes(route: Route) {
 
@@ -42,6 +46,7 @@ class ResponseHandler@Inject constructor(
 
         val fileContent = fileHandler.getFileContent(userIP)
 
+        // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
         if (!repository.getQuestion().isAnonymous && repository.userNotExists(userIP)) {
             call.respondRedirect(USER_ENDPOINT)
         }
@@ -56,6 +61,7 @@ class ResponseHandler@Inject constructor(
         val userIP = call.request.origin.remoteHost
         val choice = call.receiveParameters()["choice"]
 
+        // Si aún no ha terminado el tiempo, se registra la respuesta
         if(!repository.timeOut().value) {
             repository.setPostInAnswerCount(choice)
             updateUserStatus(choice ?: "", userIP)
@@ -66,8 +72,8 @@ class ResponseHandler@Inject constructor(
 
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
-        username = "Anonymous"
 
+        // Si la pregunta admite multiples respuestas, volvemos al formulario
         if (repository.getQuestion().isMultipleAnswers) {
             call.respondRedirect("$QUESTION_ENDPOINT/{id}")
         }
@@ -79,11 +85,8 @@ class ResponseHandler@Inject constructor(
     }
 
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
-        if (repository.getQuestion().isAnonymous) {
-            call.respondRedirect(QUESTION_ENDPOINT)
-        }
-
         val fileContent = fileHandler.loadHtmlFile("login")
+
         call.respondText(
             text = fileContent ?: ERROR_MESSAGE,
             contentType = ContentType.Text.Html
@@ -92,7 +95,9 @@ class ResponseHandler@Inject constructor(
 
     private fun Route.handleLoginRoute() = post("/login") {
         val userIP = call.request.origin.remoteHost
+        val username: String
 
+        // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP)) {
             val choice = call.receiveParameters()["user"]
             username = choice ?: ""
@@ -103,9 +108,11 @@ class ResponseHandler@Inject constructor(
     }
 
     private fun updateUserStatus(choice: String, userIP: String) {
+        // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP)) {
-            repository.addUser(User(userIP, username, true))
+            repository.addUser(User(userIP, repository.getUsernameByIp(userIP), true))
         } else {
+            // Si ya existe el usuario, se marca como que ha respondido
             repository.setUserResponded(userIP)
         }
 

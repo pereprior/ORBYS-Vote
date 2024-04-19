@@ -35,71 +35,14 @@ class AddOtherQuestion: AddFragment() {
         setDefaultAnswers()
     }
 
-    private fun setDefaultAnswers() {
-        addNewAnswerButton()
-
-        addNewAnswerToQuestion()
-        addNewAnswerToQuestion()
-    }
-
-    private fun addNewAnswerToQuestion() {
-        // Crear un nuevo campo de texto para una respuesta
-        val newAnswerField = EditText(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            hint = getString(R.string.question_answer_hint)
-            inputType = InputType.TYPE_CLASS_TEXT
-            id = View.generateViewId()
-            filters = arrayOf(InputFilter.LengthFilter(20))
-        }
-
-        // Agregar el nuevo campo de texto al layout y a la lista de campos de texto
-        binding.answersLayout.addView(newAnswerField)
-        answerFields.add(newAnswerField)
-    }
-
-    private fun addNewAnswerButton() {
-        // Crear el boton para añadir nuevas respuestas
-        val newButton = ImageButton(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-
-            foregroundGravity = Gravity.CENTER
-            background = ContextCompat.getDrawable(context, android.R.color.transparent)
-            contentDescription = getString(R.string.exit_button_desc)
-
-            val drawable = ContextCompat.getDrawable(context, android.R.drawable.ic_input_add)
-            val originalIconSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
-            val desiredIconSize = context.resources.getDimensionPixelSize(R.dimen.icon_size)
-            val scale = desiredIconSize.toFloat() / originalIconSize
-
-            setImageDrawable(drawable)
-            scaleX = scale
-            scaleY = scale
-
-            setColorFilter(ContextCompat.getColor(context, R.color.blue_selected), PorterDuff.Mode.SRC_IN)
-            setOnClickListener {
-                if (answerFields.size < 5) {
-                    addNewAnswerToQuestion()
-                } else {
-                    binding.errorMessage.text = getString(R.string.max_answers_error)
-                }
-            }
-        }
-
-        binding.answersLayout.addView(newButton)
-    }
-
     override fun saveQuestion(context: Context) {
+        // Controlar que los campos de las preguntas no estén vacíos
         if (answerFields.any { it.text.isEmpty() }) {
             binding.errorMessage.text = getString(R.string.empty_answers_error)
             return
         }
 
+        // Controlar que no haya dos preguntas iguales
         val answerTexts = answerFields.map { it.text.toString() }
         if (answerTexts.size != answerTexts.toSet().size) {
             binding.errorMessage.text = getString(R.string.same_question_error)
@@ -123,6 +66,66 @@ class AddOtherQuestion: AddFragment() {
             isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,
             isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
         )
+    }
+
+    private fun setDefaultAnswers() {
+        // Boton para añadir mas respuestas
+        addNewAnswerButton()
+
+        // Añadir dos respuestas por defecto
+        repeat(2) { addNewAnswerToQuestion() }
+    }
+
+    private fun addNewAnswerToQuestion() {
+        val newAnswerField = createAnswerField()
+        // Agregar el nuevo campo de texto al layout y a la lista de campos de texto
+        binding.answersLayout.addView(newAnswerField)
+        answerFields.add(newAnswerField)
+    }
+
+    private fun createAnswerField() = EditText(context).apply {
+        // Crear un nuevo campo de texto para una respuesta
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        hint = getString(R.string.question_answer_hint)
+        inputType = InputType.TYPE_CLASS_TEXT
+        id = View.generateViewId()
+        filters = arrayOf(InputFilter.LengthFilter(20))
+    }
+
+    private fun addNewAnswerButton() {
+        val newButton = createNewAnswerButton()
+        binding.answersLayout.addView(newButton)
+    }
+
+    private fun createNewAnswerButton() = ImageButton(context).apply {
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        setupButtonAppearance()
+        setOnClickListener {
+            if (answerFields.size < 5) addNewAnswerToQuestion()
+            else binding.errorMessage.text = getString(R.string.max_answers_error)
+        }
+    }
+
+    private fun ImageButton.setupButtonAppearance() {
+        val drawable = ContextCompat.getDrawable(context, android.R.drawable.ic_input_add)
+        val originalIconSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
+        val desiredIconSize = context.resources.getDimensionPixelSize(R.dimen.icon_size)
+        val scale = desiredIconSize.toFloat() / originalIconSize
+
+        foregroundGravity = Gravity.CENTER
+        background = ContextCompat.getDrawable(context, android.R.color.transparent)
+        contentDescription = getString(R.string.exit_button_desc)
+        scaleX = scale
+        scaleY = scale
+
+        setImageDrawable(drawable)
+        setColorFilter(ContextCompat.getColor(context, R.color.blue_selected), PorterDuff.Mode.SRC_IN)
     }
 
 }

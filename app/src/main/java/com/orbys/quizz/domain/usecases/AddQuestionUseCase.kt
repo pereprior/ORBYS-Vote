@@ -4,6 +4,7 @@ import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.repositories.IQuestionRepository
 import javax.inject.Inject
 
+// Caso de uso para añadir una nueva pregunta
 class AddQuestionUseCase @Inject constructor(
     private val repository: IQuestionRepository
 ) {

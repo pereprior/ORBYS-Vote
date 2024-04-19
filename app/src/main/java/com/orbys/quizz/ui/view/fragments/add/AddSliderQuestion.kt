@@ -8,7 +8,7 @@ import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 
 /**
- * Clase que representa una actividad para añadir preguntas de tipo "Barra progresiva".
+ * Clase que representa una actividad para añadir preguntas de tipo "Slider".
  */
 class AddSliderQuestion: AddFragment() {
 

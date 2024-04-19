@@ -13,7 +13,10 @@ class HttpController @Inject constructor(
     fun setupRoutes(route: Route) {
 
         route.apply {
+            // Respuestas del servidor http
             responseHandler.setupRoutes(this)
+
+            // Descargar los datos del servidor
             fileHandler.setupRoutes(this)
         }
 

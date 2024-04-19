@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 /**
  * Servicio que inicia el servidor HTTP.
- * El servidor se inicia en un hilo separado para que no bloquee el hilo principal de la aplicación.
  *
  * @property controller Controlador de las rutas del servidor HTTP.
  * @property server El servidor HTTP que se inicia en este servicio.
@@ -39,7 +38,6 @@ class HttpService: Service() {
         return START_NOT_STICKY
     }
 
-    // Inicia el servidor HTTP en un hilo separado.
     private fun startServer() {
         Thread {
             server = createServer()
@@ -47,7 +45,6 @@ class HttpService: Service() {
         }.start()
     }
 
-    // Crea el servidor HTTP con el motor Netty en el puerto 8888
     private fun createServer() = embeddedServer(Netty, port = SERVER_PORT) {
         // Configuración del motor de plantillas para el HTML
         install(FreeMarker) {

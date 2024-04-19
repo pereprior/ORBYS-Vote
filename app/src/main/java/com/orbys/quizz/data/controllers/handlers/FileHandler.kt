@@ -17,38 +17,50 @@ import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
 
-private const val HTTP_FILES_FOLDER = "/assets/"
-private const val HTTP_FILES_NAME = "_index"
-private const val HTTP_FILES_EXTENSION = ".html"
-private const val QUESTION_PLACEHOLDER = "[QUESTION]"
-private const val ANSWER_PLACEHOLDER = "[ANSWER"
-private const val SEND_BUTTON_PLACEHOLDER = "[SEND]"
-private const val LOGIN_TITLE_PLACEHOLDER = "[LOGIN_TITLE]"
-private const val MULTIPLE_CHOICE = "multiple"
-private const val SINGLE_CHOICE = "single"
-private const val CSV_FILE_NAME = "data"
-private const val TIME_FORMAT = "HH:mm:ss"
-private const val DATE_FORMAT = "dd/MM/yyyy"
-private const val DATE_TIME_FORMAT = "yyyyMMddHHmmss"
-
+/**
+ * Clase para manejar las operaciones de archivos del servidor.
+ *
+ * @property httpRepository Repositorio para operaciones HTTP.
+ * @property fileRepository Repositorio para operaciones de archivos.
+ * @property context Contexto de la aplicación.
+ */
 class FileHandler @Inject constructor(
     private val httpRepository: HttpRepositoryImpl,
     private val fileRepository: FileRepository,
     private val context: Context
 ) {
+    private companion object {
+        const val HTTP_FILES_FOLDER = "/assets/"
+        const val HTTP_FILES_NAME = "_index"
+        const val HTTP_FILES_EXTENSION = ".html"
+        const val QUESTION_PLACEHOLDER = "[QUESTION]"
+        const val ANSWER_PLACEHOLDER = "[ANSWER"
+        const val SEND_BUTTON_PLACEHOLDER = "[SEND]"
+        const val LOGIN_TITLE_PLACEHOLDER = "[LOGIN_TITLE]"
+        const val MULTIPLE_CHOICE = "multiple"
+        const val SINGLE_CHOICE = "single"
+        const val CSV_FILE_NAME = "data"
+        const val TIME_FORMAT = "HH:mm:ss"
+        const val DATE_FORMAT = "dd/MM/yyyy"
+        const val DATE_TIME_FORMAT = "yyyyMMddHHmmss"
+    }
 
     fun setupRoutes(route: Route) {
         route.handleDownloadRoute()
     }
 
+    // Ruta de descarga del archivo de datos.
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
         call.respondFile(fileRepository.getFile())
     }
 
     fun getFileContent(userIP: String): String? {
         return when {
+            // Si el tiempo de espera ha terminado muestra el mensaje de tiempo agotado.
             httpRepository.timeOut().value -> TIME_OUT_MESSAGE
+            // Si el usuario ya ha respondido y la pregunta no permite más respuestas muestra el mensaje de usuario respondido.
             httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
+            // Carga el archivo HTML de la pregunta.
             else -> loadHtmlFile(httpRepository.getQuestion().answerType.name)
         }
     }
@@ -56,6 +68,7 @@ class FileHandler @Inject constructor(
     fun loadHtmlFile(answerType: String): String? {
         val filePath = "${answerType.lowercase(Locale.ROOT)}$HTTP_FILES_NAME$HTTP_FILES_EXTENSION"
         return this::class.java.getResource("$HTTP_FILES_FOLDER$filePath")?.readText()?.let {
+            // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
             replace(it, httpRepository.getQuestion())
         }
     }
@@ -66,6 +79,7 @@ class FileHandler @Inject constructor(
         val dateTimeFormatter = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
+        // Fecha y hora actual como indentificador unico del archivo.
         val dateTime = dateTimeFormatter.format(Calendar.getInstance().time)
 
         fileRepository.createFile("$CSV_FILE_NAME$dateTime")
@@ -95,7 +109,9 @@ class FileHandler @Inject constructor(
     }
 
     private fun String.replaceOtherFunctions(question: Question): String {
+        // Si el usuario envia varias respuestas a la vez
         val answersToString = question.answers.joinToString(",") { it.answer.toString() }
+        // Si la pregunta es de eleccion multiple o de respuesta multiple
         val multipleChoices = if (question.isMultipleChoices) MULTIPLE_CHOICE else SINGLE_CHOICE
         val multipleAnswers = if (question.isMultipleAnswers) MULTIPLE_CHOICE else SINGLE_CHOICE
 

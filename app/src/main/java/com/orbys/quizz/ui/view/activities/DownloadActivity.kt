@@ -8,13 +8,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.DownloadFragment
 import com.orbys.quizz.ui.services.FloatingViewService
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.system.exitProcess
 
+/**
+ * Actividad que se encarga de proporcionar los permisos para descargar las preguntas del servidor
+ *
+ * @property binding Vista de la actividad
+ */
 class DownloadActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -34,6 +36,7 @@ class DownloadActivity: AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             storagePermissionGranted()
         } else {
+            // Solicita el permiso de almacenamiento si no se ha concedido.
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
         }
     }
@@ -58,7 +61,6 @@ class DownloadActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         supportFragmentManager.beginTransaction().apply {
-            // Fragmento con los tipos de preguntas
             replace(binding.fragmentContainer.id, DownloadFragment())
             commit()
         }
@@ -67,6 +69,7 @@ class DownloadActivity: AppCompatActivity() {
     private fun storagePermissionDenied() {
         startService(Intent(this, FloatingViewService::class.java))
 
+        // Muestra un mensaje indicando que se ha denegado el permiso de almacenamiento.
         Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show()
         finish()
     }

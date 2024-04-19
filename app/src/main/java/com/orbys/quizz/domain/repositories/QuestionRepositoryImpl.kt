@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * Clase que gestiona el flujo de datos relacionados con las preguntas y respuestas.
  *
- * @property _question Un flujo mutable privado que contiene una lista de preguntas.
- * @property _questionUpdated Un flujo mutable privado que emite una respuesta cada vez que se actualiza una pregunta.
- * @property question Un flujo inmutable y publico para llamar a la lista de preguntas.
- * @property questionUpdated Un flujo inmutable y publico para llamar a la respuesta emitida cada vez que se actualiza una pregunta.
+ * @property _question Un flujo mutable privado la información de la pregunta.
+ * @property _questionUpdated Un flujo mutable privado que emite una respuesta cada vez que se actualiza la pregunta.
+ * @property question Un flujo inmutable y publico para llamar a la pregunta.
+ * @property questionUpdated Un flujo inmutable y publico para llamar a la respuesta emitida cada vez que se actualiza la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     companion object {
@@ -31,7 +31,6 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
         }
     }
 
-    // Flujo de preguntas
     private var _question = MutableStateFlow(Question(""))
     private val _questionUpdated = MutableSharedFlow<Unit>(replay = 1)
 
@@ -44,13 +43,11 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     override fun timeOut() { timeOut.tryEmit(true) }
     override fun resetTimer() { timeOut.tryEmit(false) }
 
-
     // Metodos para gestionar la pregunta lanzada
     override fun addQuestion(question: Question) {
         _question.value = question
         _questionUpdated.tryEmit(Unit)
     }
-
 
     // Métodos para gestionar el contador de respuestas de una pregunta
     override fun clearAnswer(question: Question) { _question.value.answers.forEach { it.count.tryEmit(0) } }

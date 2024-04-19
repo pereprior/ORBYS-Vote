@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.databinding.ActivityAddQuestionBinding
-import com.orbys.quizz.domain.usecases.AddQuestionUseCase
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
+import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
- * Clase que representa una actividad para añadir preguntas a la lista.
+ * Clase abstracta que representa un Fragmento para añadir nueva pregunta a lanzar
  *
  * @property viewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
  * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
@@ -26,55 +26,34 @@ import javax.inject.Inject
 @AndroidEntryPoint
 abstract class AddFragment: Fragment() {
 
-    @Inject
-    lateinit var addQuestionUseCase: AddQuestionUseCase
+    private lateinit var viewModel: QuestionViewModel
     protected lateinit var binding: ActivityAddQuestionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Recogemos la instancia del ViewModel
-        val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return binding.root
-
-        button.visibility = View.VISIBLE
-        button.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, TypesQuestionFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
-
+        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = ActivityAddQuestionBinding.inflate(inflater, container, false)
 
         with(binding) {
+            val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
+            setBackButtonVisible(button)
+
             // Asignar los listeners a los botones
             saveButton.setOnClickListener { saveQuestion(it.context) }
 
             configurationsIcon.setOnClickListener {
-                if (configurationsLayout.visibility == View.VISIBLE) {
-                    configurationsIcon.setImageResource(R.drawable.ic_config_show)
-                    configurationsLayout.visibility = View.GONE
-                } else {
-                    configurationsIcon.setImageResource(R.drawable.ic_config_show)
-                    configurationsLayout.visibility = View.VISIBLE
-                }
+                if (configurationsLayout.visibility == View.VISIBLE) setConfigVisible(R.drawable.ic_config_hide, View.GONE)
+                else setConfigVisible(R.drawable.ic_config_show, View.VISIBLE)
             }
 
             timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    timeoutInput.visibility = View.VISIBLE
-                    minutesHelpText.visibility = View.VISIBLE
-                } else {
-                    timeoutInput.visibility = View.GONE
-                    minutesHelpText.visibility = View.GONE
-                }
+                if (isChecked) setTimerVisibility(View.VISIBLE) else setTimerVisibility(View.GONE)
             }
 
+            return root
         }
-
-        return binding.root
     }
 
     abstract fun createQuestionFromInput(): Question
@@ -88,13 +67,37 @@ abstract class AddFragment: Fragment() {
             return
         }
 
-        addQuestionUseCase(question)
+        viewModel.addQuestion(question)
 
         // Lanzar la actividad para añadir respuestas
         context.startService(Intent(context, FloatingViewService::class.java))
 
         activity?.finish()
         clear()
+    }
+
+    // Cambiar la visibilidad del formulario del cronometro
+    private fun setTimerVisibility(visible: Int) {
+        binding.timeoutInput.visibility = visible
+        binding.minutesHelpText.visibility = visible
+    }
+
+    // Cambiar la visibilidad de la confirguración adicional
+    private fun setConfigVisible(icon: Int, visible: Int) {
+        binding.configurationsIcon.setImageResource(icon)
+        binding.configurationsLayout.visibility = visible
+    }
+
+    // Cambiar la visibilidad del boton de volver al fragmento anterior
+    private fun setBackButtonVisible(button: ImageButton) {
+        button.visibility = View.VISIBLE
+        button.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, TypesQuestionFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     private fun clear() {

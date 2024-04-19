@@ -14,6 +14,9 @@ import com.orbys.quizz.ui.view.fragments.cards.StarsCard
 import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
 import kotlin.system.exitProcess
 
+/**
+ * Fragmento que contiene los tipos de preguntas que se pueden crear.
+ */
 class TypesQuestionFragment: Fragment() {
 
     private lateinit var binding: FragmentQuestionTypesBinding
@@ -24,21 +27,19 @@ class TypesQuestionFragment: Fragment() {
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
 
-        val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return binding.root
-        button.visibility = View.GONE
+        with(binding) {
+            val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
+            button.visibility = View.GONE
 
-        addFragments()
+            parentFragmentManager.beginTransaction()
+                .add(yesNoCardContainer.id, YesNoCard())
+                .add(starsCardContainer.id, StarsCard())
+                .add(sliderCardContainer.id, SliderCard())
+                .add(otherCardContainer.id, OtherCard())
+                .commit()
 
-        return binding.root
-    }
-
-    private fun addFragments() {
-        parentFragmentManager.beginTransaction()
-            .add(binding.yesNoCardContainer.id, YesNoCard())
-            .add(binding.starsCardContainer.id, StarsCard())
-            .add(binding.sliderCardContainer.id, SliderCard())
-            .add(binding.otherCardContainer.id, OtherCard())
-            .commit()
+            return root
+        }
     }
 
 }

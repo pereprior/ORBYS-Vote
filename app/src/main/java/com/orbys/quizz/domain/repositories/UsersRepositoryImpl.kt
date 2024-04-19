@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * Clase que gestiona los usuarios que han respondido las preguntas.
  *
- * @property _respondedUsers Un flujo mutable que contiene una lista de usuarios que han respondido.
+ * @property _respondedUsers Un flujo mutable privado que contiene una lista de usuarios que han accedido al servidor.
+ * @property respondedUsers Un flujo inmutable y publico para llamar a la lista de usuarios.
  */
 class UsersRepositoryImpl private constructor(): IUsersRepository {
     companion object {
@@ -26,7 +27,6 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
         }
     }
 
-    // Flujo de usuarios que han respondido
     private var _respondedUsers = MutableStateFlow(listOf<User>())
     val respondedUsers: StateFlow<List<User>> = _respondedUsers
 

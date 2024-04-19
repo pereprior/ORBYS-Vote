@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.services
+package com.orbys.quizz.ui.view.widgets
 
 import android.view.MotionEvent
 import android.view.View
@@ -27,8 +27,12 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
-    // Variables para gestionar la vista
+class LaunchQuestionView(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+): ConstraintLayout(context, attrs, defStyleAttr), View.OnTouchListener {
+
     private var windowManager: WindowManager
     private lateinit var layoutParams: WindowManager.LayoutParams
     private var binding: ServiceLaunchQuestionBinding
@@ -36,15 +40,10 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
     private val questionRepository = QuestionRepositoryImpl.getInstance()
     private val usersRepository = UsersRepositoryImpl.getInstance()
 
-    // Coordenadas del widget
     private var x: Int = 0
     private var y: Int = 0
     private var onChangeX: Float = 0f
     private var onChangeY: Float = 0f
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     init {
         inflateLayoutParamsAsFloatingLayout()
@@ -126,11 +125,13 @@ class LaunchQuestionView : ConstraintLayout, View.OnTouchListener {
             }
 
             downloadButton.setOnClickListener {
-                windowManager.removeView(this@LaunchQuestionView)
+                if(chronometer.isCountDownFinished()) {
+                    windowManager.removeView(this@LaunchQuestionView)
 
-                val intent = Intent(context, DownloadActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
+                    val intent = Intent(context, DownloadActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)
+                }
             }
 
             if(question.timeOut!! > 0) {

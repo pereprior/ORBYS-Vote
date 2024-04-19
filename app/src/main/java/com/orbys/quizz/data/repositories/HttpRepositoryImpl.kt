@@ -45,5 +45,6 @@ class HttpRepositoryImpl @Inject constructor(
     // Comprueba si un usuario ya ha respondido
     override fun userResponded(ip: String): Boolean = usersRepository.usersResponded(ip)
 
+    // Obtiene el nombre de usuario a partir de la IP
     override fun getUsernameByIp(ip: String): String = usersRepository.getUsernameByIp(ip)
 }
