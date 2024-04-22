@@ -34,5 +34,8 @@
     <string name="configurations_text">Setări suplimentare</string>
     <string name="users_count_title">"Utilizatori: "</string>
     <string name="min_answers_error">Nu puteți pune mai puțin de 2 răspunsuri</string>
+    <string name="csv_legend_question_title">Întrebare;</string>
+    <string name="csv_legend_answers_title">Răspunsuri;</string>
+    <string name="csv_legend">Data;Ora;IP;Nume de utilizator;Răspuns</string>
 
 </resources>

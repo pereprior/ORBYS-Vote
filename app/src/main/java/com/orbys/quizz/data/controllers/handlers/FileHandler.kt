@@ -97,13 +97,17 @@ class FileHandler @Inject constructor(
         val time = timeFormatter.format(Calendar.getInstance().time)
         // Fecha y hora actual como indentificador unico del archivo.
 
-        fileRepository.createFile(CSV_FILE_NAME)
+        fileRepository.createFile(
+            fileName = CSV_FILE_NAME,
+            question = httpRepository.getQuestion().question,
+            answers = httpRepository.getQuestion().answers.map { it.answer.toString() }
+        )
+
         fileRepository.writeFile(
             date = date,
             time = time,
             ip = userIP,
             username = httpRepository.getUsernameByIp(userIP),
-            question = httpRepository.getQuestion().question,
             answer = choice
         )
     }

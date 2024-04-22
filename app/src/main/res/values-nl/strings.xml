@@ -34,5 +34,8 @@
     <string name="configurations_text">Aanvullende instellingen</string>
     <string name="users_count_title">"Gebruikers: "</string>
     <string name="min_answers_error">U kunt niet minder dan 2 antwoorden opgeven</string>
+    <string name="csv_legend_question_title">Vraag;</string>
+    <string name="csv_legend_answers_title">Antwoorden;</string>
+    <string name="csv_legend">Datum;Tijd;IP;Gebruikersnaam;Antwoord</string>
 
 </resources>

@@ -34,5 +34,8 @@
     <string name="configurations_text">Ezarpen aurreratua</string>
     <string name="users_count_title">"Erabiltzaileak: "</string>
     <string name="min_answers_error">2 baino gutxiago ezin duzu erantzunak jartzea</string>
+    <string name="csv_legend_question_title">Galdera;</string>
+    <string name="csv_legend_answers_title">Erantzunak;</string>
+    <string name="csv_legend">Data;Ordua;IP;Erabiltzaile izena;Erantzuna</string>
 
 </resources>

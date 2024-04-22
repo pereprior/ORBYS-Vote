@@ -16,12 +16,15 @@
     <string name="question_question_hint">Question:</string>
     <string name="question_answer_hint">Answer:</string>
 
-    <!-- HTML placeholders -->
+    <!-- File placeholders -->
     <string name="save_button_placeholder">Save</string>
     <string name="yes_answer_placeholder">Yes</string>
     <string name="no_answers_placeholder">No</string>
     <string name="login_title_placeholder">Enter a username:</string>
     <string name="multiple_voting_alert_placeholder">You have successfully answered! You can answer one more time if you wish</string>
+    <string name="csv_legend_question_title">Question;</string>
+    <string name="csv_legend_answers_title">Answers;</string>
+    <string name="csv_legend">Date;Time;IP;Username;Answer</string>
 
     <!-- Error messages -->
     <string name="questions_exists_error">Question already exists</string>

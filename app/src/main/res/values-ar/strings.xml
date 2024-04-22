@@ -34,5 +34,8 @@
     <string name="configurations_text">الإعدادات الإضافية</string>
     <string name="users_count_title">"المستخدمون: "</string>
     <string name="min_answers_error">لا يمكنك وضع أقل من 2 إجابات</string>
+    <string name="csv_legend_question_title">السؤال؛</string>
+    <string name="csv_legend_answers_title">الإجابات؛</string>
+    <string name="csv_legend">التاريخ؛ الوقت؛ عنوان IP؛ اسم المستخدم؛ الإجابة</string>
 
 </resources>

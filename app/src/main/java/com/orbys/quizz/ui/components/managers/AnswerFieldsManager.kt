@@ -78,9 +78,9 @@ class AnswerFieldsManager(
 
     private fun createButton(resId: Int) = ImageButton(context).apply {
         val drawable = ContextCompat.getDrawable(context, resId)
-        val originalIconSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
-        val desiredIconSize = context.resources.getDimensionPixelSize(R.dimen.icon_size)
-        val scale = desiredIconSize.toFloat() / originalIconSize
+        val originalSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)
+        val size = context.resources.getDimensionPixelSize(R.dimen.icon_size)
+        val scale = size.toFloat() / originalSize
 
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,

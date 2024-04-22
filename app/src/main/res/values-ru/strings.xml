@@ -34,5 +34,8 @@
     <string name="configurations_text">Дополнительные настройки</string>
     <string name="users_count_title">"Пользователи: "</string>
     <string name="min_answers_error">Вы не можете поставить менее 2 ответов</string>
+    <string name="csv_legend_question_title">Вопрос;</string>
+    <string name="csv_legend_answers_title">Ответы;</string>
+    <string name="csv_legend">Дата;Время;IP;Имя пользователя;Ответ</string>
 
 </resources>

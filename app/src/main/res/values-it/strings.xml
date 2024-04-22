@@ -34,5 +34,8 @@
     <string name="configurations_text">Impostazioni aggiuntive</string>
     <string name="users_count_title">"Utenti: "</string>
     <string name="min_answers_error">Non puoi mettere meno di 2 risposte</string>
+    <string name="csv_legend_question_title">Domanda;</string>
+    <string name="csv_legend_answers_title">Risposte;</string>
+    <string name="csv_legend">Data;Ora;IP;Nome utente;Risposta</string>
 
 </resources>

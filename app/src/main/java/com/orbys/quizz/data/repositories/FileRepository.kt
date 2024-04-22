@@ -2,6 +2,7 @@ package com.orbys.quizz.data.repositories
 
 import android.content.Context
 import android.os.Environment
+import com.orbys.quizz.R
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -31,13 +32,17 @@ class FileRepository private constructor(
         return file
     }
 
-    override fun createFile(fileName: String) {
+    override fun createFile(
+        fileName: String,
+        question: String,
+        answers: List<String>
+    ) {
         val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
         file = File(filePath)
 
         if (!file.exists()) {
             file.createNewFile()
-            writeFile("Date", "Time", "IP Address", "Username", "Question", "Answer")
+            writeLegend(question, answers)
         }
     }
 
@@ -46,19 +51,33 @@ class FileRepository private constructor(
         time: String,
         ip: String,
         username: String,
-        question: String,
         answer: String
     ) {
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
 
-            val csvData = "$date;$time;$ip;$username;$question;$answer\n"
+            val csvData = "$date;$time;$ip;$username;$answer\n"
 
             bufferedWriter.write(csvData)
             bufferedWriter.close()
         }
     }
 
-    fun deleteFile() { if (file.exists()) file.delete() }
+    override fun deleteFile() { if (file.exists()) file.delete() }
+
+    private fun writeLegend(question: String, answers: List<String>) {
+        if (file.exists()) {
+            val fileWriter = FileWriter(file, true)
+            val bufferedWriter = BufferedWriter(fileWriter)
+            val answersToCsv = answers.joinToString(";")
+
+            bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}$question\n")
+            bufferedWriter.write("${context.getString(R.string.csv_legend_answers_title)}$answersToCsv\n\n")
+            bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")
+
+            bufferedWriter.close()
+        }
+    }
+
 }
