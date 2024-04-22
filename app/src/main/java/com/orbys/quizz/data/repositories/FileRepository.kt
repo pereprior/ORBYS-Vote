@@ -2,7 +2,6 @@ package com.orbys.quizz.data.repositories
 
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -15,7 +14,6 @@ import java.io.FileWriter
 class FileRepository private constructor(
     private val context: Context,
 ) : IFileRepository {
-
     companion object {
         @Volatile
         private var INSTANCE: FileRepository? = null
@@ -62,13 +60,5 @@ class FileRepository private constructor(
         }
     }
 
-    fun deleteFile() {
-        Log.d("FileRepository:", "Deleting file: ${file.absolutePath}")
-        if (file.exists()) {
-            Log.d("FileRepository:", "File exists")
-            file.delete()
-            Log.d("FileRepository:", "File deleted")
-        }
-    }
-
+    fun deleteFile() { if (file.exists()) file.delete() }
 }
