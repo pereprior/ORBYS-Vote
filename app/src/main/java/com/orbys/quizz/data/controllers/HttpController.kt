@@ -22,4 +22,8 @@ class HttpController @Inject constructor(
 
     }
 
+    fun resetFiles() {
+        fileHandler.deleteFile()
+    }
+
 }

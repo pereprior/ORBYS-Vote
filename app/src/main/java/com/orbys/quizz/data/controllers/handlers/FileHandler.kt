@@ -1,6 +1,7 @@
 package com.orbys.quizz.data.controllers.handlers
 
 import android.content.Context
+import android.util.Log
 import com.orbys.quizz.R
 import com.orbys.quizz.data.constants.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.constants.TIME_OUT_MESSAGE
@@ -8,8 +9,10 @@ import com.orbys.quizz.data.constants.USER_RESPONDED_MESSAGE
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.domain.models.Question
+import io.ktor.http.ContentType
 import io.ktor.server.application.call
 import io.ktor.server.response.respondFile
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import java.text.SimpleDateFormat
@@ -26,7 +29,6 @@ import javax.inject.Inject
  */
 class FileHandler @Inject constructor(
     private val httpRepository: HttpRepositoryImpl,
-    private val fileRepository: FileRepository,
     private val context: Context
 ) {
     private companion object {
@@ -42,16 +44,31 @@ class FileHandler @Inject constructor(
         const val CSV_FILE_NAME = "data"
         const val TIME_FORMAT = "HH:mm:ss"
         const val DATE_FORMAT = "dd/MM/yyyy"
-        const val DATE_TIME_FORMAT = "yyyyMMddHHmmss"
     }
+
+    private val fileRepository = FileRepository.getInstance(context)
 
     fun setupRoutes(route: Route) {
         route.handleDownloadRoute()
     }
 
+    fun deleteFile() {
+        fileRepository.deleteFile()
+    }
+
     // Ruta de descarga del archivo de datos.
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
-        call.respondFile(fileRepository.getFile())
+        val file = fileRepository.getFile()
+        Log.d("FileHandler", "File: ${file.absolutePath}")
+
+        if (!file.exists()) {
+            call.respondText(
+                text = "error",
+                contentType = ContentType.Text.Html
+            )
+        } else {
+            call.respondFile(file)
+        }
     }
 
     fun getFileContent(userIP: String): String? {
@@ -76,13 +93,11 @@ class FileHandler @Inject constructor(
     fun createDataFile(choice: String, userIP: String) {
         val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        val dateTimeFormatter = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault())
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
         // Fecha y hora actual como indentificador unico del archivo.
-        val dateTime = dateTimeFormatter.format(Calendar.getInstance().time)
 
-        fileRepository.createFile("$CSV_FILE_NAME$dateTime")
+        fileRepository.createFile(CSV_FILE_NAME)
         fileRepository.writeFile(
             date = date,
             time = time,

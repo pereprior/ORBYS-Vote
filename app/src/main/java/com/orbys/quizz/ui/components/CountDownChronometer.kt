@@ -6,13 +6,14 @@ import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.Chronometer
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Cronometro que proporciona funcionalidad adicional para contar hacia atrás.
  *
  * @param context El contexto en el que se utiliza el cronómetro.
  * @param attrs Los atributos del cronómetro.
- * @param defStyleAttr El estilo por defecto del cronómetro.
  */
 class CountDownChronometer(
     context: Context,
@@ -26,7 +27,8 @@ class CountDownChronometer(
 
     private val repository = QuestionRepositoryImpl.getInstance()
     private var timeInMillis: Long = 0
-    private var isFinished: Boolean = false
+    private val _isFinished = MutableStateFlow(false)
+    val isFinished: StateFlow<Boolean> get() = _isFinished
 
     fun setTimeInMillis(timeInMillis: Long) {
         this.timeInMillis = timeInMillis
@@ -52,11 +54,7 @@ class CountDownChronometer(
         stop()
         text = TIME_OUT
         repository.timeOut()
-        isFinished = true
-    }
-
-    fun isCountDownFinished(): Boolean {
-        return isFinished
+        _isFinished.value = true
     }
 
 }

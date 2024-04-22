@@ -57,6 +57,7 @@ class HttpService: Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        controller.resetFiles()
         server?.stop(1000, 5000)
     }
 

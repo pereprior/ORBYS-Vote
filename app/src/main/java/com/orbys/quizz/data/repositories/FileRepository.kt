@@ -2,6 +2,7 @@ package com.orbys.quizz.data.repositories
 
 import android.content.Context
 import android.os.Environment
+import android.util.Log
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -11,11 +12,22 @@ import java.io.FileWriter
  *
  * @property context Contexto de la aplicación.
  */
-class FileRepository(
-    private val context: Context
+class FileRepository private constructor(
+    private val context: Context,
 ) : IFileRepository {
 
-    private var file: File = File("")
+    companion object {
+        @Volatile
+        private var INSTANCE: FileRepository? = null
+
+        fun getInstance(context: Context): FileRepository {
+            return INSTANCE ?: synchronized(this) {
+                FileRepository(context).also { INSTANCE = it }
+            }
+        }
+    }
+
+    private var file = File("")
 
     fun getFile(): File {
         return file
@@ -47,6 +59,15 @@ class FileRepository(
 
             bufferedWriter.write(csvData)
             bufferedWriter.close()
+        }
+    }
+
+    fun deleteFile() {
+        Log.d("FileRepository:", "Deleting file: ${file.absolutePath}")
+        if (file.exists()) {
+            Log.d("FileRepository:", "File exists")
+            file.delete()
+            Log.d("FileRepository:", "File deleted")
         }
     }
 

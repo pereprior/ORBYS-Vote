@@ -31,4 +31,8 @@
     <string name="chronometer_title">Tempo rimanente</string>
     <string name="download_title">Scansiona per scaricare:</string>
     <string name="download_format_description">Formato: .csv</string>
+    <string name="configurations_text">Impostazioni aggiuntive</string>
+    <string name="users_count_title">"Utenti: "</string>
+    <string name="min_answers_error">Non puoi mettere meno di 2 risposte</string>
+
 </resources>

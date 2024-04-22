@@ -31,4 +31,8 @@
     <string name="chronometer_title">Resterende tijd</string>
     <string name="download_title">Scannen om te downloaden:</string>
     <string name="download_format_description">Formaat: .csv</string>
+    <string name="configurations_text">Aanvullende instellingen</string>
+    <string name="users_count_title">"Gebruikers: "</string>
+    <string name="min_answers_error">U kunt niet minder dan 2 antwoorden opgeven</string>
+
 </resources>

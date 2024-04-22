@@ -73,11 +73,6 @@ class ResponseHandler@Inject constructor(
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
 
-        // Si la pregunta admite multiples respuestas, volvemos al formulario
-        if (repository.getQuestion().isMultipleAnswers) {
-            call.respondRedirect("$QUESTION_ENDPOINT/{id}")
-        }
-
         call.respondText(
             text = SUCCESS_MESSAGE,
             contentType = ContentType.Text.Html

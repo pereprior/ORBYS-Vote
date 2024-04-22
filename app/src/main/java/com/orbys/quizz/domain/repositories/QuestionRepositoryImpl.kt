@@ -3,7 +3,6 @@ package com.orbys.quizz.domain.repositories
 import com.orbys.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
  * @property _question Un flujo mutable privado la información de la pregunta.
  * @property _questionUpdated Un flujo mutable privado que emite una respuesta cada vez que se actualiza la pregunta.
  * @property question Un flujo inmutable y publico para llamar a la pregunta.
- * @property questionUpdated Un flujo inmutable y publico para llamar a la respuesta emitida cada vez que se actualiza la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     companion object {
@@ -35,7 +33,6 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     private val _questionUpdated = MutableSharedFlow<Unit>(replay = 1)
 
     val question: StateFlow<Question> = _question
-    val questionUpdated: SharedFlow<Unit> = _questionUpdated
     val timeOut: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
 

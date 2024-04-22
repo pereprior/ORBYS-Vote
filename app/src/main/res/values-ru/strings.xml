@@ -31,4 +31,8 @@
     <string name="chronometer_title">Оставшееся время</string>
     <string name="download_title">Сканируйте для загрузки:</string>
     <string name="download_format_description">Формат: .csv</string>
+    <string name="configurations_text">Дополнительные настройки</string>
+    <string name="users_count_title">"Пользователи: "</string>
+    <string name="min_answers_error">Вы не можете поставить менее 2 ответов</string>
+
 </resources>

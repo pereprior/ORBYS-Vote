@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
+import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.databinding.ActivityAddQuestionBinding
-import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.services.FloatingViewService
+import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,14 +28,14 @@ import dagger.hilt.android.AndroidEntryPoint
 abstract class AddFragment: Fragment() {
 
     private lateinit var viewModel: QuestionViewModel
-    protected lateinit var binding: ActivityAddQuestionBinding
+    protected lateinit var binding: FragmentAddQuestionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
-        binding = ActivityAddQuestionBinding.inflate(inflater, container, false)
+        binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
 
         with(binding) {
             val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
@@ -63,7 +64,7 @@ abstract class AddFragment: Fragment() {
 
         // Comprobar si la pregunta o el título están vacíos
         if (question.question.isEmpty()) {
-            binding.errorMessage.text = getString(R.string.empty_answers_error)
+            errorMessage(R.string.empty_answers_error)
             return
         }
 
@@ -74,6 +75,11 @@ abstract class AddFragment: Fragment() {
 
         activity?.finish()
         clear()
+    }
+
+    protected fun errorMessage(message: Int) {
+        binding.errorMessage.text = getString(message)
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     // Cambiar la visibilidad del formulario del cronometro

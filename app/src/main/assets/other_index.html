@@ -203,10 +203,15 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
                 if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
-                    alert("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
+                    var redirect = confirm("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
+                    if (redirect) {
+                        window.location.href = '/question/{id}';
+                    } else {
+                        window.location.href = '/question';
+                    }
+                } else {
+                    window.location.href = '/question';
                 }
-
-                window.location.href = '/question';
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };

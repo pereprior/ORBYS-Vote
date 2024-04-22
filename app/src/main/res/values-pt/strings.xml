@@ -31,4 +31,8 @@
     <string name="chronometer_title">Tempo restante</string>
     <string name="download_title">Digitalizar para baixar:</string>
     <string name="download_format_description">Formato: .csv</string>
+    <string name="configurations_text">Configurações adicionais</string>
+    <string name="users_count_title">"Usuários: "</string>
+    <string name="min_answers_error">Você não pode colocar menos de 2 respostas</string>
+
 </resources>

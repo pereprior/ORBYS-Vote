@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/question_type_card"
-    android:layout_width="100dp"
-    android:layout_height="match_parent"
+    android:layout_width="@dimen/card_width"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/medium_margin"
     app:cardCornerRadius="@dimen/small_margin"
     app:cardElevation="@dimen/small_margin"
@@ -16,7 +16,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_margin="@dimen/medium_margin">
+        android:layout_margin="@dimen/medium_margin"
+        tools:ignore="UseCompoundDrawables">
 
         <!-- Icono del tipo de la pregunta que representa la tarjeta -->
         <ImageView

@@ -10,6 +10,7 @@
     <string name="card_type_icon_desc" translatable="false">Icono de cada tipo de pregunta</string>
     <string name="question_type_icon_desc" translatable="false">Icono que representa el tipo de la pregunta</string>
     <string name="app_logo_desc" translatable="false">Logo de la empresa</string>
+    <string name="config_icon_desc" translatable="false">Boton para desplegar la configuracion adicional</string>
 
     <!-- Add dialog hint -->
     <string name="question_question_hint">Question:</string>
@@ -25,6 +26,7 @@
     <!-- Error messages -->
     <string name="questions_exists_error">Question already exists</string>
     <string name="max_answers_error">You can\'t put more than 5 answers</string>
+    <string name="min_answers_error">You can\'t put less than 2 answers</string>
     <string name="empty_answers_error">You can\'t save if there are empty fields</string>
     <string name="same_question_error">You can\'t save questions with the same content</string>
 
@@ -53,6 +55,7 @@
     <string name="chronometer_title">Time remaining</string>
     <string name="download_title">Scan to download:</string>
     <string name="download_format_description">Format: .csv</string>
-    <string name="configurations_text">Configuración adicional</string>
+    <string name="configurations_text">Additional Settings</string>
+    <string name="users_count_title">"Users: "</string>
 
 </resources>

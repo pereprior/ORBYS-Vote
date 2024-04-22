@@ -12,8 +12,8 @@ import com.orbys.quizz.data.constants.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.constants.SERVER_PORT
 import com.orbys.quizz.data.constants.URL_ENTRY
 import com.orbys.quizz.data.constants.hostIP
-import com.orbys.quizz.ui.components.QRCodeGenerator
 import com.orbys.quizz.databinding.FragmentDownloadBinding
+import com.orbys.quizz.ui.components.QRCodeGenerator
 import com.orbys.quizz.ui.services.FloatingViewService
 import kotlin.system.exitProcess
 
@@ -45,6 +45,7 @@ class DownloadFragment: Fragment() {
             }
 
             qrCode.setImageBitmap(QRCodeGenerator().encodeAsBitmap(url))
+            qrUrl.text = url
 
             return root
         }

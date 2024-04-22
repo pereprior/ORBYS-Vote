@@ -31,4 +31,8 @@
     <string name="chronometer_title">Timp rămas</string>
     <string name="download_title">Scanați pentru a descărca:</string>
     <string name="download_format_description">Format: .csv</string>
+    <string name="configurations_text">Setări suplimentare</string>
+    <string name="users_count_title">"Utilizatori: "</string>
+    <string name="min_answers_error">Nu puteți pune mai puțin de 2 răspunsuri</string>
+
 </resources>

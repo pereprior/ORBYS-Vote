@@ -31,4 +31,8 @@
     <string name="chronometer_title">الوقت المتبقي</string>
     <string name="download_title">مسح للتنزيل:</string>
     <string name="download_format_description">التنسيق: .csv</string>
+    <string name="configurations_text">الإعدادات الإضافية</string>
+    <string name="users_count_title">"المستخدمون: "</string>
+    <string name="min_answers_error">لا يمكنك وضع أقل من 2 إجابات</string>
+
 </resources>

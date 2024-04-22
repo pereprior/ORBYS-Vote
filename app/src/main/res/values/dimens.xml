@@ -6,6 +6,7 @@
     <dimen name="activity_layout_height">260dp</dimen>
 
     <dimen name="icon_size">16dp</dimen>
+    <dimen name="card_width">100dp</dimen>
     <dimen name="qr_code_size">120dp</dimen>
     <dimen name="graphic_height">158dp</dimen>
 

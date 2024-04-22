@@ -68,7 +68,8 @@
                 android:scaleY="0.6"
                 android:scaleX="0.6"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_config_hide"/>
+                android:src="@drawable/ic_config_hide"
+                android:contentDescription="@string/config_icon_desc" />
 
             <TextView
                 android:layout_width="wrap_content"
