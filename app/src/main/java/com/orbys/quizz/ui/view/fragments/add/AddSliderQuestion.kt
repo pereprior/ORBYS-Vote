@@ -36,7 +36,7 @@ class AddSliderQuestion: AddFragment() {
             Answer(4),
             Answer(5),
         ),
-        answerType = AnswerType.BAR,
+        answerType = AnswerType.SLIDER,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
         isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked

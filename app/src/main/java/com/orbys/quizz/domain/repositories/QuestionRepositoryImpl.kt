@@ -1,7 +1,6 @@
 package com.orbys.quizz.domain.repositories
 
 import com.orbys.quizz.domain.models.Question
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -9,8 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
  * Clase que gestiona el flujo de datos relacionados con las preguntas y respuestas.
  *
  * @property _question Un flujo mutable privado la información de la pregunta.
- * @property _questionUpdated Un flujo mutable privado que emite una respuesta cada vez que se actualiza la pregunta.
  * @property question Un flujo inmutable y publico para llamar a la pregunta.
+ * @property timeOut Un flujo mutable para gestionar el tiempo limite de la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     companion object {
@@ -30,28 +29,21 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     }
 
     private var _question = MutableStateFlow(Question(""))
-    private val _questionUpdated = MutableSharedFlow<Unit>(replay = 1)
-
     val question: StateFlow<Question> = _question
-    val timeOut: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
+    val timeOut = MutableStateFlow(false)
 
     // Metodos para gestionar el temporizador
     override fun timeOut() { timeOut.tryEmit(true) }
     override fun resetTimer() { timeOut.tryEmit(false) }
 
     // Metodos para gestionar la pregunta lanzada
-    override fun addQuestion(question: Question) {
-        _question.value = question
-        _questionUpdated.tryEmit(Unit)
-    }
+    override fun addQuestion(question: Question) { _question.value = question }
 
     // Métodos para gestionar el contador de respuestas de una pregunta
-    override fun clearAnswer(question: Question) { _question.value.answers.forEach { it.count.tryEmit(0) } }
-    override fun incAnswer(answer: String) {
-        for (ans in _question.value.answers) {
-            if (ans.answer?.toString()?.equals(answer) == true) {
-                ans.count.tryEmit(ans.count.value + 1)
+    override fun incAnswer(answerText: String) {
+        for (answer in _question.value.answers) {
+            if (answer.answer?.toString()?.equals(answerText) == true) {
+                answer.count.tryEmit(answer.count.value + 1)
             }
         }
 

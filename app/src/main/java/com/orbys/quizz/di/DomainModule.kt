@@ -3,8 +3,6 @@ package com.orbys.quizz.di
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.domain.usecases.AddQuestionUseCase
-import com.orbys.quizz.domain.usecases.ResetTimerUseCase
-import com.orbys.quizz.domain.usecases.TimeOutUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,13 +27,4 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideAddQuestionUseCase() = AddQuestionUseCase(QuestionRepositoryImpl.getInstance())
-
-    @Provides
-    @Singleton
-    fun provideResetTimerUseCase() = ResetTimerUseCase(QuestionRepositoryImpl.getInstance())
-
-    @Provides
-    @Singleton
-    fun provideTimeOutUseCase() = TimeOutUseCase(QuestionRepositoryImpl.getInstance())
-
 }

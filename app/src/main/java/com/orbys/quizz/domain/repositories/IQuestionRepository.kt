@@ -7,10 +7,7 @@ interface IQuestionRepository {
     fun addQuestion(question: Question)
 
     // Incrementa el contador de una respuesta de una pregunta
-    fun incAnswer(answer: String)
-
-    // Reinicia el contador de respuestas de una pregunta
-    fun clearAnswer(question: Question)
+    fun incAnswer(answerText: String)
 
     // Indica que el tiempo limite ha terminado
     fun timeOut()

@@ -5,16 +5,18 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
 
-private const val DEFAULT_SIZE = 200
-private const val BLACK = -0x1000000
-private const val WHITE = -0x1
-
 /**
  * QRCodeGenerator se encarga de generar los codigos qr.
  *
  * Utiliza la libreria ZXing para codificar una url en un codigo qr y convertir el resultado de una forma legible para el usuario.
  */
 class QRCodeGenerator {
+
+    companion object {
+        private const val DEFAULT_SIZE = 200
+        private const val BLACK = -0x1000000
+        private const val WHITE = -0x1
+    }
 
     /**
      * Codifica la url y la devuelve como un bitmap.

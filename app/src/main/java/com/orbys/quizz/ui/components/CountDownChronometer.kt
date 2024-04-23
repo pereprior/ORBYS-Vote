@@ -27,6 +27,7 @@ class CountDownChronometer(
 
     private val repository = QuestionRepositoryImpl.getInstance()
     private var timeInMillis: Long = 0
+
     private val _isFinished = MutableStateFlow(false)
     val isFinished: StateFlow<Boolean> get() = _isFinished
 
