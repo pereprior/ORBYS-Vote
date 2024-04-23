@@ -13,6 +13,11 @@
         android:elevation="@dimen/small_margin"
         android:gravity="start">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/question_question_title"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,6 +60,26 @@
             android:layout_marginBottom="4dp"
             android:textSize="@dimen/font_size"
             android:textColor="@android:color/holo_red_light" />
+
+        <!-- Layout para añadir respuestas personalizadas -->
+        <LinearLayout
+            android:id="@+id/answersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" />
+
+        <!-- Botón de guardar los cambios -->
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/medium_margin"
+            android:textSize="@dimen/title_font_size"
+            android:text="@string/save_button_placeholder"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -300,27 +325,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
-
-        <!-- Layout para añadir respuestas personalizadas -->
-        <LinearLayout
-            android:id="@+id/answersLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" />
-
-        <!-- Botón de guardar los cambios -->
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:textSize="@dimen/title_font_size"
-            android:text="@string/save_button_placeholder"
-            android:textAlignment="center"
-            android:textStyle="bold" />
 
     </LinearLayout>
 

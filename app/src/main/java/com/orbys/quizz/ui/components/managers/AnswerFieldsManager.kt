@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
@@ -31,6 +32,18 @@ class AnswerFieldsManager(
     fun anyAnswerIsEmpty() = answerFields.any { it.text.isEmpty() }
     fun getAnswersText() = answerFields.map { it.text.toString() }
     fun getAnswers() = MutableStateFlow(answerFields.map { Answer(it.text.toString()) })
+
+    init {
+        val textView = TextView(context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            text = context.getString(R.string.question_answer_title)
+        }
+
+        layout.addView(textView)
+    }
 
     fun setAddAnswersButtons() {
         val addButton = createButton(android.R.drawable.ic_input_add)
@@ -59,6 +72,7 @@ class AnswerFieldsManager(
 
     private fun createAnswerLayout(answer: EditText, button: ImageButton) = LinearLayout(context).apply {
         orientation = LinearLayout.HORIZONTAL
+        gravity = Gravity.CENTER
         addView(answer)
         addView(button)
 
@@ -89,10 +103,10 @@ class AnswerFieldsManager(
 
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            50
         )
 
-        foregroundGravity = Gravity.CENTER
+        foregroundGravity = Gravity.END
         background = ContextCompat.getDrawable(context, android.R.color.transparent)
         scaleX = scale
         scaleY = scale

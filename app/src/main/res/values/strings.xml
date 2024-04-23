@@ -61,5 +61,7 @@
     <string name="configurations_text">Additional Settings</string>
     <string name="users_count_title">"Users: "</string>
     <string name="numeric_answer_hint">Max Number:\n</string>
+    <string name="question_question_title">Enter the question:</string>
+    <string name="question_answer_title">Enter the answers:</string>
 
 </resources>
