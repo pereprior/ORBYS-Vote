@@ -36,6 +36,6 @@
     <string name="min_answers_error">No pots posar menys de 2 respostes</string>
     <string name="csv_legend_question_title">Pregunta;</string>
     <string name="csv_legend_answers_title">Respostes;</string>
-    <string name="csv_legend">Data;Hora;IP;Nom d'usuari;Resposta</string>
+    <string name="csv_legend">Data;Hora;IP;Nom d\'usuari;Resposta</string>
 
 </resources>

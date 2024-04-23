@@ -1,10 +1,10 @@
 package com.orbys.quizz.data.controllers.handlers
 
-import com.orbys.quizz.data.constants.ERROR_MESSAGE
-import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
-import com.orbys.quizz.data.constants.SUCCESS_MESSAGE
-import com.orbys.quizz.data.constants.USER_ENDPOINT
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
+import com.orbys.quizz.data.utils.ServerMessages.FILE_NOT_FOUND_MESSAGE
+import com.orbys.quizz.data.utils.ServerMessages.SUCCESS_MESSAGE
+import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
+import com.orbys.quizz.data.utils.ServerUtils.Companion.USER_ENDPOINT
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
 import io.ktor.server.application.call
@@ -43,7 +43,6 @@ class ResponseHandler@Inject constructor(
 
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
         val userIP = call.request.origin.remoteHost
-
         val fileContent = fileHandler.getFileContent(userIP)
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
@@ -52,7 +51,7 @@ class ResponseHandler@Inject constructor(
         }
 
         call.respondText(
-            text = fileContent ?: ERROR_MESSAGE,
+            text = fileContent ?: FILE_NOT_FOUND_MESSAGE,
             contentType = ContentType.Text.Html
         )
     }
@@ -72,7 +71,6 @@ class ResponseHandler@Inject constructor(
 
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
-
         call.respondText(
             text = SUCCESS_MESSAGE,
             contentType = ContentType.Text.Html
@@ -83,19 +81,17 @@ class ResponseHandler@Inject constructor(
         val fileContent = fileHandler.loadHtmlFile("login")
 
         call.respondText(
-            text = fileContent ?: ERROR_MESSAGE,
+            text = fileContent ?: FILE_NOT_FOUND_MESSAGE,
             contentType = ContentType.Text.Html
         )
     }
 
     private fun Route.handleLoginRoute() = post("/login") {
         val userIP = call.request.origin.remoteHost
-        val username: String
+        val username = call.receiveParameters()["user"] ?: ""
 
         // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP)) {
-            val choice = call.receiveParameters()["user"]
-            username = choice ?: ""
             repository.addUser(User(userIP, username))
         }
 

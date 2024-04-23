@@ -19,6 +19,7 @@ class FileRepository private constructor(
         @Volatile
         private var INSTANCE: FileRepository? = null
 
+        // Instancia del repositorio
         fun getInstance(context: Context): FileRepository {
             return INSTANCE ?: synchronized(this) {
                 FileRepository(context).also { INSTANCE = it }
@@ -27,22 +28,28 @@ class FileRepository private constructor(
     }
 
     private var file = File("")
-
-    fun getFile(): File {
-        return file
-    }
+    override fun getFile() = file
 
     override fun createFile(
         fileName: String,
         question: String,
         answers: List<String>
     ) {
-        val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
-        file = File(filePath)
+        // Crear el archivo para almacenar los datos del quizz
+        val filePath = "${context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)}/$fileName.csv"
+        file = File(filePath).apply {
 
-        if (!file.exists()) {
-            file.createNewFile()
-            writeLegend(question, answers)
+            if (!exists()) {
+                createNewFile()
+                appendToFile { bufferedWriter ->
+                    val answersToCsv = answers.joinToString(";")
+
+                    // Escribir la cabecera del archivo
+                    bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}$question\n")
+                    bufferedWriter.write("${context.getString(R.string.csv_legend_answers_title)}$answersToCsv\n\n")
+                    bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")
+                }
+            }
         }
     }
 
@@ -53,30 +60,21 @@ class FileRepository private constructor(
         username: String,
         answer: String
     ) {
+        // Si el fichero existe, añadir la respuesta al archivo
         if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
-            val bufferedWriter = BufferedWriter(fileWriter)
-
-            val csvData = "$date;$time;$ip;$username;$answer\n"
-
-            bufferedWriter.write(csvData)
-            bufferedWriter.close()
+            appendToFile { bufferedWriter ->
+                val csvData = "$date;$time;$ip;$username;$answer\n"
+                bufferedWriter.write(csvData)
+            }
         }
     }
 
     override fun deleteFile() { if (file.exists()) file.delete() }
 
-    private fun writeLegend(question: String, answers: List<String>) {
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
-            val bufferedWriter = BufferedWriter(fileWriter)
-            val answersToCsv = answers.joinToString(";")
-
-            bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}$question\n")
-            bufferedWriter.write("${context.getString(R.string.csv_legend_answers_title)}$answersToCsv\n\n")
-            bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")
-
-            bufferedWriter.close()
+    private fun appendToFile(writeAction: (BufferedWriter) -> Unit) {
+        // Añade una nueva linea al archivo
+        FileWriter(file, true).buffered().use { bufferedWriter ->
+            writeAction(bufferedWriter)
         }
     }
 

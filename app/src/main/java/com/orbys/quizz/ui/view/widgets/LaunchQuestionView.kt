@@ -12,10 +12,8 @@ import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
-import com.orbys.quizz.data.constants.QUESTION_ENDPOINT
-import com.orbys.quizz.data.constants.SERVER_PORT
-import com.orbys.quizz.data.constants.URL_ENTRY
-import com.orbys.quizz.data.constants.hostIP
+import com.orbys.quizz.data.utils.ServerUtils
+import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
@@ -65,6 +63,7 @@ class LaunchQuestionView(
 
     private val questionRepository = QuestionRepositoryImpl.getInstance()
     private val usersRepository = UsersRepositoryImpl.getInstance()
+    private val serverUtils = ServerUtils()
 
     private var x: Int = 0
     private var y: Int = 0
@@ -110,7 +109,7 @@ class LaunchQuestionView(
 
     private fun bindOnQuestion() {
         val question = questionRepository.question.value
-        val  url = "$URL_ENTRY$hostIP:$SERVER_PORT$QUESTION_ENDPOINT/${question.id}"
+        val  url = serverUtils.getServerUrl("$QUESTION_ENDPOINT/${question.id}")
 
         with(binding) {
 

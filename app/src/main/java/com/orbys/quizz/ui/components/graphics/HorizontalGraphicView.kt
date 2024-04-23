@@ -42,7 +42,7 @@ class HorizontalGraphicView(
             val x = 5f
             val y = (top + bottom) / 2 - (paint.descent() + paint.ascent()) / 2
             // Pintamos el texto en la barra segun este vacia o llena
-            paint.color = if (right == 0f) Color.WHITE else Color.BLACK
+            paint.color = Color.WHITE
             // Pintamos el texto en la barra
             canvas.drawText("${bar.answer}: ${bar.height}", x, y, paint)
         }

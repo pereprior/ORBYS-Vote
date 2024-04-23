@@ -1,15 +1,14 @@
 package com.orbys.quizz.data.controllers.handlers
 
 import android.content.Context
-import android.util.Log
 import com.orbys.quizz.R
-import com.orbys.quizz.data.constants.DOWNLOAD_ENDPOINT
-import com.orbys.quizz.data.constants.TIME_OUT_MESSAGE
-import com.orbys.quizz.data.constants.USER_RESPONDED_MESSAGE
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
+import com.orbys.quizz.data.utils.ServerMessages.FILE_NOT_FOUND_MESSAGE
+import com.orbys.quizz.data.utils.ServerMessages.TIME_OUT_MESSAGE
+import com.orbys.quizz.data.utils.ServerMessages.USER_RESPONDED_MESSAGE
+import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.domain.models.Question
-import io.ktor.http.ContentType
 import io.ktor.server.application.call
 import io.ktor.server.response.respondFile
 import io.ktor.server.response.respondText
@@ -48,43 +47,28 @@ class FileHandler @Inject constructor(
 
     private val fileRepository = FileRepository.getInstance(context)
 
-    fun setupRoutes(route: Route) {
-        route.handleDownloadRoute()
-    }
-
-    fun deleteFile() {
-        fileRepository.deleteFile()
-    }
-
+    fun setupRoutes(route: Route) { route.handleDownloadRoute() }
     // Ruta de descarga del archivo de datos.
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
         val file = fileRepository.getFile()
-        Log.d("FileHandler", "File: ${file.absolutePath}")
 
-        if (!file.exists()) {
-            call.respondText(
-                text = "error",
-                contentType = ContentType.Text.Html
-            )
-        } else {
-            call.respondFile(file)
-        }
+        if (file.exists()) call.respondFile(file)
+        else call.respondText(FILE_NOT_FOUND_MESSAGE)
     }
 
-    fun getFileContent(userIP: String): String? {
-        return when {
-            // Si el tiempo de espera ha terminado muestra el mensaje de tiempo agotado.
-            httpRepository.timeOut().value -> TIME_OUT_MESSAGE
-            // Si el usuario ya ha respondido y la pregunta no permite más respuestas muestra el mensaje de usuario respondido.
-            httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
-            // Carga el archivo HTML de la pregunta.
-            else -> loadHtmlFile(httpRepository.getQuestion().answerType.name)
-        }
+    fun getFileContent(userIP: String) = when {
+        // Si el tiempo de espera ha terminado muestra el mensaje de tiempo agotado.
+        httpRepository.timeOut().value -> TIME_OUT_MESSAGE
+        // Si el usuario ya ha respondido y la pregunta no permite más respuestas muestra el mensaje de usuario respondido.
+        httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
+        // Carga el archivo HTML de la pregunta.
+        else -> loadHtmlFile(httpRepository.getQuestion().answerType.name)
     }
 
     fun loadHtmlFile(answerType: String): String? {
-        val filePath = "${answerType.lowercase(Locale.ROOT)}$HTTP_FILES_NAME$HTTP_FILES_EXTENSION"
-        return this::class.java.getResource("$HTTP_FILES_FOLDER$filePath")?.readText()?.let {
+        val fileName = "${answerType.lowercase(Locale.ROOT)}$HTTP_FILES_NAME$HTTP_FILES_EXTENSION"
+
+        return this::class.java.getResource("$HTTP_FILES_FOLDER$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
             replace(it, httpRepository.getQuestion())
         }
@@ -112,6 +96,8 @@ class FileHandler @Inject constructor(
         )
     }
 
+    fun deleteFile() { fileRepository.deleteFile() }
+
     private fun replace(content: String, question: Question): String = content
         .replace(SEND_BUTTON_PLACEHOLDER, context.getString(R.string.save_button_placeholder))
         .replace(LOGIN_TITLE_PLACEHOLDER, context.getString(R.string.login_title_placeholder))
@@ -121,6 +107,7 @@ class FileHandler @Inject constructor(
 
     private fun String.replaceAnswersNames(question: Question): String {
         var result = this
+        // Reemplaza los marcadores de posición de las respuestas por los valores correspondientes.
         question.answers.forEachIndexed { index, answer ->
             result = result.replace("$ANSWER_PLACEHOLDER$index]", answer.answer.toString())
         }
