@@ -1,5 +1,6 @@
 package com.orbys.quizz.domain.repositories
 
+import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,14 +40,18 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     // Metodos para gestionar la pregunta lanzada
     override fun addQuestion(question: Question) { _question.value = question }
 
-    // Métodos para gestionar el contador de respuestas de una pregunta
+    // Métodos para gestionar las respuestas de una pregunta
     override fun incAnswer(answerText: String) {
-        for (answer in _question.value.answers) {
+        for (answer in _question.value.answers.value) {
             if (answer.answer?.toString()?.equals(answerText) == true) {
                 answer.count.tryEmit(answer.count.value + 1)
             }
         }
 
+    }
+    override fun addAnswer(answerText: String) {
+        val newAnswersList = _question.value.answers.value + Answer(answerText)
+        _question.value.answers.tryEmit(newAnswersList)
     }
 
 }

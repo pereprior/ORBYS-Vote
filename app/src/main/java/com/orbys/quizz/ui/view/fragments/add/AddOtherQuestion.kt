@@ -7,7 +7,6 @@ import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.AnswerFieldsManager
-import com.orbys.quizz.ui.components.managers.AnswerFieldsManager.Companion.MIN_ANSWERS
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -19,13 +18,31 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AddOtherQuestion: AddFragment() {
 
+    companion object {
+        private const val MAX_LENGTH = 20
+        private const val MIN_ANSWERS = 2
+        private const val MAX_ANSWERS = 5
+        private const val FIELD_LENGTH = 200
+    }
+
     private lateinit var fieldsManager: AnswerFieldsManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fieldsManager = AnswerFieldsManager(requireContext(), binding.answersLayout)
-        binding.questionTypeIcon.setImageResource(R.drawable.ic_others)
+        with(binding) {
+            fieldsManager = AnswerFieldsManager(
+                context = requireContext(),
+                layout = answersLayout,
+                maxLength = MAX_LENGTH,
+                minAnswers = MIN_ANSWERS,
+                maxAnswers = MAX_ANSWERS,
+                fieldLength = FIELD_LENGTH
+            )
+
+            questionTypeIcon.setImageResource(R.drawable.ic_others)
+        }
+
         setDefaultAnswers()
     }
 
@@ -47,18 +64,20 @@ class AddOtherQuestion: AddFragment() {
     }
 
     override fun createQuestionFromInput(): Question {
-        val questionText = binding.questionQuestion.text.toString()
+        with(binding) {
+            val questionText = questionQuestion.text.toString()
 
-        return Question(
-            question = questionText,
-            icon = R.drawable.ic_others,
-            answers = fieldsManager.getAnswers(),
-            answerType = AnswerType.OTHER,
-            isAnonymous = binding.anonymousQuestionOption.isChecked,
-            timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
-            isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,
-            isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
-        )
+            return Question(
+                question = questionText,
+                icon = R.drawable.ic_others,
+                answers = fieldsManager.getAnswers(),
+                answerType = AnswerType.OTHER,
+                isAnonymous = anonymousQuestionOption.isChecked,
+                timeOut = timeoutInput.text.toString().toIntOrNull() ?: 0,
+                isMultipleChoices = multiAnswerQuestionOption.isChecked,
+                isMultipleAnswers = nonFilterUsersQuestionOption.isChecked
+            )
+        }
     }
 
     private fun setDefaultAnswers() {
@@ -66,7 +85,7 @@ class AddOtherQuestion: AddFragment() {
         fieldsManager.setAddAnswersButtons()
 
         // Añadir dos respuestas por defecto
-        repeat(MIN_ANSWERS) { fieldsManager.addAnswersField() }
+        repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }
     }
 
 }

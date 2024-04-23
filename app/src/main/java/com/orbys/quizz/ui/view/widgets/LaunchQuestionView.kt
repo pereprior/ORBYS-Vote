@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -192,15 +193,22 @@ class LaunchQuestionView(
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
         // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en el grafico de barras.
-        question.answers.forEach { answer ->
-            val bar = Bar(answer.answer.toString(), height = answer.count.value)
-            barView.addBar(bar)
+        GlobalScope.launch {
+            question.answers.collect { answers ->
+                barView.clearBars()
 
-            GlobalScope.launch {
-                // Recoge los cambios en count para cada respuesta
-                answer.count.collect { count ->
-                    bar.height = count
-                    barView.invalidate()
+                answers.forEach { answer ->
+                    val bar = Bar(answer.answer.toString(), height = answer.count.value)
+                    barView.addBar(bar)
+
+                    GlobalScope.launch {
+                        // Recoge los cambios en count para cada respuesta
+                        answer.count.collect { count ->
+                            Log.d("LaunchuestionView:", "Answers: $answer")
+                            bar.height = count
+                            barView.invalidate()
+                        }
+                    }
                 }
             }
         }

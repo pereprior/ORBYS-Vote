@@ -5,6 +5,6 @@ enum class AnswerType {
     NONE,
     YESNO,
     STARS,
-    SLIDER,
+    NUMERIC,
     OTHER
 }

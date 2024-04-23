@@ -36,6 +36,7 @@ class FileHandler @Inject constructor(
         const val HTTP_FILES_EXTENSION = ".html"
         const val QUESTION_PLACEHOLDER = "[QUESTION]"
         const val ANSWER_PLACEHOLDER = "[ANSWER"
+        const val MAX_ANSWER_PLACEHOLDER = "[MAX_ANSWER]"
         const val SEND_BUTTON_PLACEHOLDER = "[SEND]"
         const val LOGIN_TITLE_PLACEHOLDER = "[LOGIN_TITLE]"
         const val MULTIPLE_CHOICE = "multiple"
@@ -84,7 +85,7 @@ class FileHandler @Inject constructor(
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
             question = httpRepository.getQuestion().question,
-            answers = httpRepository.getQuestion().answers.map { it.answer.toString() }
+            answers = httpRepository.getQuestion().answers.value.map { it.answer.toString() }
         )
 
         fileRepository.writeFile(
@@ -102,13 +103,14 @@ class FileHandler @Inject constructor(
         .replace(SEND_BUTTON_PLACEHOLDER, context.getString(R.string.save_button_placeholder))
         .replace(LOGIN_TITLE_PLACEHOLDER, context.getString(R.string.login_title_placeholder))
         .replace(QUESTION_PLACEHOLDER, question.question)
+        .replace(MAX_ANSWER_PLACEHOLDER, question.maxNumericAnswer.toString())
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 
     private fun String.replaceAnswersNames(question: Question): String {
         var result = this
         // Reemplaza los marcadores de posición de las respuestas por los valores correspondientes.
-        question.answers.forEachIndexed { index, answer ->
+        question.answers.value.forEachIndexed { index, answer ->
             result = result.replace("$ANSWER_PLACEHOLDER$index]", answer.answer.toString())
         }
         return result
@@ -116,7 +118,7 @@ class FileHandler @Inject constructor(
 
     private fun String.replaceOtherFunctions(question: Question): String {
         // Si el usuario envia varias respuestas a la vez
-        val answersToString = question.answers.joinToString(",") { it.answer.toString() }
+        val answersToString = question.answers.value.joinToString(",") { it.answer.toString() }
         // Si la pregunta es de eleccion multiple o de respuesta multiple
         val multipleChoices = if (question.isMultipleChoices) MULTIPLE_CHOICE else SINGLE_CHOICE
         val multipleAnswers = if (question.isMultipleAnswers) MULTIPLE_CHOICE else SINGLE_CHOICE

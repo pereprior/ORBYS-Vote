@@ -1,12 +1,14 @@
 package com.orbys.quizz.domain.models
 
 import com.orbys.quizz.R
+import kotlinx.coroutines.flow.MutableStateFlow
 
 // Clase que representa una pregunta.
 data class Question(
     var question: String,
     val answerType: AnswerType = AnswerType.NONE,
-    val answers: List<Answer> = emptyList(),
+    var answers: MutableStateFlow<List<Answer>> = MutableStateFlow(emptyList()),
+    val maxNumericAnswer: Int = 1,
     val icon: Int = R.drawable.ic_help,
     val isAnonymous: Boolean = true,
     val isMultipleAnswers: Boolean = false,

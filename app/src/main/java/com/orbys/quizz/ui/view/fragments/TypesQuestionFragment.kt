@@ -8,11 +8,10 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
+import com.orbys.quizz.ui.view.fragments.cards.NumericCard
 import com.orbys.quizz.ui.view.fragments.cards.OtherCard
-import com.orbys.quizz.ui.view.fragments.cards.SliderCard
 import com.orbys.quizz.ui.view.fragments.cards.StarsCard
 import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
-import kotlin.system.exitProcess
 
 /**
  * Fragmento que contiene los tipos de preguntas que se pueden crear.
@@ -34,7 +33,7 @@ class TypesQuestionFragment: Fragment() {
             parentFragmentManager.beginTransaction()
                 .add(yesNoCardContainer.id, YesNoCard())
                 .add(starsCardContainer.id, StarsCard())
-                .add(sliderCardContainer.id, SliderCard())
+                .add(sliderCardContainer.id, NumericCard())
                 .add(otherCardContainer.id, OtherCard())
                 .commit()
 

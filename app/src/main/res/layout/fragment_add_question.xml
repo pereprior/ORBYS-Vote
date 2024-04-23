@@ -307,6 +307,7 @@
             android:id="@+id/answersLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical" />
 
         <!-- Botón de guardar los cambios -->

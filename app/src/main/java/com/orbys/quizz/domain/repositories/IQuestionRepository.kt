@@ -14,4 +14,5 @@ interface IQuestionRepository {
 
     // Reinicia el temporizador
     fun resetTimer()
+    fun addAnswer(answerText: String)
 }

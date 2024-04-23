@@ -33,6 +33,10 @@ class HttpRepositoryImpl @Inject constructor(
         } else questionRepository.incAnswer(answer ?: "")
     }
 
+    override fun addAnswer(answer: String?) = if (answer is String) questionRepository.addAnswer(answer) else Unit
+
+    fun answerExists(answer: String?) = questionRepository.question.value.answers.value.any { it.answer == answer }
+
     // Marca a un usuario como que ha respondido
     override fun setUserResponded(ip: String) = usersRepository.setUserResponded(ip)
 

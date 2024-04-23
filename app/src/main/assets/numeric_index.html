@@ -51,54 +51,10 @@
             margin: 0 20px;
         }
 
-        #sliderValue {
-            font-size: 1.5em;
-        }
-
-        /* Estilo para el slider */
-        .slider {
-            width: 100%;
-            height: 15px;
-            border-radius: 5px;
-            background: #d3d3d3;
-            outline: none;
-            opacity: 0.7;
-            margin-right: 300px;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
-
-        .slider-point {
-            height: 10px;
-            width: 10px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 2px;
-        }
-
-        .slider-container {
-            display: flex;
-            justify-content: space-between;
-            width: 97%;
-            padding: 0 10px;
-        }
-
-        .slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #04AA6D;
-            cursor: pointer;
-        }
-
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #04AA6D;
-            cursor: pointer;
+        #myNumber {
+            font-size: 2em;
+            width: 80%;
+            padding: 10px;
         }
     </style>
 </head>
@@ -109,14 +65,7 @@
         <br>
 
         <div style="text-align: center">
-            <input type="range" min="1" max="5" value="3" class="slider" id="myRange">
-            <div class="slider-container">
-                <div class="slider-point"><p>[ANSWER0]</p></div>
-                <div class="slider-point"><p>[ANSWER1]</p></div>
-                <div class="slider-point"><p>[ANSWER2]</p></div>
-                <div class="slider-point"><p>[ANSWER3]</p></div>
-                <div class="slider-point"><p>[ANSWER4]</p></div>
-            </div>
+            <input type="number" min="1" max="[MAX_ANSWER]" value="1" id="myNumber">
         </div>
         <br><br>
 
@@ -129,8 +78,8 @@
             // Evita que se envien datos vacios o por defecto
             event.preventDefault();
 
-            // Obtenemos el valor del slider
-            var choice = document.getElementById('myRange').value;
+            // Obtenemos el valor del campo de texto
+            var choice = document.getElementById('myNumber').value;
 
             // Realizamos la peticion POST al servidor
             fetch(
@@ -142,7 +91,16 @@
             ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                window.location.href = '/question';
+                if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
+                    var redirect = confirm("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
+                    if (redirect) {
+                        window.location.href = '/question/{id}';
+                    } else {
+                        window.location.href = '/question';
+                    }
+                } else {
+                    window.location.href = '/question';
+                }
             }) // Si ocurre algun error, lo mostramos en la consola
                 .catch(console.error);
         };

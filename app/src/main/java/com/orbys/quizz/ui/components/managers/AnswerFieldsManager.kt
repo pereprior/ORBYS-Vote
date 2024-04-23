@@ -13,52 +13,57 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class AnswerFieldsManager(
     private val context: Context,
     private val layout: LinearLayout,
+    private val hintText: String = context.getString(R.string.question_answer_hint),
+    private val maxLength: Int = 20,
+    private val minAnswers: Int = 1,
+    private val maxAnswers: Int = 1,
+    private val fieldLength: Int = 200,
+    private val numericAnswer: Boolean = false
 ) {
-    companion object {
-        const val MAX_LENGTH = 20
-        const val MIN_ANSWERS = 2
-        const val MAX_ANSWERS = 5
-        const val FIELD_LENGTH = 200
-    }
 
     private val answerFields = mutableListOf<EditText>()
 
     fun anyAnswerIsEmpty() = answerFields.any { it.text.isEmpty() }
     fun getAnswersText() = answerFields.map { it.text.toString() }
-    fun getAnswers() = answerFields.map { Answer(it.text.toString()) }
+    fun getAnswers() = MutableStateFlow(answerFields.map { Answer(it.text.toString()) })
 
     fun setAddAnswersButtons() {
         val addButton = createButton(android.R.drawable.ic_input_add)
 
         addButton.setOnClickListener {
-            if (answerFields.size < MAX_ANSWERS) addAnswersField()
+            if (answerFields.size < maxAnswers) addAnswerField()
             else Toast.makeText(context, R.string.max_answers_error, Toast.LENGTH_SHORT).show()
         }
 
         layout.addView(addButton)
     }
 
-    fun addAnswersField() {
+    fun addAnswerField() {
         val answerField = createAnswerField()
-        val deleteButton = createButton(android.R.drawable.ic_menu_delete)
-        val newAnswer = createAnswer(answerField, deleteButton)
 
-        layout.addView(newAnswer)
+        if (maxAnswers != minAnswers) {
+            val deleteButton = createButton(android.R.drawable.ic_menu_delete)
+            val answerLayout = createAnswerLayout(answerField, deleteButton)
+            layout.addView(answerLayout)
+        } else {
+            layout.addView(answerField)
+        }
+
         answerFields.add(answerField)
     }
 
-    private fun createAnswer(answer: EditText, button: ImageButton) = LinearLayout(context).apply {
+    private fun createAnswerLayout(answer: EditText, button: ImageButton) = LinearLayout(context).apply {
         orientation = LinearLayout.HORIZONTAL
-        gravity = Gravity.CENTER
         addView(answer)
         addView(button)
 
         button.setOnClickListener {
-            if(answerFields.size > MIN_ANSWERS) {
+            if(answerFields.size > minAnswers) {
                 layout.removeView(this)
                 answerFields.remove(answer)
             } else Toast.makeText(context, R.string.min_answers_error, Toast.LENGTH_SHORT).show()
@@ -67,13 +72,13 @@ class AnswerFieldsManager(
 
     private fun createAnswerField() = EditText(context).apply {
         layoutParams = LinearLayout.LayoutParams(
-            FIELD_LENGTH,
+            fieldLength,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        hint = context.getString(R.string.question_answer_hint)
-        inputType = InputType.TYPE_CLASS_TEXT
+        hint = hintText
+        inputType = if (numericAnswer) InputType.TYPE_CLASS_NUMBER else InputType.TYPE_CLASS_TEXT
         id = View.generateViewId()
-        filters = arrayOf(InputFilter.LengthFilter(MAX_LENGTH))
+        filters = arrayOf(InputFilter.LengthFilter(maxLength))
     }
 
     private fun createButton(resId: Int) = ImageButton(context).apply {

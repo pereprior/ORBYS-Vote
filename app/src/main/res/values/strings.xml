@@ -37,7 +37,7 @@
     <string name="activity_question_type_title">Select the type of question:</string>
     <string name="yesno_question_type_title">Yes/No</string>
     <string name="stars_question_type_title">Stars</string>
-    <string name="slider_question_type_title">Progressive Bar</string>
+    <string name="numeric_question_type_title">Numeric</string>
     <string name="other_question_type_title">Others</string>
 
     <!-- New Question Activity messages -->
@@ -60,5 +60,6 @@
     <string name="download_format_description">Format: .csv</string>
     <string name="configurations_text">Additional Settings</string>
     <string name="users_count_title">"Users: "</string>
+    <string name="numeric_answer_hint">Max Number:\n</string>
 
 </resources>

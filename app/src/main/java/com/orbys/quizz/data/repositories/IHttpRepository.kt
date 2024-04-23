@@ -13,4 +13,5 @@ interface IHttpRepository {
     fun addUser(user: User)
     fun userResponded(ip: String): Boolean
     fun getUsernameByIp(ip: String): String
+    fun addAnswer(answer: String?)
 }

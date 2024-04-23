@@ -35,4 +35,9 @@ abstract class BarView(
         invalidate()
     }
 
+    fun clearBars() {
+        bars.clear()
+        invalidate()
+    }
+
 }
