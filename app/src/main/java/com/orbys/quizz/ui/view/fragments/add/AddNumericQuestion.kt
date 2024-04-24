@@ -17,7 +17,6 @@ class AddNumericQuestion: AddFragment() {
         private const val MAX_DIGITS = 4
         private const val MIN_ANSWERS = 1
         private const val MAX_ANSWERS = 1
-        private const val FIELD_LENGTH = 100
     }
 
     private lateinit var fieldsManager: AnswerFieldsManager
@@ -33,7 +32,6 @@ class AddNumericQuestion: AddFragment() {
                 maxLength = MAX_DIGITS,
                 minAnswers = MIN_ANSWERS,
                 maxAnswers = MAX_ANSWERS,
-                fieldLength = FIELD_LENGTH,
                 numericAnswer = true
             )
 

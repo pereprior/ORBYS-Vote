@@ -17,7 +17,7 @@
     <string name="question_answer_hint">Answer:</string>
 
     <!-- File placeholders -->
-    <string name="save_button_placeholder">Save</string>
+    <string name="save_button_placeholder">Launch</string>
     <string name="yes_answer_placeholder">Yes</string>
     <string name="no_answers_placeholder">No</string>
     <string name="login_title_placeholder">Enter a username:</string>
@@ -63,5 +63,7 @@
     <string name="numeric_answer_hint">Max Number:\n</string>
     <string name="question_question_title">Enter the question:</string>
     <string name="question_answer_title">Enter the answers:</string>
+    <string name="time_out_button_text">Finish</string>
+    <string name="no_network_error">No internet connection</string>
 
 </resources>

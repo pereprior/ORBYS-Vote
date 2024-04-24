@@ -13,7 +13,7 @@ import com.google.zxing.common.BitMatrix
 class QRCodeGenerator {
 
     companion object {
-        private const val DEFAULT_SIZE = 200
+        private const val DEFAULT_SIZE = 1024
         private const val BLACK = -0x1000000
         private const val WHITE = -0x1
     }

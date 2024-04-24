@@ -64,61 +64,58 @@
     </LinearLayout>
 
     <!-- Layout que contiene la información de las respuestas enviadas al servidor -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="@drawable/bg_main"
-        android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/download_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/exit_button_desc"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_download"
+            android:tint="@color/gray3"
+            tools:ignore="UseAppTint"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Botón de cerrar el dialogo -->
-            <ImageButton
-                android:id="@+id/download_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center_vertical"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button_desc"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_download"
-                android:tint="@color/blue_selected"
-                tools:ignore="UseAppTint" />
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/exit_button_desc"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:src="@drawable/ic_back"
+            android:tint="@color/blue_selected"
+            tools:ignore="UseAppTint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Botón de cerrar el dialogo -->
-            <ImageButton
-                android:id="@+id/close_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="@dimen/close_button_margin"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button_desc"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:src="@drawable/ic_back"
-                android:tint="@color/blue_selected"
-                tools:ignore="UseAppTint" />
-
-        </LinearLayout>
-
-        <!-- Grafico con las respuestas -->
         <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
             android:id="@+id/barView"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/graphic_height" />
+            android:layout_height="@dimen/graphic_height"
+            app:layout_constraintTop_toBottomOf="@id/download_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Texto para el contador de los usuarios que han respondido -->
         <LinearLayout
+            android:id="@+id/chronometer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/barView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:id="@+id/responded_users_count"
@@ -147,6 +144,20 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/time_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/small_margin"
+            android:textSize="@dimen/title_font_size"
+            android:text="@string/time_out_button_text"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/chronometer_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -129,16 +128,13 @@ class LaunchQuestionView(
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             }
-            downloadButton.setOnClickListener {
-                windowManager.removeView(this@LaunchQuestionView)
 
-                val intent = Intent(context, DownloadActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
-            }
-
-            if(question.timeOut!! > 0) {
-                setChronometerCount(question.timeOut)
+            // Gestión del cronómetro
+            if(question.timeOut!! > 0) { setChronometerCount(question.timeOut) }
+            timeOutButton.setOnClickListener {
+                setDownloadButtonClickable()
+                questionRepository.timeOut()
+                chronometer.cancelTimer()
             }
 
             setUsersCount()
@@ -150,11 +146,9 @@ class LaunchQuestionView(
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setChronometerCount(timeOut: Int) {
         // Muestra el cronómetro si la pregunta tiene un tiempo de espera
-        downloadButton.drawable.setTint(ContextCompat.getColor(context, R.color.gray3))
         chronometerTitle.visibility = VISIBLE
         chronometer.visibility = VISIBLE
 
-        downloadButton.isClickable = false
         val timeInSeconds = timeOut * 60
         val timeInMillis = timeInSeconds * 1000L
 
@@ -165,16 +159,11 @@ class LaunchQuestionView(
         GlobalScope.launch {
             chronometer.isFinished.collect { isFinished ->
                 if (isFinished) {
-                    downloadButton.isClickable = true
-                    downloadButton.drawable.setTint(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.blue_selected
-                        )
-                    )
+                    setDownloadButtonClickable()
                 }
             }
         }
+
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -204,13 +193,30 @@ class LaunchQuestionView(
                     GlobalScope.launch {
                         // Recoge los cambios en count para cada respuesta
                         answer.count.collect { count ->
-                            Log.d("LaunchuestionView:", "Answers: $answer")
                             bar.height = count
                             barView.invalidate()
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun ServiceLaunchQuestionBinding.setDownloadButtonClickable() {
+        downloadButton.drawable.setTint(
+            ContextCompat.getColor(
+                context,
+                R.color.blue_selected
+            )
+        )
+
+        downloadButton.setOnClickListener {
+            windowManager.removeView(this@LaunchQuestionView)
+            usersRepository.clearRespondedUsers()
+
+            val intent = Intent(context, DownloadActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
         }
     }
 

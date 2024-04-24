@@ -9,24 +9,19 @@ import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-/**
- * Cronometro que proporciona funcionalidad adicional para contar hacia atrás.
- *
- * @param context El contexto en el que se utiliza el cronómetro.
- * @param attrs Los atributos del cronómetro.
- */
 class CountDownChronometer(
     context: Context,
     attrs: AttributeSet? = null
 ) : Chronometer(context, attrs) {
 
-    private companion object {
+    companion object {
         const val TIME_OUT = ": TIME OUT"
         const val COUNT_DOWN_INTERVAL = 1000L
     }
 
     private val repository = QuestionRepositoryImpl.getInstance()
     private var timeInMillis: Long = 0
+    private var timer: CountDownTimer? = null
 
     private val _isFinished = MutableStateFlow(false)
     val isFinished: StateFlow<Boolean> get() = _isFinished
@@ -41,15 +36,23 @@ class CountDownChronometer(
         startTimer()
     }
 
-    private fun startTimer() = object : CountDownTimer(timeInMillis, COUNT_DOWN_INTERVAL) {
-        override fun onTick(millisUntilFinished: Long) {
-            base = SystemClock.elapsedRealtime() + millisUntilFinished
-        }
+    private fun startTimer() {
+        timer = object : CountDownTimer(timeInMillis, COUNT_DOWN_INTERVAL) {
+            override fun onTick(millisUntilFinished: Long) {
+                base = SystemClock.elapsedRealtime() + millisUntilFinished
+            }
 
-        override fun onFinish() {
-            stopTimer()
-        }
-    }.start()
+            override fun onFinish() {
+                stopTimer()
+            }
+        }.start()
+    }
+
+    fun cancelTimer() {
+        timer?.cancel()
+        text = TIME_OUT
+        timer = null
+    }
 
     private fun stopTimer() {
         stop()

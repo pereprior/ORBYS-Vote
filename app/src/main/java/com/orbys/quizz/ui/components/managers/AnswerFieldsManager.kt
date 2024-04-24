@@ -23,7 +23,7 @@ class AnswerFieldsManager(
     private val maxLength: Int = 20,
     private val minAnswers: Int = 1,
     private val maxAnswers: Int = 1,
-    private val fieldLength: Int = 200,
+    private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT,
     private val numericAnswer: Boolean = false
 ) {
 
