@@ -1,61 +1,99 @@
 package com.orbys.quizz.ui.components
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
+import com.orbys.quizz.R
 
 /**
- * QRCodeGenerator se encarga de generar los codigos qr.
+ * Clase para generar códigos QR con un logo en el centro.
  *
- * Utiliza la libreria ZXing para codificar una url en un codigo qr y convertir el resultado de una forma legible para el usuario.
+ * @property context Contexto de la aplicación.
  */
-class QRCodeGenerator {
+class QRCodeGenerator(private val context: Context) {
 
     companion object {
-        private const val DEFAULT_SIZE = 1024
-        private const val BLACK = -0x1000000
-        private const val WHITE = -0x1
+        private const val DEFAULT_SIZE = 300
+        private const val BLACK = Color.BLACK
+        private const val WHITE = Color.WHITE
+        private const val LOGO_SIZE_DIFF = 4
     }
 
-    /**
-     * Codifica la url y la devuelve como un bitmap.
-     *
-     * @param url La url que se va a codificar.
-     * @param width El ancho de la imagen del qr. Por defecto equivale a DEFAULT_SIZE.
-     * @param height El alto de la imagen del qr. Por defecto equivale a DEFAULT_SIZE.
-     * @return Un Bitmap que represneta la imagen del qr, o null si la proceso falla.
-     */
     fun encodeAsBitmap(
         url: String,
+        logoResId: Int = R.drawable.orbys_logo,
         width: Int = DEFAULT_SIZE,
         height: Int = DEFAULT_SIZE
     ): Bitmap? {
         val bitMatrix = try {
-            // Codifica la url en un BitMatrix.
-            MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, null)
-        } catch (e: IllegalArgumentException) {
+            MultiFormatWriter().encode(
+                url,
+                BarcodeFormat.QR_CODE,
+                width, height,
+                // Error correction hace que el qr se pueda seguir leyendo con el logo en el centro
+                mapOf(EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.H)
+            )
+        } catch (e: WriterException) {
             return null
         }
 
-        return createBitmapFromBitMatrix(bitMatrix)
+        // Crea el mapa de bits del qr
+        val qrCode = createBitmapFromBitMatrix(bitMatrix)
+        // Convierte el logo a mapa de bits
+        val logo = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
+
+        return overlayLogoOnQrCode(qrCode, logo)
     }
 
-    /**
-     * Devuelve un bitmap a partir de un bitmatrix.
-     * BitMatrix es una representación 2D del código QR, donde cada bit representa un píxel.
-     * Este método convierte BitMatrix en una matriz de píxeles y luego crea un bitmap a partir de esta matriz.
-     *
-     * @param bitMatrix El BitMatrix a convertir en un bitmap.
-     * @return Un mapa de bits que representa el código QR.
-     */
     private fun createBitmapFromBitMatrix(bitMatrix: BitMatrix): Bitmap {
-        val pixels = IntArray(bitMatrix.width * bitMatrix.height) { index ->
-            if (bitMatrix[index % bitMatrix.width, index / bitMatrix.width]) BLACK else WHITE
+        val size = bitMatrix.width
+        val blankAreaSize = size / LOGO_SIZE_DIFF
+        val blankAreaPosition = (size / 2 - blankAreaSize / 2)..(size / 2 + blankAreaSize / 2)
+
+        val pixels = IntArray(size * size) { index ->
+            val x = index % size
+            val y = index / size
+            // Si la posición está en el área donde se situará el logo, se pone blanco
+            if (x in blankAreaPosition && y in blankAreaPosition) WHITE
+            // Si no, se pone del color correspondiente para crear el qr
+            else if (bitMatrix[x, y]) BLACK else WHITE
         }
 
-        return Bitmap.createBitmap(bitMatrix.width, bitMatrix.height, Bitmap.Config.ARGB_8888).apply {
-            setPixels(pixels, 0, bitMatrix.width, 0, 0, bitMatrix.width, bitMatrix.height)
+        return Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888).apply {
+            setPixels(pixels, 0, size, 0, 0, size, size)
+        }
+    }
+
+    private fun overlayLogoOnQrCode(qrCode: Bitmap, logo: Bitmap?): Bitmap {
+        val qrSize = qrCode.width
+        val logoSize = qrSize / LOGO_SIZE_DIFF
+        val logoPosition = (qrSize - logoSize) / 2f
+
+        // Parametros con los que se dibuja el logo
+        val paint = Paint().apply {
+            colorFilter = PorterDuffColorFilter(context.getColor(R.color.background_black), PorterDuff.Mode.SRC_IN)
+        }
+
+        return Bitmap.createBitmap(qrSize, qrSize, qrCode.config).apply {
+            // Dibujamos el qr
+            Canvas(this).drawBitmap(qrCode, 0f, 0f, null)
+            logo?.let {
+                val scaledLogo = Bitmap.createScaledBitmap(it, logoSize, logoSize, false)
+                // Dibujamos el logo por encima
+                Canvas(this).drawBitmap(scaledLogo, logoPosition, logoPosition, paint)
+            }
         }
     }
 

@@ -30,7 +30,7 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_gravity="start|bottom"
+                android:layout_gravity="start|center_vertical"
                 android:layout_marginBottom="4dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/exit_button_desc"
@@ -39,15 +39,16 @@
             <!-- Text Field para la pregunta -->
             <EditText
                 android:id="@+id/question_question"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:hint="@string/question_question_hint"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:autofillHints=""
+                android:gravity="top"
                 android:textSize="@dimen/font_size"
                 android:layout_marginTop="@dimen/small_margin"
-                android:maxLength="40" />
+                android:maxLength="40"
+                android:lines="4" />
 
         </LinearLayout>
 

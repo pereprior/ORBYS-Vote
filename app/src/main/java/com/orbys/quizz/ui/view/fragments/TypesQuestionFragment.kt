@@ -33,7 +33,7 @@ class TypesQuestionFragment: Fragment() {
             parentFragmentManager.beginTransaction()
                 .add(yesNoCardContainer.id, YesNoCard())
                 .add(starsCardContainer.id, StarsCard())
-                .add(sliderCardContainer.id, NumericCard())
+                .add(numericCardContainer.id, NumericCard())
                 .add(otherCardContainer.id, OtherCard())
                 .commit()
 

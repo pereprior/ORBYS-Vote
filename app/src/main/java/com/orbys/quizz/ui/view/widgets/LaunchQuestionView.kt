@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
@@ -115,7 +116,7 @@ class LaunchQuestionView(
 
             // Establece los elementos relacionados con la pregunta
             questionTypeIcon.setImageResource(question.icon)
-            qrCode.setImageBitmap(QRCodeGenerator().encodeAsBitmap(url))
+            qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url, R.drawable.orbys_logo))
             this.question.text = question.question
             questionUrl.text = url
 
@@ -135,6 +136,7 @@ class LaunchQuestionView(
                 setDownloadButtonClickable()
                 questionRepository.timeOut()
                 chronometer.cancelTimer()
+                Toast.makeText(context, context.getString(R.string.timeup_message), Toast.LENGTH_SHORT).show()
             }
 
             setUsersCount()

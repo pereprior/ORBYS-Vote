@@ -1,6 +1,5 @@
 package com.orbys.quizz.data.controllers.handlers
 
-import android.util.Log
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.utils.ServerMessages.FILE_NOT_FOUND_MESSAGE
 import com.orbys.quizz.data.utils.ServerMessages.SUCCESS_MESSAGE
@@ -70,9 +69,6 @@ class ResponseHandler@Inject constructor(
             repository.setPostInAnswerCount(choice)
             updateUserStatus(choice ?: "", userIP)
         }
-
-        Log.d("RESPONSE:", "User: $userIP, Choice: $choice")
-        Log.d("RESPONSE:", "Answer count: ${repository.getQuestion()}")
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }

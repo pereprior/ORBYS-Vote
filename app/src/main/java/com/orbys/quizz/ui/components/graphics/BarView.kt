@@ -21,7 +21,7 @@ abstract class BarView(
     attributes: AttributeSet
 ) : View(context, attributes) {
 
-    private val fontSize = context.resources.getDimensionPixelSize(R.dimen.font_size).toFloat()
+    private val fontSize = context.resources.getDimensionPixelSize(R.dimen.title_font_size).toFloat()
 
     protected val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {

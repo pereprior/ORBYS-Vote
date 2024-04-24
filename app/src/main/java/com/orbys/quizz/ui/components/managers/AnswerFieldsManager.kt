@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
@@ -25,25 +24,13 @@ class AnswerFieldsManager(
     private val maxAnswers: Int = 1,
     private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT,
     private val numericAnswer: Boolean = false
-) {
+): AnswerManager(context, layout) {
 
     private val answerFields = mutableListOf<EditText>()
 
     fun anyAnswerIsEmpty() = answerFields.any { it.text.isEmpty() }
     fun getAnswersText() = answerFields.map { it.text.toString() }
     fun getAnswers() = MutableStateFlow(answerFields.map { Answer(it.text.toString()) })
-
-    init {
-        val textView = TextView(context).apply {
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            text = context.getString(R.string.question_answer_title)
-        }
-
-        layout.addView(textView)
-    }
 
     fun setAddAnswersButtons() {
         val addButton = createButton(android.R.drawable.ic_input_add)

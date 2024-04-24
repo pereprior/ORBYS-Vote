@@ -20,6 +20,8 @@
     <string name="save_button_placeholder">Launch</string>
     <string name="yes_answer_placeholder">Yes</string>
     <string name="no_answers_placeholder">No</string>
+    <string name="true_answer_placeholder">True</string>
+    <string name="false_answer_placeholder">False</string>
     <string name="login_title_placeholder">Enter a username:</string>
     <string name="multiple_voting_alert_placeholder">You have successfully answered! You can answer one more time if you wish</string>
     <string name="csv_legend_question_title">Question;</string>
@@ -64,6 +66,8 @@
     <string name="question_question_title">Enter the question:</string>
     <string name="question_answer_title">Enter the answers:</string>
     <string name="time_out_button_text">Finish</string>
-    <string name="no_network_error">No internet connection</string>
+    <string name="no_network_error">No internet connection, please check your internet connection and try again</string>
+    <string name="timeup_message">Time to respond is up</string>
+    <string name="truefalse_question_type_title">True/False</string>
 
 </resources>

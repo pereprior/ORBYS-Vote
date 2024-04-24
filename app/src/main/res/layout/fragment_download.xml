@@ -19,8 +19,8 @@
     <!-- Código QR -->
     <ImageView
         android:id="@+id/qrCode"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_marginTop="@dimen/medium_margin"
         android:contentDescription="@string/qr_code_desc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/medium_margin"
-        android:textSize="@dimen/font_size"
+        android:textSize="@dimen/title_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/qrCode" />
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/download_format_description"
-        android:textSize="@dimen/font_size"
+        android:textSize="@dimen/title_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/qrUrl" />

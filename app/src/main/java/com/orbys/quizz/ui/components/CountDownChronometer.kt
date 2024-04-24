@@ -17,6 +17,7 @@ class CountDownChronometer(
     companion object {
         const val TIME_OUT = ": TIME OUT"
         const val COUNT_DOWN_INTERVAL = 1000L
+        const val TEXT_SIZE = 11f
     }
 
     private val repository = QuestionRepositoryImpl.getInstance()
@@ -25,6 +26,10 @@ class CountDownChronometer(
 
     private val _isFinished = MutableStateFlow(false)
     val isFinished: StateFlow<Boolean> get() = _isFinished
+
+    init {
+        textSize = TEXT_SIZE
+    }
 
     fun setTimeInMillis(timeInMillis: Long) {
         this.timeInMillis = timeInMillis
