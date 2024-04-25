@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="@dimen/activity_layout_width"
     android:layout_height="@dimen/activity_layout_height"
-    tools:context=".ui.view.activities.MainActivity"
+    tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
 
     <!-- Botón de cerrar la actividad -->

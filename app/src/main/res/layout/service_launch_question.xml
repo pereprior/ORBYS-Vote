@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:elevation="@dimen/small_margin"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:background="@android:color/transparent"
     android:theme="@style/Base.Theme.OrbysQuizz">
 

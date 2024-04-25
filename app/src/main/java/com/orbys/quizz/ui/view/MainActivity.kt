@@ -1,0 +1,75 @@
+package com.orbys.quizz.ui.view
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.orbys.quizz.core.PermissionManager
+import com.orbys.quizz.data.services.HttpService
+import com.orbys.quizz.databinding.ActivityMainBinding
+import com.orbys.quizz.ui.services.FloatingViewService
+import com.orbys.quizz.ui.view.fragments.DownloadFragment
+import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
+
+/**
+ * Actividad principal de la aplicación
+ */
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var permissionManager: PermissionManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        permissionManager = PermissionManager(this)
+        stopActiveServices()
+
+        // Verificar si tenemos los permisos necesarios
+        permissionManager.checkAndRequestPermissions()
+
+        // Mostrar la vista
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        printFragments()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        permissionManager
+            .onRequestPermissionsResult(requestCode, grantResults) {
+                printFragments()
+            }
+    }
+
+    private fun printFragments() {
+
+        with(binding) {
+
+            closeButton.setOnClickListener {
+                finish()
+                exitProcess(0)
+            }
+
+            supportFragmentManager.beginTransaction().apply {
+                val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {
+                    DownloadFragment()
+                } else {
+                    TypesQuestionFragment()
+                }
+                replace(fragmentContainer.id, fragment)
+                commit()
+            }
+        }
+
+    }
+
+    private fun stopActiveServices() {
+        // Detiene los servicios si están en ejecución.
+        stopService(Intent(this, HttpService::class.java))
+        stopService(Intent(this, FloatingViewService::class.java))
+    }
+
+}

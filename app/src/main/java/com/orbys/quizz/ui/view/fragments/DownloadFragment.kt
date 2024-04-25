@@ -1,6 +1,5 @@
 package com.orbys.quizz.ui.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.databinding.FragmentDownloadBinding
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.view.activities.MainActivity
 import kotlin.system.exitProcess
 
 /**
@@ -35,9 +33,10 @@ class DownloadFragment: Fragment() {
             val closeButton: ImageButton = activity?.findViewById(R.id.close_button) ?: return root
 
             backButton.setOnClickListener {
-                activity?.finish()
-                val intent = Intent(context, MainActivity::class.java)
-                context?.startActivity(intent)
+                activity?.supportFragmentManager?.beginTransaction()?.apply {
+                    replace(R.id.fragment_container, TypesQuestionFragment())
+                    commit()
+                }
             }
             closeButton.setOnClickListener {
                 activity?.finish()

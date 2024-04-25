@@ -8,7 +8,7 @@
     app:cardCornerRadius="@dimen/small_margin"
     app:cardElevation="@dimen/small_margin"
     android:layout_gravity="center"
-    tools:context=".ui.view.activities.MainActivity" >
+    tools:context=".ui.view.MainActivity" >
 
     <!-- Layout que representa el icono y el tipo de la tarjeta -->
     <LinearLayout

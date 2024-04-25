@@ -22,8 +22,7 @@ import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.ui.components.QRCodeGenerator
 import com.orbys.quizz.ui.components.showToastWithCustomView
-import com.orbys.quizz.ui.view.activities.DownloadActivity
-import com.orbys.quizz.ui.view.activities.MainActivity
+import com.orbys.quizz.ui.view.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -217,8 +216,9 @@ class LaunchQuestionView(
             windowManager.removeView(this@LaunchQuestionView)
             usersRepository.clearRespondedUsers()
 
-            val intent = Intent(context, DownloadActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
             context.startActivity(intent)
         }
     }
