@@ -2,40 +2,65 @@
 <resources>
     <string name="question_question_hint">Pregunta:</string>
     <string name="question_answer_hint">Resposta:</string>
-    <string name="save_button_placeholder">Gardar</string>
+    <string name="numeric_answer_hint">Número máximo:\n</string>
+
+    <!-- Marcadores de archivo -->
+    <string name="save_button_placeholder">Lanzar</string>
     <string name="yes_answer_placeholder">Si</string>
     <string name="no_answers_placeholder">Non</string>
+    <string name="true_answer_placeholder">Verdadeiro</string>
+    <string name="false_answer_placeholder">Falso</string>
     <string name="login_title_placeholder">Introduce un nome de usuario:</string>
-    <string name="multiple_voting_alert_placeholder">Respondeste con éxito! Podes responder unha vez máis se o desexas</string>
+    <string name="multiple_voting_alert_placeholder">¡Respostou con éxito! Podes responder unha vez máis se o desexas</string>
+    <string name="csv_legend_question_title">Pregunta ;</string>
+    <string name="csv_legend_answers_title">Respostas ;</string>
+    <string name="csv_legend">Data ;Hora ;IP ;Nome de usuario ;Resposta</string>
+
+    <!-- Mensaxes de erro -->
     <string name="questions_exists_error">A pregunta xa existe</string>
     <string name="max_answers_error">Non podes poñer máis de 5 respostas</string>
+    <string name="min_answers_error">Non podes poñer menos de 2 respostas</string>
     <string name="empty_answers_error">Non podes gardar se hai campos baleiros</string>
     <string name="same_question_error">Non podes gardar preguntas co mesmo contido</string>
+    <string name="no_network_error">Sen conexión a Internet, comproba a túa conexión e volve intentalo</string>
+    <string name="storage_permission_denied">Permiso de almacenamento denegado</string>
+
+    <!-- Mensaxes de alerta -->
+    <string name="file_not_found_message">Erro: non se puido ler o ficheiro HTML</string>
+    <string name="success_message">Grazas pola túa resposta</string>
+    <string name="user_responded_message">O usuario xa respondeu á pregunta</string>
+    <string name="time_out_message">O tempo para responder á pregunta caducou</string>
+    <string name="timeup_message">O tempo para responder rematou</string>
+
+    <!-- Mensaxes da actividade principal -->
     <string name="activity_question_type_title">Selecciona o tipo de pregunta:</string>
     <string name="yesno_question_type_title">Si/Non</string>
+    <string name="truefalse_question_type_title">Verdadeiro/Falso</string>
     <string name="stars_question_type_title">Estrelas</string>
-    <string name="slider_question_type_title">Barra progresiva</string>
-    <string name="other_question_type_title">Outras</string>
+    <string name="numeric_question_type_title">Numérico</string>
+    <string name="other_question_type_title">Outros</string>
+
+    <!-- Mensaxes da nova pregunta -->
+    <string name="question_question_title">Introduce a pregunta:</string>
+    <string name="question_answer_title">Introduce as respostas:</string>
     <string name="anonymous_radio_title">Configurar usuarios:</string>
-    <string name="anonymous_question_option_text">Anónima</string>
+    <string name="anonymous_question_option_text">Anónimo</string>
     <string name="non_anonymous_question_option_text">Usuario requerido</string>
     <string name="filter_users_radio_title">Configurar número de respostas por usuario:</string>
     <string name="filter_users_question_option_text">Unha resposta</string>
-    <string name="non_filter_users_question_option_text">Varias respostas</string>
+    <string name="non_filter_users_question_option_text">Respostas múltiples</string>
     <string name="answers_radio_title">Configurar número de respostas posibles:</string>
     <string name="single_answer_question_option_text">Resposta única</string>
     <string name="multi_answer_question_option_text">Respostas múltiples</string>
     <string name="time_checkbox_title">Configurar cronómetro:</string>
-    <string name="timeout_question_option_text">Tempo límite</string>
+    <string name="timeout_question_option_text">Límite de tempo</string>
     <string name="minutes_help_text">minutos</string>
+
+    <!-- Mensaxes do servizo de lanzamento -->
     <string name="chronometer_title">Tempo restante</string>
-    <string name="download_title">Escanear para descargar:</string>
+    <string name="download_title">Escanea para descargar:</string>
     <string name="download_format_description">Formato: .csv</string>
     <string name="configurations_text">Axustes adicionais</string>
     <string name="users_count_title">"Usuarios: "</string>
-    <string name="min_answers_error">Non podes poñer menos de 2 respostas</string>
-    <string name="csv_legend_question_title">Pregunta;</string>
-    <string name="csv_legend_answers_title">Respostas;</string>
-    <string name="csv_legend">Data;Hora;IP;Nome de usuario;Resposta</string>
-
+    <string name="time_out_button_text">Fin</string>
 </resources>

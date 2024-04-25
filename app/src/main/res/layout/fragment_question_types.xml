@@ -20,12 +20,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent" />
+
     <!-- Layout que representa la tarjeta de las pregunta de si/no -->
     <FrameLayout
         android:id="@+id/yes_no_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/boolean_card_container" />
 
@@ -34,7 +43,7 @@
         android:id="@+id/boolean_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintStart_toEndOf="@id/yes_no_card_container"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -61,10 +70,8 @@
         android:id="@+id/other_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         app:layout_constraintTop_toBottomOf="@id/stars_card_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

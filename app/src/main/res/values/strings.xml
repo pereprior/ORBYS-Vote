@@ -15,6 +15,7 @@
     <!-- Add dialog hint -->
     <string name="question_question_hint">Question:</string>
     <string name="question_answer_hint">Answer:</string>
+    <string name="numeric_answer_hint">Max Number:\n</string>
 
     <!-- File placeholders -->
     <string name="save_button_placeholder">Launch</string>
@@ -34,15 +35,27 @@
     <string name="min_answers_error">You can\'t put less than 2 answers</string>
     <string name="empty_answers_error">You can\'t save if there are empty fields</string>
     <string name="same_question_error">You can\'t save questions with the same content</string>
+    <string name="no_network_error">No internet connection, please check your internet connection and try again</string>
+    <string name="storage_permission_denied">Storage Permission Denied</string>
+
+    <!-- Alert messages -->
+    <string name="file_not_found_message">Error: could not read the HTML file</string>
+    <string name="success_message">Thank you for your response</string>
+    <string name="user_responded_message">The user has already responded to the question</string>
+    <string name="time_out_message">The time to answer the question has expired</string>
+    <string name="timeup_message">Time to respond is up</string>
 
     <!-- Main Activity messages -->
     <string name="activity_question_type_title">Select the type of question:</string>
     <string name="yesno_question_type_title">Yes/No</string>
+    <string name="truefalse_question_type_title">True/False</string>
     <string name="stars_question_type_title">Stars</string>
     <string name="numeric_question_type_title">Numeric</string>
     <string name="other_question_type_title">Others</string>
 
     <!-- New Question Activity messages -->
+    <string name="question_question_title">Enter the question:</string>
+    <string name="question_answer_title">Enter the answers:</string>
     <string name="anonymous_radio_title">Set up users:</string>
     <string name="anonymous_question_option_text">Anonymous</string>
     <string name="non_anonymous_question_option_text">User required</string>
@@ -62,17 +75,6 @@
     <string name="download_format_description">Format: .csv</string>
     <string name="configurations_text">Additional Settings</string>
     <string name="users_count_title">"Users: "</string>
-    <string name="numeric_answer_hint">Max Number:\n</string>
-    <string name="question_question_title">Enter the question:</string>
-    <string name="question_answer_title">Enter the answers:</string>
     <string name="time_out_button_text">Finish</string>
-    <string name="no_network_error">No internet connection, please check your internet connection and try again</string>
-    <string name="timeup_message">Time to respond is up</string>
-    <string name="truefalse_question_type_title">True/False</string>
-    <string name="storage_permission_denied">Storage Permission Denied</string>
-    <string name="file_not_found_message">Error: no se pudo leer el archivo html</string>
-    <string name="success_message">Gracias por tu respuesta</string>
-    <string name="user_responded_message">El usuario ya ha respondido a la pregunta</string>
-    <string name="time_out_message">El tiempo para contestar la pregunta se ha agotado</string>
 
 </resources>
