@@ -3,7 +3,8 @@ package com.orbys.quizz.ui.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.orbys.quizz.core.PermissionManager
+import com.orbys.quizz.core.network.NetworkManager
+import com.orbys.quizz.core.permissions.PermissionManager
 import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.services.FloatingViewService
@@ -19,12 +20,17 @@ import kotlin.system.exitProcess
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var networkManager: NetworkManager
     private lateinit var permissionManager: PermissionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionManager = PermissionManager(this)
+        networkManager = NetworkManager()
         stopActiveServices()
+
+        // Comprobar si hay conexión a Internet
+        networkManager.checkNetwork(this)
 
         // Verificar si tenemos los permisos necesarios
         permissionManager.checkAndRequestPermissions()

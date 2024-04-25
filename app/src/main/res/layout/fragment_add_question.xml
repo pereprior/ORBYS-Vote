@@ -56,7 +56,7 @@
                 android:hint="@string/question_question_hint"
                 android:inputType="textMultiLine"
                 android:lines="4"
-                android:maxLength="40"
+                android:maxLength="100"
                 android:padding="@dimen/small_margin"
                 android:textSize="@dimen/font_size" />
 

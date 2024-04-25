@@ -1,24 +1,24 @@
-package com.orbys.quizz.core
+package com.orbys.quizz.core.permissions
 
 import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Clase para gestionar los permisos necesarios para la aplicación.
  *
- * @property activity La actividad desde la que se llama a esta clase.
+ * @param activity La actividad desde la que se llama a esta clase.
  */
 class PermissionManager(activity: AppCompatActivity) {
 
-    private val networkPermissionManager = NetworkPermissionManager(activity)
     private val storagePermissionManager = StoragePermissionManager(activity)
     private val overlayPermissionManager = OverlayPermissionManager(activity)
 
+    // Comprueba y solicita los permisos necesarios.
     fun checkAndRequestPermissions() {
-        networkPermissionManager.checkPermission()
         storagePermissionManager.checkAndRequestPermission()
         overlayPermissionManager.checkAndRequestPermission()
     }
 
+    // Maneja el resultado de la solicitud de permiso.
     fun onRequestPermissionsResult(
         requestCode: Int,
         grantResults: IntArray,

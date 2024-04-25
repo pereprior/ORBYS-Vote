@@ -4,9 +4,6 @@ import android.content.Context
 import com.orbys.quizz.R
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.data.utils.ServerMessages.FILE_NOT_FOUND_MESSAGE
-import com.orbys.quizz.data.utils.ServerMessages.TIME_OUT_MESSAGE
-import com.orbys.quizz.data.utils.ServerMessages.USER_RESPONDED_MESSAGE
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.domain.models.Question
 import io.ktor.server.application.call
@@ -24,11 +21,11 @@ import javax.inject.Inject
  *
  * @property httpRepository Repositorio para operaciones HTTP.
  * @property fileRepository Repositorio para operaciones de archivos.
- * @property context Contexto de la aplicación.
+ * @property appContext Contexto de la aplicación.
  */
 class FileHandler @Inject constructor(
     private val httpRepository: HttpRepositoryImpl,
-    private val context: Context
+    private val appContext: Context
 ) {
     private companion object {
         const val HTTP_FILES_FOLDER = "/assets/"
@@ -46,7 +43,7 @@ class FileHandler @Inject constructor(
         const val DATE_FORMAT = "dd/MM/yyyy"
     }
 
-    private val fileRepository = FileRepository.getInstance(context)
+    private val fileRepository = FileRepository.getInstance(appContext)
 
     fun setupRoutes(route: Route) { route.handleDownloadRoute() }
     // Ruta de descarga del archivo de datos.
@@ -54,14 +51,14 @@ class FileHandler @Inject constructor(
         val file = fileRepository.getFile()
 
         if (file.exists()) call.respondFile(file)
-        else call.respondText(FILE_NOT_FOUND_MESSAGE)
+        else call.respondText(appContext.getString(R.string.file_not_found_message))
     }
 
     fun getFileContent(userIP: String) = when {
         // Si el tiempo de espera ha terminado muestra el mensaje de tiempo agotado.
-        httpRepository.timeOut().value -> TIME_OUT_MESSAGE
+        httpRepository.timeOut().value -> appContext.getString(R.string.time_out_message)
         // Si el usuario ya ha respondido y la pregunta no permite más respuestas muestra el mensaje de usuario respondido.
-        httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> USER_RESPONDED_MESSAGE
+        httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> appContext.getString(R.string.user_responded_message)
         // Carga el archivo HTML de la pregunta.
         else -> loadHtmlFile(httpRepository.getQuestion().answerType.name)
     }
@@ -100,8 +97,8 @@ class FileHandler @Inject constructor(
     fun deleteFile() { fileRepository.deleteFile() }
 
     private fun replace(content: String, question: Question): String = content
-        .replace(SEND_BUTTON_PLACEHOLDER, context.getString(R.string.save_button_placeholder))
-        .replace(LOGIN_TITLE_PLACEHOLDER, context.getString(R.string.login_title_placeholder))
+        .replace(SEND_BUTTON_PLACEHOLDER, appContext.getString(R.string.save_button_placeholder))
+        .replace(LOGIN_TITLE_PLACEHOLDER, appContext.getString(R.string.login_title_placeholder))
         .replace(QUESTION_PLACEHOLDER, question.question)
         .replace(MAX_ANSWER_PLACEHOLDER, question.maxNumericAnswer.toString())
         .replaceAnswersNames(question)
@@ -118,7 +115,7 @@ class FileHandler @Inject constructor(
 
     private fun String.replaceOtherFunctions(question: Question): String {
         // Si el usuario envia varias respuestas a la vez
-        val answersToString = question.answers.value.joinToString(",") { it.answer.toString() }
+        val answersToString = question.answers.value.joinToString(";") { it.answer.toString() }
         // Si la pregunta es de eleccion multiple o de respuesta multiple
         val multipleChoices = if (question.isMultipleChoices) MULTIPLE_CHOICE else SINGLE_CHOICE
         val multipleAnswers = if (question.isMultipleAnswers) MULTIPLE_CHOICE else SINGLE_CHOICE
@@ -127,7 +124,7 @@ class FileHandler @Inject constructor(
             .replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
             .replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
             .replace("MULTIPLE_ANSWERS_PLACEHOLDER", multipleAnswers)
-            .replace("MULTIPLE_VOTING_ALERT_PLACEHOLDER", context.getString(R.string.multiple_voting_alert_placeholder))
+            .replace("MULTIPLE_VOTING_ALERT_PLACEHOLDER", appContext.getString(R.string.multiple_voting_alert_placeholder))
     }
 
 }

@@ -55,7 +55,8 @@ object DataModule {
                     UsersRepositoryImpl.getInstance()
                 ),
                 context
-            )
+            ),
+            context
         ),
 
         FileHandler(

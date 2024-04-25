@@ -1,4 +1,4 @@
-package com.orbys.quizz.core
+package com.orbys.quizz.core.permissions
 
 import android.Manifest
 import android.content.pm.PackageManager

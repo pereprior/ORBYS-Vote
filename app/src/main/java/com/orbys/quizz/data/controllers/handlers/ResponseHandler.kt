@@ -1,9 +1,9 @@
 package com.orbys.quizz.data.controllers.handlers
 
+import android.content.Context
 import android.util.Log
+import com.orbys.quizz.R
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.data.utils.ServerMessages.FILE_NOT_FOUND_MESSAGE
-import com.orbys.quizz.data.utils.ServerMessages.SUCCESS_MESSAGE
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.data.utils.ServerUtils.Companion.USER_ENDPOINT
 import com.orbys.quizz.domain.models.User
@@ -26,7 +26,8 @@ import javax.inject.Inject
  */
 class ResponseHandler@Inject constructor(
     private val repository: HttpRepositoryImpl,
-    private val fileHandler: FileHandler
+    private val fileHandler: FileHandler,
+    private val appContext: Context
 ) {
 
     fun setupRoutes(route: Route) {
@@ -52,7 +53,7 @@ class ResponseHandler@Inject constructor(
         }
 
         call.respondText(
-            text = fileContent ?: FILE_NOT_FOUND_MESSAGE,
+            text = fileContent ?: appContext.getString(R.string.file_not_found_message),
             contentType = ContentType.Text.Html
         )
     }
@@ -82,7 +83,7 @@ class ResponseHandler@Inject constructor(
         call.response.headers.append("Cache-Control", "no-store")
         Log.d("RESPONSE1", "YA ESTAMOS AQUI")
         call.respondText(
-            text = SUCCESS_MESSAGE,
+            text = appContext.getString(R.string.success_message),
             contentType = ContentType.Text.Html
         )
     }
@@ -91,7 +92,7 @@ class ResponseHandler@Inject constructor(
         val fileContent = fileHandler.loadHtmlFile("login")
 
         call.respondText(
-            text = fileContent ?: FILE_NOT_FOUND_MESSAGE,
+            text = fileContent ?: appContext.getString(R.string.file_not_found_message),
             contentType = ContentType.Text.Html
         )
     }

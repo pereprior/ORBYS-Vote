@@ -19,11 +19,12 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
-            height: 60%;
+            height: 80%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: auto;
         }
 
         button {
@@ -61,13 +62,14 @@
 <body>
 
     <form id="myForm">
+        <br><br><br>
         <h1 id="questionText">[QUESTION]</h1>
-        <br>
+        <br><br><br>
 
         <div style="text-align: center">
             <input type="number" min="1" max="[MAX_ANSWER]" value="1" id="myNumber">
         </div>
-        <br><br>
+        <br><br><br>
 
         <button type="submit">[SEND]</button>
     </form>

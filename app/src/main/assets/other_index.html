@@ -25,7 +25,6 @@
             justify-content: center;
             align-items: center;
             overflow: auto;
-            position: relative;
         }
 
         button, input[type="radio"] + label {
@@ -46,7 +45,7 @@
         h1 {
             text-align: center;
             color: #333;
-            font-size: 5em;
+            font-size: 4em;
             max-width: 100%;
             word-wrap: break-word;
             margin: 0 20px;
@@ -59,7 +58,7 @@
 
         /* Estilo para las etiquetas de los botones de seleccion */
         input[type="radio"] + label {
-            padding: 20px 40px;
+            padding: 10px 40px;
             background-color: #ccc;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -68,9 +67,16 @@
             font-size: 2em;
         }
 
-        #answers {
+        #radioContainer {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 100%;
+        }
+
+        #checkboxContainer {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             max-width: 100%;
         }
@@ -117,24 +123,30 @@
 </head>
 <body>
 
-<form id="myForm">
-    <h1 id="questionText">[QUESTION]</h1>
-    <br><br>
+    <form id="myForm">
+        <br><br>
+        <h1 id="questionText">[QUESTION]</h1>
+        <br><br>
 
-    <div id="answers">
-        <!-- Los botones de radio se generarán aquí con el script -->
-    </div>
-    <br>
+        <div id="answers">
+            <!-- Los botones de radio se generarán aquí con el script -->
+            <div id="radioContainer"></div>
+            <!-- Los checkboxes se generarán aquí con el script -->
+            <div id="checkboxContainer"></div>
+        </div>
+        <br><br>
 
-    <button type="submit">[SEND]</button>
-</form>
+        <button type="submit">[SEND]</button>
+    </form>
 
     <script>
         // Lista con las respuestas de la pregunta
-        var answers = "ANSWERS_STRING_PLACEHOLDER".split(",");
+        var answers = "ANSWERS_STRING_PLACEHOLDER".split(";");
         var choices = "MULTIPLE_CHOICES_PLACEHOLDER"
-        // El div donde se van a poner los botones
-        var div = document.getElementById('answers');
+        // El div donde se van a poner los botones de radio
+        var radioDiv = document.getElementById('radioContainer');
+        // El div donde se van a poner los checkboxes
+        var checkboxDiv = document.getElementById('checkboxContainer');
 
         if (choices == "single") {
 
@@ -151,8 +163,8 @@
                 label.htmlFor = radioButton.id;
                 label.textContent = answers[i];
 
-                div.appendChild(radioButton);
-                div.appendChild(label);
+                radioDiv.appendChild(radioButton);
+                radioDiv.appendChild(label);
             }
 
             var radios = document.querySelectorAll('input[type="radio"]');
@@ -177,8 +189,8 @@
                 label.htmlFor = checkboxButton.id;
                 label.textContent = answers[i];
 
-                div.appendChild(checkboxButton);
-                div.appendChild(label);
+                checkboxDiv.appendChild(checkboxButton);
+                checkboxDiv.appendChild(label);
             }
 
         }

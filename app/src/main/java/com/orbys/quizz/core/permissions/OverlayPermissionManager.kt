@@ -1,4 +1,4 @@
-package com.orbys.quizz.core
+package com.orbys.quizz.core.permissions
 
 import android.content.Intent
 import android.net.Uri
@@ -15,14 +15,17 @@ class OverlayPermissionManager (
 ) {
 
     fun checkAndRequestPermission() {
+
         if(!Settings.canDrawOverlays(activity)) {
             // Crea un intent para abrir la configuración de permisos de superposición para esta aplicación.
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:${activity.packageName}")
             )
+
             activity.startActivity(intent)
         }
+
     }
 
 }
