@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
+import com.orbys.quizz.ui.components.showToastWithCustomView
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class AnswerFieldsManager(
@@ -37,7 +38,7 @@ class AnswerFieldsManager(
 
         addButton.setOnClickListener {
             if (answerFields.size < maxAnswers) addAnswerField()
-            else Toast.makeText(context, R.string.max_answers_error, Toast.LENGTH_SHORT).show()
+            else context.showToastWithCustomView(context.getString(R.string.max_answers_error), Toast.LENGTH_SHORT)
         }
 
         layout.addView(addButton)
@@ -67,7 +68,7 @@ class AnswerFieldsManager(
             if(answerFields.size > minAnswers) {
                 layout.removeView(this)
                 answerFields.remove(answer)
-            } else Toast.makeText(context, R.string.min_answers_error, Toast.LENGTH_SHORT).show()
+            } else context.showToastWithCustomView(context.getString(R.string.min_answers_error), Toast.LENGTH_SHORT)
         }
     }
 

@@ -44,7 +44,7 @@ class DownloadFragment: Fragment() {
                 exitProcess(0)
             }
 
-            qrCode.setImageBitmap(QRCodeGenerator(requireContext()).encodeAsBitmap(url, R.drawable.orbys_logo))
+            qrCode.setImageBitmap(QRCodeGenerator(requireContext()).encodeAsBitmap(url))
             qrUrl.text = url
 
             return root

@@ -21,6 +21,7 @@ import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.ui.components.QRCodeGenerator
+import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.view.activities.DownloadActivity
 import com.orbys.quizz.ui.view.activities.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -116,7 +117,7 @@ class LaunchQuestionView(
 
             // Establece los elementos relacionados con la pregunta
             questionTypeIcon.setImageResource(question.icon)
-            qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url, R.drawable.orbys_logo))
+            qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url))
             this.question.text = question.question
             questionUrl.text = url
 
@@ -136,7 +137,7 @@ class LaunchQuestionView(
                 setDownloadButtonClickable()
                 questionRepository.timeOut()
                 chronometer.cancelTimer()
-                Toast.makeText(context, context.getString(R.string.timeup_message), Toast.LENGTH_SHORT).show()
+                context.showToastWithCustomView(context.getString(R.string.timeup_message), Toast.LENGTH_SHORT)
             }
 
             setUsersCount()

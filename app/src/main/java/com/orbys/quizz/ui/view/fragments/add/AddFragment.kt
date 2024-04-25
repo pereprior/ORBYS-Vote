@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel
@@ -79,7 +80,7 @@ abstract class AddFragment: Fragment() {
 
     protected fun errorMessage(message: Int) {
         binding.errorMessage.text = getString(message)
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
     }
 
     // Cambiar la visibilidad del formulario del cronometro

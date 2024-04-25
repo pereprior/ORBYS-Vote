@@ -18,47 +18,48 @@
             android:layout_height="wrap_content"
             android:text="@string/question_question_title"/>
 
+        <!-- Mensaje de error -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center" >
+            android:orientation="horizontal">
 
             <!-- Icono con el tipo de la pregunta a crear -->
             <ImageView
                 android:id="@+id/question_type_icon"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:layout_marginEnd="@dimen/medium_margin"
                 android:layout_gravity="start|center_vertical"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:layout_marginBottom="4dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/exit_button_desc"
-                app:tint="@color/blue_selected"/>
+                app:tint="@color/blue_selected" />
 
             <!-- Text Field para la pregunta -->
             <EditText
                 android:id="@+id/question_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_margin"
+                android:autofillHints=""
+                android:background="@drawable/bg_textbox"
+                android:gravity="top"
                 android:hint="@string/question_question_hint"
                 android:inputType="textMultiLine"
-                android:autofillHints=""
-                android:gravity="top"
-                android:textSize="@dimen/font_size"
-                android:layout_marginTop="@dimen/small_margin"
+                android:lines="4"
                 android:maxLength="40"
-                android:lines="4" />
+                android:padding="@dimen/small_margin"
+                android:textSize="@dimen/font_size" />
 
         </LinearLayout>
 
-        <!-- Mensaje de error -->
         <TextView
             android:id="@+id/error_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="@dimen/small_margin"
             android:textSize="@dimen/font_size"
             android:textColor="@android:color/holo_red_light" />
 

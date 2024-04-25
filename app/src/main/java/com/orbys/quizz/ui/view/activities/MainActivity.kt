@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.R
 import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
+import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         // Verifica si hay conexión a internet
         if (!isNetworkAvailable()) {
-            Toast.makeText(this, this.getString(R.string.no_network_error), Toast.LENGTH_LONG).show()
+            this.showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
             finish()
         }
 

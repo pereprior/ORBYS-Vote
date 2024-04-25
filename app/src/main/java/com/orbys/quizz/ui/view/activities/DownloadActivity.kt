@@ -9,8 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.databinding.ActivityMainBinding
-import com.orbys.quizz.ui.view.fragments.DownloadFragment
+import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.services.FloatingViewService
+import com.orbys.quizz.ui.view.fragments.DownloadFragment
 
 /**
  * Actividad que se encarga de proporcionar los permisos para descargar las preguntas del servidor
@@ -70,7 +71,7 @@ class DownloadActivity: AppCompatActivity() {
         startService(Intent(this, FloatingViewService::class.java))
 
         // Muestra un mensaje indicando que se ha denegado el permiso de almacenamiento.
-        Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show()
+        this.showToastWithCustomView(getString(com.orbys.quizz.R.string.storage_permission_denied), Toast.LENGTH_LONG)
         finish()
     }
 

@@ -33,7 +33,7 @@ class QRCodeGenerator(private val context: Context) {
 
     fun encodeAsBitmap(
         url: String,
-        logoResId: Int = R.drawable.orbys_logo,
+        logoResId: Int = R.drawable.ic_orbys,
         width: Int = DEFAULT_SIZE,
         height: Int = DEFAULT_SIZE
     ): Bitmap? {

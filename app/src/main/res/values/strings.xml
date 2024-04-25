@@ -69,5 +69,6 @@
     <string name="no_network_error">No internet connection, please check your internet connection and try again</string>
     <string name="timeup_message">Time to respond is up</string>
     <string name="truefalse_question_type_title">True/False</string>
+    <string name="storage_permission_denied">Storage Permission Denied</string>
 
 </resources>
