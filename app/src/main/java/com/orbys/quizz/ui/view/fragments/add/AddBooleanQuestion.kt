@@ -8,17 +8,14 @@ import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
- */
-class AddYesNoQuestion: AddFragment() {
+class AddBooleanQuestion: AddFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            questionTitle.text = "${getString(R.string.yesno_question_type_title)} ${getString(R.string.question_question_hint)}"
-            questionTypeIcon.setImageResource(R.drawable.ic_yesno)
+            questionTitle.text = "${getString(R.string.truefalse_question_type_title)} ${getString(R.string.question_question_hint)}"
+            questionTypeIcon.setImageResource(R.drawable.ic_boolean)
 
             filterUsersTitle.visibility = View.GONE
             filterUsersGroup.visibility = View.GONE
@@ -32,11 +29,11 @@ class AddYesNoQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.ic_yesno,
+        icon = R.drawable.ic_boolean,
         answers = MutableStateFlow(
             listOf(
-                Answer(this.getString(R.string.yes_answer_placeholder)),
-                Answer(this.getString(R.string.no_answers_placeholder))
+                Answer(this.getString(R.string.true_answer_placeholder)),
+                Answer(this.getString(R.string.false_answer_placeholder))
             )
         ),
         answerType = AnswerType.YESNO,

@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
+import com.orbys.quizz.ui.view.fragments.cards.BooleanCard
 import com.orbys.quizz.ui.view.fragments.cards.NumericCard
 import com.orbys.quizz.ui.view.fragments.cards.OtherCard
 import com.orbys.quizz.ui.view.fragments.cards.StarsCard
@@ -32,6 +33,7 @@ class TypesQuestionFragment: Fragment() {
 
             parentFragmentManager.beginTransaction()
                 .add(yesNoCardContainer.id, YesNoCard())
+                .add(booleanCardContainer.id, BooleanCard())
                 .add(starsCardContainer.id, StarsCard())
                 .add(numericCardContainer.id, NumericCard())
                 .add(otherCardContainer.id, OtherCard())

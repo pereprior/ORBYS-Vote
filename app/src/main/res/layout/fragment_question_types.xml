@@ -27,33 +27,44 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/stars_card_container" />
+        app:layout_constraintEnd_toStartOf="@id/boolean_card_container" />
 
     <!-- Layout que representa la tarjeta de las pregunta de estrellas -->
     <FrameLayout
-        android:id="@+id/stars_card_container"
+        android:id="@+id/boolean_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toEndOf="@id/yes_no_card_container"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Layout que representa la tarjeta de las pregunta de slider -->
+    <!-- Layout que representa la tarjeta de las preguntas numericas -->
     <FrameLayout
-        android:id="@+id/numeric_card_container"
+        android:id="@+id/stars_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/yes_no_card_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/other_card_container" />
+        app:layout_constraintEnd_toStartOf="@id/numeric_card_container" />
 
     <!-- Layout que representa la tarjeta de las pregunta de otros -->
+    <FrameLayout
+        android:id="@+id/numeric_card_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/boolean_card_container"
+        app:layout_constraintStart_toEndOf="@id/stars_card_container"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Layout que representa la tarjeta de las pregunta de boolean -->
     <FrameLayout
         android:id="@+id/other_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@id/stars_card_container"
-        app:layout_constraintStart_toEndOf="@id/numeric_card_container"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

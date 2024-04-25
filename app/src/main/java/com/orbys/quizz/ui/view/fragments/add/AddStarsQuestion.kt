@@ -17,7 +17,9 @@ class AddStarsQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            questionTitle.text = "${getString(R.string.stars_question_type_title)} ${getString(R.string.question_question_hint)}"
             binding.questionTypeIcon.setImageResource(R.drawable.ic_star)
+
             filterUsersTitle.visibility = View.GONE
             filterUsersGroup.visibility = View.GONE
             filterUsersDivider.visibility = View.GONE

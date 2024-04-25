@@ -35,7 +35,9 @@ class AddNumericQuestion: AddFragment() {
                 numericAnswer = true
             )
 
+            questionTitle.text = "${getString(R.string.numeric_question_type_title)} ${getString(R.string.question_question_hint)}"
             questionTypeIcon.setImageResource(R.drawable.ic_number)
+
             multiAnswerTitle.visibility = View.GONE
             multiAnswerGroup.visibility = View.GONE
             multiAnswerDivider.visibility = View.GONE

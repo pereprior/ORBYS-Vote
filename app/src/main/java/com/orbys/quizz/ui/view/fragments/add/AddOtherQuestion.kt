@@ -40,6 +40,7 @@ class AddOtherQuestion: AddFragment() {
                 fieldLength = FIELD_LENGTH
             )
 
+            questionTitle.text = "${getString(R.string.other_question_type_title)} ${getString(R.string.question_question_hint)}"
             questionTypeIcon.setImageResource(R.drawable.ic_others)
         }
 
