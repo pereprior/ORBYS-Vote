@@ -30,7 +30,9 @@
     <string name="success_message">Bedankt voor je antwoord</string>
     <string name="user_responded_message">De gebruiker heeft al op de vraag gereageerd</string>
     <string name="time_out_message">De tijd om de vraag te beantwoorden is verstreken</string>
+    <string name="time_in_message">De server luistert nog steeds naar reacties</string>
     <string name="time_up_message">De tijd om te antwoorden is voorbij</string>
+    <string name="no_response_message">De server heeft geen reacties ontvangen</string>
 
     <!-- Berichten van de hoofdactiviteit -->
     <string name="activity_question_type_title">Selecteer het type vraag:</string>

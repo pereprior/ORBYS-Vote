@@ -31,6 +31,9 @@
     <string name="user_responded_message">El usuario ya ha respondido a la pregunta</string>
     <string name="time_out_message">Se ha agotado el tiempo para responder la pregunta</string>
     <string name="time_up_message">El tiempo para responder ha terminado</string>
+    <string name="time_in_message">El servidor aún está escuchando respuestas</string>
+    <string name="no_response_message">El servidor no ha recibido respuestas</string>
+
 
     <!-- Mensajes de la actividad principal -->
     <string name="activity_question_type_title">Selecciona el tipo de pregunta:</string>

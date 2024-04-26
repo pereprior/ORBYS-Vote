@@ -30,7 +30,9 @@
     <string name="success_message">Merci pour votre réponse</string>
     <string name="user_responded_message">L\'utilisateur a déjà répondu à la question</string>
     <string name="time_out_message">Le temps pour répondre à la question est écoulé</string>
+    <string name="time_in_message">Le serveur écoute toujours les réponses</string>
     <string name="time_up_message">Le temps de réponse est écoulé</string>
+    <string name="no_response_message">Le serveur n\'a pas reçu de réponse</string>
 
     <!-- Messages d'activité principale -->
     <string name="activity_question_type_title">Sélectionnez le type de question :</string>

@@ -47,7 +47,7 @@
                 android:gravity="top"
                 android:hint="@string/question_question_hint"
                 android:inputType="textMultiLine"
-                android:lines="4"
+                android:lines="3"
                 android:maxLength="100"
                 android:padding="@dimen/small_margin"
                 android:textSize="@dimen/font_size" />

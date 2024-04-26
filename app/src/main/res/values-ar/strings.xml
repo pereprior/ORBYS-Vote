@@ -30,7 +30,9 @@
     <string name="success_message">شكراً على إجابتك</string>
     <string name="user_responded_message">لقد أجاب المستخدم بالفعل على السؤال</string>
     <string name="time_out_message">انتهى وقت الإجابة على السؤال</string>
-    <string name="time_up_message">انتهى وقت الاستجابة</string>
+    <string name="time_in_message">الخادم ما زال يستمع للاستجابات</string>
+    <string name="time_up_message">انتهى الوقت المحدد للرد</string>
+    <string name="no_response_message">لم يتلقَ الخادم أية استجابات</string>
 
     <!-- رسائل النشاط الرئيسية -->
     <string name="activity_question_type_title">اختر نوع السؤال:</string>

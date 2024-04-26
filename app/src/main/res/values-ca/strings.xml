@@ -30,7 +30,9 @@
     <string name="success_message">Gràcies per la teva resposta</string>
     <string name="user_responded_message">L\'usuari ja ha respost a la pregunta</string>
     <string name="time_out_message">El temps per respondre la pregunta s\'ha esgotat</string>
-    <string name="time_up_message">El temps per respondre ha finalitzat</string>
+    <string name="time_in_message">El servidor encara està escoltant respostes</string>
+    <string name="time_up_message">El temps per respondre s\'ha esgotat</string>
+    <string name="no_response_message">El servidor no ha rebut respostes</string>
 
     <!-- Missatges de l'activitat principal -->
     <string name="activity_question_type_title">Selecciona el tipus de pregunta:</string>

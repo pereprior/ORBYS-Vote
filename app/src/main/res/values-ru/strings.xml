@@ -30,7 +30,9 @@
     <string name="success_message">Спасибо за ваш ответ</string>
     <string name="user_responded_message">Пользователь уже ответил на вопрос</string>
     <string name="time_out_message">Время для ответа на вопрос истекло</string>
-    <string name="time_up_message">Время для ответа истекло</string>
+    <string name="time_in_message">Сервер по-прежнему ждет ответов</string>
+    <string name="time_up_message">Истекло время для ответа</string>
+    <string name="no_response_message">Сервер не получил ответов</string>
 
     <!-- Сообщения главной активности -->
     <string name="activity_question_type_title">Выберите тип вопроса:</string>

@@ -53,7 +53,7 @@ class LaunchQuestionView(
     private var binding: ServiceLaunchQuestionBinding
     private var windowManager: WindowManager
     private val layoutParams = WindowManager.LayoutParams(
-        WindowManager.LayoutParams.WRAP_CONTENT,
+        1000,
         WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY

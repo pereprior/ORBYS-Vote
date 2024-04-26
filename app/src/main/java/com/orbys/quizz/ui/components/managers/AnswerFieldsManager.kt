@@ -60,9 +60,9 @@ class AnswerFieldsManager(
 
     private fun createAnswerLayout(answer: EditText, button: ImageButton) = LinearLayout(context).apply {
         orientation = LinearLayout.HORIZONTAL
-        gravity = Gravity.CENTER
-        addView(answer)
+        gravity = Gravity.CENTER_VERTICAL
         addView(button)
+        addView(answer)
 
         button.setOnClickListener {
             if(answerFields.size > minAnswers) {
@@ -91,10 +91,9 @@ class AnswerFieldsManager(
 
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            50
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        foregroundGravity = Gravity.END
         background = ContextCompat.getDrawable(context, android.R.color.transparent)
         scaleX = scale
         scaleY = scale

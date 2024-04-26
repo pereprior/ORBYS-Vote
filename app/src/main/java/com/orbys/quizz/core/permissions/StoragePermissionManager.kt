@@ -1,11 +1,8 @@
 package com.orbys.quizz.core.permissions
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
 import com.orbys.quizz.ui.components.showToastWithCustomView
 
@@ -23,11 +20,11 @@ class StoragePermissionManager(
 
     fun checkAndRequestPermission() {
         // Si no tiene ya el permiso lo solicita
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        /*if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION_CODE
             )
-        }
+        }*/
     }
 
     fun onRequestPermissionsResult(

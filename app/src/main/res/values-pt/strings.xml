@@ -30,7 +30,9 @@
     <string name="success_message">Obrigado pela sua resposta</string>
     <string name="user_responded_message">O usuário já respondeu à pergunta</string>
     <string name="time_out_message">O tempo para responder à pergunta esgotou</string>
+    <string name="time_in_message">O servidor ainda está à espera de respostas</string>
     <string name="time_up_message">O tempo para responder acabou</string>
+    <string name="no_response_message">O servidor não recebeu respostas</string>
 
     <!-- Mensagens da atividade principal -->
     <string name="activity_question_type_title">Selecione o tipo de pergunta:</string>

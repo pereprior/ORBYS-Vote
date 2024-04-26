@@ -3,6 +3,7 @@ package com.orbys.quizz.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
@@ -23,7 +24,6 @@ class AddOtherQuestion: AddFragment() {
         private const val MAX_LENGTH = 20
         private const val MIN_ANSWERS = 2
         private const val MAX_ANSWERS = 5
-        private const val FIELD_LENGTH = 200
     }
 
     private lateinit var fieldsManager: AnswerFieldsManager
@@ -38,7 +38,7 @@ class AddOtherQuestion: AddFragment() {
                 maxLength = MAX_LENGTH,
                 minAnswers = MIN_ANSWERS,
                 maxAnswers = MAX_ANSWERS,
-                fieldLength = FIELD_LENGTH
+                fieldLength = LinearLayout.LayoutParams.MATCH_PARENT
             )
 
             val title: TextView? = activity?.findViewById(R.id.title)
