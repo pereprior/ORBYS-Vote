@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -73,9 +75,11 @@ class LaunchQuestionView(
 
     init {
         binding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
+        addView(binding.root)
+
+        printQrCode()
         bindOnQuestion()
 
-        addView(binding.root)
         setOnTouchListener(this)
 
         layoutParams.x = x
@@ -108,17 +112,23 @@ class LaunchQuestionView(
         return true
     }
 
+    private fun printQrCode() {
+        val  url = serverUtils.getServerUrl("$QUESTION_ENDPOINT/${questionRepository.question.value.id}")
+
+        val qrCode: ImageView = findViewById(R.id.qrCode)
+        val qrUrl: TextView = findViewById(R.id.qrUrl)
+
+        qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url))
+        qrUrl.text = url
+    }
+
     private fun bindOnQuestion() {
         val question = questionRepository.question.value
-        val  url = serverUtils.getServerUrl("$QUESTION_ENDPOINT/${question.id}")
 
         with(binding) {
-
             // Establece los elementos relacionados con la pregunta
             questionTypeIcon.setImageResource(question.icon)
-            qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url))
             this.question.text = question.question
-            questionUrl.text = url
 
             // Establece las acciones de los botones
             closeButton.setOnClickListener {
@@ -136,7 +146,7 @@ class LaunchQuestionView(
                 setDownloadButtonClickable()
                 questionRepository.timeOut()
                 chronometer.cancelTimer()
-                context.showToastWithCustomView(context.getString(R.string.timeup_message), Toast.LENGTH_SHORT)
+                context.showToastWithCustomView(context.getString(R.string.time_up_message), Toast.LENGTH_SHORT)
             }
 
             setUsersCount()

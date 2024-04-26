@@ -30,7 +30,7 @@
     <string name="success_message">Grazas pola túa resposta</string>
     <string name="user_responded_message">O usuario xa respondeu á pregunta</string>
     <string name="time_out_message">O tempo para responder á pregunta caducou</string>
-    <string name="timeup_message">O tempo para responder rematou</string>
+    <string name="time_up_message">O tempo para responder rematou</string>
 
     <!-- Mensaxes da actividade principal -->
     <string name="activity_question_type_title">Selecciona o tipo de pregunta:</string>

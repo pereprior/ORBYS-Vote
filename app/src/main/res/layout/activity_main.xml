@@ -49,6 +49,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/blue_selected" />
 
+    <!-- Titulo con la funcionalidad del fragmento -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textSize="@dimen/type_fragment_title_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/app_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Separador de la actividad y el fragmento -->
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_margin"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent" />
 
     <!-- Contenedor de los fragmentos de la actividad-->
     <LinearLayout
@@ -59,6 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_logo" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

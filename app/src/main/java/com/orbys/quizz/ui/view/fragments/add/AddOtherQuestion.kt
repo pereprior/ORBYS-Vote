@@ -3,6 +3,7 @@ package com.orbys.quizz.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
@@ -40,7 +41,8 @@ class AddOtherQuestion: AddFragment() {
                 fieldLength = FIELD_LENGTH
             )
 
-            questionTitle.text = "${getString(R.string.other_question_type_title)} ${getString(R.string.question_question_hint)}"
+            val title: TextView? = activity?.findViewById(R.id.title)
+            title?.text = "${getString(R.string.other_question_type_title)} ${getString(R.string.question_question_hint)}"
             questionTypeIcon.setImageResource(R.drawable.ic_others)
         }
 

@@ -3,38 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/small_margin"
     android:layout_height="match_parent"
     tools:context=".ui.view.MainActivity">
-
-    <!-- Titulo con la funcionalidad del fragmento -->
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:text="@string/activity_question_type_title"
-        android:textSize="@dimen/type_fragment_title_size"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="parent" />
 
     <!-- Layout que representa la tarjeta de las pregunta de si/no -->
     <FrameLayout
         android:id="@+id/yes_no_card_container"
         android:layout_width="0dp"
+        android:layout_marginStart="@dimen/small_margin"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/boolean_card_container" />
 
@@ -43,7 +22,8 @@
         android:id="@+id/boolean_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        android:layout_marginEnd="@dimen/small_margin"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/yes_no_card_container"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -52,6 +32,7 @@
         android:id="@+id/stars_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
         app:layout_constraintTop_toBottomOf="@id/yes_no_card_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/numeric_card_container" />
@@ -61,6 +42,7 @@
         android:id="@+id/numeric_card_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/small_margin"
         app:layout_constraintTop_toBottomOf="@id/boolean_card_container"
         app:layout_constraintStart_toEndOf="@id/stars_card_container"
         app:layout_constraintEnd_toEndOf="parent" />

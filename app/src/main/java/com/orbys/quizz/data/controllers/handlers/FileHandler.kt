@@ -50,8 +50,11 @@ class FileHandler @Inject constructor(
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
         val file = fileRepository.getFile()
 
-        if (file.exists()) call.respondFile(file)
-        else call.respondText(appContext.getString(R.string.file_not_found_message))
+        // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
+        if (!httpRepository.timeOut().value) call.respondText(appContext.getString(R.string.time_in_message))
+        // Si nadie a contestado la pregunta no se podra descargar el archivo.
+        else if (!file.exists()) call.respondText(appContext.getString(R.string.no_response_message))
+        else call.respondFile(file)
     }
 
     fun getFileContent(userIP: String) = when {
@@ -81,11 +84,11 @@ class FileHandler @Inject constructor(
 
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
-            question = httpRepository.getQuestion().question,
+            question = httpRepository.getQuestion(),
             answers = httpRepository.getQuestion().answers.value.map { it.answer.toString() }
         )
 
-        fileRepository.writeFile(
+        fileRepository.writeLine(
             date = date,
             time = time,
             ip = userIP,

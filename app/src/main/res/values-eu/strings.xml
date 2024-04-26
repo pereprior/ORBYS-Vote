@@ -30,7 +30,7 @@
     <string name="success_message">Eskerrik asko zure erantzunagatik</string>
     <string name="user_responded_message">Erabiltzaileak dagoeneko erantzun du galderari</string>
     <string name="time_out_message">Galdera erantzuteko denbora bukatu da</string>
-    <string name="timeup_message">Erantzun denbora bukatu da</string>
+    <string name="time_up_message">Erantzun denbora bukatu da</string>
 
     <!-- Gaitasun nagusiaren mezuak -->
     <string name="activity_question_type_title">Galdera mota hautatu:</string>

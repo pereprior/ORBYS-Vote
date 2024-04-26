@@ -64,24 +64,21 @@ class ResponseHandler@Inject constructor(
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
         if(!repository.timeOut().value) {
-            if (!repository.answerExists(choice)) {
+            // Si la respuesta no existe, se añade
+            // Si la respuesta contiene una coma, no se añade ya que se trata de una respuesta multiple
+            if (!repository.answerExists(choice) && choice?.contains(",") == false) {
                 repository.addAnswer(choice)
             }
 
-            Log.d("RESPONSE1", "Choice: $choice")
             repository.setPostInAnswerCount(choice)
-            Log.d("RESPONSE1", "RESPUESTA INCREMENTADA")
             updateUserStatus(choice ?: "", userIP)
-            Log.d("RESPONSE1", "USUARIO ACTUALIZADO")
         }
 
-        Log.d("RESPONSE1", "REDIRECCIONANDO")
         call.respondRedirect(QUESTION_ENDPOINT)
     }
 
     private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
         call.response.headers.append("Cache-Control", "no-store")
-        Log.d("RESPONSE1", "YA ESTAMOS AQUI")
         call.respondText(
             text = appContext.getString(R.string.success_message),
             contentType = ContentType.Text.Html

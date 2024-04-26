@@ -30,7 +30,7 @@
     <string name="success_message">Gracias por tu respuesta</string>
     <string name="user_responded_message">El usuario ya ha respondido a la pregunta</string>
     <string name="time_out_message">Se ha agotado el tiempo para responder la pregunta</string>
-    <string name="timeup_message">El tiempo para responder ha terminado</string>
+    <string name="time_up_message">El tiempo para responder ha terminado</string>
 
     <!-- Mensajes de la actividad principal -->
     <string name="activity_question_type_title">Selecciona el tipo de pregunta:</string>

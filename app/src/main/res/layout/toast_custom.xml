@@ -3,13 +3,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="@dimen/medium_margin"
     android:paddingVertical="4dp">
 
     <ImageView
         android:id="@+id/custom_toast_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/icon_size_large"
+        android:layout_height="@dimen/icon_size_large"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_info" />
 
@@ -21,6 +21,6 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:textColor="@color/white"
-        android:textSize="11sp" />
+        android:textSize="@dimen/title_font_size" />
 
 </LinearLayout>

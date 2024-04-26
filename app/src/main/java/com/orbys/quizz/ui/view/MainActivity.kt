@@ -1,13 +1,10 @@
 package com.orbys.quizz.ui.view
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.core.network.NetworkManager
 import com.orbys.quizz.core.permissions.PermissionManager
-import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.databinding.ActivityMainBinding
-import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.DownloadFragment
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         permissionManager = PermissionManager(this)
         networkManager = NetworkManager()
-        stopActiveServices()
 
         // Comprobar si hay conexión a Internet
         networkManager.checkNetwork(this)
@@ -70,12 +66,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    }
-
-    private fun stopActiveServices() {
-        // Detiene los servicios si están en ejecución.
-        stopService(Intent(this, HttpService::class.java))
-        stopService(Intent(this, FloatingViewService::class.java))
     }
 
 }

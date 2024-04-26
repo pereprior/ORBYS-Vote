@@ -14,21 +14,6 @@
         android:gravity="start">
 
         <TextView
-            android:id="@+id/question_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/medium_margin"
-            android:textSize="@dimen/type_fragment_title_size" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:layout_marginHorizontal="@dimen/small_margin" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/question_question_title"/>

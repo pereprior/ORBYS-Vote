@@ -3,9 +3,10 @@
     <dimen name="rounded_background">20dp</dimen>
 
     <dimen name="activity_layout_width">260dp</dimen>
-    <dimen name="activity_layout_height">300dp</dimen>
+    <dimen name="activity_layout_height">260dp</dimen>
 
     <dimen name="icon_size">16dp</dimen>
+    <dimen name="icon_size_large">30dp</dimen>
     <dimen name="card_width">115dp</dimen>
     <dimen name="qr_code_size">200dp</dimen>
     <dimen name="graphic_height">1dp</dimen>

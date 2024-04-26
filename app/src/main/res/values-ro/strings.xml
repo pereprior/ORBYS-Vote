@@ -30,7 +30,7 @@
     <string name="success_message">Mulțumim pentru răspunsul dumneavoastră</string>
     <string name="user_responded_message">Utilizatorul a răspuns deja la întrebare</string>
     <string name="time_out_message">Timpul pentru a răspunde la întrebare a expirat</string>
-    <string name="timeup_message">Timpul pentru a răspunde a expirat</string>
+    <string name="time_up_message">Timpul pentru a răspunde a expirat</string>
 
     <!-- Mesaje ale activității principale -->
     <string name="activity_question_type_title">Selectați tipul de întrebare:</string>

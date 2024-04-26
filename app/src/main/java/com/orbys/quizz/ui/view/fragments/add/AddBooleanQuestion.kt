@@ -2,6 +2,7 @@ package com.orbys.quizz.ui.view.fragments.add
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
@@ -14,7 +15,9 @@ class AddBooleanQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            questionTitle.text = "${getString(R.string.truefalse_question_type_title)} ${getString(R.string.question_question_hint)}"
+            val title: TextView? = activity?.findViewById(R.id.title)
+
+            title?.text = "${getString(R.string.truefalse_question_type_title)} ${getString(R.string.question_question_hint)}"
             questionTypeIcon.setImageResource(R.drawable.ic_boolean)
 
             filterUsersTitle.visibility = View.GONE
@@ -36,7 +39,7 @@ class AddBooleanQuestion: AddFragment() {
                 Answer(this.getString(R.string.false_answer_placeholder))
             )
         ),
-        answerType = AnswerType.YESNO,
+        answerType = AnswerType.BOOLEAN,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )

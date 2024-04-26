@@ -25,6 +25,7 @@
     <string name="false_answer_placeholder">False</string>
     <string name="login_title_placeholder">Enter a username:</string>
     <string name="multiple_voting_alert_placeholder">You have successfully answered! You can answer one more time if you wish</string>
+    <string name="csv_legend_question_type">Type;</string>
     <string name="csv_legend_question_title">Question;</string>
     <string name="csv_legend_answers_title">Answers;</string>
     <string name="csv_legend">Date;Time;IP;Username;Answer</string>
@@ -43,7 +44,9 @@
     <string name="success_message">Thank you for your response</string>
     <string name="user_responded_message">The user has already responded to the question</string>
     <string name="time_out_message">The time to answer the question has expired</string>
-    <string name="timeup_message">Time to respond is up</string>
+    <string name="time_in_message">The server is still listening for responses</string>
+    <string name="time_up_message">Time to respond is up</string>
+    <string name="no_response_message">The server has not received responses</string>
 
     <!-- Main Activity messages -->
     <string name="activity_question_type_title">Select the type of question:</string>
