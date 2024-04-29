@@ -1,4 +1,4 @@
-package com.orbys.quizz.domain.usecases
+package com.orbys.quizz.domain.usecases.question
 
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.repositories.IQuestionRepository

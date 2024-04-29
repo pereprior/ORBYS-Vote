@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel

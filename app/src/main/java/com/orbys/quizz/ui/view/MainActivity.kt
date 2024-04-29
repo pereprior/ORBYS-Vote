@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
                 replace(fragmentContainer.id, fragment)
                 commit()
             }
+
         }
 
     }

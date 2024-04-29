@@ -25,6 +25,7 @@ class CountDownChronometer(
     private var timer: CountDownTimer? = null
 
     private val _isFinished = MutableStateFlow(false)
+
     val isFinished: StateFlow<Boolean> get() = _isFinished
 
     init {

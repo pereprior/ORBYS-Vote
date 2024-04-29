@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.components
+package com.orbys.quizz.core.extensions
 
 import android.content.Context
 import android.view.Gravity

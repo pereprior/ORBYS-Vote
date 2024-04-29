@@ -2,7 +2,7 @@ package com.orbys.quizz.di
 
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
-import com.orbys.quizz.domain.usecases.AddQuestionUseCase
+import com.orbys.quizz.domain.usecases.question.AddQuestionUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

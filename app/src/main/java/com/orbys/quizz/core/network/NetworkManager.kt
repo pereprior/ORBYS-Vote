@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.R
-import com.orbys.quizz.ui.components.showToastWithCustomView
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface

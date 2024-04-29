@@ -51,7 +51,7 @@ class FileHandler @Inject constructor(
         val file = fileRepository.getFile()
 
         // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
-        if (!httpRepository.timeOut().value) call.respondText(appContext.getString(R.string.time_in_message))
+        if (!httpRepository.timerState().value) call.respondText(appContext.getString(R.string.time_in_message))
         // Si nadie a contestado la pregunta no se podra descargar el archivo.
         else if (!file.exists()) call.respondText(appContext.getString(R.string.no_response_message))
         else call.respondFile(file)
@@ -59,11 +59,11 @@ class FileHandler @Inject constructor(
 
     fun getFileContent(userIP: String) = when {
         // Si el tiempo de espera ha terminado muestra el mensaje de tiempo agotado.
-        httpRepository.timeOut().value -> appContext.getString(R.string.time_out_message)
+        httpRepository.timerState().value -> appContext.getString(R.string.time_out_message)
         // Si el usuario ya ha respondido y la pregunta no permite más respuestas muestra el mensaje de usuario respondido.
-        httpRepository.userResponded(userIP) && !httpRepository.getQuestion().isMultipleAnswers -> appContext.getString(R.string.user_responded_message)
+        httpRepository.userResponded(userIP) && !httpRepository.getQuestionInfo().isMultipleAnswers -> appContext.getString(R.string.user_responded_message)
         // Carga el archivo HTML de la pregunta.
-        else -> loadHtmlFile(httpRepository.getQuestion().answerType.name)
+        else -> loadHtmlFile(httpRepository.getQuestionInfo().answerType.name)
     }
 
     fun loadHtmlFile(answerType: String): String? {
@@ -71,7 +71,7 @@ class FileHandler @Inject constructor(
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
-            replace(it, httpRepository.getQuestion())
+            replace(it, httpRepository.getQuestionInfo())
         }
     }
 
@@ -84,8 +84,8 @@ class FileHandler @Inject constructor(
 
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
-            question = httpRepository.getQuestion(),
-            answers = httpRepository.getQuestion().answers.value.map { it.answer.toString() }
+            question = httpRepository.getQuestionInfo(),
+            answers = httpRepository.getQuestionInfo().answers.value.map { it.answer.toString() }
         )
 
         fileRepository.writeLine(

@@ -16,10 +16,11 @@ class HorizontalGraphicView(
 ): BarView(context, attributes) {
 
     companion object {
-        private const val BAR_WIDTH = 60f
-        private const val BAR_MARGIN = 10f
         private const val TEXT_POSITION = 5f
     }
+
+    private val barWidth = context.resources.getDimensionPixelSize(R.dimen.bar_width)
+    private val barMargin = context.resources.getDimensionPixelSize(R.dimen.bar_margin)
 
     override fun onDraw(canvas: Canvas) {
         // Obtenemos el total de todas las respuestas
@@ -27,8 +28,8 @@ class HorizontalGraphicView(
 
         bars.forEachIndexed { index, bar ->
             // Calculamos las coordenadas en las que se dibuja la barra
-            val top = index * (BAR_WIDTH + BAR_MARGIN)
-            val bottom = top + BAR_WIDTH
+            val top = index * (barWidth + barMargin).toFloat()
+            val bottom = top + barWidth
 
             // Porcentaje del contador de esta barra en funcion del total
             val countPercent: Float = if(totalCount > 0) (bar.height.toFloat() / totalCount) else 0f
@@ -50,7 +51,7 @@ class HorizontalGraphicView(
         }
 
         // Actualizar el tamaño de la vista conforme a la cantidad de barras
-        layoutParams.height = if (bars.size == 0) 1 else (bars.size * (BAR_WIDTH + BAR_MARGIN)).toInt()
+        layoutParams.height = if (bars.size == 0) 1 else (bars.size * (barWidth + barMargin))
         requestLayout()
     }
 

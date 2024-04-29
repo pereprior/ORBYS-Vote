@@ -1,10 +1,11 @@
 package com.orbys.quizz.core.permissions
 
+import android.Manifest
 import android.content.pm.PackageManager
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.orbys.quizz.R
-import com.orbys.quizz.ui.components.showToastWithCustomView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 /**
  * Clase StoragePermissionManager para gestionar los permisos de almacenamiento.
@@ -20,11 +21,11 @@ class StoragePermissionManager(
 
     fun checkAndRequestPermission() {
         // Si no tiene ya el permiso lo solicita
-        /*if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 STORAGE_PERMISSION_CODE
             )
-        }*/
+        }
     }
 
     fun onRequestPermissionsResult(
@@ -38,16 +39,11 @@ class StoragePermissionManager(
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     onPermissionGranted()
                 } else {
-                    storagePermissionDenied()
+                    Log.d("StoragePermissionManager", "Storage Permission denied")
+                    onPermissionGranted()
                 }
             }
         }
-    }
-
-    private fun storagePermissionDenied() {
-        // Se ejecuta cuando se deniega el permiso de almacenamiento.
-        activity.showToastWithCustomView(activity.getString(R.string.storage_permission_denied), Toast.LENGTH_LONG)
-        activity.finish()
     }
 
 }

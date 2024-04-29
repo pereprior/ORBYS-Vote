@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
  *
  * @property _question Un flujo mutable privado la información de la pregunta.
  * @property question Un flujo inmutable y publico para llamar a la pregunta.
- * @property timeOut Un flujo mutable para gestionar el tiempo limite de la pregunta.
+ * @property timerState Un flujo mutable para gestionar el tiempo limite de la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     companion object {
@@ -31,13 +31,15 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
 
     private var _question = MutableStateFlow(Question(""))
     val question: StateFlow<Question> = _question
-    val timeOut = MutableStateFlow(false)
+    private val timerState = MutableStateFlow(false)
 
     // Metodos para gestionar el temporizador
-    override fun timeOut() { timeOut.tryEmit(true) }
-    override fun resetTimer() { timeOut.tryEmit(false) }
+    override fun getTimerState(): MutableStateFlow<Boolean> = timerState
+    override fun timeOut() { timerState.tryEmit(true) }
+    override fun resetTimer() { timerState.tryEmit(false) }
 
     // Metodos para gestionar la pregunta lanzada
+    override fun getQuestion(): Question = _question.value
     override fun addQuestion(question: Question) { _question.value = question }
 
     // Métodos para gestionar las respuestas de una pregunta

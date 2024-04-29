@@ -12,8 +12,8 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.domain.models.Answer
-import com.orbys.quizz.ui.components.showToastWithCustomView
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class AnswerFieldsManager(

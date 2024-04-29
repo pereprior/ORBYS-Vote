@@ -48,7 +48,7 @@ class ResponseHandler@Inject constructor(
         val fileContent = fileHandler.getFileContent(userIP)
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
-        if (!repository.getQuestion().isAnonymous && repository.userNotExists(userIP)) {
+        if (!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP)) {
             call.respondRedirect(USER_ENDPOINT)
         }
 
@@ -63,11 +63,11 @@ class ResponseHandler@Inject constructor(
         val choice = call.receiveParameters()["choice"]
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
-        if(!repository.timeOut().value) {
+        if(!repository.timerState().value) {
             // Si la respuesta no existe, se añade
             // Si la respuesta contiene una coma, no se añade ya que se trata de una respuesta multiple
             if (!repository.answerExists(choice) && choice?.contains(",") == false) {
-                repository.addAnswer(choice)
+                repository.addAnswerToList(choice)
             }
 
             repository.setPostInAnswerCount(choice)
@@ -100,7 +100,7 @@ class ResponseHandler@Inject constructor(
 
         // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP)) {
-            repository.addUser(User(userIP, username))
+            repository.addUserToRespondedList(User(userIP, username))
         }
 
         call.respondRedirect("$QUESTION_ENDPOINT/{id}")
@@ -110,10 +110,10 @@ class ResponseHandler@Inject constructor(
         // Si el usuario no existe, se registra
         try {
             if (repository.userNotExists(userIP)) {
-                repository.addUser(User(userIP, repository.getUsernameByIp(userIP), true))
+                repository.addUserToRespondedList(User(userIP, repository.getUsernameByIp(userIP), true))
             } else {
                 // Si ya existe el usuario, se marca como que ha respondido
-                repository.setUserResponded(userIP)
+                repository.setUserAsResponded(userIP)
             }
 
             fileHandler.createDataFile(choice, userIP)

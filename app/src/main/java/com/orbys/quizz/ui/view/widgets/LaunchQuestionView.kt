@@ -13,23 +13,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.setChronometerCount
+import com.orbys.quizz.core.extensions.setDownloadButtonClickable
+import com.orbys.quizz.core.extensions.setGraphicAnswersCount
+import com.orbys.quizz.core.extensions.setUsersCount
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
-import com.orbys.quizz.domain.models.Bar
-import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.components.showToastWithCustomView
 import com.orbys.quizz.ui.view.MainActivity
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Clase que representa una vista para lanzar una pregunta a ser contestada.
@@ -53,7 +49,8 @@ class LaunchQuestionView(
     private var binding: ServiceLaunchQuestionBinding
     private var windowManager: WindowManager
     private val layoutParams = WindowManager.LayoutParams(
-        1000,
+        context.resources.getDimensionPixelSize(R.dimen.widget_width),
+        //WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -141,96 +138,20 @@ class LaunchQuestionView(
             }
 
             // Gestión del cronómetro
-            if(question.timeOut!! > 0) { setChronometerCount(question.timeOut) }
+            if(question.timeOut!! > 0) {
+                setChronometerCount(question.timeOut, context, windowManager, this@LaunchQuestionView,)
+            }
             timeOutButton.setOnClickListener {
-                setDownloadButtonClickable()
+                setDownloadButtonClickable(context, windowManager, this@LaunchQuestionView, usersRepository)
                 questionRepository.timeOut()
                 chronometer.cancelTimer()
                 context.showToastWithCustomView(context.getString(R.string.time_up_message), Toast.LENGTH_SHORT)
             }
 
-            setUsersCount()
+            setUsersCount(context, usersRepository.respondedUsers)
             setGraphicAnswersCount(question)
         }
 
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun ServiceLaunchQuestionBinding.setChronometerCount(timeOut: Int) {
-        // Muestra el cronómetro si la pregunta tiene un tiempo de espera
-        chronometerTitle.visibility = VISIBLE
-        chronometer.visibility = VISIBLE
-
-        val timeInSeconds = timeOut * 60
-        val timeInMillis = timeInSeconds * 1000L
-
-        chronometer.setTimeInMillis(timeInMillis)
-        chronometer.startCountDown()
-
-        // Lanzamos una corrutina para recoger los cambios en el estado del cronómetro
-        GlobalScope.launch {
-            chronometer.isFinished.collect { isFinished ->
-                if (isFinished) {
-                    setDownloadButtonClickable()
-                }
-            }
-        }
-
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun ServiceLaunchQuestionBinding.setUsersCount() {
-        // Lanza una corrutina para recoger los cambios en el número de usuarios que han respondido
-        GlobalScope.launch {
-            usersRepository.respondedUsers.collect { usersList ->
-                withContext(Dispatchers.Main) {
-                    respondedUsersCount.text =
-                        "${context.getString(R.string.users_count_title)}${usersList.size}"
-                }
-            }
-        }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
-        // Lanza una corrutina para recoger los recuentos de respuestas y establecerlos en el grafico de barras.
-        GlobalScope.launch {
-            question.answers.collect { answers ->
-                barView.clearBars()
-
-                answers.forEach { answer ->
-                    val bar = Bar(answer.answer.toString(), height = answer.count.value)
-                    barView.addBar(bar)
-
-                    GlobalScope.launch {
-                        // Recoge los cambios en count para cada respuesta
-                        answer.count.collect { count ->
-                            bar.height = count
-                            barView.invalidate()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun ServiceLaunchQuestionBinding.setDownloadButtonClickable() {
-        downloadButton.drawable.setTint(
-            ContextCompat.getColor(
-                context,
-                R.color.blue_selected
-            )
-        )
-
-        downloadButton.setOnClickListener {
-            windowManager.removeView(this@LaunchQuestionView)
-            usersRepository.clearRespondedUsers()
-
-            val intent = Intent(context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
-            context.startActivity(intent)
-        }
     }
 
 }

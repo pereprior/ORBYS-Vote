@@ -1,7 +1,6 @@
 package com.orbys.quizz.di
 
 import android.content.Context
-import com.orbys.quizz.data.controllers.HttpController
 import com.orbys.quizz.data.controllers.handlers.FileHandler
 import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
@@ -9,6 +8,13 @@ import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.repositories.IFileRepository
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
+import com.orbys.quizz.domain.usecases.question.AddAnswerUseCase
+import com.orbys.quizz.domain.usecases.question.GetQuestionUseCase
+import com.orbys.quizz.domain.usecases.question.GetTimerStateUseCase
+import com.orbys.quizz.domain.usecases.question.IncAnswerUseCase
+import com.orbys.quizz.domain.usecases.users.AddRespondedUserUseCase
+import com.orbys.quizz.domain.usecases.users.GetRespondedUsersUseCase
+import com.orbys.quizz.domain.usecases.users.SetUserRespondedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +31,15 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideServerRepository() = HttpRepositoryImpl(QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance())
+    fun provideServerRepository() = HttpRepositoryImpl(
+        GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
+        IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+        AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+        GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
+        GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
+        AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
+        SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
+    )
 
     @Provides
     @Singleton
@@ -35,37 +49,42 @@ object DataModule {
     @Singleton
     fun provideFileHandler(@ApplicationContext context: Context) = FileHandler(
         HttpRepositoryImpl(
-            QuestionRepositoryImpl.getInstance(),
-            UsersRepositoryImpl.getInstance()
+            GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
+            IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+            AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+            GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
+            GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
+            AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
+            SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
         ),
         context
     )
 
     @Provides
     @Singleton
-    fun provideQuestionController(@ApplicationContext context: Context) = HttpController(
-        ResponseHandler(
+    fun provideResponseHandler(@ApplicationContext context: Context) = ResponseHandler(
+        HttpRepositoryImpl(
+            GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
+            IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+            AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+            GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
+            GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
+            AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
+            SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
+        ),
+        FileHandler(
             HttpRepositoryImpl(
-                QuestionRepositoryImpl.getInstance(),
-                UsersRepositoryImpl.getInstance()
-            ),
-            FileHandler(
-                HttpRepositoryImpl(
-                    QuestionRepositoryImpl.getInstance(),
-                    UsersRepositoryImpl.getInstance()
-                ),
-                context
+                GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
+                IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+                AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
+                GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
+                GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
+                AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
+                SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
             ),
             context
         ),
-
-        FileHandler(
-            HttpRepositoryImpl(
-                QuestionRepositoryImpl.getInstance(),
-                UsersRepositoryImpl.getInstance()
-            ),
-            context
-        )
+        context
     )
 
 }

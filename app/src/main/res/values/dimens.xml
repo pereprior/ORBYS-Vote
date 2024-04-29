@@ -4,12 +4,16 @@
 
     <dimen name="activity_layout_width">260dp</dimen>
     <dimen name="activity_layout_height">300dp</dimen>
+    <dimen name="widget_layout_width">300dp</dimen>
 
     <dimen name="icon_size">16dp</dimen>
     <dimen name="icon_size_large">30dp</dimen>
     <dimen name="card_width">115dp</dimen>
     <dimen name="qr_code_size">200dp</dimen>
     <dimen name="graphic_height">1dp</dimen>
+    <dimen name="widget_width">580dp</dimen>
+    <dimen name="bar_width">60dp</dimen>
+    <dimen name="bar_margin">10dp</dimen>
 
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
@@ -21,5 +25,5 @@
     <dimen name="url_font_size">12sp</dimen>
     <dimen name="type_fragment_title_size">14sp</dimen>
     <dimen name="url_title_font_size">16sp</dimen>
-    <dimen name="close_button_margin">190dp</dimen>
+
 </resources>
