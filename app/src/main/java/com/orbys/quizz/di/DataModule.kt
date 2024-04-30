@@ -1,6 +1,7 @@
 package com.orbys.quizz.di
 
 import android.content.Context
+import com.orbys.quizz.data.controllers.handlers.ErrorHandler
 import com.orbys.quizz.data.controllers.handlers.FileHandler
 import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
@@ -47,44 +48,20 @@ object DataModule {
 
     @Provides
     @Singleton
+    fun provideErrorHandler(@ApplicationContext context: Context) = ErrorHandler(context)
+
+    @Provides
+    @Singleton
     fun provideFileHandler(@ApplicationContext context: Context) = FileHandler(
-        HttpRepositoryImpl(
-            GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
-            IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-            AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-            GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
-            GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
-            AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
-            SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
-        ),
+        provideServerRepository(),
         context
     )
 
     @Provides
     @Singleton
     fun provideResponseHandler(@ApplicationContext context: Context) = ResponseHandler(
-        HttpRepositoryImpl(
-            GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
-            IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-            AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-            GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
-            GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
-            AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
-            SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
-        ),
-        FileHandler(
-            HttpRepositoryImpl(
-                GetQuestionUseCase(QuestionRepositoryImpl.getInstance()),
-                IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-                AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
-                GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
-                GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
-                AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
-                SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
-            ),
-            context
-        ),
-        context
+        provideServerRepository(),
+        provideFileHandler(context),
     )
 
 }

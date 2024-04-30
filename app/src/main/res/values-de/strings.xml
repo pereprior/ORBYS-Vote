@@ -65,4 +65,8 @@
     <string name="configurations_text">Zusätzliche Einstellungen</string>
     <string name="users_count_title">"Benutzer: "</string>
     <string name="time_out_button_text">Fertig</string>
+
+    <string name="csv_legend_question_type">Typ;</string>
+    <string name="graphic_title_text">Antworten-Grafik:</string>
+
 </resources>

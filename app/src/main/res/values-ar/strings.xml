@@ -66,4 +66,7 @@
     <string name="users_count_title">"المستخدمون: "</string>
     <string name="time_out_button_text">إنهاء</string>
 
+    <string name="csv_legend_question_type">النوع؛</string>
+    <string name="graphic_title_text">الرسم البياني للإجابات:</string>
+
 </resources>

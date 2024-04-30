@@ -68,7 +68,39 @@
         <button type="submit">[SEND]</button>
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+
     <script>
+        const myPopup = new Popup(
+            {
+                id: "popup_message",
+                titleColor: "#b81414",
+                textColor: "#FFFFFF",
+                closeColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "!",
+                content: `<span style="font-size: 2em;"><strong>[POPUP_CONTENT]</strong></span>`,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                css: `
+                    .popup.board button {
+                        border: 2px solid white;
+                        background-color: transparent;
+                        color: white;
+                        filter: drop-shadow(0 0 .2em #000000bb);
+                        margin-top: 1em;
+                    }`,
+                loadCallback: () => {
+                    document
+                        .querySelector(".popup.board button")
+                        .addEventListener("click", () => {
+                        popup.hide();
+                    });
+                },
+            }
+        );
+
         // El código se ejecuta cuando pulso el botón enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envíen datos vacíos o por defecto
@@ -83,20 +115,33 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: 'user=' + encodeURIComponent(username),
             })
-            // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
-                .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+                // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+                .then(response => {
+                if (response.status === 409) {
+                    // Si recibimos un error 409, mostramos un pop-up con el mensaje de error
+                    myPopup.show();
+                    return Promise.reject(new Error('Error en la respuesta del servidor'));
+                }
+                if (!response.ok) {
+                    return Promise.reject(new Error('Error en la respuesta del servidor'));
+                }
+                return response.text();
+            })
                 .then(text => { // Si la respuesta es correcta, redirigimos a la página de la pregunta
                 window.location.href = '/question/{id}';
                 // Agregamos una entrada al historial del navegador
                 history.pushState(null, null, '/question/{id}');
             }) // Si ocurre algún error, lo mostramos en la consola
-                .catch(console.error);
+                .catch(error => {
+                console.error(error);
+            });
         };
 
         // Impide que el usuario pueda volver después de enviar el formulario
         window.onload = function() {
             window.history.replaceState({}, document.title, "/question");
         }
+
     </script>
 
 </body>

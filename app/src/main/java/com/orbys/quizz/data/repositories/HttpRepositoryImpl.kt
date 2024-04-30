@@ -57,6 +57,9 @@ class HttpRepositoryImpl @Inject constructor(
     // Comprueba si un usuario ya existe en el repositorio
     override fun userNotExists(userIp: String) = !getUsers().any { it.ip == userIp }
 
+    // Comprueba si ya existe un usuario con el mismo nombre
+    fun usernameExists(username: String) = getUsers().any { it.username == username }
+
     // Comprueba si un usuario ya ha respondido
     override fun userResponded(ip: String): Boolean = getUsers().any { it.ip == ip && it.responded }
 

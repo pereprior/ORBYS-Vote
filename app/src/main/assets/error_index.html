@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Orbys Quizz</title>
+</head>
+<body>
+
+    <div id="popup_message"> </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+
+    <script>
+        const errorPopup = new Popup(
+            {
+                id: "popup_message",
+                titleColor: "#ff0000",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "!",
+                content: `<span style="font-size: 2em;"><strong>[POPUP_CONTENT]</strong></span>`,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+                showImmediately: true
+            }
+        );
+
+        // Muestra el pop-up inmediatamente cuando se carga la página
+        errorPopup.show();
+    </script>
+
+</body>
+</html>

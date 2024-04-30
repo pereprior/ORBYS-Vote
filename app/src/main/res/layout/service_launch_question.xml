@@ -95,13 +95,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
-            android:id="@+id/barView"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/graphic_height"
             app:layout_constraintTop_toBottomOf="@id/download_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/graphic_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/small_margin"
+                    android:text="@string/graphic_title_text"
+                    android:gravity="center"
+                    android:textSize="@dimen/title_font_size" />
+
+                <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
+                    android:id="@+id/barView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="162dp" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/chronometer_layout"
@@ -109,7 +133,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/barView"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -126,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/small_margin"
-                android:layout_marginStart="@dimen/large_margin"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:gravity="center"
                 android:text="@string/chronometer_title"
                 android:textSize="@dimen/title_font_size"
@@ -138,21 +162,21 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/time_out_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_size"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:text="@string/time_out_button_text"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/chronometer_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
-            android:id="@+id/time_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="@dimen/small_margin"
-            android:textSize="@dimen/title_font_size"
-            android:text="@string/time_out_button_text"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/chronometer_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

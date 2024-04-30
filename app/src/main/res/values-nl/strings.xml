@@ -65,4 +65,8 @@
     <string name="configurations_text">Extra instellingen</string>
     <string name="users_count_title">"Gebruikers: "</string>
     <string name="time_out_button_text">Einde</string>
+
+    <string name="csv_legend_question_type">Type;</string>
+    <string name="graphic_title_text">Antwoordgrafiek:</string>
+
 </resources>

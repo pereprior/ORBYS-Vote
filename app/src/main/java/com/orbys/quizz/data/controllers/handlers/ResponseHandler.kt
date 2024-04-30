@@ -1,16 +1,16 @@
 package com.orbys.quizz.data.controllers.handlers
 
-import android.content.Context
 import android.util.Log
-import com.orbys.quizz.R
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.data.utils.ServerUtils.Companion.USER_ENDPOINT
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.plugins.origin
 import io.ktor.server.request.receiveParameters
+import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
@@ -26,16 +26,14 @@ import javax.inject.Inject
  */
 class ResponseHandler@Inject constructor(
     private val repository: HttpRepositoryImpl,
-    private val fileHandler: FileHandler,
-    private val appContext: Context
+    private val fileHandler: FileHandler
 ) {
 
     fun setupRoutes(route: Route) {
 
         route.apply {
             handleGetQuestionRoute()
-            handleSubmitRoute()
-            handleSuccessRoute()
+            handleSubmitQuestionRoute()
 
             handleNewUserRoute()
             handleLoginRoute()
@@ -45,22 +43,36 @@ class ResponseHandler@Inject constructor(
 
     private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
         val userIP = call.request.origin.remoteHost
-        val fileContent = fileHandler.getFileContent(userIP)
+        val fileContent = fileHandler.loadHtmlFile()
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
-        if (!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP)) {
+        if(!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP)) {
             call.respondRedirect(USER_ENDPOINT)
         }
 
-        call.respondText(
-            text = fileContent ?: appContext.getString(R.string.file_not_found_message),
-            contentType = ContentType.Text.Html
-        )
+        if (repository.timerState().value) {
+            call.respondRedirect("/error/5")
+        }
+
+        if (repository.userResponded(userIP) && !repository.getQuestionInfo().isMultipleAnswers) {
+            call.respondRedirect("/error/7")
+        }
+
+        try {
+            call.respondText(
+                text = fileContent!!,
+                contentType = ContentType.Text.Html
+            )
+        } catch (e: Exception) {
+            call.respondRedirect("/error/1")
+        }
     }
 
-    private fun Route.handleSubmitRoute() = post("/submit") {
+    private fun Route.handleSubmitQuestionRoute() = post("/submit") {
         val userIP = call.request.origin.remoteHost
         val choice = call.receiveParameters()["choice"]
+
+        if (choice == "") return@post
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
         if(!repository.timerState().value) {
@@ -74,29 +86,32 @@ class ResponseHandler@Inject constructor(
             updateUserStatus(choice ?: "", userIP)
         }
 
-        call.respondRedirect(QUESTION_ENDPOINT)
-    }
-
-    private fun Route.handleSuccessRoute() = get(QUESTION_ENDPOINT) {
-        call.response.headers.append("Cache-Control", "no-store")
-        call.respondText(
-            text = appContext.getString(R.string.success_message),
-            contentType = ContentType.Text.Html
-        )
+        call.respond(HttpStatusCode.OK)
     }
 
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
+        // Pintamos el popup de error por si el usuario que introduce ya existe
         val fileContent = fileHandler.loadHtmlFile("login")
 
-        call.respondText(
-            text = fileContent ?: appContext.getString(R.string.file_not_found_message),
-            contentType = ContentType.Text.Html
-        )
+        try {
+            call.respondText(
+                text = fileContent!!,
+                contentType = ContentType.Text.Html
+            )
+        } catch (e: Exception) {
+            call.respondRedirect("/error/1")
+        }
     }
 
     private fun Route.handleLoginRoute() = post("/login") {
         val userIP = call.request.origin.remoteHost
         val username = call.receiveParameters()["user"] ?: ""
+
+        // Si ya hay un usuario con el mismo nombre, no se registra
+        if (repository.usernameExists(username)) {
+            call.respond(HttpStatusCode.Conflict)
+            return@post
+        }
 
         // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP)) {
@@ -119,9 +134,8 @@ class ResponseHandler@Inject constructor(
             fileHandler.createDataFile(choice, userIP)
 
         } catch (e: Exception) {
-            Log.d("RESPONSE1", "ERROR: ${e.message}")
+            Log.e("RESPONSE1", "ERROR: ${e.message}")
         }
-
     }
 
 }

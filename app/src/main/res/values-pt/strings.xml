@@ -65,4 +65,8 @@
     <string name="configurations_text">Configurações adicionais</string>
     <string name="users_count_title">"Usuários: "</string>
     <string name="time_out_button_text">Terminar</string>
+
+    <string name="csv_legend_question_type">Tipo;</string>
+    <string name="graphic_title_text">Gráfico de respostas:</string>
+
 </resources>

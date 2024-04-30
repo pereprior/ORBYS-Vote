@@ -65,4 +65,8 @@
     <string name="configurations_text">Configuracions addicionals</string>
     <string name="users_count_title">"Usuaris: "</string>
     <string name="time_out_button_text">Finalitzar</string>
+
+    <string name="csv_legend_question_type">Tipus;</string>
+    <string name="graphic_title_text">Gràfic de les respostes:</string>
+
 </resources>

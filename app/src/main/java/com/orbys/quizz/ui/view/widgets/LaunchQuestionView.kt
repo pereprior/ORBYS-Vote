@@ -72,6 +72,8 @@ class LaunchQuestionView(
 
     init {
         binding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
+        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
         addView(binding.root)
 
         printQrCode()
@@ -82,7 +84,6 @@ class LaunchQuestionView(
         layoutParams.x = x
         layoutParams.y = y
 
-        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.addView(this, layoutParams)
         questionRepository.resetTimer()
     }

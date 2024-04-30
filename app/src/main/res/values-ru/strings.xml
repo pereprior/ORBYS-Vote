@@ -65,4 +65,8 @@
     <string name="configurations_text">Дополнительные настройки</string>
     <string name="users_count_title">"Пользователи: "</string>
     <string name="time_out_button_text">Финиш</string>
+
+    <string name="csv_legend_question_type">Тип;</string>
+    <string name="graphic_title_text">График ответов:</string>
+
 </resources>

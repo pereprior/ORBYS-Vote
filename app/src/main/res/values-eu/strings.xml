@@ -65,4 +65,8 @@
     <string name="configurations_text">Ezarpen gehigarriak</string>
     <string name="users_count_title">"Erabiltzaileak: "</string>
     <string name="time_out_button_text">Amaitu</string>
+
+    <string name="csv_legend_question_type">Mota;</string>
+    <string name="graphic_title_text">Erantzunen grafikoa:</string>
+
 </resources>

@@ -40,11 +40,11 @@
     <string name="storage_permission_denied">Storage Permission Denied</string>
 
     <!-- Alert messages -->
+    <string name="user_already_exists_message">User already exists</string>
     <string name="file_not_found_message">Error: could not read the HTML file</string>
-    <string name="success_message">Thank you for your response</string>
-    <string name="user_responded_message">The user has already responded to the question</string>
-    <string name="time_out_message">The time to answer the question has expired</string>
-    <string name="time_in_message">The server is still listening for responses</string>
+    <string name="user_responded_message">The user has already responded</string>
+    <string name="time_out_message">The time has expired</string>
+    <string name="time_in_message">The server is listening for responses</string>
     <string name="time_up_message">Time to respond is up</string>
     <string name="no_response_message">The server has not received responses</string>
 
@@ -73,6 +73,7 @@
     <string name="minutes_help_text">minutes</string>
 
     <!-- Launch Service messages -->
+    <string name="graphic_title_text">Answers graphic:</string>
     <string name="chronometer_title">Time remaining</string>
     <string name="download_title">Scan to download:</string>
     <string name="download_format_description">Format: .csv</string>
