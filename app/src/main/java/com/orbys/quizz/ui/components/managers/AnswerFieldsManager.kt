@@ -20,7 +20,7 @@ class AnswerFieldsManager(
     private val context: Context,
     private val layout: LinearLayout,
     private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 20,
+    private val maxLength: Int = 30,
     private val minAnswers: Int = 1,
     private val maxAnswers: Int = 1,
     private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -76,7 +76,9 @@ class AnswerFieldsManager(
         layoutParams = LinearLayout.LayoutParams(
             fieldLength,
             LinearLayout.LayoutParams.WRAP_CONTENT
-        )
+        ).apply {
+            marginEnd = context.resources.getDimensionPixelSize(R.dimen.medium_margin)
+        }
         hint = hintText
         inputType = if (numericAnswer) InputType.TYPE_CLASS_NUMBER else InputType.TYPE_CLASS_TEXT
         id = View.generateViewId()

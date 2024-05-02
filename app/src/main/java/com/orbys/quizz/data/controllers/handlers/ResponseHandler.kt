@@ -45,9 +45,8 @@ class ResponseHandler@Inject constructor(
         val fileContent = fileHandler.loadHtmlFile()
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
-        if(!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP)) {
+        if(!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP))
             call.respondRedirect(USER_ENDPOINT)
-        }
 
         // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
         if (repository.timerState().value)
