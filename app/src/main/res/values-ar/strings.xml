@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">رفض إذن التخزين</string>
 
     <!-- رسائل التنبيه -->
-    <string name="file_not_found_message">خطأ: تعذر قراءة ملف HTML</string>
-    <string name="success_message">شكراً على إجابتك</string>
+    <string name="success_message">تم إرسال الرد بنجاح!</string>
+    <string name="user_already_exists_message">المستخدم موجود بالفعل</string>
+    <string name="file_not_found_message">خطأ: لم يتمكن من قراءة ملف HTML</string>
     <string name="user_responded_message">لقد أجاب المستخدم بالفعل على السؤال</string>
     <string name="time_out_message">انتهى وقت الإجابة على السؤال</string>
     <string name="time_in_message">الخادم ما زال يستمع للاستجابات</string>

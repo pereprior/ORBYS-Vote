@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Biltegiratze baimena ukatuta</string>
 
     <!-- Alarma mezuak -->
+    <string name="success_message">Erantzuna arrakastaz bidalia!</string>
+    <string name="user_already_exists_message">Erabiltzailea dagoeneko existitzen da</string>
     <string name="file_not_found_message">Errorea: ezin izan da HTML fitxategia irakurri</string>
-    <string name="success_message">Eskerrik asko zure erantzunagatik</string>
     <string name="user_responded_message">Erabiltzaileak dagoeneko erantzun du galderari</string>
     <string name="time_out_message">Galdera erantzuteko denbora bukatu da</string>
     <string name="time_in_message">Zerbitzaria erantzunak entzuten jarraitzen du</string>

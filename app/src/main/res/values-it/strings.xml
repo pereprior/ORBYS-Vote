@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Autorizzazione di archiviazione negata</string>
 
     <!-- Messaggi di avviso -->
+    <string name="success_message">Risposta inviata con successo!</string>
+    <string name="user_already_exists_message">Utente già esistente</string>
     <string name="file_not_found_message">Errore: impossibile leggere il file HTML</string>
-    <string name="success_message">Grazie per la tua risposta</string>
     <string name="user_responded_message">L\'utente ha già risposto alla domanda</string>
     <string name="time_out_message">Il tempo per rispondere alla domanda è scaduto</string>
     <string name="time_in_message">Il server sta ancora ascoltando le risposte</string>

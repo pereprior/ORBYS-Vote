@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Отказано в разрешении на хранение</string>
 
     <!-- Сообщения об оповещениях -->
-    <string name="file_not_found_message">Ошибка: не удалось прочитать HTML-файл</string>
-    <string name="success_message">Спасибо за ваш ответ</string>
+    <string name="success_message">Ответ успешно отправлен!</string>
+    <string name="user_already_exists_message">Пользователь уже существует</string>
+    <string name="file_not_found_message">Ошибка: не удалось прочитать файл HTML</string>
     <string name="user_responded_message">Пользователь уже ответил на вопрос</string>
     <string name="time_out_message">Время для ответа на вопрос истекло</string>
     <string name="time_in_message">Сервер по-прежнему ждет ответов</string>

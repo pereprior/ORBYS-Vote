@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Permiso de almacenamento denegado</string>
 
     <!-- Mensaxes de alerta -->
+    <string name="success_message">¡Resposta enviada con éxito!</string>
+    <string name="user_already_exists_message">O usuario xa existe</string>
     <string name="file_not_found_message">Erro: non se puido ler o ficheiro HTML</string>
-    <string name="success_message">Grazas pola túa resposta</string>
     <string name="user_responded_message">O usuario xa respondeu á pregunta</string>
     <string name="time_out_message">O tempo para responder á pregunta caducou</string>
     <string name="time_in_message">O servidor aínda está escoitando as respostas</string>

@@ -40,6 +40,7 @@
     <string name="storage_permission_denied">Storage Permission Denied</string>
 
     <!-- Alert messages -->
+    <string name="success_message">Response sent successfully!</string>
     <string name="user_already_exists_message">User already exists</string>
     <string name="file_not_found_message">Error: could not read the HTML file</string>
     <string name="user_responded_message">The user has already responded</string>

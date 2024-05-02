@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Permís d\'emmagatzematge denegat</string>
 
     <!-- Missatges d'alerta -->
+    <string name="success_message">Resposta enviada amb èxit!</string>
+    <string name="user_already_exists_message">L\'usuari ja existeix</string>
     <string name="file_not_found_message">Error: no s\'ha pogut llegir el fitxer HTML</string>
-    <string name="success_message">Gràcies per la teva resposta</string>
     <string name="user_responded_message">L\'usuari ja ha respost a la pregunta</string>
     <string name="time_out_message">El temps per respondre la pregunta s\'ha esgotat</string>
     <string name="time_in_message">El servidor encara està escoltant respostes</string>

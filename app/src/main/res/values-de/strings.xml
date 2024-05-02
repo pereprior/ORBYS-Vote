@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Speicherberechtigung verweigert</string>
 
     <!-- Warnmeldungen -->
+    <string name="success_message">Antwort erfolgreich gesendet!</string>
+    <string name="user_already_exists_message">Benutzer existiert bereits</string>
     <string name="file_not_found_message">Fehler: HTML-Datei konnte nicht gelesen werden</string>
-    <string name="success_message">Vielen Dank für Ihre Antwort</string>
     <string name="user_responded_message">Der Benutzer hat bereits auf die Frage geantwortet</string>
     <string name="time_out_message">Die Zeit für die Beantwortung der Frage ist abgelaufen</string>
     <string name="time_in_message">Der Server wartet immer noch auf Antworten</string>

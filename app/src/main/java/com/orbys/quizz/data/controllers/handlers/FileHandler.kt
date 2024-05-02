@@ -39,6 +39,7 @@ class FileHandler @Inject constructor(
         const val MAX_ANSWER_PLACEHOLDER = "[MAX_ANSWER]"
         const val SEND_BUTTON_PLACEHOLDER = "[SEND]"
         const val LOGIN_TITLE_PLACEHOLDER = "[LOGIN_TITLE]"
+        const val SUCCESS_MESSAGE_PLACEHOLDER = "[SUCCESS_MESSAGE]"
         const val MULTIPLE_CHOICE = "multiple"
         const val SINGLE_CHOICE = "single"
         const val CSV_FILE_NAME = "data"
@@ -103,6 +104,7 @@ class FileHandler @Inject constructor(
         .replace(LOGIN_TITLE_PLACEHOLDER, appContext.getString(R.string.login_title_placeholder))
         .replace(QUESTION_PLACEHOLDER, question.question)
         .replace(MAX_ANSWER_PLACEHOLDER, question.maxNumericAnswer.toString())
+        .replace(SUCCESS_MESSAGE_PLACEHOLDER, appContext.getString(R.string.success_message))
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 

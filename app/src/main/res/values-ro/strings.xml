@@ -26,8 +26,9 @@
     <string name="storage_permission_denied">Permisiunea de stocare refuzată</string>
 
     <!-- Mesaje de avertizare -->
+    <string name="success_message">Răspuns trimis cu succes!</string>
+    <string name="user_already_exists_message">Utilizatorul există deja</string>
     <string name="file_not_found_message">Eroare: nu s-a putut citi fișierul HTML</string>
-    <string name="success_message">Mulțumim pentru răspunsul dumneavoastră</string>
     <string name="user_responded_message">Utilizatorul a răspuns deja la întrebare</string>
     <string name="time_out_message">Timpul pentru a răspunde la întrebare a expirat</string>
     <string name="time_in_message">Serverul încă ascultă răspunsurile</string>
