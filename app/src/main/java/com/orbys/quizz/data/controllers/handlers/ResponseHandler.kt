@@ -1,6 +1,5 @@
 package com.orbys.quizz.data.controllers.handlers
 
-import android.util.Log
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.data.utils.ServerUtils.Companion.USER_ENDPOINT
@@ -50,13 +49,13 @@ class ResponseHandler@Inject constructor(
             call.respondRedirect(USER_ENDPOINT)
         }
 
-        if (repository.timerState().value) {
+        // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
+        if (repository.timerState().value)
             call.respondRedirect("/error/5")
-        }
 
-        if (repository.userResponded(userIP) && !repository.getQuestionInfo().isMultipleAnswers) {
+        // Si la pregunta no es de multiples respuestas y el usuario ya ha respondido, redirigimos a la pagina de error
+        if (repository.userResponded(userIP) && !repository.getQuestionInfo().isMultipleAnswers)
             call.respondRedirect("/error/7")
-        }
 
         try {
             call.respondText(
@@ -123,19 +122,14 @@ class ResponseHandler@Inject constructor(
 
     private fun updateUserStatus(choice: String, userIP: String) {
         // Si el usuario no existe, se registra
-        try {
-            if (repository.userNotExists(userIP)) {
-                repository.addUserToRespondedList(User(userIP, repository.getUsernameByIp(userIP), true))
-            } else {
-                // Si ya existe el usuario, se marca como que ha respondido
-                repository.setUserAsResponded(userIP)
-            }
-
-            fileHandler.createDataFile(choice, userIP)
-
-        } catch (e: Exception) {
-            Log.e("RESPONSE1", "ERROR: ${e.message}")
+        if (repository.userNotExists(userIP)) {
+            repository.addUserToRespondedList(User(userIP, repository.getUsernameByIp(userIP), true))
+        } else {
+            // Si ya existe el usuario, se marca como que ha respondido
+            repository.setUserAsResponded(userIP)
         }
+
+        fileHandler.createDataFile(choice, userIP)
     }
 
 }
