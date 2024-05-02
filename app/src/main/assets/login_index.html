@@ -71,7 +71,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
 
     <script>
-        const myPopup = new Popup(
+        const alertPopup = new Popup(
             {
                 id: "popup_message",
                 titleColor: "#b81414",
@@ -109,39 +109,36 @@
             // Obtenemos el nombre de usuario del campo de entrada
             var username = document.getElementById('username').value;
 
-            // Realizamos la petición POST al servidor
-            fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'user=' + encodeURIComponent(username),
-            })
-                // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
-                .then(response => {
+            // Realizamos la petición al servidor
+            fetch(
+                '/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'user=' + encodeURIComponent(username)
+                }
+            )
+                .then( response => {
+                // Si recibimos un error 409, mostramos un pop-up con el mensaje de error
                 if (response.status === 409) {
-                    // Si recibimos un error 409, mostramos un pop-up con el mensaje de error
-                    myPopup.show();
+                    alertPopup.show();
                     return Promise.reject(new Error('Error en la respuesta del servidor'));
                 }
-                if (!response.ok) {
-                    return Promise.reject(new Error('Error en la respuesta del servidor'));
-                }
+                // Cualquier otro error lo notificamos
+                if (!response.ok) return Promise.reject(new Error('Error en la respuesta del servidor'));
                 return response.text();
             })
-                .then(text => { // Si la respuesta es correcta, redirigimos a la página de la pregunta
-                window.location.href = '/question/{id}';
-                // Agregamos una entrada al historial del navegador
-                history.pushState(null, null, '/question/{id}');
-            }) // Si ocurre algún error, lo mostramos en la consola
-                .catch(error => {
-                console.error(error);
-            });
+                .then(text => {
+                // Si la respuesta es correcta, redirigimos a la página de la pregunta
+                window.location.href = '/question';
+                history.pushState(null, null, '/question');
+            })
+                .catch(error => console.error(error));
         };
 
-        // Impide que el usuario pueda volver después de enviar el formulario
+        // Impide que el usuario pueda volver después de hacer login
         window.onload = function() {
             window.history.replaceState({}, document.title, "/question");
         }
-
     </script>
 
 </body>

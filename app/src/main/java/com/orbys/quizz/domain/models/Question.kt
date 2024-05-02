@@ -14,11 +14,4 @@ data class Question(
     val isMultipleAnswers: Boolean = false,
     val isMultipleChoices: Boolean = false,
     val timeOut: Int? = null,
-) {
-    // Id autonumerico de la pregunta.
-    val id: Int = nextId++
-
-    companion object {
-        private var nextId = 0
-    }
-}
+)

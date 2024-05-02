@@ -40,7 +40,7 @@ class ResponseHandler@Inject constructor(
 
     }
 
-    private fun Route.handleGetQuestionRoute() = get("$QUESTION_ENDPOINT/{id}") {
+    private fun Route.handleGetQuestionRoute() = get(QUESTION_ENDPOINT) {
         val userIP = call.request.origin.remoteHost
         val fileContent = fileHandler.loadHtmlFile()
 
@@ -76,8 +76,8 @@ class ResponseHandler@Inject constructor(
         // Si aún no ha terminado el tiempo, se registra la respuesta
         if(!repository.timerState().value) {
             // Si la respuesta no existe, se añade
-            // Si la respuesta contiene una coma, no se añade ya que se trata de una respuesta multiple
-            if (!repository.answerExists(choice) && choice?.contains(",") == false) {
+            // Si la respuesta contiene ";", no se añade ya que se trata de varias respuestas
+            if (!repository.answerExists(choice) && choice?.contains(";") == false) {
                 repository.addAnswerToList(choice)
             }
 
@@ -117,7 +117,7 @@ class ResponseHandler@Inject constructor(
             repository.addUserToRespondedList(User(userIP, username))
         }
 
-        call.respondRedirect("$QUESTION_ENDPOINT/{id}")
+        call.respondRedirect(QUESTION_ENDPOINT)
     }
 
     private fun updateUserStatus(choice: String, userIP: String) {

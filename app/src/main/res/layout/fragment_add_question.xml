@@ -140,6 +140,7 @@
                 <TextView
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/anonymous_question_option_text" />
 
                 <RadioButton
@@ -153,6 +154,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/non_anonymous_question_option_text" />
 
             </RadioGroup>
@@ -191,6 +193,7 @@
                 <TextView
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/filter_users_question_option_text" />
 
                 <RadioButton
@@ -204,6 +207,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/non_filter_users_question_option_text" />
 
             </RadioGroup>
@@ -242,6 +246,7 @@
                 <TextView
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/single_answer_question_option_text" />
 
                 <RadioButton
@@ -255,6 +260,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size"
                     android:text="@string/multi_answer_question_option_text" />
 
             </RadioGroup>

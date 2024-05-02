@@ -74,7 +74,59 @@
         <button type="submit">[SEND]</button>
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+
     <script>
+        const infoPopup = new Popup(
+            {
+                id: "popup_message",
+                titleColor: "#00a135",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "✔",
+                content: `<span style="font-size: 2em;"><strong>Respuesta enviada con éxito!</strong></span>`,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+            }
+        );
+
+        const confirmPopup = new Popup(
+            {
+                id: "popup_confirm",
+                titleColor: "#55c1f2",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "?",
+                content: `
+                <span style="font-size: 2em;"><strong>Quieres enviar otra respuesta?</strong></span>
+                <br>
+                <button id="btn-refuse-override" style="padding: 20px 30px;">No</button>                   <button id="btn-accept-override" style="padding: 20px 30px;">Si</button>
+                `,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+                loadCallback: () => {
+                    document
+                        .getElementById("btn-refuse-override")
+                        .addEventListener("click", () => {
+                            infoPopup.show();
+                            confirmPopup.hide();
+                        })
+                    ;
+
+                    document
+                        .getElementById("btn-accept-override")
+                        .addEventListener("click", () => {
+                            confirmPopup.hide();
+                        })
+                    ;
+                },
+            }
+        );
+
         // El codigo se ejecuta cuando pulso el boton enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envien datos vacios o por defecto
@@ -83,34 +135,23 @@
             // Obtenemos el valor del campo de texto
             var choice = document.getElementById('myNumber').value;
 
-            // Realizamos la peticion POST al servidor
+            // Realizamos la peticion al servidor
             fetch(
                 '/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: 'choice=' + encodeURIComponent(choice),
                 }
-            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+            )   // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
-                .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
-                    var redirect = confirm("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
-                    if (redirect) {
-                        window.location.href = '/question/{id}';
-                    } else {
-                        window.location.href = '/question';
-                    }
-                } else {
-                    window.location.href = '/question';
-                }
-            }) // Si ocurre algun error, lo mostramos en la consola
+                .then(text => {
+                    // Si la respuesta es multiple, mostramos un popup por si el usuario quiere seguir contestando
+                    if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") confirmPopup.show();
+                    else infoPopup.show();
+                })
                 .catch(console.error);
         };
 
-        // Impide que el usuario pueda volver despues de votar
-        window.onload = function() {
-            window.history.replaceState({}, document.title, "/question");
-        }
     </script>
 
 </body>

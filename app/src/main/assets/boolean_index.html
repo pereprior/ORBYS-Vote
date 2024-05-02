@@ -52,12 +52,10 @@
             margin: 0 20px;
         }
 
-        /* Eliminamos el circulo que los marca como seleccionados */
         input[type="radio"] {
             display: none;
         }
 
-        /* Estilo para las etiquetas de los botones de seleccion */
         input[type="radio"] + label {
             padding: 20px 40px;
             background-color: #ccc;
@@ -68,13 +66,11 @@
             font-size: 2em;
         }
 
-        /* Color para el boton seleccionado "Si" */
         input[type="radio"]#btn1:checked + label {
             background-color: #4caf50;
             color: white;
         }
 
-        /* Color para el boton seleccionado "No" */
         input[type="radio"]#btn2:checked + label {
             background-color: #f44336;
             color: white;
@@ -125,32 +121,20 @@
             // Obtenemos el valor del boton seleccionado
             var choice = document.querySelector('input[name="choice"]:checked').value;
 
-            // Realizamos la peticion POST al servidor
+            // Realizamos la peticion al servidor
             fetch(
                 '/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: 'choice=' + encodeURIComponent(choice),
                 }
-            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
-                .then(response => {
-                if (response.status === 409) {
-                    // Si recibimos un error 409, mostramos un pop-up con el mensaje de error
-                    errorPopup.show();
-                    return Promise.reject(new Error('Error en la respuesta del servidor'));
-                }
-                if (!response.ok) {
-                    return Promise.reject(new Error('Error en la respuesta del servidor'));
-                }
-                return response.text();
-            })
-                .then(text => { // Si la respuesta es correcta, redirigimos a la página de la pregunta
-                infoPopup.show();
-            }) // Si ocurre algún error, lo mostramos en la consola
-                .catch(error => {
-                console.error(error);
-            });
+            )   // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+                .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
+                // Si la respuesta es correcta, mostramos un pop-up con el mensaje de éxito
+                .then(text => infoPopup.show())
+                .catch(error => console.error(error));
         };
+
     </script>
 
 </body>

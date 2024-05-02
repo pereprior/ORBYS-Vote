@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,6 +84,40 @@
     </form>
 
     <script>
+        // Añade un evento de clic a cada estrella
+        document.querySelectorAll('.star').forEach(function(star, index, starList) {
+            star.addEventListener('click', function() {
+                // Por defecto todas las estrellas no están seleccionadas
+                starList.forEach(function(otherStar) {
+                    otherStar.classList.remove('selected');
+                });
+
+                // Al seleccionar una estrella, se seleccionan también las anteriores
+                for (let i = 0; i <= index; i++) {
+                    starList[i].classList.add('selected');
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+
+    <script>
+        const infoPopup = new Popup(
+            {
+                id: "popup_message",
+                titleColor: "#00a135",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "✔",
+                content: `<span style="font-size: 2em;"><strong>Respuesta enviada con éxito!</strong></span>`,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+            }
+        );
+
         // El codigo se ejecuta cuando pulso el boton enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envien datos vacios o por defecto
@@ -94,40 +127,20 @@
             var stars = document.querySelectorAll('.star.selected');
             var choice = stars[stars.length - 1].getAttribute('data-value');
 
-            // Realizamos la peticion POST al servidor
+            // Realizamos la peticion al servidor
             fetch(
                 '/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: 'choice=' + encodeURIComponent(choice),
                 }
-            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+            )   // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
-                .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                window.location.href = '/question';
-            }) // Si ocurre algun error, lo mostramos en la consola
-                .catch(console.error);
+                // Si la respuesta es correcta, mostramos un pop-up con el mensaje de éxito
+                .then(text => infoPopup.show())
+                .catch(error => console.error(error));
         };
 
-        // Añade un evento de clic a cada estrella
-        document.querySelectorAll('.star').forEach(function(star, index, starList) {
-            star.addEventListener('click', function() {
-                // Elimina la clase 'selected' de todas las estrellas
-                starList.forEach(function(otherStar) {
-                    otherStar.classList.remove('selected');
-                });
-
-                // Añade la clase 'selected' a la estrella clicada y a todas las anteriores
-                for (let i = 0; i <= index; i++) {
-                    starList[i].classList.add('selected');
-                }
-            });
-        });
-
-        // Impide que el usuario pueda volver despues de votar
-        window.onload = function() {
-            window.history.replaceState({}, document.title, "/question");
-        }
     </script>
 
 </body>

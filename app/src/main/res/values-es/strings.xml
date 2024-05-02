@@ -51,7 +51,7 @@
     <string name="non_anonymous_question_option_text">Usuario requerido</string>
     <string name="filter_users_radio_title">Configurar número de respuestas por usuario:</string>
     <string name="filter_users_question_option_text">Una respuesta</string>
-    <string name="non_filter_users_question_option_text">Respuestas múltiples</string>
+    <string name="non_filter_users_question_option_text">Varias respuestas</string>
     <string name="answers_radio_title">Configurar número de respuestas posibles:</string>
     <string name="single_answer_question_option_text">Respuesta única</string>
     <string name="multi_answer_question_option_text">Respuestas múltiples</string>

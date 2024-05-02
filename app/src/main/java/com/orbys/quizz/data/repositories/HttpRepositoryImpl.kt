@@ -36,7 +36,7 @@ class HttpRepositoryImpl @Inject constructor(
 
         // Si el usuario ha enviado varias respuestas
         if (answer?.contains(",") == true) {
-            val answers = answer.split(",")
+            val answers = answer.split(";")
 
             answers.forEach { incAnswer(it) }
 

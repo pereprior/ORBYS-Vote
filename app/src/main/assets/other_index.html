@@ -51,12 +51,10 @@
             margin: 0 20px;
         }
 
-        /* Eliminamos el circulo que los marca como seleccionados */
         input[type="radio"] {
             display: none;
         }
 
-        /* Estilo para las etiquetas de los botones de seleccion */
         input[type="radio"] + label {
             padding: 10px 40px;
             background-color: #ccc;
@@ -113,11 +111,7 @@
 
         input[type="checkbox"] + label {
             padding: 20px;
-            font-size: 2.5em;
-        }
-
-        input[type="checkbox"] {
-            transform: scale(0.5);
+            font-size: 2em;
         }
     </style>
 </head>
@@ -129,9 +123,9 @@
         <br><br>
 
         <div id="answers">
-            <!-- Los botones de radio se generarán aquí con el script -->
+            <!-- Los botones de las preguntas con respuesta única se generarán aquí -->
             <div id="radioContainer"></div>
-            <!-- Los checkboxes se generarán aquí con el script -->
+            <!-- Los checkboxes de las preguntas con respuesta multiple se generarán aquí -->
             <div id="checkboxContainer"></div>
         </div>
         <br><br>
@@ -139,26 +133,26 @@
         <button type="submit">[SEND]</button>
     </form>
 
+    <!-- Script para crear los botones para seleccionar las respuestas -->
     <script>
         // Lista con las respuestas de la pregunta
         var answers = "ANSWERS_STRING_PLACEHOLDER".split(";");
-        var choices = "MULTIPLE_CHOICES_PLACEHOLDER"
-        // El div donde se van a poner los botones de radio
+
+        // Los div donde se van a poner los botones
         var radioDiv = document.getElementById('radioContainer');
-        // El div donde se van a poner los checkboxes
         var checkboxDiv = document.getElementById('checkboxContainer');
 
-        if (choices == "single") {
+        // Si la pregunta es de respuesta única
+        if ("MULTIPLE_CHOICES_PLACEHOLDER" == "single") {
 
             for (var i = 0; i < answers.length; i++) {
-                // Crea el boton
+                // Creamos un boton de radio por cada respuesta
                 var radioButton = document.createElement('input');
                 radioButton.type = 'radio';
                 radioButton.name = 'choice';
                 radioButton.value = answers[i];
                 radioButton.id = 'btn' + i;
 
-                // Crea el texto del boton
                 var label = document.createElement('label');
                 label.htmlFor = radioButton.id;
                 label.textContent = answers[i];
@@ -167,6 +161,7 @@
                 radioDiv.appendChild(label);
             }
 
+            // Obtiene el valor del boton seleccionado
             var radios = document.querySelectorAll('input[type="radio"]');
             radios.forEach(function(radio) {
                 radio.addEventListener('click', function() {
@@ -174,17 +169,17 @@
                 });
             });
 
+        // Si la pregunta es de respuesta multiple
         } else {
 
             for (var i = 0; i < answers.length; i++) {
-                // Crea el boton
+                // Creamos un checkbox por cada respuesta
                 var checkboxButton = document.createElement('input');
                 checkboxButton.type = 'checkbox';
                 checkboxButton.name = 'choice';
                 checkboxButton.value = answers[i];
                 checkboxButton.id = 'btn' + i;
 
-                // Crea el texto del boton
                 var label = document.createElement('label');
                 label.htmlFor = checkboxButton.id;
                 label.textContent = answers[i];
@@ -195,42 +190,88 @@
 
         }
 
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+
+    <!-- Script para gestionar las respuestas que envia el usuario -->
+    <script>
+        const infoPopup = new Popup(
+            {
+                id: "popup_message",
+                titleColor: "#00a135",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "✔",
+                content: `<span style="font-size: 2em;"><strong>Respuesta enviada con éxito!</strong></span>`,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+            }
+        );
+
+        const confirmPopup = new Popup(
+            {
+                id: "popup_confirm",
+                titleColor: "#55c1f2",
+                textColor: "#FFFFFF",
+                backgroundColor: "#010101",
+                title: "?",
+                content: `
+                <span style="font-size: 2em;"><strong>Quieres enviar otra respuesta?</strong></span>
+                <br>
+                <button id="btn-refuse-override" style="padding: 20px 30px;">No</button>                   <button id="btn-accept-override" style="padding: 20px 30px;">Si</button>
+                `,
+                borderWidth: ".15em",
+                borderColor: "#FFFFFF",
+                textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
+                loadCallback: () => {
+                    document
+                        .getElementById("btn-refuse-override")
+                        .addEventListener("click", () => {
+                        infoPopup.show();
+                        confirmPopup.hide();
+                    })
+                    ;
+
+                    document
+                        .getElementById("btn-accept-override")
+                        .addEventListener("click", () => {
+                        confirmPopup.hide();
+                    })
+                    ;
+                },
+            }
+        );
+
         // El codigo se ejecuta cuando pulso el boton enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envien datos vacios o por defecto
             event.preventDefault();
 
-            // Obtenemos el valor del boton seleccionado
+            // Obtenemos el valor de los botones seleccionado
             var choices = Array.from(document.querySelectorAll('input[name="choice"]:checked')).map(input => input.value);
 
-            // Realizamos la peticion POST al servidor
+            // Realizamos la peticion al servidor
             fetch(
                 '/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'choice=' + encodeURIComponent(choices.join(',')),
+                    body: 'choice=' + encodeURIComponent(choices.join(';')),
                 }
-            ) // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
+            )   // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
-                .then(text => { // Si la respuesta es correcta, redirigimos a la pagina de exito
-                if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
-                    var redirect = confirm("MULTIPLE_VOTING_ALERT_PLACEHOLDER");
-                    if (redirect) {
-                        window.location.href = '/question/{id}';
-                    } else {
-                        window.location.href = '/question';
-                    }
-                } else {
-                    window.location.href = '/question';
-                }
-            }) // Si ocurre algun error, lo mostramos en la consola
+                .then(text => {
+                    // Si la respuesta es multiple, mostramos un popup por si el usuario quiere seguir contestando
+                    if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") confirmPopup.show();
+                    else infoPopup.show();
+                })
                 .catch(console.error);
         };
 
-        // Impide que el usuario pueda volver despues de votar
-        window.onload = function() {
-            window.history.replaceState({}, document.title, "/question");
-        }
     </script>
 
 </body>

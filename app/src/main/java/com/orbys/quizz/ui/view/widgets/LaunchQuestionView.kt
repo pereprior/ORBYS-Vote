@@ -111,7 +111,7 @@ class LaunchQuestionView(
     }
 
     private fun printQrCode() {
-        val  url = serverUtils.getServerUrl("$QUESTION_ENDPOINT/${questionRepository.question.value.id}")
+        val  url = serverUtils.getServerUrl(QUESTION_ENDPOINT)
 
         val qrCode: ImageView = findViewById(R.id.qrCode)
         val qrUrl: TextView = findViewById(R.id.qrUrl)
