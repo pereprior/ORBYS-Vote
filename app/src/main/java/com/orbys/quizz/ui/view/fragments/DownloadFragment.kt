@@ -45,7 +45,7 @@ class DownloadFragment: Fragment() {
                 }
             }
 
-            qrCode.setImageBitmap(QRCodeGenerator(requireContext()).encodeAsBitmap(url))
+            qrCode.setImageBitmap(QRCodeGenerator(requireContext()).encodeAsBitmap(url, true))
             qrUrl.text = url
 
             return root

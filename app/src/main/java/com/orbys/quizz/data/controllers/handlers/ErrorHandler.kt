@@ -30,6 +30,7 @@ class ErrorHandler @Inject constructor(
 
     private companion object {
         const val POPUP_CONTENT_PLACEHOLDER = "[POPUP_CONTENT]"
+        const val ERROR_ENDPOINT = "/error"
     }
 
     fun setupRoutes(route: Route, fileHandler: FileHandler) {
@@ -41,14 +42,14 @@ class ErrorHandler @Inject constructor(
     }
 
     /**
-     * Muestra en el navegador la página con el error correspondiente.
+     * Ruta con la página con el error correspondiente.
      *
      * @param fileHandler Gestor de archivos.
-     * @return GET con la respuesta con la página de error.
+     * @return GET
      */
     private fun Route.handleError(
         fileHandler: FileHandler
-    ) = get("/error/{id}") {
+    ) = get("$ERROR_ENDPOINT/{id}") {
         val id = call.parameters["id"]?.toIntOrNull() ?: 0
         val errorType = getErrorById(id)
         val fileContent = replacePopupPlaceHolders(fileHandler.loadHtmlFile("error"), errorType)

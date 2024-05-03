@@ -21,6 +21,7 @@ class FileRepository private constructor(
         @Volatile
         private var INSTANCE: FileRepository? = null
 
+        // Instancia unica para el repositorio.
         fun getInstance(context: Context): FileRepository {
             return INSTANCE ?: synchronized(this) {
                 FileRepository(context).also { INSTANCE = it }
@@ -31,6 +32,13 @@ class FileRepository private constructor(
     private var file = File("")
     override fun getFile() = file
 
+    /**
+     * Crea un archivo CSV y escribe la leyenda de la pregunta.
+     *
+     * @param fileName Nombre del nuevo archivo.
+     * @param question Pregunta a la que corresponde el nuevo fichero.
+     * @param answers Lista de respuestas de la pregunta del fichero.
+     */
     override fun createFile(
         fileName: String,
         question: Question,
@@ -46,6 +54,15 @@ class FileRepository private constructor(
         }
     }
 
+    /**
+     * Escribe una línea en el archivo CSV correspondiente a una respuesta.
+     *
+     * @param date Fecha de la respuesta.
+     * @param time Hora de la respuesta.
+     * @param ip Dirección IP del usuario que ha respondido.
+     * @param username Nombre del usuario que ha respondido.
+     * @param answer Respuesta seleccionada por el usuario.
+     */
     override fun writeLine(
         date: String,
         time: String,
@@ -66,6 +83,12 @@ class FileRepository private constructor(
 
     override fun deleteFile() { if (file.exists()) file.delete() }
 
+    /**
+     * Escribe la leyenda de la pregunta en el archivo CSV.
+     *
+     * @param question Pregunta a la que corresponde el archivo.
+     * @param answers Lista de respuestas de la pregunta.
+     */
     private fun writeLegend(question: Question, answers: List<String>) {
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)

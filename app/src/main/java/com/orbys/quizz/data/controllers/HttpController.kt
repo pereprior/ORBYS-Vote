@@ -9,9 +9,9 @@ import javax.inject.Inject
 /**
  * Controlador de las rutas del servidor http
  *
- * @param responseHandler Gestion de las respuestas del servidor http
- * @param fileHandler Gestion de los archivos
- * @param errorHandler Gestion de los errores
+ * @param responseHandler Gestor de las respuestas del servidor http
+ * @param fileHandler Gestor de los archivos
+ * @param errorHandler Gestor de los errores
  */
 class HttpController @Inject constructor(
     private val responseHandler: ResponseHandler,

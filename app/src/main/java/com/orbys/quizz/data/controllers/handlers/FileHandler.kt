@@ -21,20 +21,19 @@ import java.util.Locale
 import javax.inject.Inject
 
 /**
- * Clase para manejar las operaciones de archivos del servidor.
+ * Clase para gestionar las operaciones con los archivos del servidor.
  *
- * @property httpRepository Repositorio para operaciones HTTP.
- * @property fileRepository Repositorio para operaciones de archivos.
+ * @property repository Repositorio para operaciones HTTP.
  * @property appContext Contexto de la aplicacion.
  */
 class FileHandler @Inject constructor(
-    private val httpRepository: HttpRepositoryImpl,
+    private val repository: HttpRepositoryImpl,
     private val appContext: Context
 ) {
     private val fileRepository = FileRepository.getInstance(appContext)
     private companion object {
         const val HTTP_FILES_FOLDER = "/assets"
-        const val HTTP_FILES_NAME = "_index"
+        const val HTTP_FILES_PLACEHOLDER = "_index"
         const val HTTP_FILES_EXTENSION = ".html"
         const val MULTIPLE_CHOICE = "multiple"
         const val SINGLE_CHOICE = "single"
@@ -43,30 +42,49 @@ class FileHandler @Inject constructor(
         const val DATE_FORMAT = "dd/MM/yyyy"
     }
 
-    fun setupRoutes(route: Route) { route.handleDownloadRoute() }
+    fun setupRoutes(route: Route) {
 
-    // Ruta de descarga del archivo de datos.
+        route.apply {
+            handleDownloadRoute()
+        }
+
+    }
+
+    /**
+     * Ruta para descargar el archivo con los datos de la pregunta.
+     *
+     * @return GET
+     */
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
-        val file = fileRepository.getFile()
-
-        checkPossibleErrors(file, call)
-
-        call.respondFile(file)
+        checkPossibleErrors(fileRepository.getFile(), call)
+        call.respondFile(fileRepository.getFile())
     }
 
     fun deleteFile() { fileRepository.deleteFile() }
 
+    /**
+     * Carga el archivo HTML correspondiente a la pregunta.
+     *
+     * @param htmlName Nombre del archivo HTML.
+     * @return Contenido del archivo HTML.
+     */
     fun loadHtmlFile(
-        htmlName: String = httpRepository.getQuestionInfo().getAnswerType()
+        htmlName: String = repository.getQuestionInfo().getAnswerType()
     ): String? {
-        val fileName = "${htmlName.lowercase(Locale.ROOT)}$HTTP_FILES_NAME$HTTP_FILES_EXTENSION"
+        val fileName = htmlName.lowercase(Locale.ROOT) + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
-            replace(it, httpRepository.getQuestionInfo())
+            replace(it, repository.getQuestionInfo())
         }
     }
 
+    /**
+     * Crea el archivo de datos y añade la respuesta del usuario.
+     *
+     * @param choice Respuesta del usuario.
+     * @param userIP IP del usuario que ha contestado.
+     */
     fun createDataFile(choice: String, userIP: String) {
         val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
@@ -75,26 +93,33 @@ class FileHandler @Inject constructor(
 
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
-            question = httpRepository.getQuestionInfo(),
-            answers = httpRepository.getAnswersAsString()
+            question = repository.getQuestionInfo(),
+            answers = repository.getAnswersAsString()
         )
 
         fileRepository.writeLine(
             date = date,
             time = time,
             ip = userIP,
-            username = httpRepository.getUsernameByIp(userIP),
+            username = repository.getUsernameByIp(userIP),
             answer = choice
         )
     }
 
     private suspend fun checkPossibleErrors(file: File, call: ApplicationCall) {
         // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
-        if (!httpRepository.isTimeOut()) call.respondRedirect("/error/3")
+        if (!repository.isTimeOut()) call.respondRedirect("/error/3")
         // Si nadie a contestado la pregunta no se podra descargar el archivo.
         if (!file.exists()) call.respondRedirect("/error/6")
     }
 
+    /**
+     * Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
+     *
+     * @param content Contenido del archivo HTML.
+     * @param question Pregunta a la que se refiere el archivo HTML.
+     * @return Contenido del archivo HTML con los marcadores reemplazados.
+     */
     private fun replace(content: String, question: Question): String = content
         .replace("[SEND]", appContext.getString(R.string.send_button_placeholder))
         .replace("[LOGIN_TITLE]", appContext.getString(R.string.login_title_placeholder))

@@ -13,30 +13,54 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.showToastWithCustomView
-import com.orbys.quizz.domain.models.Answer
-import kotlinx.coroutines.flow.MutableStateFlow
 
-class AnswerFieldsManager(
+/**
+ * Clase que crea y gestiona un formulario de respuestas de texto.
+ *
+ * @param context Contexto de la aplicación.
+ * @param layout Layout donde se mostrarán las respuestas.
+ * @param hintText Texto de ayuda que se mostrará en los campos de texto.
+ * @param maxLength Cantidad máxima de caracteres.
+ * @param minAnswers Número mínimo de respuestas.
+ * @param maxAnswers Número máximo de respuestas.
+ * @param fieldLength Longitud de los campos de texto.
+ */
+class TextAnswersManager(
     private val context: Context,
     private val layout: LinearLayout,
     private val hintText: String = context.getString(R.string.question_answer_hint),
     private val maxLength: Int = 33,
     private val minAnswers: Int = 1,
     private val maxAnswers: Int = 1,
-    private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT,
-    private val numericAnswer: Boolean = false
+    private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT
 ): AnswerManager(context, layout) {
 
-    private val answerFields = mutableListOf<EditText>()
+    override fun addAnswerField() {
+        val answerField = createAnswerField()
+        val deleteButton = createButton(android.R.drawable.ic_menu_delete)
+        val answerLayout = createAnswerLayout(answerField, deleteButton)
 
-    fun anyAnswerIsEmpty() = answerFields.any { it.text.isEmpty() }
-    fun getAnswersText() = answerFields.map { it.text.toString() }
-    fun getAnswers() = MutableStateFlow(answerFields.map { Answer(it.text.toString()) })
+        layout.addView(answerLayout)
+        answerFields.add(answerField)
+    }
 
-    fun setAddAnswersButtons() {
+    override fun createAnswerField() = EditText(context).apply {
+        layoutParams = LinearLayout.LayoutParams(
+            fieldLength,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        hint = hintText
+        inputType = InputType.TYPE_CLASS_TEXT
+        id = View.generateViewId()
+        filters = arrayOf(InputFilter.LengthFilter(maxLength))
+    }
+
+    fun addButtonForAddAnswers() {
+        // Creamos un boton para añadir nuevos campos para más respuestas
         val addButton = createButton(android.R.drawable.ic_input_add)
 
         addButton.setOnClickListener {
+            // Si no se ha llegado al límite de respuestas, se añade un nuevo campo
             if (answerFields.size < maxAnswers) addAnswerField()
             else context.showToastWithCustomView(context.getString(R.string.max_answers_error), Toast.LENGTH_SHORT)
         }
@@ -44,20 +68,12 @@ class AnswerFieldsManager(
         layout.addView(addButton)
     }
 
-    fun addAnswerField() {
-        val answerField = createAnswerField()
-
-        if (maxAnswers != minAnswers) {
-            val deleteButton = createButton(android.R.drawable.ic_menu_delete)
-            val answerLayout = createAnswerLayout(answerField, deleteButton)
-            layout.addView(answerLayout)
-        } else {
-            layout.addView(answerField)
-        }
-
-        answerFields.add(answerField)
-    }
-
+    /**
+     * Crea un layout que contiene un campo de texto y un botón para eliminarlo.
+     *
+     * @param answer Campo de texto.
+     * @param button Botón para eliminar el campo de texto.
+     */
     private fun createAnswerLayout(answer: EditText, button: ImageButton) = LinearLayout(context).apply {
         orientation = LinearLayout.HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
@@ -65,6 +81,7 @@ class AnswerFieldsManager(
         addView(answer)
 
         button.setOnClickListener {
+            // Si no se ha superado el número mínimo de respuestas, se elimina el campo
             if(answerFields.size > minAnswers) {
                 layout.removeView(this)
                 answerFields.remove(answer)
@@ -72,17 +89,7 @@ class AnswerFieldsManager(
         }
     }
 
-    private fun createAnswerField() = EditText(context).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            fieldLength,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        hint = hintText
-        inputType = if (numericAnswer) InputType.TYPE_CLASS_NUMBER else InputType.TYPE_CLASS_TEXT
-        id = View.generateViewId()
-        filters = arrayOf(InputFilter.LengthFilter(maxLength))
-    }
-
+    // Crea un botón con un icono escalado
     private fun createButton(resId: Int) = ImageButton(context).apply {
         val drawable = ContextCompat.getDrawable(context, resId)
         val originalSize = maxOf(drawable?.intrinsicWidth ?: 0, drawable?.intrinsicHeight ?: 0)

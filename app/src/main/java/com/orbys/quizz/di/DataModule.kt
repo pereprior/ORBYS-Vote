@@ -13,8 +13,8 @@ import com.orbys.quizz.domain.usecases.question.AddAnswerUseCase
 import com.orbys.quizz.domain.usecases.question.GetQuestionUseCase
 import com.orbys.quizz.domain.usecases.question.GetTimerStateUseCase
 import com.orbys.quizz.domain.usecases.question.IncAnswerUseCase
-import com.orbys.quizz.domain.usecases.users.AddRespondedUserUseCase
-import com.orbys.quizz.domain.usecases.users.GetRespondedUsersUseCase
+import com.orbys.quizz.domain.usecases.users.AddUserUseCase
+import com.orbys.quizz.domain.usecases.users.GetUsersListUseCase
 import com.orbys.quizz.domain.usecases.users.SetUserRespondedUseCase
 import dagger.Module
 import dagger.Provides
@@ -37,8 +37,8 @@ object DataModule {
         IncAnswerUseCase(QuestionRepositoryImpl.getInstance()),
         AddAnswerUseCase(QuestionRepositoryImpl.getInstance()),
         GetTimerStateUseCase(QuestionRepositoryImpl.getInstance()),
-        GetRespondedUsersUseCase(UsersRepositoryImpl.getInstance()),
-        AddRespondedUserUseCase(UsersRepositoryImpl.getInstance()),
+        GetUsersListUseCase(UsersRepositoryImpl.getInstance()),
+        AddUserUseCase(UsersRepositoryImpl.getInstance()),
         SetUserRespondedUseCase(UsersRepositoryImpl.getInstance())
     )
 

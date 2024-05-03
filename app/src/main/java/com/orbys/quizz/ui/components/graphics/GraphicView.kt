@@ -16,7 +16,7 @@ import com.orbys.quizz.domain.models.Bar
  * @property bars Lista de barras que se van a dibujar en el grafico.
  * @property paint Plantilla que se utiliza para dibujar las barras.
  */
-abstract class BarView(
+abstract class GraphicView(
     context: Context,
     attributes: AttributeSet
 ) : View(context, attributes) {

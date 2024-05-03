@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
 
             closeButton.setOnClickListener {
+                // Cierra la aplicación
                 finish()
                 exitProcess(0)
             }

@@ -26,13 +26,23 @@ class QRCodeGenerator(private val context: Context) {
 
     companion object {
         private const val DEFAULT_SIZE = 300
-        private const val BLACK = Color.BLACK
-        private const val WHITE = Color.WHITE
+        // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
         private const val LOGO_SIZE_DIFF = 4
     }
 
+    /**
+     * Genera un codigo QR a partir de una URL.
+     *
+     * @param url URL a codificar.
+     * @param logo Indica si se debe añadir un logo en el centro.
+     * @param logoResId Identificador del logo.
+     * @param width Ancho del codigo QR.
+     * @param height Alto del codigo QR.
+     * @return Mapa de bits que representa el codigo QR.
+     */
     fun encodeAsBitmap(
         url: String,
+        logo: Boolean = false,
         logoResId: Int = R.drawable.ic_orbys,
         width: Int = DEFAULT_SIZE,
         height: Int = DEFAULT_SIZE
@@ -50,14 +60,24 @@ class QRCodeGenerator(private val context: Context) {
         }
 
         // Crea el mapa de bits del qr
-        val qrCode = createBitmapFromBitMatrix(bitMatrix)
+        val qrCode = createBitmapFromBitMatrix(bitMatrix, logo)
         // Convierte el logo a mapa de bits
-        val logo = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
+        val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
 
-        return overlayLogoOnQrCode(qrCode, logo)
+        return overlayLogoOnQrCode(qrCode, logoBitMap)
     }
 
-    private fun createBitmapFromBitMatrix(bitMatrix: BitMatrix): Bitmap {
+    /**
+     * Crea un mapa de bits a partir de una matriz de bits dada.
+     *
+     * @param bitMatrix Matriz de bits.
+     * @param blankArea Indica si se debe crear un área en blanco en el centro.
+     * @return Mapa de bits.
+     */
+    private fun createBitmapFromBitMatrix(
+        bitMatrix: BitMatrix,
+        blankArea: Boolean = false
+    ): Bitmap {
         val size = bitMatrix.width
         val blankAreaSize = size / LOGO_SIZE_DIFF
         val blankAreaPosition = (size / 2 - blankAreaSize / 2)..(size / 2 + blankAreaSize / 2)
@@ -65,10 +85,10 @@ class QRCodeGenerator(private val context: Context) {
         val pixels = IntArray(size * size) { index ->
             val x = index % size
             val y = index / size
-            // Si la posición está en el área donde se situará el logo, se pone blanco
-            if (x in blankAreaPosition && y in blankAreaPosition) WHITE
+            // Si blankArea es true y la posición está en el área donde se situará el logo, se pone blanco
+            if (blankArea && x in blankAreaPosition && y in blankAreaPosition) Color.WHITE
             // Si no, se pone del color correspondiente para crear el qr
-            else if (bitMatrix[x, y]) BLACK else WHITE
+            else if (bitMatrix[x, y]) Color.BLACK else Color.WHITE
         }
 
         return Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888).apply {
@@ -76,6 +96,13 @@ class QRCodeGenerator(private val context: Context) {
         }
     }
 
+    /**
+     * Añade el logo en el centro del código QR.
+     *
+     * @param qrCode Código QR como mapa de bits.
+     * @param logo Logo como mapa de bits.
+     * @return Código QR con el logo superpuesto.
+     */
     private fun overlayLogoOnQrCode(qrCode: Bitmap, logo: Bitmap?): Bitmap {
         val qrSize = qrCode.width
         val logoSize = qrSize / LOGO_SIZE_DIFF

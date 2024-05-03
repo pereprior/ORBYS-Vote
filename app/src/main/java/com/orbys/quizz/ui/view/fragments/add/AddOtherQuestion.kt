@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.components.managers.AnswerFieldsManager
+import com.orbys.quizz.ui.components.managers.TextAnswersManager
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -25,13 +25,13 @@ class AddOtherQuestion: AddFragment() {
         private const val MAX_ANSWERS = 5
     }
 
-    private lateinit var fieldsManager: AnswerFieldsManager
+    private lateinit var fieldsManager: TextAnswersManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            fieldsManager = AnswerFieldsManager(
+            fieldsManager = TextAnswersManager(
                 context = requireContext(),
                 layout = answersLayout,
                 minAnswers = MIN_ANSWERS,
@@ -83,7 +83,7 @@ class AddOtherQuestion: AddFragment() {
 
     private fun setDefaultAnswers() {
         // Boton para añadir mas respuestas
-        fieldsManager.setAddAnswersButtons()
+        fieldsManager.addButtonForAddAnswers()
 
         // Añadir dos respuestas por defecto
         repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }

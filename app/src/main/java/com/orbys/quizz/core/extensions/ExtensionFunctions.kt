@@ -1,9 +1,13 @@
 package com.orbys.quizz.core.extensions
 
+import android.content.Intent
 import android.text.InputFilter
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.services.FloatingViewService
 
 // Funciones de extension para los modelos de datos del dominio
 fun Question.getAnswers() = answers.value
@@ -26,4 +30,9 @@ fun EditText.limitLines(maxLines: Int) {
             null
         }
     )
+}
+fun Fragment.stopActiveServices() {
+    // Cierra los servicios activos
+    activity?.stopService(Intent(activity, HttpService::class.java))
+    activity?.stopService(Intent(activity, FloatingViewService::class.java))
 }

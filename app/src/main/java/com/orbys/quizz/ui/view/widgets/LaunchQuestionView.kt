@@ -112,7 +112,7 @@ class LaunchQuestionView(
         val qrCode: ImageView = findViewById(R.id.qrCode)
         val qrUrl: TextView = findViewById(R.id.qrUrl)
 
-        qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url))
+        qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url, true))
         qrUrl.text = url
     }
 

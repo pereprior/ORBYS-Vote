@@ -6,8 +6,8 @@ import com.orbys.quizz.domain.usecases.question.AddAnswerUseCase
 import com.orbys.quizz.domain.usecases.question.GetQuestionUseCase
 import com.orbys.quizz.domain.usecases.question.GetTimerStateUseCase
 import com.orbys.quizz.domain.usecases.question.IncAnswerUseCase
-import com.orbys.quizz.domain.usecases.users.AddRespondedUserUseCase
-import com.orbys.quizz.domain.usecases.users.GetRespondedUsersUseCase
+import com.orbys.quizz.domain.usecases.users.AddUserUseCase
+import com.orbys.quizz.domain.usecases.users.GetUsersListUseCase
 import com.orbys.quizz.domain.usecases.users.SetUserRespondedUseCase
 import javax.inject.Inject
 
@@ -21,8 +21,8 @@ class HttpRepositoryImpl @Inject constructor(
     private val incAnswer: IncAnswerUseCase,
     private val addAnswer: AddAnswerUseCase,
     private val getTimerState: GetTimerStateUseCase,
-    private val getUsers: GetRespondedUsersUseCase,
-    private val addUser: AddRespondedUserUseCase,
+    private val getUsers: GetUsersListUseCase,
+    private val addUser: AddUserUseCase,
     private val setUserResponded: SetUserRespondedUseCase
 ): IHttpRepository {
     // Devuelve true si el temporizador ha finalizado

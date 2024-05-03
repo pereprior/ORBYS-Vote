@@ -1,6 +1,5 @@
 package com.orbys.quizz.ui.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
-import com.orbys.quizz.data.services.HttpService
+import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
-import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.cards.BooleanCard
 import com.orbys.quizz.ui.view.fragments.cards.NumericCard
 import com.orbys.quizz.ui.view.fragments.cards.OtherCard
@@ -31,15 +29,9 @@ class TypesQuestionFragment: Fragment() {
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
         stopActiveServices()
+        replaceMainActivityBindingFunctions()
 
         with(binding) {
-            val backButton: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
-            val closeButton: ImageButton = activity?.findViewById(R.id.close_button) ?: return root
-            val title: TextView = activity?.findViewById(R.id.title) ?: return root
-
-            closeButton.visibility = View.VISIBLE
-            backButton.visibility = View.GONE
-            title.text = getString(R.string.activity_question_type_title)
 
             parentFragmentManager.beginTransaction()
                 .add(yesNoCardContainer.id, YesNoCard())
@@ -53,9 +45,14 @@ class TypesQuestionFragment: Fragment() {
         }
     }
 
-    private fun stopActiveServices() {
-        activity?.stopService(Intent(activity, HttpService::class.java))
-        activity?.stopService(Intent(activity, FloatingViewService::class.java))
+    private fun replaceMainActivityBindingFunctions() {
+        val backButton: ImageButton? = activity?.findViewById(R.id.back_button)
+        val closeButton: ImageButton? = activity?.findViewById(R.id.close_button)
+        val title: TextView? = activity?.findViewById(R.id.title)
+
+        closeButton?.visibility = View.VISIBLE
+        backButton?.visibility = View.GONE
+        title?.text = getString(R.string.activity_question_type_title)
     }
 
 }

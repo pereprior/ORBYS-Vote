@@ -18,10 +18,10 @@ import io.ktor.server.routing.post
 import javax.inject.Inject
 
 /**
- * Clase para manejar las respuestas del servidor.
+ * Clase para gstionar las peticiones del servidor.
  *
  * @property repository Repositorio para operaciones HTTP.
- * @property fileHandler Manejador de archivos.
+ * @property fileHandler Gestor de archivos.
  */
 class ResponseHandler@Inject constructor(
     private val repository: HttpRepositoryImpl,
@@ -40,6 +40,11 @@ class ResponseHandler@Inject constructor(
 
     }
 
+    /**
+     * Ruta que muestra el formulario para contestar la pregunta.
+     *
+     * @return GET
+     */
     private fun Route.handleGetQuestionRoute() = get(QUESTION_ENDPOINT) {
         val userIP = call.request.origin.remoteHost
         val fileContent = fileHandler.loadHtmlFile()
@@ -64,6 +69,11 @@ class ResponseHandler@Inject constructor(
         } catch (e: Exception) { call.respondRedirect("/error/1") }
     }
 
+    /**
+     * Ruta que recibe y gestiona la respuesta del usuario.
+     *
+     * @return POST
+     */
     private fun Route.handleSubmitQuestionRoute() = post("/submit") {
         val userIP = call.request.origin.remoteHost
         val choice = call.receiveParameters()["choice"]
@@ -72,18 +82,17 @@ class ResponseHandler@Inject constructor(
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
         if(!repository.isTimeOut()) {
-            // Si la respuesta no existe, se añade
-            // Si la respuesta contiene ";", no se añade ya que se trata de varias respuestas
-            if (!repository.answerExists(choice) && choice?.contains(";") == false)
-                repository.addAnswerToList(choice)
-
-            repository.incAnswerCount(choice)
-            updateUserStatus(choice ?: "", userIP)
+            answerRegister(choice, userIP)
         }
 
         call.respond(HttpStatusCode.OK)
     }
 
+    /**
+     * Ruta que muestra el formulario para acceder a la pregunta con nombre de usuario.
+     *
+     * @return GET
+     */
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
         // Pintamos el popup de error por si el usuario que introduce ya existe
         val fileContent = fileHandler.loadHtmlFile("login")
@@ -96,6 +105,11 @@ class ResponseHandler@Inject constructor(
         } catch (e: Exception) { call.respondRedirect("/error/1") }
     }
 
+    /**
+     * Ruta que recibe y gestiona el nombre de usuario.
+     *
+     * @return POST
+     */
     private fun Route.handleLoginRoute() = post("/login") {
         val userIP = call.request.origin.remoteHost
         val username = call.receiveParameters()["user"] ?: ""
@@ -113,14 +127,21 @@ class ResponseHandler@Inject constructor(
         call.respondRedirect(QUESTION_ENDPOINT)
     }
 
-    private fun updateUserStatus(choice: String, userIP: String) {
+    private fun answerRegister(choice: String?, userIP: String) {
+        // Si la respuesta no existe, se añade
+        if (!repository.answerExists(choice) && choice?.contains(";") == false)
+            repository.addAnswerToList(choice)
+
+        repository.incAnswerCount(choice)
+
         // Si el usuario no existe, se registra
         if (repository.userNotExists(userIP))
             repository.addUserToList(User(userIP, repository.getUsernameByIp(userIP), true))
         else
             repository.setUserAsResponded(userIP)
 
-        fileHandler.createDataFile(choice, userIP)
+        if (choice != null)
+            fileHandler.createDataFile(choice, userIP)
     }
 
 }

@@ -13,7 +13,7 @@ import com.orbys.quizz.R
 class HorizontalGraphicView(
     context: Context,
     attributes: AttributeSet
-): BarView(context, attributes) {
+): GraphicView(context, attributes) {
 
     companion object {
         private const val TEXT_POSITION = 5f
