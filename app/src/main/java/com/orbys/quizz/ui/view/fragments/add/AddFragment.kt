@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.limitLines
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
@@ -41,18 +42,10 @@ abstract class AddFragment: Fragment() {
         with(binding) {
             val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
             setBackButtonVisible(button)
+            questionQuestion.limitLines(3)
 
             // Asignar los listeners a los botones
-            saveButton.setOnClickListener { saveQuestion(it.context) }
-
-            configurationsIcon.setOnClickListener {
-                if (configurationsLayout.visibility == View.VISIBLE) setConfigVisible(R.drawable.ic_config_hide, View.GONE)
-                else setConfigVisible(R.drawable.ic_config_show, View.VISIBLE)
-            }
-
-            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) setTimerVisibility(View.VISIBLE) else setTimerVisibility(View.GONE)
-            }
+            setButtonListeners()
 
             return root
         }
@@ -81,6 +74,24 @@ abstract class AddFragment: Fragment() {
     protected fun errorMessage(message: Int) {
         binding.errorMessage.text = getString(message)
         context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
+    }
+
+    private fun setButtonListeners() {
+        with(binding) {
+            saveButton.setOnClickListener { saveQuestion(it.context) }
+
+            configurationsIcon.setOnClickListener {
+                if (configurationsLayout.visibility == View.VISIBLE) setConfigVisible(
+                    R.drawable.ic_config_hide,
+                    View.GONE
+                )
+                else setConfigVisible(R.drawable.ic_config_show, View.VISIBLE)
+            }
+
+            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) setTimerVisibility(View.VISIBLE) else setTimerVisibility(View.GONE)
+            }
+        }
     }
 
     // Cambiar la visibilidad del formulario del cronometro

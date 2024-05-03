@@ -9,6 +9,11 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import javax.inject.Inject
 
+/**
+ * Clase para gestionar los errores y excepciones del servidor http.
+ *
+ * @param appContext Contexto de la aplicación.
+ */
 class ErrorHandler @Inject constructor(
     private val appContext: Context
 ) {
@@ -28,10 +33,22 @@ class ErrorHandler @Inject constructor(
     }
 
     fun setupRoutes(route: Route, fileHandler: FileHandler) {
-        route.handleError(fileHandler)
+
+        route.apply {
+            handleError(fileHandler)
+        }
+
     }
 
-    private fun Route.handleError(fileHandler: FileHandler) = get("/error/{id}") {
+    /**
+     * Muestra en el navegador la página con el error correspondiente.
+     *
+     * @param fileHandler Gestor de archivos.
+     * @return GET con la respuesta con la página de error.
+     */
+    private fun Route.handleError(
+        fileHandler: FileHandler
+    ) = get("/error/{id}") {
         val id = call.parameters["id"]?.toIntOrNull() ?: 0
         val errorType = getErrorById(id)
         val fileContent = replacePopupPlaceHolders(fileHandler.loadHtmlFile("error"), errorType)
@@ -42,6 +59,13 @@ class ErrorHandler @Inject constructor(
         )
     }
 
+    /**
+     * Reemplaza el mensaje del popup con el error correspondiente.
+     *
+     * @param content Contenido del archivo html.
+     * @param errorType Tipo de error que llama.
+     * @return Contenido del archivo html con los marcadores reemplazados.
+     */
     private fun replacePopupPlaceHolders(content: String?, errorType: ErrorType): String? {
 
         val errorMessage = when (errorType) {
@@ -58,12 +82,18 @@ class ErrorHandler @Inject constructor(
 
             ErrorType.NO_RESPONSE -> appContext.getString(R.string.no_response_message)
 
-            else -> null
+            else -> "ERROR"
         }
 
         return content?.replace(POPUP_CONTENT_PLACEHOLDER, errorMessage ?: "")
     }
 
+    /**
+     * Obtiene el tipo de error a partir de su codigo.
+     *
+     * @param id Identificador del error.
+     * @return Tipo de error correspondiente
+     */
     private fun getErrorById(id: Int) = when (id) {
 
         1 -> ErrorType.FILE_NOT_FOUND

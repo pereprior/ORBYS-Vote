@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddOtherQuestion: AddFragment() {
 
     companion object {
-        private const val MAX_LENGTH = 25
         private const val MIN_ANSWERS = 2
         private const val MAX_ANSWERS = 5
     }
@@ -35,7 +34,6 @@ class AddOtherQuestion: AddFragment() {
             fieldsManager = AnswerFieldsManager(
                 context = requireContext(),
                 layout = answersLayout,
-                maxLength = MAX_LENGTH,
                 minAnswers = MIN_ANSWERS,
                 maxAnswers = MAX_ANSWERS,
                 fieldLength = LinearLayout.LayoutParams.MATCH_PARENT

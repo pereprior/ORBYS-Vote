@@ -5,7 +5,7 @@
     <string name="numeric_answer_hint">Numero massimo:\n</string>
 
     <!-- Sostituzioni del file -->
-    <string name="save_button_placeholder">Avvia</string>
+    <string name="launch_button_placeholder">Avvia</string>
     <string name="yes_answer_placeholder">Sì</string>
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">Vero</string>

@@ -4,7 +4,7 @@ import com.orbys.quizz.domain.models.User
 
 interface IUsersRepository {
     // Devuelve la lista de usuarios
-    fun getRespondedUsers(): List<User>
+    fun getUsersList(): List<User>
 
     // Eliminar todos los usuarios de la lista
     fun clearRespondedUsers()

@@ -1,4 +1,4 @@
-package com.orbys.quizz.core.permissions
+package com.orbys.quizz.core.managers
 
 import android.content.Intent
 import android.net.Uri

@@ -1,4 +1,4 @@
-package com.orbys.quizz.core.extensions
+package com.orbys.quizz.ui.view.widgets
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,9 @@ import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.getCount
+import com.orbys.quizz.core.extensions.minutesToSeconds
+import com.orbys.quizz.core.extensions.secondsToMillis
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
@@ -31,8 +34,8 @@ fun ServiceLaunchQuestionBinding.setChronometerCount(
     chronometerTitle.visibility = ConstraintLayout.VISIBLE
     chronometer.visibility = ConstraintLayout.VISIBLE
 
-    val timeInSeconds = time * 60
-    val timeInMillis = timeInSeconds * 1000L
+    val timeInSeconds = time.minutesToSeconds()
+    val timeInMillis = timeInSeconds.secondsToMillis()
 
     chronometer.setTimeInMillis(timeInMillis)
     chronometer.startCountDown()
@@ -76,7 +79,7 @@ fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
             barView.clearBars()
 
             answers.forEach { answer ->
-                val bar = Bar(answer.answer.toString(), height = answer.count.value)
+                val bar = Bar(answer.answer.toString(), height = answer.getCount())
                 barView.addBar(bar)
 
                 GlobalScope.launch {

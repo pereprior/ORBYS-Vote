@@ -14,10 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.quizz.R
-import com.orbys.quizz.core.extensions.setChronometerCount
-import com.orbys.quizz.core.extensions.setDownloadButtonClickable
-import com.orbys.quizz.core.extensions.setGraphicAnswersCount
-import com.orbys.quizz.core.extensions.setUsersCount
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
@@ -50,7 +46,6 @@ class LaunchQuestionView(
     private var windowManager: WindowManager
     private val layoutParams = WindowManager.LayoutParams(
         context.resources.getDimensionPixelSize(R.dimen.widget_width),
-        //WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -61,6 +56,7 @@ class LaunchQuestionView(
         PixelFormat.TRANSLUCENT
     )
 
+    // TODO: Mirar inyección de dependencias
     private val questionRepository = QuestionRepositoryImpl.getInstance()
     private val usersRepository = UsersRepositoryImpl.getInstance()
     private val serverUtils = ServerUtils()
@@ -121,7 +117,7 @@ class LaunchQuestionView(
     }
 
     private fun bindOnQuestion() {
-        val question = questionRepository.question.value
+        val question = questionRepository.getQuestion()
 
         with(binding) {
             // Establece los elementos relacionados con la pregunta

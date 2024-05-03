@@ -1,4 +1,4 @@
-package com.orbys.quizz.core.network
+package com.orbys.quizz.core.managers
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -28,6 +28,12 @@ class NetworkManager {
         }
     }
 
+    /**
+     * Comprueba si hay conexión a Internet.
+     *
+     * @param activity La actividad actual.
+     * @return true si hay conexión a Internet.
+     */
     private fun isNetworkAvailable(activity: AppCompatActivity): Boolean {
         val connectivityManager = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         // Comprueba si hay una conexión a Internet activa
@@ -37,6 +43,7 @@ class NetworkManager {
         return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
+    // Obtiene la dirección IP local del dispositivo que ejecuta la app
     private fun getLocalIpFromNetworkInterfaces(): String? {
         // Obtengo una lista de todas las interfaces de red en el dispositivo
         val interfaces = Collections.list(NetworkInterface.getNetworkInterfaces())

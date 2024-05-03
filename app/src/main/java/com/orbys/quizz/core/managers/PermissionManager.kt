@@ -1,4 +1,4 @@
-package com.orbys.quizz.core.permissions
+package com.orbys.quizz.core.managers
 
 import androidx.appcompat.app.AppCompatActivity
 

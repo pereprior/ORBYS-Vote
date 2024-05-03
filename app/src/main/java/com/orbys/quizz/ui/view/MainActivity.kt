@@ -2,8 +2,8 @@ package com.orbys.quizz.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.orbys.quizz.core.network.NetworkManager
-import com.orbys.quizz.core.permissions.PermissionManager
+import com.orbys.quizz.core.managers.NetworkManager
+import com.orbys.quizz.core.managers.PermissionManager
 import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.DownloadFragment
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
@@ -57,8 +57,10 @@ class MainActivity : AppCompatActivity() {
 
             supportFragmentManager.beginTransaction().apply {
                 val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {
+                    // Mostrar el fragmento de descarga del fichero
                     DownloadFragment()
                 } else {
+                    // Mostrar el fragmento de selección de tipos de preguntas
                     TypesQuestionFragment()
                 }
                 replace(fragmentContainer.id, fragment)

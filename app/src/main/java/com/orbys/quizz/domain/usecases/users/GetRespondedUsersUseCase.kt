@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetRespondedUsersUseCase @Inject constructor(
     private val repository: IUsersRepository
 ) {
-    operator fun invoke() = repository.getRespondedUsers()
+    operator fun invoke() = repository.getUsersList()
 }

@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <title>Orbys Quizz Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             display: flex;
@@ -19,7 +21,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
-            height: 60%;
+            max-width: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -27,32 +29,37 @@
         }
 
         button {
-            width: 50%;
-            padding: 10px;
-            margin-bottom: 10px;
+            width: 80%;
+            padding: 15px;
+            margin-top: 20px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: none;
             border-radius: 4px;
-            color: black;
+            background-color: #016dc2;
+            color: white;
             cursor: pointer;
-            font-size: 2em;
+            font-size: 1em;
+            transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #b5b5b5;
-        }
+        button:hover { background-color: #1c5480; }
 
         h1 {
             text-align: center;
             color: #333;
-            font-size: 5em;
             max-width: 100%;
             word-wrap: break-word;
-            margin: 0 20px;
+            margin-bottom: 20px;
         }
 
         input[type="text"] {
-            font-size: 1.5em;
+            font-size: 1em;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -65,7 +72,7 @@
         <input type="text" id="username" name="username" placeholder="Username" required>
         <br><br>
 
-        <button type="submit">[SEND]</button>
+        <button type="submit">Acceder</button>
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
@@ -83,21 +90,13 @@
                 borderWidth: ".15em",
                 borderColor: "#FFFFFF",
                 textShadow: "0 0 .3em #000000bb",
-                css: `
-                    .popup.board button {
-                        border: 2px solid white;
-                        background-color: transparent;
-                        color: white;
-                        filter: drop-shadow(0 0 .2em #000000bb);
-                        margin-top: 1em;
-                    }`,
                 loadCallback: () => {
                     document
                         .querySelector(".popup.board button")
                         .addEventListener("click", () => {
                         popup.hide();
                     });
-                },
+                }
             }
         );
 

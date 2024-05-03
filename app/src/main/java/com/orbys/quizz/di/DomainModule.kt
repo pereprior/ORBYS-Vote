@@ -26,5 +26,5 @@ object DomainModule {
 
     @Provides
     @Singleton
-    fun provideAddQuestionUseCase() = AddQuestionUseCase(QuestionRepositoryImpl.getInstance())
+    fun provideAddQuestionUseCase() = AddQuestionUseCase(provideQuestionRepository())
 }

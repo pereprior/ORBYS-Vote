@@ -49,7 +49,7 @@ class ResponseHandler@Inject constructor(
             call.respondRedirect(USER_ENDPOINT)
 
         // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
-        if (repository.timerState().value)
+        if (repository.isTimeOut())
             call.respondRedirect("/error/5")
 
         // Si la pregunta no es de multiples respuestas y el usuario ya ha respondido, redirigimos a la pagina de error
@@ -61,9 +61,7 @@ class ResponseHandler@Inject constructor(
                 text = fileContent!!,
                 contentType = ContentType.Text.Html
             )
-        } catch (e: Exception) {
-            call.respondRedirect("/error/1")
-        }
+        } catch (e: Exception) { call.respondRedirect("/error/1") }
     }
 
     private fun Route.handleSubmitQuestionRoute() = post("/submit") {
@@ -73,14 +71,13 @@ class ResponseHandler@Inject constructor(
         if (choice == "") return@post
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
-        if(!repository.timerState().value) {
+        if(!repository.isTimeOut()) {
             // Si la respuesta no existe, se añade
             // Si la respuesta contiene ";", no se añade ya que se trata de varias respuestas
-            if (!repository.answerExists(choice) && choice?.contains(";") == false) {
+            if (!repository.answerExists(choice) && choice?.contains(";") == false)
                 repository.addAnswerToList(choice)
-            }
 
-            repository.setPostInAnswerCount(choice)
+            repository.incAnswerCount(choice)
             updateUserStatus(choice ?: "", userIP)
         }
 
@@ -96,9 +93,7 @@ class ResponseHandler@Inject constructor(
                 text = fileContent!!,
                 contentType = ContentType.Text.Html
             )
-        } catch (e: Exception) {
-            call.respondRedirect("/error/1")
-        }
+        } catch (e: Exception) { call.respondRedirect("/error/1") }
     }
 
     private fun Route.handleLoginRoute() = post("/login") {
@@ -112,21 +107,18 @@ class ResponseHandler@Inject constructor(
         }
 
         // Si el usuario no existe, se registra
-        if (repository.userNotExists(userIP)) {
-            repository.addUserToRespondedList(User(userIP, username))
-        }
+        if (repository.userNotExists(userIP))
+            repository.addUserToList(User(userIP, username))
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
 
     private fun updateUserStatus(choice: String, userIP: String) {
         // Si el usuario no existe, se registra
-        if (repository.userNotExists(userIP)) {
-            repository.addUserToRespondedList(User(userIP, repository.getUsernameByIp(userIP), true))
-        } else {
-            // Si ya existe el usuario, se marca como que ha respondido
+        if (repository.userNotExists(userIP))
+            repository.addUserToList(User(userIP, repository.getUsernameByIp(userIP), true))
+        else
             repository.setUserAsResponded(userIP)
-        }
 
         fileHandler.createDataFile(choice, userIP)
     }

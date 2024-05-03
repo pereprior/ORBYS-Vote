@@ -2,6 +2,8 @@ package com.orbys.quizz.data.controllers.handlers
 
 import android.content.Context
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.getAnswerType
+import com.orbys.quizz.core.extensions.getAnswers
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
@@ -23,7 +25,7 @@ import javax.inject.Inject
  *
  * @property httpRepository Repositorio para operaciones HTTP.
  * @property fileRepository Repositorio para operaciones de archivos.
- * @property appContext Contexto de la aplicación.
+ * @property appContext Contexto de la aplicacion.
  */
 class FileHandler @Inject constructor(
     private val httpRepository: HttpRepositoryImpl,
@@ -31,15 +33,9 @@ class FileHandler @Inject constructor(
 ) {
     private val fileRepository = FileRepository.getInstance(appContext)
     private companion object {
-        const val HTTP_FILES_FOLDER = "/assets/"
+        const val HTTP_FILES_FOLDER = "/assets"
         const val HTTP_FILES_NAME = "_index"
         const val HTTP_FILES_EXTENSION = ".html"
-        const val QUESTION_PLACEHOLDER = "[QUESTION]"
-        const val ANSWER_PLACEHOLDER = "[ANSWER"
-        const val MAX_ANSWER_PLACEHOLDER = "[MAX_ANSWER]"
-        const val SEND_BUTTON_PLACEHOLDER = "[SEND]"
-        const val LOGIN_TITLE_PLACEHOLDER = "[LOGIN_TITLE]"
-        const val SUCCESS_MESSAGE_PLACEHOLDER = "[SUCCESS_MESSAGE]"
         const val MULTIPLE_CHOICE = "multiple"
         const val SINGLE_CHOICE = "single"
         const val CSV_FILE_NAME = "data"
@@ -53,26 +49,19 @@ class FileHandler @Inject constructor(
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
         val file = fileRepository.getFile()
 
-        checkError(file, call)
+        checkPossibleErrors(file, call)
 
         call.respondFile(file)
     }
 
     fun deleteFile() { fileRepository.deleteFile() }
 
-    private suspend fun checkError(file: File, call: ApplicationCall) {
-        // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
-        if (!httpRepository.timerState().value) call.respondRedirect("/error/3")
-        // Si nadie a contestado la pregunta no se podra descargar el archivo.
-        if (!file.exists()) call.respondRedirect("/error/6")
-    }
-
     fun loadHtmlFile(
-        htmlName: String = httpRepository.getQuestionInfo().answerType.name
+        htmlName: String = httpRepository.getQuestionInfo().getAnswerType()
     ): String? {
         val fileName = "${htmlName.lowercase(Locale.ROOT)}$HTTP_FILES_NAME$HTTP_FILES_EXTENSION"
 
-        return this::class.java.getResource("$HTTP_FILES_FOLDER$fileName")?.readText()?.let {
+        return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
             replace(it, httpRepository.getQuestionInfo())
         }
@@ -87,7 +76,7 @@ class FileHandler @Inject constructor(
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
             question = httpRepository.getQuestionInfo(),
-            answers = httpRepository.getQuestionInfo().answers.value.map { it.answer.toString() }
+            answers = httpRepository.getAnswersAsString()
         )
 
         fileRepository.writeLine(
@@ -99,27 +88,34 @@ class FileHandler @Inject constructor(
         )
     }
 
+    private suspend fun checkPossibleErrors(file: File, call: ApplicationCall) {
+        // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
+        if (!httpRepository.isTimeOut()) call.respondRedirect("/error/3")
+        // Si nadie a contestado la pregunta no se podra descargar el archivo.
+        if (!file.exists()) call.respondRedirect("/error/6")
+    }
+
     private fun replace(content: String, question: Question): String = content
-        .replace(SEND_BUTTON_PLACEHOLDER, appContext.getString(R.string.save_button_placeholder))
-        .replace(LOGIN_TITLE_PLACEHOLDER, appContext.getString(R.string.login_title_placeholder))
-        .replace(QUESTION_PLACEHOLDER, question.question)
-        .replace(MAX_ANSWER_PLACEHOLDER, question.maxNumericAnswer.toString())
-        .replace(SUCCESS_MESSAGE_PLACEHOLDER, appContext.getString(R.string.success_message))
+        .replace("[SEND]", appContext.getString(R.string.send_button_placeholder))
+        .replace("[LOGIN_TITLE]", appContext.getString(R.string.login_title_placeholder))
+        .replace("[QUESTION]", question.question)
+        .replace("[MAX_ANSWER]", question.maxNumericAnswer.toString())
+        .replace("[SUCCESS_MESSAGE]", appContext.getString(R.string.success_message))
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 
     private fun String.replaceAnswersNames(question: Question): String {
         var result = this
         // Reemplaza los marcadores de posición de las respuestas por los valores correspondientes.
-        question.answers.value.forEachIndexed { index, answer ->
-            result = result.replace("$ANSWER_PLACEHOLDER$index]", answer.answer.toString())
+        question.getAnswers().forEachIndexed { index, answer ->
+            result = result.replace("[ANSWER$index]", answer.answer)
         }
         return result
     }
 
     private fun String.replaceOtherFunctions(question: Question): String {
         // Si el usuario envia varias respuestas a la vez
-        val answersToString = question.answers.value.joinToString(";") { it.answer.toString() }
+        val answersToString = question.getAnswers().joinToString(";") { it.answer }
         // Si la pregunta es de eleccion multiple o de respuesta multiple
         val multipleChoices = if (question.isMultipleChoices) MULTIPLE_CHOICE else SINGLE_CHOICE
         val multipleAnswers = if (question.isMultipleAnswers) MULTIPLE_CHOICE else SINGLE_CHOICE

@@ -3,6 +3,7 @@ package com.orbys.quizz.data.repositories
 import android.content.Context
 import android.os.Environment
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.getAnswerType
 import com.orbys.quizz.domain.models.Question
 import java.io.BufferedWriter
 import java.io.File
@@ -38,6 +39,7 @@ class FileRepository private constructor(
         val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
         file = File(filePath)
 
+        // Si el archivo no existe, se crea y se escribe la leyenda de la pregunta.
         if (!file.exists()) {
             file.createNewFile()
             writeLegend(question, answers)
@@ -70,7 +72,7 @@ class FileRepository private constructor(
             val bufferedWriter = BufferedWriter(fileWriter)
             val answersToCsv = answers.joinToString(";")
 
-            bufferedWriter.write("${context.getString(R.string.csv_legend_question_type)}${question.answerType.name}\n")
+            bufferedWriter.write("${context.getString(R.string.csv_legend_question_type)}${question.getAnswerType()}\n")
             bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}${question.question}\n")
             bufferedWriter.write("${context.getString(R.string.csv_legend_answers_title)}$answersToCsv\n\n")
             bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")

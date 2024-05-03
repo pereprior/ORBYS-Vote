@@ -5,7 +5,7 @@
     <string name="numeric_answer_hint">Maximale nummer:\n</string>
 
     <!-- Vervangingen van bestanden -->
-    <string name="save_button_placeholder">Starten</string>
+    <string name="launch_button_placeholder">Starten</string>
     <string name="yes_answer_placeholder">Ja</string>
     <string name="no_answers_placeholder">Nee</string>
     <string name="true_answer_placeholder">Waar</string>

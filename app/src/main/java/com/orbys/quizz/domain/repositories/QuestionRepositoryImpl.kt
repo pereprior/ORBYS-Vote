@@ -1,15 +1,15 @@
 package com.orbys.quizz.domain.repositories
 
+import com.orbys.quizz.core.extensions.getAnswers
+import com.orbys.quizz.core.extensions.getCount
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Clase que gestiona el flujo de datos relacionados con las preguntas y respuestas.
  *
- * @property _question Un flujo mutable privado la información de la pregunta.
- * @property question Un flujo inmutable y publico para llamar a la pregunta.
+ * @property question Un flujo mutable privado la información de la pregunta.
  * @property timerState Un flujo mutable para gestionar el tiempo limite de la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
@@ -29,8 +29,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
         }
     }
 
-    private var _question = MutableStateFlow(Question(""))
-    val question: StateFlow<Question> = _question
+    private var question = MutableStateFlow(Question(""))
     private val timerState = MutableStateFlow(false)
 
     // Metodos para gestionar el temporizador
@@ -39,21 +38,20 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     override fun resetTimer() { timerState.tryEmit(false) }
 
     // Metodos para gestionar la pregunta lanzada
-    override fun getQuestion(): Question = _question.value
-    override fun addQuestion(question: Question) { _question.value = question }
+    override fun getQuestion(): Question = question.value
+    override fun addQuestion(question: Question) { this.question.value = question }
 
     // Métodos para gestionar las respuestas de una pregunta
+    override fun addAnswer(answerText: String) {
+        val newAnswersList = question.value.getAnswers() + Answer(answerText)
+        question.value.answers.tryEmit(newAnswersList)
+    }
     override fun incAnswer(answerText: String) {
-        for (answer in _question.value.answers.value) {
-            if (answer.answer?.toString()?.equals(answerText) == true) {
-                answer.count.tryEmit(answer.count.value + 1)
+        for (answer in question.value.getAnswers()) {
+            if (answer.answer == answerText) {
+                answer.count.tryEmit(answer.getCount() + 1)
             }
         }
-
-    }
-    override fun addAnswer(answerText: String) {
-        val newAnswersList = _question.value.answers.value + Answer(answerText)
-        _question.value.answers.tryEmit(newAnswersList)
     }
 
 }

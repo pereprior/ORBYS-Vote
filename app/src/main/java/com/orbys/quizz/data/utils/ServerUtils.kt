@@ -1,6 +1,6 @@
 package com.orbys.quizz.data.utils
 
-import com.orbys.quizz.core.network.NetworkManager
+import com.orbys.quizz.core.managers.NetworkManager
 
 /**
  * Clase utilitaria para la configuración del servidor.

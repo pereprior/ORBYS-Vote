@@ -6,6 +6,13 @@ import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import io.ktor.server.routing.Route
 import javax.inject.Inject
 
+/**
+ * Controlador de las rutas del servidor http
+ *
+ * @param responseHandler Gestion de las respuestas del servidor http
+ * @param fileHandler Gestion de los archivos
+ * @param errorHandler Gestion de los errores
+ */
 class HttpController @Inject constructor(
     private val responseHandler: ResponseHandler,
     private val fileHandler: FileHandler,
@@ -21,7 +28,7 @@ class HttpController @Inject constructor(
             // Descargar los datos del servidor
             fileHandler.setupRoutes(this)
 
-            // Manejar errores
+            // Gestionar errores
             errorHandler.setupRoutes(this, fileHandler)
         }
 

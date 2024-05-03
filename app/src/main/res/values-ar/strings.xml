@@ -5,7 +5,7 @@
     <string name="numeric_answer_hint">الحد الأقصى: </string>
 
     <!-- مكان النصوص -->
-    <string name="save_button_placeholder">بدء</string>
+    <string name="launch_button_placeholder">بدء</string>
     <string name="yes_answer_placeholder">نعم</string>
     <string name="no_answers_placeholder">لا</string>
     <string name="true_answer_placeholder">صحيح</string>

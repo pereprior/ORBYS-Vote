@@ -5,7 +5,7 @@
     <string name="numeric_answer_hint">Número màxim:\n</string>
 
     <!-- Marcadors de fitxers -->
-    <string name="save_button_placeholder">Iniciar</string>
+    <string name="launch_button_placeholder">Iniciar</string>
     <string name="yes_answer_placeholder">Sí</string>
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">Vertader</string>

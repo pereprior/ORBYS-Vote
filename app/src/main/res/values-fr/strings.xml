@@ -5,7 +5,7 @@
     <string name="numeric_answer_hint">Nombre maximal :\n</string>
 
     <!-- Remplacements de fichier -->
-    <string name="save_button_placeholder">Lancer</string>
+    <string name="launch_button_placeholder">Lancer</string>
     <string name="yes_answer_placeholder">Oui</string>
     <string name="no_answers_placeholder">Non</string>
     <string name="true_answer_placeholder">Vrai</string>
