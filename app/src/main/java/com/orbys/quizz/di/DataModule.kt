@@ -1,12 +1,14 @@
 package com.orbys.quizz.di
 
 import android.content.Context
+import com.orbys.quizz.core.managers.NetworkManager
 import com.orbys.quizz.data.controllers.handlers.ErrorHandler
 import com.orbys.quizz.data.controllers.handlers.FileHandler
 import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.repositories.IFileRepository
+import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
 import com.orbys.quizz.domain.usecases.question.AddAnswerUseCase
@@ -63,5 +65,9 @@ object DataModule {
         provideServerRepository(),
         provideFileHandler(context),
     )
+
+    @Provides
+    @Singleton
+    fun provideServerUtils() = ServerUtils(NetworkManager())
 
 }

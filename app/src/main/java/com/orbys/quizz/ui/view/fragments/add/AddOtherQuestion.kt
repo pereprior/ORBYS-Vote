@@ -4,33 +4,31 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.TextAnswersManager
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Otros".
- *
- * @property viewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
- * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  */
-@AndroidEntryPoint
 class AddOtherQuestion: AddFragment() {
+
+    override val titleResId: Int = R.string.other_question_type_title
+    override val iconResId: Int = R.drawable.ic_others
+
+    private lateinit var fieldsManager: TextAnswersManager
 
     companion object {
         private const val MIN_ANSWERS = 2
         private const val MAX_ANSWERS = 5
     }
 
-    private lateinit var fieldsManager: TextAnswersManager
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            // Configurar el formulario para añadir las respuestas
             fieldsManager = TextAnswersManager(
                 context = requireContext(),
                 layout = answersLayout,
@@ -39,12 +37,12 @@ class AddOtherQuestion: AddFragment() {
                 fieldLength = LinearLayout.LayoutParams.MATCH_PARENT
             )
 
-            val title: TextView? = activity?.findViewById(R.id.title)
-            title?.text = "${getString(R.string.other_question_type_title)} ${getString(R.string.question_question_hint)}"
-            questionTypeIcon.setImageResource(R.drawable.ic_others)
+            setAdditionalConfigurations()
         }
 
-        setDefaultAnswers()
+        // Añadir dos respuestas por defecto
+        fieldsManager.addButtonForAddAnswers()
+        repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }
     }
 
     override fun saveQuestion(context: Context) {
@@ -64,29 +62,15 @@ class AddOtherQuestion: AddFragment() {
         super.saveQuestion(context)
     }
 
-    override fun createQuestionFromInput(): Question {
-        with(binding) {
-            val questionText = questionQuestion.text.toString()
-
-            return Question(
-                question = questionText,
-                icon = R.drawable.ic_others,
-                answers = fieldsManager.getAnswers(),
-                answerType = AnswerType.OTHER,
-                isAnonymous = anonymousQuestionOption.isChecked,
-                timeOut = timeoutInput.text.toString().toIntOrNull() ?: 0,
-                isMultipleChoices = multiAnswerQuestionOption.isChecked,
-                isMultipleAnswers = nonFilterUsersQuestionOption.isChecked
-            )
-        }
-    }
-
-    private fun setDefaultAnswers() {
-        // Boton para añadir mas respuestas
-        fieldsManager.addButtonForAddAnswers()
-
-        // Añadir dos respuestas por defecto
-        repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }
-    }
+    override fun createQuestionFromInput() = Question(
+        question = binding.questionQuestion.text.toString(),
+        icon = R.drawable.ic_others,
+        answers = fieldsManager.getAnswers(),
+        answerType = AnswerType.OTHER,
+        isAnonymous = binding.anonymousQuestionOption.isChecked,
+        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
+        isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,
+        isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
+    )
 
 }

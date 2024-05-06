@@ -2,8 +2,12 @@ package com.orbys.quizz.core.extensions
 
 import android.content.Intent
 import android.text.InputFilter
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.orbys.quizz.R
 import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
@@ -31,8 +35,33 @@ fun EditText.limitLines(maxLines: Int) {
         }
     )
 }
-fun Fragment.stopActiveServices() {
+fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
     // Cierra los servicios activos
-    activity?.stopService(Intent(activity, HttpService::class.java))
+    if (isHttpFragment) { activity?.stopService(Intent(activity, HttpService::class.java)) }
     activity?.stopService(Intent(activity, FloatingViewService::class.java))
+}
+fun Fragment.replaceMainActivityBindingFunctions(
+    titleRedId: Int,
+    closeButtonVisibility: Int = View.GONE,
+    backButtonVisibility: Int = View.GONE,
+    backButtonNavFragment: Fragment? = null
+) {
+    // Reemplaza las funciones de la actividad principal
+    val backButton = activity?.findViewById<ImageButton>(R.id.back_button)
+    val closeButton = activity?.findViewById<ImageButton>(R.id.close_button)
+    val title = activity?.findViewById<TextView>(R.id.title)
+
+    title?.text = getString(titleRedId)
+    closeButton?.visibility = closeButtonVisibility
+    backButton?.visibility = backButtonVisibility
+
+    if (backButtonVisibility == View.VISIBLE && backButtonNavFragment != null) {
+        backButton?.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()?.apply {
+                replace(R.id.fragment_container, backButtonNavFragment)
+                commit()
+            }
+        }
+    }
+
 }

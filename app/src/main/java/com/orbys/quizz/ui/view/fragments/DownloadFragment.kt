@@ -1,51 +1,53 @@
 package com.orbys.quizz.ui.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
-import com.orbys.quizz.data.utils.ServerUtils
+import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
+import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.databinding.FragmentQrCodeBinding
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.services.FloatingViewService
+import com.orbys.quizz.ui.viewmodels.QuestionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragmento que contiene los elementos para descargar el fichero con los resultados de la pregunta.
  */
+@AndroidEntryPoint
 class DownloadFragment: Fragment() {
 
+    private lateinit var viewModel: QuestionViewModel
     private lateinit var binding: FragmentQrCodeBinding
-    private val serverUtils = ServerUtils()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentQrCodeBinding.inflate(inflater, container, false)
-        val url = serverUtils.getServerUrl(DOWNLOAD_ENDPOINT)
-        activity?.stopService(Intent(activity, FloatingViewService::class.java))
 
+        // Detenemos los servicios activos
+        stopActiveServices(true)
+
+        // Cambios en los elementos de la actividad principal
+        replaceMainActivityBindingFunctions(
+            titleRedId = R.string.download_title,
+            backButtonVisibility = View.VISIBLE,
+            backButtonNavFragment = TypesQuestionFragment()
+        )
+
+        // Cambios en la vista del fragmento
         with(binding) {
-            val backButton: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
-            val closeButton: ImageButton = activity?.findViewById(R.id.close_button) ?: return root
-            val title: TextView = activity?.findViewById(R.id.title) ?: return root
+            val url = viewModel.getServerUrl(DOWNLOAD_ENDPOINT)
 
-            title.text = getString(R.string.download_title)
-            closeButton.visibility = View.GONE
-            backButton.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()?.apply {
-                    replace(R.id.fragment_container, TypesQuestionFragment())
-                    commit()
-                }
-            }
+            qrCode.setImageBitmap(QRCodeGenerator(requireContext())
+                .encodeAsBitmap(url, true))
 
-            qrCode.setImageBitmap(QRCodeGenerator(requireContext()).encodeAsBitmap(url, true))
             qrUrl.text = url
 
             return root

@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.limitLines
+import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
@@ -22,15 +22,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Clase abstracta que representa un Fragmento para añadir nueva pregunta a lanzar
- *
- * @property viewModel ViewModel para gestionar las operaciones relacionadas con las preguntas.
- * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  */
 @AndroidEntryPoint
 abstract class AddFragment: Fragment() {
 
     private lateinit var viewModel: QuestionViewModel
     protected lateinit var binding: FragmentAddQuestionBinding
+    
+    protected abstract val titleResId: Int
+    protected abstract val iconResId: Int
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,19 +39,50 @@ abstract class AddFragment: Fragment() {
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
 
+        // Cambios en los elementos de la actividad principal
+        replaceMainActivityBindingFunctions(
+            titleResId,
+            backButtonVisibility = View.VISIBLE,
+            backButtonNavFragment = TypesQuestionFragment()
+        )
+        
         with(binding) {
-            val button: ImageButton = activity?.findViewById(R.id.back_button) ?: return root
-            setBackButtonVisible(button)
+            // Icono del tipo de la pregunta a crear
+            questionTypeIcon.setImageResource(iconResId)
+            
+            // Limitar el número de lineas de la pregunta
             questionQuestion.limitLines(3)
 
-            // Asignar los listeners a los botones
-            setButtonListeners()
+            // Configurar el boton para lanzar la pregunta
+            launchButton.setOnClickListener { saveQuestion(it.context) }
+
+            // Mostrar la configuración adicional
+            configurationsIcon.setOnClickListener {
+                if (configurationsLayout.visibility == View.VISIBLE)
+                    setConfigVisibilityTo(R.drawable.ic_config_hide, View.GONE)
+                else
+                    setConfigVisibilityTo(R.drawable.ic_config_show, View.VISIBLE)
+            }
+
+            // Mostrar el formulario del tiempo de espera
+            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) setTimerVisibilityTo(View.VISIBLE) else setTimerVisibilityTo(View.GONE)
+            }
 
             return root
         }
     }
 
-    abstract fun createQuestionFromInput(): Question
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.setAdditionalConfigurations(
+            filterUsersConfig = false,
+            multiAnswerConfig = false
+        )
+    }
+
+    protected abstract fun createQuestionFromInput(): Question
 
     protected open fun saveQuestion(context: Context) {
         val question = createQuestionFromInput()
@@ -71,51 +102,14 @@ abstract class AddFragment: Fragment() {
         clear()
     }
 
-    protected fun errorMessage(message: Int) {
-        binding.errorMessage.text = getString(message)
-        context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
-    }
-
-    private fun setButtonListeners() {
-        with(binding) {
-            saveButton.setOnClickListener { saveQuestion(it.context) }
-
-            configurationsIcon.setOnClickListener {
-                if (configurationsLayout.visibility == View.VISIBLE) setConfigVisible(
-                    R.drawable.ic_config_hide,
-                    View.GONE
-                )
-                else setConfigVisible(R.drawable.ic_config_show, View.VISIBLE)
-            }
-
-            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) setTimerVisibility(View.VISIBLE) else setTimerVisibility(View.GONE)
-            }
-        }
-    }
-
-    // Cambiar la visibilidad del formulario del cronometro
-    private fun setTimerVisibility(visible: Int) {
-        binding.timeoutInput.visibility = visible
-        binding.minutesHelpText.visibility = visible
-    }
-
-    // Cambiar la visibilidad de la confirguración adicional
-    private fun setConfigVisible(icon: Int, visible: Int) {
-        binding.configurationsIcon.setImageResource(icon)
-        binding.configurationsLayout.visibility = visible
-    }
-
-    // Cambiar la visibilidad del boton de volver al fragmento anterior
-    private fun setBackButtonVisible(button: ImageButton) {
-        button.visibility = View.VISIBLE
-        button.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, TypesQuestionFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
+    protected fun errorMessage(
+        message: Int,
+        showErrorMessage: Boolean = true,
+        showToast: Boolean = true
+    ) {
+        // Mostrar un mensaje de error
+        if (showErrorMessage) binding.errorMessage.text = getString(message)
+        if (showToast) context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
     }
 
     private fun clear() {
@@ -124,6 +118,33 @@ abstract class AddFragment: Fragment() {
             questionQuestion.text.clear()
             errorMessage.text = ""
         }
+    }
+
+    // Configurar las opciones adicionales de la pregunta
+    protected fun FragmentAddQuestionBinding.setAdditionalConfigurations(
+        filterUsersConfig: Boolean = true,
+        multiAnswerConfig: Boolean = true,
+        timerConfig: Boolean = true
+    ) {
+        filterUsersTitle.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
+        filterUsersGroup.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
+        filterUsersDivider.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
+        multiAnswerTitle.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
+        multiAnswerGroup.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
+        multiAnswerDivider.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
+        timeoutQuestionOption.visibility = if (timerConfig) View.VISIBLE else View.GONE
+    }
+
+    // Cambiar la visibilidad del formulario del cronometro
+    private fun FragmentAddQuestionBinding.setTimerVisibilityTo(visible: Int) {
+        timeoutInput.visibility = visible
+        minutesHelpText.visibility = visible
+    }
+
+    // Cambiar la visibilidad de la confirguración adicional
+    private fun FragmentAddQuestionBinding.setConfigVisibilityTo(icon: Int, visible: Int) {
+        configurationsIcon.setImageResource(icon)
+        configurationsLayout.visibility = visible
     }
 
 }

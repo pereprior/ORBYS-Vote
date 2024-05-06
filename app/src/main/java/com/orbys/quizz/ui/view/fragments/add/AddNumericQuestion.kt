@@ -3,10 +3,10 @@ package com.orbys.quizz.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.components.managers.AnswerManager
 import com.orbys.quizz.ui.components.managers.NumericAnswersManager
 
 /**
@@ -14,25 +14,23 @@ import com.orbys.quizz.ui.components.managers.NumericAnswersManager
  */
 class AddNumericQuestion: AddFragment() {
 
-    private lateinit var answersManager: NumericAnswersManager
+    override val titleResId: Int = R.string.numeric_question_type_title
+    override val iconResId: Int = R.drawable.ic_number
+
+    private lateinit var answersManager: AnswerManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            // Configurar el formulario para añadir el número máximo para la respuesta
             answersManager = NumericAnswersManager(
                 context = requireContext(),
                 layout = answersLayout,
                 hintText = getString(R.string.numeric_answer_hint)
             )
 
-            val title: TextView? = activity?.findViewById(R.id.title)
-            title?.text = "${getString(R.string.numeric_question_type_title)} ${getString(R.string.question_question_hint)}"
-            questionTypeIcon.setImageResource(R.drawable.ic_number)
-
-            multiAnswerTitle.visibility = View.GONE
-            multiAnswerGroup.visibility = View.GONE
-            multiAnswerDivider.visibility = View.GONE
+            setAdditionalConfigurations(multiAnswerConfig = false)
         }
 
         answersManager.addAnswerField()
@@ -40,7 +38,7 @@ class AddNumericQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.ic_number,
+        icon = iconResId,
         answerType = AnswerType.NUMERIC,
         maxNumericAnswer = answersManager.getAnswersText().firstOrNull()?.toIntOrNull() ?: 0,
         isAnonymous = binding.anonymousQuestionOption.isChecked,

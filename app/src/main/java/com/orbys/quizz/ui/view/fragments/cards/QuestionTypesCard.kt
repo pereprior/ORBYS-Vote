@@ -14,14 +14,25 @@ import com.orbys.quizz.databinding.CardTypesQuestionBinding
  */
 abstract class QuestionTypesCard : Fragment() {
 
-    protected lateinit var binding: CardTypesQuestionBinding
+    private lateinit var binding: CardTypesQuestionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = CardTypesQuestionBinding.inflate(inflater, container, false)
+        binding.bindCard()
+
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.setOnClickListener { setOnClickCard() }
+    }
+
+    protected abstract fun CardTypesQuestionBinding.bindCard()
+    protected abstract fun setOnClickCard()
 
 }

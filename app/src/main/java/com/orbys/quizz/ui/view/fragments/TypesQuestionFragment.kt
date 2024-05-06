@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
 import com.orbys.quizz.ui.view.fragments.cards.BooleanCard
@@ -28,11 +27,19 @@ class TypesQuestionFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
+
+        // Detiene los servicios activos
         stopActiveServices()
-        replaceMainActivityBindingFunctions()
+
+        // Cambios en los elementos de la actividad principal
+        replaceMainActivityBindingFunctions(
+            titleRedId = R.string.activity_question_type_title,
+            closeButtonVisibility = View.VISIBLE
+        )
 
         with(binding) {
 
+            // Configura las tarjetas de los tipos de preguntas
             parentFragmentManager.beginTransaction()
                 .add(yesNoCardContainer.id, YesNoCard())
                 .add(booleanCardContainer.id, BooleanCard())
@@ -43,16 +50,6 @@ class TypesQuestionFragment: Fragment() {
 
             return root
         }
-    }
-
-    private fun replaceMainActivityBindingFunctions() {
-        val backButton: ImageButton? = activity?.findViewById(R.id.back_button)
-        val closeButton: ImageButton? = activity?.findViewById(R.id.close_button)
-        val title: TextView? = activity?.findViewById(R.id.title)
-
-        closeButton?.visibility = View.VISIBLE
-        backButton?.visibility = View.GONE
-        title?.text = getString(R.string.activity_question_type_title)
     }
 
 }

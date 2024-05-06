@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.showToastWithCustomView
+import com.orbys.quizz.core.managers.NetworkManager
 import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
@@ -59,7 +60,7 @@ class LaunchQuestionView(
     // TODO: Mirar inyección de dependencias
     private val questionRepository = QuestionRepositoryImpl.getInstance()
     private val usersRepository = UsersRepositoryImpl.getInstance()
-    private val serverUtils = ServerUtils()
+    private val serverUtils = ServerUtils(NetworkManager())
 
     private var x: Int = 0
     private var y: Int = 0
