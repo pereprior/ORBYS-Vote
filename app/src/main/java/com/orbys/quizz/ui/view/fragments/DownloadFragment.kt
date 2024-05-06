@@ -12,7 +12,7 @@ import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.databinding.FragmentQrCodeBinding
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.viewmodels.QuestionViewModel
+import com.orbys.quizz.ui.controllers.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

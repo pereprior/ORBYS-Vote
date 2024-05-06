@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.viewmodels
+package com.orbys.quizz.ui.controllers
 
 import androidx.lifecycle.ViewModel
 import com.orbys.quizz.domain.models.Question

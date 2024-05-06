@@ -60,14 +60,14 @@ class HttpRepositoryImpl @Inject constructor(
     override fun getAnswersAsString() = getQuestion().getAnswers().map { it.answer }
 
     // Comprueba si un usuario ya existe en la lista
-    override fun userNotExists(userIp: String) = !getUsers().any { it.ip == userIp }
+    override fun userNotExists(userIp: String) = !getUsers().value.any { it.ip == userIp }
 
     // Comprueba si existe un usuario con el mismo nombre
-    override fun usernameExists(username: String) = getUsers().any { it.username == username }
+    override fun usernameExists(username: String) = getUsers().value.any { it.username == username }
 
     // Comprueba si un usuario ya ha respondido
-    override fun userResponded(ip: String): Boolean = getUsers().any { it.ip == ip && it.responded }
+    override fun userResponded(ip: String): Boolean = getUsers().value.any { it.ip == ip && it.responded }
 
     // Devuelve el nombre de usuario a partir de la IP
-    override fun getUsernameByIp(ip: String): String = getUsers().find { it.ip == ip }?.username ?: "Anonymous"
+    override fun getUsernameByIp(ip: String): String = getUsers().value.find { it.ip == ip }?.username ?: "Anonymous"
 }

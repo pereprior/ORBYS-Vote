@@ -34,8 +34,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
 
     // Metodos para gestionar el temporizador
     override fun getTimerState(): MutableStateFlow<Boolean> = timerState
-    override fun timeOut() { timerState.tryEmit(true) }
-    override fun resetTimer() { timerState.tryEmit(false) }
+    override fun setTimeOut(isTimeOut: Boolean) { timerState.tryEmit(isTimeOut) }
 
     // Metodos para gestionar la pregunta lanzada
     override fun getQuestion(): Question = question.value

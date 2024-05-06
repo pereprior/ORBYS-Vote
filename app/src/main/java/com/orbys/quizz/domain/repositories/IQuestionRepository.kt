@@ -20,8 +20,5 @@ interface IQuestionRepository {
     fun getTimerState(): MutableStateFlow<Boolean>
 
     // Indica que el tiempo limite ha terminado
-    fun timeOut()
-
-    // Reinicia el temporizador
-    fun resetTimer()
+    fun setTimeOut(isTimeOut: Boolean = true)
 }

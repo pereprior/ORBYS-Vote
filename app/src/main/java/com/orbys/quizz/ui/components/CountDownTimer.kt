@@ -5,11 +5,16 @@ import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.widget.Chronometer
-import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class CountDownChronometer(
+/**
+ * Vista temporizador con el contador descendente
+ *
+ * @param context Contexto de la aplicacion
+ * @param attrs Atributos de la vista
+ */
+class CountDownTimer(
     context: Context,
     attrs: AttributeSet? = null
 ) : Chronometer(context, attrs) {
@@ -20,25 +25,20 @@ class CountDownChronometer(
         const val TEXT_SIZE = 11f
     }
 
-    private val repository = QuestionRepositoryImpl.getInstance()
     private var timeInMillis: Long = 0
     private var timer: CountDownTimer? = null
 
     private val _isFinished = MutableStateFlow(false)
-
     val isFinished: StateFlow<Boolean> get() = _isFinished
 
     init {
         textSize = TEXT_SIZE
     }
 
-    fun setTimeInMillis(timeInMillis: Long) {
-        this.timeInMillis = timeInMillis
-    }
+    fun setTimeInMillis(timeInMillis: Long) { this.timeInMillis = timeInMillis }
 
     fun startCountDown() {
         base = SystemClock.elapsedRealtime() + timeInMillis
-        repository.resetTimer()
         startTimer()
     }
 
@@ -55,15 +55,16 @@ class CountDownChronometer(
     }
 
     fun cancelTimer() {
+        // Cancelar el tiempo limite
         timer?.cancel()
         text = TIME_OUT
         timer = null
     }
 
     private fun stopTimer() {
+        // Detener el tiempo limite
         stop()
         text = TIME_OUT
-        repository.timeOut()
         _isFinished.value = true
     }
 

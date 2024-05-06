@@ -37,7 +37,7 @@ fun EditText.limitLines(maxLines: Int) {
 }
 fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
     // Cierra los servicios activos
-    if (isHttpFragment) { activity?.stopService(Intent(activity, HttpService::class.java)) }
+    if (!isHttpFragment) { activity?.stopService(Intent(activity, HttpService::class.java)) }
     activity?.stopService(Intent(activity, FloatingViewService::class.java))
 }
 fun Fragment.replaceMainActivityBindingFunctions(

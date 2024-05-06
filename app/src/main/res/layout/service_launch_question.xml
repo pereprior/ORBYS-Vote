@@ -36,7 +36,7 @@
 
         <!-- Texto para la pregunta -->
         <TextView
-            android:id="@+id/question"
+            android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_margin"
-            app:layout_constraintTop_toBottomOf="@id/question"
+            app:layout_constraintTop_toBottomOf="@id/question_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -66,20 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="@drawable/bg_main" >
-
-        <ImageButton
-            android:id="@+id/download_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/exit_button_desc"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
-            android:src="@drawable/ic_download"
-            android:tint="@color/gray3"
-            tools:ignore="UseAppTint"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/close_button"
@@ -99,7 +85,7 @@
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/graphic_height"
-            app:layout_constraintTop_toBottomOf="@id/download_button"
+            app:layout_constraintTop_toBottomOf="@id/close_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" >
 
@@ -156,8 +142,8 @@
                 android:textSize="@dimen/title_font_size"
                 android:visibility="gone" />
 
-            <com.orbys.quizz.ui.components.CountDownChronometer
-                android:id="@+id/chronometer"
+            <com.orbys.quizz.ui.components.CountDownTimer
+                android:id="@+id/timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />

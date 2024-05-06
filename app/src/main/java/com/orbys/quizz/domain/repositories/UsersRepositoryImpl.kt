@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * Clase que gestiona los usuarios que han respondido las preguntas.
  *
- * @property _respondedUsers Un flujo mutable privado que contiene una lista de usuarios que han accedido al servidor.
+ * @property respondedUsers Un flujo mutable privado que contiene una lista de usuarios que han accedido al servidor.
  * @property getUsersList Un flujo inmutable y publico para llamar a la lista de usuarios.
  */
 class UsersRepositoryImpl private constructor(): IUsersRepository {
@@ -27,22 +27,21 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
         }
     }
 
-    private var _respondedUsers = MutableStateFlow(listOf<User>())
-    val respondedUsers: StateFlow<List<User>> = _respondedUsers
+    private var respondedUsers = MutableStateFlow(listOf<User>())
 
-    override fun getUsersList(): List<User> = _respondedUsers.value
-    override fun clearRespondedUsers() { _respondedUsers.tryEmit(listOf()) }
+    override fun getUsersList(): StateFlow<List<User>> = respondedUsers
+    override fun clearRespondedUsers() { respondedUsers.tryEmit(listOf()) }
     override fun setUserResponded(ip: String) {
-        val users = _respondedUsers.value.toMutableList()
+        val users = respondedUsers.value.toMutableList()
         users.find { it.ip == ip }?.responded = true
-        _respondedUsers.value = users.toList()
+        respondedUsers.value = users.toList()
     }
     override fun addRespondedUser(user: User) {
-        if (_respondedUsers.value.any { it.ip == user.ip }) return
+        if (respondedUsers.value.any { it.ip == user.ip }) return
 
-        val users = _respondedUsers.value.toMutableList()
+        val users = respondedUsers.value.toMutableList()
         users.add(user)
-        _respondedUsers.value = users.toList()
+        respondedUsers.value = users.toList()
     }
 
 }
