@@ -11,6 +11,7 @@
     <string name="question_type_icon_desc" translatable="false">Icono que representa el tipo de la pregunta</string>
     <string name="app_logo_desc" translatable="false">Logo de la empresa</string>
     <string name="config_icon_desc" translatable="false">Boton para desplegar la configuracion adicional</string>
+    <string name="alert_icon_desc" translatable="false">Icono de alerta</string>
 
     <!-- Add dialog hint -->
     <string name="question_question_hint">Question:</string>

@@ -43,6 +43,7 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* El estilo del boton de login es distinto */
 #loginButton {
     margin-top: 20px;
     border: none;

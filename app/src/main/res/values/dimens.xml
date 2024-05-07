@@ -8,7 +8,7 @@
 
     <dimen name="icon_size">16dp</dimen>
     <dimen name="icon_size_large">30dp</dimen>
-    <dimen name="card_width">115dp</dimen>
+    <dimen name="card_width">100dp</dimen>
     <dimen name="qr_code_size">200dp</dimen>
     <dimen name="graphic_height">220dp</dimen>
     <dimen name="widget_width">580dp</dimen>
@@ -25,5 +25,4 @@
     <dimen name="url_font_size">12sp</dimen>
     <dimen name="type_fragment_title_size">14sp</dimen>
     <dimen name="url_title_font_size">16sp</dimen>
-
 </resources>
