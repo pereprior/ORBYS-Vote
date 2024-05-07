@@ -6,7 +6,8 @@ import com.orbys.quizz.core.extensions.getAnswerType
 import com.orbys.quizz.core.extensions.getAnswers
 import com.orbys.quizz.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.repositories.FileRepository
-import com.orbys.quizz.data.repositories.HttpRepositoryImpl
+import com.orbys.quizz.data.repositories.QuestionRepositoryImpl
+import com.orbys.quizz.data.repositories.UsersRepositoryImpl
 import com.orbys.quizz.domain.models.Question
 import io.ktor.http.ContentType
 import io.ktor.server.application.ApplicationCall
@@ -29,7 +30,8 @@ import javax.inject.Inject
  * @property appContext Contexto de la aplicacion.
  */
 class FileHandler @Inject constructor(
-    private val repository: HttpRepositoryImpl,
+    private val questionRepository: QuestionRepositoryImpl,
+    private val usersRepository: UsersRepositoryImpl,
     private val appContext: Context
 ) {
     private val fileRepository = FileRepository.getInstance(appContext)
@@ -84,13 +86,13 @@ class FileHandler @Inject constructor(
      * @return Contenido del archivo HTML.
      */
     fun loadHtmlFile(
-        htmlName: String = repository.getQuestionInfo().getAnswerType()
+        htmlName: String = questionRepository.getQuestion().getAnswerType()
     ): String? {
         val fileName = htmlName.lowercase(Locale.ROOT) + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
-            replace(it, repository.getQuestionInfo())
+            replace(it, questionRepository.getQuestion())
         }
     }
 
@@ -108,22 +110,22 @@ class FileHandler @Inject constructor(
 
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
-            question = repository.getQuestionInfo(),
-            answers = repository.getAnswersAsString()
+            question = questionRepository.getQuestion(),
+            answers = questionRepository.getAnswersAsString()
         )
 
         fileRepository.writeLine(
             date = date,
             time = time,
             ip = userIP,
-            username = repository.getUsernameByIp(userIP),
+            username = usersRepository.getUsernameByIp(userIP),
             answer = choice
         )
     }
 
     private suspend fun checkPossibleErrors(file: File, call: ApplicationCall) {
         // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
-        if (!repository.isTimeOut()) call.respondRedirect("/error/3")
+        if (!questionRepository.getTimerState()) call.respondRedirect("/error/3")
         // Si nadie a contestado la pregunta no se podra descargar el archivo.
         if (!file.exists()) call.respondRedirect("/error/6")
     }

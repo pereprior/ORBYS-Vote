@@ -5,6 +5,7 @@ import android.os.Environment
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.getAnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.domain.repositories.IFileRepository
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -31,6 +32,7 @@ class FileRepository private constructor(
 
     private var file = File("")
     override fun getFile() = file
+    override fun deleteFile() { if (file.exists()) file.delete() }
 
     /**
      * Crea un archivo CSV y escribe la leyenda de la pregunta.
@@ -39,7 +41,7 @@ class FileRepository private constructor(
      * @param question Pregunta a la que corresponde el nuevo fichero.
      * @param answers Lista de respuestas de la pregunta del fichero.
      */
-    override fun createFile(
+    fun createFile(
         fileName: String,
         question: Question,
         answers: List<String>
@@ -63,7 +65,7 @@ class FileRepository private constructor(
      * @param username Nombre del usuario que ha respondido.
      * @param answer Respuesta seleccionada por el usuario.
      */
-    override fun writeLine(
+    fun writeLine(
         date: String,
         time: String,
         ip: String,
@@ -80,8 +82,6 @@ class FileRepository private constructor(
             bufferedWriter.close()
         }
     }
-
-    override fun deleteFile() { if (file.exists()) file.delete() }
 
     /**
      * Escribe la leyenda de la pregunta en el archivo CSV.

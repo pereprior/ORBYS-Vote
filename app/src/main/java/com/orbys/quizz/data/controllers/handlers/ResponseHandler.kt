@@ -2,7 +2,8 @@ package com.orbys.quizz.data.controllers.handlers
 
 import com.orbys.quizz.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.core.managers.NetworkManager.Companion.USER_ENDPOINT
-import com.orbys.quizz.data.repositories.HttpRepositoryImpl
+import com.orbys.quizz.data.repositories.QuestionRepositoryImpl
+import com.orbys.quizz.data.repositories.UsersRepositoryImpl
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -24,7 +25,8 @@ import javax.inject.Inject
  * @property fileHandler Gestor de archivos.
  */
 class ResponseHandler@Inject constructor(
-    private val repository: HttpRepositoryImpl,
+    private val questionRepository: QuestionRepositoryImpl,
+    private val usersRepository: UsersRepositoryImpl,
     private val fileHandler: FileHandler
 ) {
 
@@ -47,18 +49,19 @@ class ResponseHandler@Inject constructor(
      */
     private fun Route.handleGetQuestionRoute() = get(QUESTION_ENDPOINT) {
         val userIP = call.request.origin.remoteHost
+        val question = questionRepository.getQuestion()
         val fileContent = fileHandler.loadHtmlFile()
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
-        if(!repository.getQuestionInfo().isAnonymous && repository.userNotExists(userIP))
+        if(!question.isAnonymous && usersRepository.userNotExists(userIP))
             call.respondRedirect(USER_ENDPOINT)
 
         // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
-        if (repository.isTimeOut())
+        if (questionRepository.getTimerState())
             call.respondRedirect("/error/5")
 
         // Si la pregunta no es de multiples respuestas y el usuario ya ha respondido, redirigimos a la pagina de error
-        if (repository.userResponded(userIP) && !repository.getQuestionInfo().isMultipleAnswers)
+        if (usersRepository.userResponded(userIP) && !question.isMultipleAnswers)
             call.respondRedirect("/error/7")
 
         try {
@@ -81,7 +84,7 @@ class ResponseHandler@Inject constructor(
         if (choice == "") return@post
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
-        if(!repository.isTimeOut()) {
+        if(!questionRepository.getTimerState()) {
             answerRegister(choice, userIP)
         }
 
@@ -115,30 +118,30 @@ class ResponseHandler@Inject constructor(
         val username = call.receiveParameters()["user"] ?: ""
 
         // Si ya hay un usuario con el mismo nombre, no se registra
-        if (repository.usernameExists(username)) {
+        if (usersRepository.usernameExists(username)) {
             call.respond(HttpStatusCode.Conflict)
             return@post
         }
 
         // Si el usuario no existe, se registra
-        if (repository.userNotExists(userIP))
-            repository.addUserToList(User(userIP, username))
+        if (usersRepository.userNotExists(userIP))
+            usersRepository.addUser(User(userIP, username))
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
 
     private fun answerRegister(choice: String?, userIP: String) {
         // Si la respuesta no existe, se añade
-        if (!repository.answerExists(choice) && choice?.contains(";") == false)
-            repository.addAnswerToList(choice)
+        if (!questionRepository.answerExists(choice) && choice?.contains(";") == false)
+            questionRepository.addAnswer(choice)
 
-        repository.incAnswerCount(choice)
+        questionRepository.incAnswerCount(choice)
 
         // Si el usuario no existe, se registra
-        if (repository.userNotExists(userIP))
-            repository.addUserToList(User(userIP, repository.getUsernameByIp(userIP), true))
+        if (usersRepository.userNotExists(userIP))
+            usersRepository.addUser(User(userIP, usersRepository.getUsernameByIp(userIP), true))
         else
-            repository.setUserAsResponded(userIP)
+            usersRepository.setUserResponded(userIP)
 
         if (choice != null)
             fileHandler.createDataFile(choice, userIP)

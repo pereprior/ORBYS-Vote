@@ -8,9 +8,6 @@ import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.ui.components.LaunchQuestionView
 import com.orbys.quizz.ui.viewmodels.LaunchServiceManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -38,9 +35,7 @@ class FloatingViewService: Service() {
             )
 
             // Añadir la pregunta a la vista
-            CoroutineScope(Dispatchers.Main).launch {
-                manager.bindWidget(launchQuestionView.binding)
-            }
+            manager.bindWidget(this.binding)
         }
     }
 

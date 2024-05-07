@@ -5,19 +5,11 @@ import com.orbys.quizz.core.managers.NetworkManager
 import com.orbys.quizz.data.controllers.handlers.FileHandler
 import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
-import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.data.repositories.IFileRepository
+import com.orbys.quizz.data.repositories.QuestionRepositoryImpl
+import com.orbys.quizz.data.repositories.UsersRepositoryImpl
+import com.orbys.quizz.domain.repositories.IFileRepository
 import com.orbys.quizz.domain.repositories.IQuestionRepository
 import com.orbys.quizz.domain.repositories.IUsersRepository
-import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
-import com.orbys.quizz.domain.repositories.UsersRepositoryImpl
-import com.orbys.quizz.domain.usecases.question.AddAnswerUseCase
-import com.orbys.quizz.domain.usecases.question.GetQuestionUseCase
-import com.orbys.quizz.domain.usecases.question.GetTimerStateUseCase
-import com.orbys.quizz.domain.usecases.question.IncAnswerUseCase
-import com.orbys.quizz.domain.usecases.users.AddUserUseCase
-import com.orbys.quizz.domain.usecases.users.GetUsersListUseCase
-import com.orbys.quizz.domain.usecases.users.SetUserRespondedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,18 +38,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideServerRepository() = HttpRepositoryImpl(
-        GetQuestionUseCase(provideQuestionRepository()),
-        IncAnswerUseCase(provideQuestionRepository()),
-        AddAnswerUseCase(provideQuestionRepository()),
-        GetTimerStateUseCase(provideQuestionRepository()),
-        GetUsersListUseCase(provideUsersRepository()),
-        AddUserUseCase(provideUsersRepository()),
-        SetUserRespondedUseCase(provideUsersRepository())
-    )
-
-    @Provides
-    @Singleton
     fun provideNetworkManager() = NetworkManager()
 
     @Provides
@@ -67,14 +47,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFileHandler(@ApplicationContext context: Context) = FileHandler(
-        provideServerRepository(),
+        QuestionRepositoryImpl.getInstance(),
+        UsersRepositoryImpl.getInstance(),
         context
     )
 
     @Provides
     @Singleton
     fun provideResponseHandler(@ApplicationContext context: Context) = ResponseHandler(
-        provideServerRepository(),
+        QuestionRepositoryImpl.getInstance(),
+        UsersRepositoryImpl.getInstance(),
         provideFileHandler(context),
     )
 

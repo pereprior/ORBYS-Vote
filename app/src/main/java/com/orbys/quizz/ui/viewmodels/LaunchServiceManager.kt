@@ -2,6 +2,7 @@ package com.orbys.quizz.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,11 +14,11 @@ import com.orbys.quizz.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.domain.usecases.ClearUsersListUseCase
+import com.orbys.quizz.domain.usecases.GetQuestionUseCase
 import com.orbys.quizz.domain.usecases.GetServerUrlUseCase
-import com.orbys.quizz.domain.usecases.question.GetQuestionUseCase
-import com.orbys.quizz.domain.usecases.question.SetTimeOutUseCase
-import com.orbys.quizz.domain.usecases.users.ClearUsersListUseCase
-import com.orbys.quizz.domain.usecases.users.GetUsersListUseCase
+import com.orbys.quizz.domain.usecases.GetUsersListUseCase
+import com.orbys.quizz.domain.usecases.SetTimeOutUseCase
 import com.orbys.quizz.ui.components.QRCodeGenerator
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.MainActivity
@@ -59,7 +60,7 @@ class LaunchServiceManager @Inject constructor(
         qrUrl.text = url
     }
 
-    suspend fun bindWidget(binding: ServiceLaunchQuestionBinding) {
+    fun bindWidget(binding: ServiceLaunchQuestionBinding) {
         val question = getQuestion()
 
         with(binding) {
@@ -70,8 +71,12 @@ class LaunchServiceManager @Inject constructor(
             closeButton.setOnClickListener { stopService() }
 
             // Si el tiempo de espera no es nulo se muestra el temporizador
-            if (question.timeOut != null && question.timeOut > 0)
+            if (question.timeOut!! > 0) {
                 setTimerCount(question.timeOut)
+                Log.d("LaunchServiceManager2", "SIIIII")
+            } else {
+                Log.d("LaunchServiceManager2", "NOOO")
+            }
 
             // Boton para finalizar la pregunta
             timeOutButton.setOnClickListener {
@@ -92,7 +97,8 @@ class LaunchServiceManager @Inject constructor(
         setTimeOut(false)
     }
 
-    private suspend fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
         // Muestra el temporizador
         chronometerTitle.visibility = ConstraintLayout.VISIBLE
         timer.visibility = ConstraintLayout.VISIBLE
@@ -106,7 +112,9 @@ class LaunchServiceManager @Inject constructor(
         timer.startCountDown()
 
         // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
-        timer.isFinished.collect { setTimeOut(it) }
+        GlobalScope.launch {
+            timer.isFinished.collect { setTimeOut(it) }
+        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -122,26 +130,29 @@ class LaunchServiceManager @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
-        // Recogemos los cambios en el numero de respuestas de la pregunta
-        question.answers.collect { answers ->
-            barView.clearBars()
+    private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
+        GlobalScope.launch {
+            // Recogemos los cambios en el numero de respuestas de la pregunta
+            question.answers.collect { answers ->
+                barView.clearBars()
 
-            // Por cada respuesta nueva añadimos una barra al grafico
-            answers.forEach { answer ->
-                val bar = Bar(answer.answer, height = answer.getCount())
-                barView.addBar(bar)
+                // Por cada respuesta nueva añadimos una barra al grafico
+                answers.forEach { answer ->
+                    val bar = Bar(answer.answer, height = answer.getCount())
+                    barView.addBar(bar)
 
-                GlobalScope.launch {
-                    // Recoge los cambios en contador para cada respuesta
-                    answer.count.collect { count ->
-                        bar.height = count
-                        barView.invalidate()
+                    GlobalScope.launch {
+                        // Recoge los cambios en contador para cada respuesta
+                        answer.count.collect { count ->
+                            bar.height = count
+                            barView.invalidate()
+                        }
                     }
-                }
 
+                }
             }
         }
+
     }
 
     private fun stopService(isDownloadFragment: Boolean = false) {

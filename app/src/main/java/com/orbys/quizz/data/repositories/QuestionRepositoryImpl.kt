@@ -1,16 +1,17 @@
-package com.orbys.quizz.domain.repositories
+package com.orbys.quizz.data.repositories
 
 import com.orbys.quizz.core.extensions.getAnswers
 import com.orbys.quizz.core.extensions.getCount
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.domain.repositories.IQuestionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Clase que gestiona el flujo de datos relacionados con las preguntas y respuestas.
  *
  * @property question Un flujo mutable privado la información de la pregunta.
- * @property timerState Un flujo mutable para gestionar el tiempo limite de la pregunta.
+ * @property isTimerOut Un flujo mutable para gestionar el tiempo limite de la pregunta.
  */
 class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     companion object {
@@ -30,26 +31,35 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     }
 
     private var question = MutableStateFlow(Question(""))
-    private val timerState = MutableStateFlow(false)
+    private val isTimerOut = MutableStateFlow(false)
 
-    // Metodos para gestionar el temporizador
-    override fun getTimerState(): MutableStateFlow<Boolean> = timerState
-    override fun setTimeOut(isTimeOut: Boolean) { timerState.tryEmit(isTimeOut) }
-
-    // Metodos para gestionar la pregunta lanzada
     override fun getQuestion(): Question = question.value
     override fun addQuestion(question: Question) { this.question.value = question }
+    override fun setTimeOut(isTimeOut: Boolean) { isTimerOut.tryEmit(isTimeOut) }
 
-    // Métodos para gestionar las respuestas de una pregunta
-    override fun addAnswer(answerText: String) {
+    // Devuelve si el tiempo de la pregunta ha terminado
+    fun getTimerState(): Boolean = isTimerOut.value
+
+    // Devuelve si la respuesta existe en la lista de respuestas
+    fun answerExists(answer: String?) = question.value.getAnswers().any { it.answer == answer }
+
+    // Devuelve la lista de respuestas como una lista de strings
+    fun getAnswersAsString() = question.value.getAnswers().map { it.answer }
+
+    // Añade una respuesta a la lista de respuestas
+    fun addAnswer(answerText: String?) {
+        if (answerText == null) return
         val newAnswersList = question.value.getAnswers() + Answer(answerText)
         question.value.answers.tryEmit(newAnswersList)
     }
-    override fun incAnswer(answerText: String) {
-        for (answer in question.value.getAnswers()) {
-            if (answer.answer == answerText) {
-                answer.count.tryEmit(answer.getCount() + 1)
-            }
+
+    // Incrementa el contador de respuestas
+    fun incAnswerCount(answer: String?) {
+        answer?.split(";")?.forEach { incAnswer(it) } ?: incAnswer(answer ?: "")
+    }
+    private fun incAnswer(answerText: String) {
+        question.value.getAnswers().firstOrNull { it.answer == answerText }?.let {
+            it.count.tryEmit(it.getCount() + 1)
         }
     }
 

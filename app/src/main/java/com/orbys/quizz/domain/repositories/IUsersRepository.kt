@@ -9,10 +9,4 @@ interface IUsersRepository {
 
     // Eliminar todos los usuarios de la lista
     fun clearRespondedUsers()
-
-    // Añadir un usuario a la lista
-    fun addRespondedUser(user: User)
-
-    // Marcar al usuario como que ya ha respondido
-    fun setUserResponded(ip: String)
 }

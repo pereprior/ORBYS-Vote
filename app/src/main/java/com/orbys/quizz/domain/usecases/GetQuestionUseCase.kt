@@ -1,4 +1,4 @@
-package com.orbys.quizz.domain.usecases.question
+package com.orbys.quizz.domain.usecases
 
 import com.orbys.quizz.domain.repositories.IQuestionRepository
 import javax.inject.Inject
