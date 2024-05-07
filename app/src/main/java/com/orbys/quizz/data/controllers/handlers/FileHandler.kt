@@ -8,10 +8,12 @@ import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.domain.models.Question
+import io.ktor.http.ContentType
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
 import io.ktor.server.response.respondFile
 import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import java.io.File
@@ -46,8 +48,21 @@ class FileHandler @Inject constructor(
 
         route.apply {
             handleDownloadRoute()
+            staticContent()
         }
 
+    }
+
+    /**
+     * Ruta para obtener el archivo de estilos CSS.
+     *
+     * @return GET
+     */
+    private fun Route.staticContent() {
+        get("/styles.css") {
+            val css = this::class.java.classLoader?.getResource("assets/styles.css")?.readText()
+            call.respondText(css ?: "", ContentType.Text.CSS)
+        }
     }
 
     /**

@@ -6,6 +6,7 @@
 
     <!-- Fitxategiaren ordezkariek -->
     <string name="launch_button_placeholder">Abiarazi</string>
+    <string name="send_button_placeholder">Bidali</string>
     <string name="yes_answer_placeholder">Bai</string>
     <string name="no_answers_placeholder">Ez</string>
     <string name="true_answer_placeholder">Benetan</string>

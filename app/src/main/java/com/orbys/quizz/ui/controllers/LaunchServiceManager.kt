@@ -115,7 +115,7 @@ class LaunchServiceManager @Inject constructor(
         GlobalScope.launch {
             getUsers().collect { usersList ->
                 withContext(Dispatchers.Main) {
-                    respondedUsersCount.text = "${context.getString(R.string.users_count_title)}${usersList.size}"
+                    respondedUsersCount.text = context.getString(R.string.users_count_title) + usersList.size
                 }
             }
         }

@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.IBinder
 import com.orbys.quizz.R
 import com.orbys.quizz.data.services.HttpService
+import com.orbys.quizz.ui.components.LaunchQuestionView
 import com.orbys.quizz.ui.controllers.LaunchServiceManager
-import com.orbys.quizz.ui.view.widgets.LaunchQuestionView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

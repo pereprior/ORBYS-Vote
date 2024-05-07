@@ -6,6 +6,7 @@
 
     <!-- Platzhalter für die Datei -->
     <string name="launch_button_placeholder">Starten</string>
+    <string name="send_button_placeholder">Senden</string>
     <string name="yes_answer_placeholder">Ja</string>
     <string name="no_answers_placeholder">Nein</string>
     <string name="true_answer_placeholder">Wahr</string>

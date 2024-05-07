@@ -5,7 +5,8 @@
     <string name="numeric_answer_hint">Número máximo:\n</string>
 
     <!-- Substituições de arquivo -->
-    <string name="launch_button_placeholder">Iniciar</string>
+    <string name="launch_button_placeholder">Lançar</string>
+    <string name="send_button_placeholder">Enviar</string>
     <string name="yes_answer_placeholder">Sim</string>
     <string name="no_answers_placeholder">Não</string>
     <string name="true_answer_placeholder">Verdadeiro</string>

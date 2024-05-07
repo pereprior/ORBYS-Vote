@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.view.widgets
+package com.orbys.quizz.ui.components
 
 import android.content.Context
 import android.graphics.PixelFormat
