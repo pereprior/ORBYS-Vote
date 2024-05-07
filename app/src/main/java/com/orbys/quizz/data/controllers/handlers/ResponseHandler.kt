@@ -1,8 +1,8 @@
 package com.orbys.quizz.data.controllers.handlers
 
+import com.orbys.quizz.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
+import com.orbys.quizz.core.managers.NetworkManager.Companion.USER_ENDPOINT
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
-import com.orbys.quizz.data.utils.ServerUtils.Companion.USER_ENDPOINT
 import com.orbys.quizz.domain.models.User
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode

@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.stopActiveServices
-import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
+import com.orbys.quizz.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.databinding.FragmentQrCodeBinding
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.controllers.QuestionViewModel
+import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

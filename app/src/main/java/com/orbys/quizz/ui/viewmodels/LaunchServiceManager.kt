@@ -1,4 +1,4 @@
-package com.orbys.quizz.ui.controllers
+package com.orbys.quizz.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.getCount
 import com.orbys.quizz.core.extensions.minutesToSeconds
 import com.orbys.quizz.core.extensions.secondsToMillis
-import com.orbys.quizz.data.utils.ServerUtils.Companion.QUESTION_ENDPOINT
+import com.orbys.quizz.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question

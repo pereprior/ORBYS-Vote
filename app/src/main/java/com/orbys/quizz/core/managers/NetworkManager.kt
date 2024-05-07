@@ -17,16 +17,28 @@ import java.util.Collections
  */
 class NetworkManager {
 
-    // Devuelve la dirección IP local del dispositivo que ejecuta la app
-    fun getLocalIpAddress() = try { getLocalIpFromNetworkInterfaces() } catch (ex: Exception) { null }
+    companion object {
+        const val SERVER_PORT = 8888
+        const val QUESTION_ENDPOINT = "/question"
+        const val DOWNLOAD_ENDPOINT = "/download"
+        const val USER_ENDPOINT = "/user"
+    }
 
-    fun checkNetwork(activity: AppCompatActivity) {
+    // Devuelve la URL del servidor con el endpoint especificado
+    fun getServerUrl(endpoint: String) = "http://${getLocalIpAddress()}:$SERVER_PORT$endpoint"
+
+    fun checkNetworkOnActivity(activity: AppCompatActivity) {
         if (!isNetworkAvailable(activity)) {
             activity.showToastWithCustomView(activity.getString(R.string.no_network_error), Toast.LENGTH_LONG)
             activity.finish()
             return
         }
     }
+
+    // Devuelve la dirección IP local del dispositivo que ejecuta la app
+    private fun getLocalIpAddress() = try {
+        getLocalIpFromNetworkInterfaces()
+    } catch (ex: Exception) { null }
 
     /**
      * Comprueba si hay conexión a Internet.

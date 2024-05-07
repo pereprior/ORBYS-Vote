@@ -1,4 +1,4 @@
-package com.orbys.quizz.di
+package com.orbys.quizz.core.di
 
 import android.content.Context
 import com.orbys.quizz.core.managers.NetworkManager
@@ -7,7 +7,6 @@ import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
 import com.orbys.quizz.data.repositories.IFileRepository
-import com.orbys.quizz.data.utils.ServerUtils
 import com.orbys.quizz.domain.repositories.IQuestionRepository
 import com.orbys.quizz.domain.repositories.IUsersRepository
 import com.orbys.quizz.domain.repositories.QuestionRepositoryImpl
@@ -59,6 +58,10 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideNetworkManager() = NetworkManager()
+
+    @Provides
+    @Singleton
     fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository.getInstance(context)
 
     @Provides
@@ -74,9 +77,5 @@ object AppModule {
         provideServerRepository(),
         provideFileHandler(context),
     )
-
-    @Provides
-    @Singleton
-    fun provideServerUtils() = ServerUtils(NetworkManager())
 
 }

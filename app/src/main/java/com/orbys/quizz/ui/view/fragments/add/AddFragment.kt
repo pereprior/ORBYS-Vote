@@ -15,9 +15,9 @@ import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.controllers.QuestionViewModel
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
+import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

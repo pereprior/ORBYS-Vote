@@ -1,10 +1,10 @@
 package com.orbys.quizz.domain.usecases
 
-import com.orbys.quizz.data.utils.ServerUtils
+import com.orbys.quizz.core.managers.NetworkManager
 import javax.inject.Inject
 
 class GetServerUrlUseCase @Inject constructor(
-    private val serverUtils: ServerUtils
+    private val manager: NetworkManager
 ) {
-    operator fun invoke(endpoint: String): String = serverUtils.getServerUrl(endpoint)
+    operator fun invoke(endpoint: String): String = manager.getServerUrl(endpoint)
 }

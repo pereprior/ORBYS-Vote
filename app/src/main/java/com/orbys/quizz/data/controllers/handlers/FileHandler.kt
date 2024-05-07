@@ -4,9 +4,9 @@ import android.content.Context
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.getAnswerType
 import com.orbys.quizz.core.extensions.getAnswers
+import com.orbys.quizz.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.HttpRepositoryImpl
-import com.orbys.quizz.data.utils.ServerUtils.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.domain.models.Question
 import io.ktor.http.ContentType
 import io.ktor.server.application.ApplicationCall

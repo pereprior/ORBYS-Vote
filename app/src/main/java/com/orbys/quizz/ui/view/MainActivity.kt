@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         networkManager = NetworkManager()
 
         // Comprobar si hay conexión a Internet
-        networkManager.checkNetwork(this)
+        networkManager.checkNetworkOnActivity(this)
 
         // Verificar si tenemos los permisos necesarios
         permissionManager.checkAndRequestPermissions()

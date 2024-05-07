@@ -3,8 +3,8 @@ package com.orbys.quizz.data.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.orbys.quizz.core.managers.NetworkManager.Companion.SERVER_PORT
 import com.orbys.quizz.data.controllers.HttpController
-import com.orbys.quizz.data.utils.ServerUtils.Companion.SERVER_PORT
 import dagger.hilt.android.AndroidEntryPoint
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.server.application.install
