@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.orbys.quizz.R
-import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.ui.components.LaunchQuestionView
 import com.orbys.quizz.ui.viewmodels.LaunchServiceManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,12 +17,13 @@ class FloatingViewService: Service() {
 
     @Inject
     lateinit var manager: LaunchServiceManager
+
     private lateinit var launchQuestionView: LaunchQuestionView
 
     override fun onCreate() {
         super.onCreate()
 
-        startService(Intent(this, HttpService::class.java))
+        startService(Intent(this, manager.getHttpService()::class.java))
 
         launchQuestionView = LaunchQuestionView(this).apply {
             setOnTouchListener(this)

@@ -15,6 +15,7 @@ import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
 import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.usecases.ClearUsersListUseCase
+import com.orbys.quizz.domain.usecases.GetHttpServiceUseCase
 import com.orbys.quizz.domain.usecases.GetQuestionUseCase
 import com.orbys.quizz.domain.usecases.GetServerUrlUseCase
 import com.orbys.quizz.domain.usecases.GetUsersListUseCase
@@ -45,8 +46,11 @@ class LaunchServiceManager @Inject constructor(
     private val getQuestion: GetQuestionUseCase,
     private val clearUsers: ClearUsersListUseCase,
     private val setTimeOut: SetTimeOutUseCase,
-    private val getUsers: GetUsersListUseCase
+    private val getUsers: GetUsersListUseCase,
+    private val httpService: GetHttpServiceUseCase
 ) {
+
+    fun getHttpService() = httpService()
 
     fun printQrCode(
         endpoint: String = QUESTION_ENDPOINT,
