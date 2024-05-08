@@ -8,6 +8,9 @@ import com.orbys.quizz.databinding.ActivityMainBinding
 import com.orbys.quizz.ui.view.fragments.DownloadFragment
 import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 /**
@@ -26,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         networkManager = NetworkManager()
 
         // Comprobar si hay conexión a Internet
-        networkManager.checkNetworkOnActivity(this)
+        CoroutineScope(Dispatchers.Main).launch {
+            networkManager.checkNetworkOnActivity(this@MainActivity)
+        }
 
         // Verificar si tenemos los permisos necesarios
         permissionManager.checkAndRequestPermissions()

@@ -2,7 +2,6 @@ package com.orbys.quizz.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -75,12 +74,8 @@ class LaunchServiceManager @Inject constructor(
             closeButton.setOnClickListener { stopService() }
 
             // Si el tiempo de espera no es nulo se muestra el temporizador
-            if (question.timeOut!! > 0) {
+            if (question.timeOut!! > 0)
                 setTimerCount(question.timeOut)
-                Log.d("LaunchServiceManager2", "SIIIII")
-            } else {
-                Log.d("LaunchServiceManager2", "NOOO")
-            }
 
             // Boton para finalizar la pregunta
             timeOutButton.setOnClickListener {
@@ -160,9 +155,10 @@ class LaunchServiceManager @Inject constructor(
     }
 
     private fun stopService(isDownloadFragment: Boolean = false) {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        if (isDownloadFragment) intent.putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            if (isDownloadFragment) putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
+        }
 
         // Iniciamos la actividad principal
         context.startActivity(intent)

@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Vista que muestra un codigo qr -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/small_margin"
+    android:background="@color/background_black"
+    android:layout_gravity="center" >
 
     <!-- Código QR -->
     <ImageView
         android:id="@+id/qrCode"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/medium_margin"
-        android:contentDescription="@string/qr_code_desc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:contentDescription="@string/qr_code_desc" />
 
-    <!-- Texto con la url del codigo qr -->
+    <!-- Texto con el titulo del codigo qr -->
     <TextView
-        android:id="@+id/qrUrl"
-        android:layout_width="wrap_content"
+        android:id="@+id/qrTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
-        android:textSize="@dimen/title_font_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/qrCode" />
+        android:textAlignment="center"
+        android:layout_marginVertical="@dimen/medium_margin"
+        android:textSize="@dimen/title_font_size" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Texto con el texto del codigo qr -->
+    <TextView
+        android:id="@+id/qrText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:textSize="@dimen/title_font_size" />
+
+</LinearLayout>

@@ -47,8 +47,8 @@ class DownloadFragment: Fragment() {
 
             qrCode.setImageBitmap(QRCodeGenerator(requireContext())
                 .encodeAsBitmap(url, true))
-
-            qrUrl.text = url
+            qrTitle.text = url
+            qrText.visibility = View.GONE
 
             return root
         }

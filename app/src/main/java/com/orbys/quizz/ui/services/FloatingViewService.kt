@@ -31,7 +31,7 @@ class FloatingViewService: Service() {
             // Añadir el codigo qr a la vista
             manager.printQrCode(
                 qrCode = findViewById(R.id.qrCode),
-                qrUrl = findViewById(R.id.qrUrl)
+                qrUrl = findViewById(R.id.qrTitle)
             )
 
             // Añadir la pregunta a la vista

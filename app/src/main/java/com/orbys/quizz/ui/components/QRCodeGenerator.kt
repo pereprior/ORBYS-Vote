@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.net.wifi.WifiManager
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.zxing.BarcodeFormat
@@ -14,8 +15,10 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.orbys.quizz.R
+import java.lang.reflect.InvocationTargetException
 
 /**
  * Clase para generar códigos QR con un logo en el centro.
@@ -25,10 +28,62 @@ import com.orbys.quizz.R
 class QRCodeGenerator(private val context: Context) {
 
     companion object {
-        private const val DEFAULT_SIZE = 300
+        private const val DEFAULT_SIZE = 400
         // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
         private const val LOGO_SIZE_DIFF = 4
     }
+
+    fun generateWifiQRCode(
+        ssid: String,
+        password: String,
+        logo: Boolean = false,
+        logoResId: Int = R.drawable.ic_orbys
+    ): Bitmap {
+        //"WIFI:S:SSID;P:PASSWORD;T:Security;"
+        // Generar cadena QR
+        val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
+        val qrCodeWriter = QRCodeWriter()
+        val bitMatrix: BitMatrix = qrCodeWriter.encode(
+            wifiData,
+            BarcodeFormat.QR_CODE,
+            DEFAULT_SIZE, DEFAULT_SIZE,
+            mapOf(EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.H)
+        )
+
+        val qrCode = createBitmapFromBitMatrix(bitMatrix, logo)
+        val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
+
+        return overlayLogoOnQrCode(qrCode, logoBitMap)
+    }
+
+    fun getHotspotCredentials(): Pair<String?, String?> {
+        val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        try {
+            val method = wifiManager.javaClass.getDeclaredMethod("getWifiApConfiguration")
+            method.isAccessible = true
+            val wifiConfig = method.invoke(wifiManager) as Any
+            val ssidField = wifiConfig.javaClass.getDeclaredField("SSID")
+            ssidField.isAccessible = true
+            val ssid = ssidField.get(wifiConfig) as String
+            val passwordField = wifiConfig.javaClass.getDeclaredField("preSharedKey")
+            passwordField.isAccessible = true
+            val password = passwordField.get(wifiConfig) as String
+            return Pair(ssid.removeSurrounding("\""), password)
+        } catch (e: NoSuchMethodException) {
+            e.printStackTrace()
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        } catch (e: InvocationTargetException) {
+            e.printStackTrace()
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
+        }
+
+        return Pair(null, null)
+    }
+
+    //----------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
 
     /**
      * Genera un codigo QR a partir de una URL.

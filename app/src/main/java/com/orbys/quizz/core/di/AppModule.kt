@@ -7,6 +7,7 @@ import com.orbys.quizz.data.controllers.handlers.ResponseHandler
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.data.repositories.UsersRepositoryImpl
+import com.orbys.quizz.data.services.HttpService
 import com.orbys.quizz.domain.repositories.IFileRepository
 import com.orbys.quizz.domain.repositories.IQuestionRepository
 import com.orbys.quizz.domain.repositories.IUsersRepository
@@ -43,6 +44,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository.getInstance(context)
+
+    @Provides
+    @Singleton
+    fun provideHttpService() = HttpService()
 
     @Provides
     @Singleton

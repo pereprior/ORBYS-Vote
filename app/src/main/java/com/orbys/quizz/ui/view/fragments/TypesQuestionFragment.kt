@@ -9,6 +9,7 @@ import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
+import com.orbys.quizz.ui.components.HotspotDialog
 import com.orbys.quizz.ui.view.fragments.cards.BooleanCard
 import com.orbys.quizz.ui.view.fragments.cards.NumericCard
 import com.orbys.quizz.ui.view.fragments.cards.OtherCard
@@ -48,8 +49,13 @@ class TypesQuestionFragment: Fragment() {
                 .add(otherCardContainer.id, OtherCard())
                 .commit()
 
+            hotspotQr.setOnClickListener {
+                HotspotDialog(requireContext()).show()
+            }
+
             return root
         }
+
     }
 
 }

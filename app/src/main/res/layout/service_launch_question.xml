@@ -14,7 +14,7 @@
     <!-- Layout que contiene la información para contestar la pregunta -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/activity_layout_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/widget_layout_size"
         android:layout_margin="4dp"
         android:background="@drawable/bg_main"
         android:gravity="center">
@@ -40,7 +40,7 @@
             android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginTop="4dp"
             android:gravity="center"
             android:textSize="@dimen/url_title_font_size"
             android:maxWidth="@dimen/qr_code_size"
@@ -54,7 +54,6 @@
             layout="@layout/fragment_qr_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/small_margin"
             app:layout_constraintTop_toBottomOf="@id/question_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -63,8 +62,8 @@
 
     <!-- Layout que contiene el recuento de las respuestas enviadas al servidor -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/widget_layout_width"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/widget_layout_size"
+        android:layout_height="@dimen/widget_layout_size"
         android:layout_margin="4dp"
         android:background="@drawable/bg_main" >
 

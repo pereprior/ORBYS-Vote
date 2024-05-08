@@ -19,7 +19,7 @@
     <!-- Texto con el mensaje del toast -->
     <TextView
         android:id="@+id/custom_toast_text"
-        android:layout_width="@dimen/widget_layout_width"
+        android:layout_width="@dimen/widget_layout_size"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/small_margin"
         android:textAlignment="center"
