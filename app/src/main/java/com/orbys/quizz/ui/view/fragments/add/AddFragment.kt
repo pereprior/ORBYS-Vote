@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -89,7 +88,7 @@ abstract class AddFragment: Fragment() {
 
         // Comprobar si la pregunta o el título están vacíos
         if (question.question.isEmpty()) {
-            errorMessage(R.string.empty_answers_error, false)
+            context.showToastWithCustomView(getString(R.string.empty_answers_error), Toast.LENGTH_LONG)
             return
         }
 
@@ -100,19 +99,6 @@ abstract class AddFragment: Fragment() {
 
         activity?.finish()
         binding.questionQuestion.text.clear()
-    }
-
-    protected fun errorMessage(
-        message: Int, showToast: Boolean = true, showErrorMessage: Boolean = true
-    ) {
-        val errorView: TextView = activity?.findViewById(R.id.error_message) ?: return
-
-        // Mostrar un mensaje de error
-        if (showErrorMessage) {
-            errorView.visibility = View.VISIBLE
-            errorView.text = getString(message)
-        }
-        if (showToast) context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
     }
 
     // Configurar las opciones adicionales de la pregunta

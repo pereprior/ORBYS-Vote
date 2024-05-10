@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
-import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
 import com.orbys.quizz.ui.components.QRCodeGenerator
@@ -37,12 +36,6 @@ class TypesQuestionFragment: Fragment() {
 
         // Detiene los servicios activos
         stopActiveServices()
-
-        // Cambios en los elementos de la actividad principal
-        replaceMainActivityBindingFunctions(
-            titleRedId = R.string.activity_question_type_title,
-            closeButtonVisibility = View.VISIBLE
-        )
 
         with(binding) {
 

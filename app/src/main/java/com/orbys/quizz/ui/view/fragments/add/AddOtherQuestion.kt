@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.TextAnswersManager
@@ -48,14 +50,14 @@ class AddOtherQuestion: AddFragment() {
     override fun saveQuestion(context: Context) {
         // Controlar que los campos de las preguntas no estén vacíos
         if (fieldsManager.anyAnswerIsEmpty()) {
-            errorMessage(R.string.empty_answers_error, false)
+            context.showToastWithCustomView(getString(R.string.empty_answers_error), Toast.LENGTH_LONG)
             return
         }
 
         // Controlar que no haya dos preguntas iguales
         val answerTexts = fieldsManager.getAnswersText()
         if (answerTexts.size != answerTexts.toSet().size) {
-            errorMessage(R.string.same_question_error, false)
+            context.showToastWithCustomView(getString(R.string.same_question_error), Toast.LENGTH_LONG)
             return
         }
 

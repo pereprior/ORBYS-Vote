@@ -56,7 +56,7 @@
     <string name="no_response_message">The server has not received responses</string>
 
     <!-- Main Activity messages -->
-    <string name="activity_question_type_title">Select the type of question:</string>
+    <string name="activity_question_type_title">Select the type of question</string>
     <string name="yesno_question_type_title">Yes/No</string>
     <string name="truefalse_question_type_title">True/False</string>
     <string name="stars_question_type_title">Stars</string>

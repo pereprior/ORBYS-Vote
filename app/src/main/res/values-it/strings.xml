@@ -37,7 +37,7 @@
     <string name="no_response_message">Il server non ha ricevuto risposte</string>
 
     <!-- Messaggi dell'attività principale -->
-    <string name="activity_question_type_title">Seleziona il tipo di domanda:</string>
+    <string name="activity_question_type_title">Seleziona il tipo di domanda</string>
     <string name="yesno_question_type_title">Sì/No</string>
     <string name="truefalse_question_type_title">Vero/Falso</string>
     <string name="stars_question_type_title">Stelle</string>

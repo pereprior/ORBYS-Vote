@@ -3,7 +3,9 @@ package com.orbys.quizz.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.orbys.quizz.R
+import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.AnswerManager
@@ -48,7 +50,7 @@ class AddNumericQuestion: AddFragment() {
 
     override fun saveQuestion(context: Context) {
         if (answersManager.anyAnswerIsEmpty()) {
-            errorMessage(R.string.empty_answers_error, false)
+            context.showToastWithCustomView(getString(R.string.empty_answers_error), Toast.LENGTH_LONG)
             return
         }
 

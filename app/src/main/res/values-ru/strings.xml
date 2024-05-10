@@ -37,7 +37,7 @@
     <string name="no_response_message">Сервер не получил ответов</string>
 
     <!-- Сообщения главной активности -->
-    <string name="activity_question_type_title">Выберите тип вопроса:</string>
+    <string name="activity_question_type_title">Выберите тип вопроса</string>
     <string name="yesno_question_type_title">Да/Нет</string>
     <string name="truefalse_question_type_title">Истина/Ложь</string>
     <string name="stars_question_type_title">Звезды</string>

@@ -37,7 +37,7 @@
     <string name="no_response_message">El servidor no ha rebut respostes</string>
 
     <!-- Missatges de l'activitat principal -->
-    <string name="activity_question_type_title">Selecciona el tipus de pregunta:</string>
+    <string name="activity_question_type_title">Selecciona el tipus de pregunta</string>
     <string name="yesno_question_type_title">Sí/No</string>
     <string name="truefalse_question_type_title">Vertader/Fals</string>
     <string name="stars_question_type_title">Estrelles</string>

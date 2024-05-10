@@ -37,7 +37,7 @@
     <string name="no_response_message">Serverul nu a primit răspunsuri</string>
 
     <!-- Mesaje ale activității principale -->
-    <string name="activity_question_type_title">Selectați tipul de întrebare:</string>
+    <string name="activity_question_type_title">Selectați tipul de întrebare</string>
     <string name="yesno_question_type_title">Da/Nu</string>
     <string name="truefalse_question_type_title">Adevărat/Fals</string>
     <string name="stars_question_type_title">Stele</string>

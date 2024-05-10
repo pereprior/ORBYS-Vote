@@ -37,7 +37,7 @@
     <string name="no_response_message">لم يتلقَ الخادم أية استجابات</string>
 
     <!-- رسائل النشاط الرئيسية -->
-    <string name="activity_question_type_title">اختر نوع السؤال:</string>
+    <string name="activity_question_type_title">اختر نوع السؤال</string>
     <string name="yesno_question_type_title">نعم/لا</string>
     <string name="truefalse_question_type_title">صحيح/خطأ</string>
     <string name="stars_question_type_title">نجوم</string>

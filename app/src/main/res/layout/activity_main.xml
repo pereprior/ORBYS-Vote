@@ -9,33 +9,17 @@
     tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
 
-    <!-- Botón para volver a la pagina anterior -->
-    <ImageButton
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/exit_button_desc"
-        android:scaleX="0.6"
-        android:scaleY="0.6"
-        android:src="@drawable/ic_back"
-        app:tint="@color/blue_selected"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <!-- Logo de la empresa -->
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
+        android:layout_width="65dp"
+        android:layout_height="25dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/app_logo_desc"
         android:src="@drawable/orbys_logo"
+        android:layout_marginHorizontal="@dimen/medium_margin"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Botón de cerrar la actividad -->
     <ImageButton
@@ -44,48 +28,37 @@
         android:layout_height="24dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/exit_button_desc"
-        android:scaleX="0.6"
-        android:scaleY="0.6"
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:layout_marginHorizontal="@dimen/medium_margin"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue_selected" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Separador de la actividad y el fragmento -->
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        app:dividerColor="@color/white"
+        app:dividerThickness="0.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
     <!-- Titulo con la funcionalidad del fragmento -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
-        android:textSize="@dimen/type_fragment_title_size"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:textSize="50sp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/app_logo"
+        android:text="QUIZZ"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/error_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textAlignment="center"
-        android:textSize="@dimen/font_size"
-        android:visibility="gone"
-        android:textColor="@android:color/holo_red_light"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Separador de la actividad y el fragmento -->
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@id/error_message"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="parent" />
 
     <!-- Contenedor de los fragmentos de la actividad-->
     <LinearLayout
@@ -96,6 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        app:layout_constraintTop_toBottomOf="@id/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

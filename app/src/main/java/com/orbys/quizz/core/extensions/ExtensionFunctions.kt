@@ -70,26 +70,21 @@ fun Fragment.replaceMainActivityBindingFunctions(
     titleRedId: Int, closeButtonVisibility: Int = View.GONE,
     backButtonVisibility: Int = View.GONE, backButtonNavFragment: Fragment? = null
 ) {
-    val backButton = activity?.findViewById<ImageButton>(R.id.back_button)
     val closeButton = activity?.findViewById<ImageButton>(R.id.close_button)
     val title = activity?.findViewById<TextView>(R.id.title)
-    val errorMessage = activity?.findViewById<TextView>(R.id.error_message)
 
     title?.text = getString(titleRedId)
-    errorMessage?.visibility = View.GONE
-
     // Muestra u oculta los botones de cerrar y retroceder según requiera el fragmento
     closeButton?.visibility = closeButtonVisibility
-    backButton?.visibility = backButtonVisibility
 
-    if (backButtonVisibility == View.VISIBLE && backButtonNavFragment != null) {
+    /*if (backButtonVisibility == View.VISIBLE && backButtonNavFragment != null) {
         backButton?.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.apply {
                 replace(R.id.fragment_container, backButtonNavFragment)
                 commit()
             }
         }
-    }
+    }*/
 
 }
 

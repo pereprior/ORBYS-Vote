@@ -37,7 +37,7 @@
     <string name="no_response_message">Zerbitzariak ez du erantzunik jaso</string>
 
     <!-- Gaitasun nagusiaren mezuak -->
-    <string name="activity_question_type_title">Galdera mota hautatu:</string>
+    <string name="activity_question_type_title">Galdera mota hautatu</string>
     <string name="yesno_question_type_title">Bai/Ez</string>
     <string name="truefalse_question_type_title">Benetan/Gezurra</string>
     <string name="stars_question_type_title">Izarrak</string>

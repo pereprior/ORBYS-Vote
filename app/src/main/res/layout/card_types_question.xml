@@ -4,40 +4,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/question_type_card"
-    android:layout_width="@dimen/card_width"
+    android:layout_width="175dp"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/small_margin"
-    app:cardCornerRadius="@dimen/small_margin"
+    app:cardCornerRadius="@dimen/medium_margin"
     app:cardElevation="@dimen/small_margin"
+    android:backgroundTint="@color/blue_selected"
     android:layout_gravity="center"
     tools:context=".ui.view.MainActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="12dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        tools:ignore="UseCompoundDrawables">
+        android:layout_height="wrap_content" >
 
         <!-- Icono del tipo de la pregunta que representa la tarjeta -->
         <ImageView
             android:id="@+id/card_icon"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:contentDescription="@string/card_type_icon_desc"
-            app:tint="@color/blue_selected" />
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/medium_margin"
+            android:layout_marginVertical="4dp"
+            android:src="@drawable/ic_star"
+            android:contentDescription="@string/card_type_icon_desc" />
 
         <!-- Nombre del tipo de pregunta que representa la tarjeta -->
         <TextView
             android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/small_margin"
-            android:textSize="@dimen/font_size"
-            android:lines="2" />
+            android:text="Verdadero/Falso"
+            android:layout_gravity="center"
+            android:textSize="@dimen/url_font_size" />
 
     </LinearLayout>
 

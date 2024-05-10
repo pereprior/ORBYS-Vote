@@ -37,7 +37,7 @@
     <string name="no_response_message">De server heeft geen reacties ontvangen</string>
 
     <!-- Berichten van de hoofdactiviteit -->
-    <string name="activity_question_type_title">Selecteer het type vraag:</string>
+    <string name="activity_question_type_title">Selecteer het type vraag</string>
     <string name="yesno_question_type_title">Ja/Nee</string>
     <string name="truefalse_question_type_title">Waar/Onwaar</string>
     <string name="stars_question_type_title">Sterren</string>
