@@ -21,7 +21,8 @@ import javax.inject.Inject
 /**
  * Clase para gstionar las peticiones del servidor.
  *
- * @property repository Repositorio para operaciones HTTP.
+ * @property questionRepository Repositorio de preguntas.
+ * @property usersRepository Repositorio de usuarios.
  * @property fileHandler Gestor de archivos.
  */
 class ResponseHandler@Inject constructor(

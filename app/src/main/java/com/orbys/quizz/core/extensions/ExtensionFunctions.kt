@@ -67,8 +67,7 @@ fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
  * @param backButtonNavFragment El fragmento al que volvemos al pulsar el botón de retroceder.
  */
 fun Fragment.replaceMainActivityBindingFunctions(
-    titleRedId: Int, closeButtonVisibility: Int = View.GONE,
-    backButtonVisibility: Int = View.GONE, backButtonNavFragment: Fragment? = null
+    titleRedId: Int, closeButtonVisibility: Int = View.GONE
 ) {
     val closeButton = activity?.findViewById<ImageButton>(R.id.close_button)
     val title = activity?.findViewById<TextView>(R.id.title)
