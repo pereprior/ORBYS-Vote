@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">النوع؛</string>
     <string name="graphic_title_text">الرسم البياني للإجابات:</string>
+    <string name="confirm_message">هل ترغب في إرسال إجابة أخرى؟</string>
+    <string name="access_button_placeholder">الوصول</string>
+    <string name="username_text_hint">اسم المستخدم</string>
 
 </resources>

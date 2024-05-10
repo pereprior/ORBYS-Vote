@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">Typ;</string>
     <string name="graphic_title_text">Antworten-Grafik:</string>
+    <string name="confirm_message">Möchtest du eine weitere Antwort senden?</string>
+    <string name="access_button_placeholder">Zugriff</string>
+    <string name="username_text_hint">Benutzername</string>
 
 </resources>

@@ -49,6 +49,11 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     // Añade una respuesta a la lista de respuestas
     fun addAnswer(answerText: String?) {
         if (answerText == null) return
+
+        val existingAnswer = question.value.getAnswers().firstOrNull { it.answer == answerText }
+        if (existingAnswer != null) return
+
+        // La respuesta no existe, la añadimos a la lista
         val newAnswersList = question.value.getAnswers() + Answer(answerText)
         question.value.answers.tryEmit(newAnswersList)
     }

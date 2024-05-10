@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">Tip;</string>
     <string name="graphic_title_text">Graficul răspunsurilor:</string>
+    <string name="confirm_message">Doriți să trimiteți un alt răspuns?</string>
+    <string name="access_button_placeholder">Acces</string>
+    <string name="username_text_hint">Nume de utilizator</string>
 
 </resources>

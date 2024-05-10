@@ -33,67 +33,71 @@ import javax.inject.Inject
  * Clase que gestiona los datos que se muestran en la vista flotante
  *
  * @param context Contexto de la aplicación
- * @param serverUrl Caso de uso para obtener la url del servidor
- * @param getQuestion Caso de uso para obtener la pregunta del repositorio
- * @param clearUsers Caso de uso para limpiar la lista de usuarios
- * @param setTimeOut Caso de uso para cambiar el estado del temporizador
- * @param getUsers Caso de uso para obtener la lista de usuarios
+ * @param getServerUrlUseCase Caso de uso para obtener la url del servidor
+ * @param getQuestionUseCase Caso de uso para obtener la pregunta del repositorio
+ * @param clearUsersListUseCase Caso de uso para limpiar la lista de usuarios
+ * @param setTimeOutUseCase Caso de uso para cambiar el estado del temporizador
+ * @param getUsersListUseCase Caso de uso para obtener la lista de usuarios
+ * @param getHttpServiceUseCase Caso de uso para obtener el servicio http
  */
 class LaunchServiceManager @Inject constructor(
-    private val context: Context,
-    private val serverUrl: GetServerUrlUseCase,
-    private val getQuestion: GetQuestionUseCase,
-    private val clearUsers: ClearUsersListUseCase,
-    private val setTimeOut: SetTimeOutUseCase,
-    private val getUsers: GetUsersListUseCase,
-    private val httpService: GetHttpServiceUseCase
+    private val context: Context, private val getServerUrlUseCase: GetServerUrlUseCase,
+    private val getQuestionUseCase: GetQuestionUseCase,
+    private val clearUsersListUseCase: ClearUsersListUseCase,
+    private val setTimeOutUseCase: SetTimeOutUseCase,
+    private val getUsersListUseCase: GetUsersListUseCase,
+    private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
 
-    fun getHttpService() = httpService()
+    fun getHttpService() = getHttpServiceUseCase()
 
     fun printQrCode(
         endpoint: String = QUESTION_ENDPOINT,
-        qrCode: ImageView,
-        qrUrl: TextView
+        qrCode: ImageView, qrUrl: TextView
     ) {
-        val url = serverUrl(endpoint)
+        val url = getServerUrlUseCase(endpoint)
 
         // Generamos el qr a partir de la url del servidor http
-        qrCode.setImageBitmap(QRCodeGenerator(context).encodeAsBitmap(url, true))
+        qrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url, true))
         qrUrl.text = url
     }
 
-    fun bindWidget(binding: ServiceLaunchQuestionBinding) {
-        val question = getQuestion()
+    fun setQuestionElements(binding: ServiceLaunchQuestionBinding) {
+        val question = getQuestionUseCase()
 
         with(binding) {
-            // Titulo y tipo de la pregunta
-            questionTypeIcon.setImageResource(question.icon)
-            questionText.text = question.question
-
-            closeButton.setOnClickListener { stopService() }
-
-            // Si el tiempo de espera no es nulo se muestra el temporizador
-            if (question.timeOut!! > 0)
-                setTimerCount(question.timeOut)
-
-            // Boton para finalizar la pregunta
-            timeOutButton.setOnClickListener {
-                setTimeOut(true)
-                timer.cancelTimer()
-
-                stopService(true)
-            }
+            // Información de la pregunta
+            setQuestionElements(question)
 
             // Recuento de usuarios que han respondido
             setUsersCount()
 
             // Grafico de barras con el recuento de respuestas
             setGraphicAnswersCount(question)
-        }
 
-        // Ponemos el servidor escuchando respuestas
-        setTimeOut(false)
+            // Ponemos el servidor escuchando respuestas
+            setTimeOutUseCase(false)
+        }
+    }
+
+    private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {
+        // Titulo y tipo de la pregunta
+        questionTypeIcon.setImageResource(question.icon)
+        questionText.text = question.question
+
+        closeButton.setOnClickListener { stopService() }
+
+        // Si el tiempo de espera no es nulo se muestra el temporizador
+        if (question.timeOut!! > 0)
+            setTimerCount(question.timeOut)
+
+        // Boton para finalizar la pregunta
+        timeOutButton.setOnClickListener {
+            setTimeOutUseCase(true)
+            timer.cancelTimer()
+
+            stopService(true)
+        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -112,7 +116,7 @@ class LaunchServiceManager @Inject constructor(
 
         // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
         GlobalScope.launch {
-            timer.isFinished.collect { setTimeOut(it) }
+            timer.isFinished.collect { setTimeOutUseCase(it) }
         }
     }
 
@@ -120,7 +124,7 @@ class LaunchServiceManager @Inject constructor(
     private fun ServiceLaunchQuestionBinding.setUsersCount() {
         // Recogemos los cambios en el número de usuarios que han respondido
         GlobalScope.launch {
-            getUsers().collect { usersList ->
+            getUsersListUseCase().collect { usersList ->
                 withContext(Dispatchers.Main) {
                     respondedUsersCount.text = context.getString(R.string.users_count_title) + usersList.size
                 }
@@ -164,7 +168,7 @@ class LaunchServiceManager @Inject constructor(
         context.startActivity(intent)
 
         // Limpiamos la lista de usuarios
-        clearUsers()
+        clearUsersListUseCase()
 
         // Detenemos el servicio
         context.stopService(Intent(context, FloatingViewService::class.java))

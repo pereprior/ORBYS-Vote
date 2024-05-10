@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">Tipus;</string>
     <string name="graphic_title_text">Gràfic de les respostes:</string>
+    <string name="confirm_message">Vols enviar una altra resposta?</string>
+    <string name="access_button_placeholder">Accés</string>
+    <string name="username_text_hint">Nom d\'usuari</string>
 
 </resources>

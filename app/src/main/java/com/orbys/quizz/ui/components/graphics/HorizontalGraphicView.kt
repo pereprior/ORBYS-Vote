@@ -51,7 +51,7 @@ class HorizontalGraphicView(
         }
 
         // Actualizar el tamaño de la vista conforme a la cantidad de barras
-        layoutParams.height = if (bars.size == 0) 1 else (bars.size * (barWidth + barMargin))
+        layoutParams.height = bars.size * (barWidth + barMargin)
         requestLayout()
     }
 

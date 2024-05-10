@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * @param layout Layout donde se mostrarán las respuestas.
  */
 abstract class AnswerManager(
-    context: Context,
-    layout: LinearLayout
+    context: Context, layout: LinearLayout
 ) {
     protected val answerFields = mutableListOf<EditText>()
 

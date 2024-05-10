@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="micro_qr_code_size">30dp</dimen>
 </resources>

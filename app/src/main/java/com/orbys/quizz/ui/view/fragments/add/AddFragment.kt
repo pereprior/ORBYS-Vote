@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -33,8 +34,7 @@ abstract class AddFragment: Fragment() {
     protected abstract val iconResId: Int
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
@@ -76,9 +76,9 @@ abstract class AddFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Configuración adicionales por defecto de las preguntas
         binding.setAdditionalConfigurations(
-            filterUsersConfig = false,
-            multiAnswerConfig = false
+            filterUsersConfig = false, multiAnswerConfig = false
         )
     }
 
@@ -89,7 +89,7 @@ abstract class AddFragment: Fragment() {
 
         // Comprobar si la pregunta o el título están vacíos
         if (question.question.isEmpty()) {
-            errorMessage(R.string.empty_answers_error)
+            errorMessage(R.string.empty_answers_error, false)
             return
         }
 
@@ -99,25 +99,20 @@ abstract class AddFragment: Fragment() {
         context.startService(Intent(context, FloatingViewService::class.java))
 
         activity?.finish()
-        clear()
+        binding.questionQuestion.text.clear()
     }
 
     protected fun errorMessage(
-        message: Int,
-        showErrorMessage: Boolean = true,
-        showToast: Boolean = true
+        message: Int, showToast: Boolean = true, showErrorMessage: Boolean = true
     ) {
-        // Mostrar un mensaje de error
-        if (showErrorMessage) binding.errorMessage.text = getString(message)
-        if (showToast) context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
-    }
+        val errorView: TextView = activity?.findViewById(R.id.error_message) ?: return
 
-    private fun clear() {
-        with(binding) {
-            // Limpiar los campos de texto y el mensaje de error
-            questionQuestion.text.clear()
-            errorMessage.text = ""
+        // Mostrar un mensaje de error
+        if (showErrorMessage) {
+            errorView.visibility = View.VISIBLE
+            errorView.text = getString(message)
         }
+        if (showToast) context?.showToastWithCustomView(getString(message), Toast.LENGTH_LONG)
     }
 
     // Configurar las opciones adicionales de la pregunta
@@ -135,7 +130,7 @@ abstract class AddFragment: Fragment() {
         timeoutQuestionOption.visibility = if (timerConfig) View.VISIBLE else View.GONE
     }
 
-    // Cambiar la visibilidad del formulario del cronometro
+    // Cambiar la visibilidad del formulario del temporizador
     private fun FragmentAddQuestionBinding.setTimerVisibilityTo(visible: Int) {
         timeoutInput.visibility = visible
         minutesHelpText.visibility = visible

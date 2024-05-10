@@ -46,7 +46,7 @@ class DownloadFragment: Fragment() {
             val url = viewModel.getServerUrl(DOWNLOAD_ENDPOINT)
 
             qrCode.setImageBitmap(QRCodeGenerator(requireContext())
-                .encodeAsBitmap(url, true))
+                .generateUrlQrCode(url, true))
             qrTitle.text = url
             qrText.visibility = View.GONE
 

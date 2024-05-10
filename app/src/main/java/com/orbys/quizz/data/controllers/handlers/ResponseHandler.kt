@@ -84,9 +84,8 @@ class ResponseHandler@Inject constructor(
         if (choice == "") return@post
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
-        if(!questionRepository.getTimerState()) {
+        if(!questionRepository.getTimerState())
             answerRegister(choice, userIP)
-        }
 
         call.respond(HttpStatusCode.OK)
     }

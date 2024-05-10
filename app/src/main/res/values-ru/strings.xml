@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">Тип;</string>
     <string name="graphic_title_text">График ответов:</string>
+    <string name="confirm_message">Желаете отправить другой ответ?</string>
+    <string name="access_button_placeholder">Доступ</string>
+    <string name="username_text_hint">Имя пользователя</string>
 
 </resources>

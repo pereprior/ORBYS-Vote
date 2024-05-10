@@ -12,7 +12,7 @@
     <string name="app_logo_desc" translatable="false">Logo de la empresa</string>
     <string name="config_icon_desc" translatable="false">Boton para desplegar la configuracion adicional</string>
     <string name="alert_icon_desc" translatable="false">Icono de alerta</string>
-    <string name="hotspot_qr_desc" translatable="false">Qr para conectarse por hotspot</string>
+    <string name="hotspot_qr_desc" translatable="false">Qr para conectarse al wifi</string>
 
     <!-- Add dialog hint -->
     <string name="question_question_hint">Question:</string>
@@ -22,6 +22,8 @@
     <!-- File placeholders -->
     <string name="launch_button_placeholder">Launch</string>
     <string name="send_button_placeholder">Send</string>
+    <string name="access_button_placeholder">Access</string>
+    <string name="username_text_hint">Username</string>
     <string name="yes_answer_placeholder">Yes</string>
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">True</string>
@@ -44,6 +46,7 @@
 
     <!-- Alert messages -->
     <string name="success_message">Response sent successfully!</string>
+    <string name="confirm_message">Do you send another answer?</string>
     <string name="user_already_exists_message">User already exists</string>
     <string name="file_not_found_message">Error: could not read the HTML file</string>
     <string name="user_responded_message">The user has already responded</string>

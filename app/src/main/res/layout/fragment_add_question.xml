@@ -43,7 +43,7 @@
                 android:id="@+id/question_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginVertical="@dimen/small_margin"
                 android:autofillHints=""
                 android:background="@drawable/bg_textbox"
                 android:gravity="top"
@@ -54,16 +54,6 @@
                 android:inputType="textMultiLine" />
 
         </LinearLayout>
-
-        <!-- Mensaje que se muestra en caso de error -->
-        <TextView
-            android:id="@+id/error_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/small_margin"
-            android:textSize="@dimen/font_size"
-            android:textColor="@android:color/holo_red_light" />
 
         <!-- Layout para añadir respuestas personalizadas -->
         <LinearLayout

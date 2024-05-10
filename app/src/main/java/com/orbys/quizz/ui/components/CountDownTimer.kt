@@ -15,8 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @param attrs Atributos de la vista
  */
 class CountDownTimer(
-    context: Context,
-    attrs: AttributeSet? = null
+    context: Context, attrs: AttributeSet? = null
 ) : Chronometer(context, attrs) {
 
     companion object {

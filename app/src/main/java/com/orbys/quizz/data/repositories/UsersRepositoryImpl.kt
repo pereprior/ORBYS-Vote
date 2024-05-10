@@ -47,18 +47,16 @@ class UsersRepositoryImpl private constructor(): IUsersRepository {
 
     // Establece que el usuario ha respondido
     fun setUserResponded(ip: String) {
-        val users = users.value.toMutableList()
-        users.find { it.ip == ip }?.responded = true
-        this.users.value = users.toList()
+        users.value = users.value.map { user ->
+            if (user.ip == ip) user.copy(responded = true) else user
+        }
     }
 
     // Añade un usuario a la lista de usuarios
     fun addUser(user: User) {
-        if (users.value.any { it.ip == user.ip }) return
-
-        val users = users.value.toMutableList()
-        users.add(user)
-        this.users.value = users.toList()
+        users.value.find { it.ip == user.ip } ?: run {
+            users.value += user
+        }
     }
 
 }

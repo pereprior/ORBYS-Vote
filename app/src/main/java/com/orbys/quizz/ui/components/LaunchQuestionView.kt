@@ -24,9 +24,7 @@ import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
  * @property onChangeY Cambio en la coordenada y durante un evento de movimiento.
  */
 class LaunchQuestionView(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ): ConstraintLayout(context, attrs, defStyleAttr), View.OnTouchListener {
     var binding: ServiceLaunchQuestionBinding
         private set
@@ -34,15 +32,13 @@ class LaunchQuestionView(
         private set
 
     private val layoutParams = WindowManager.LayoutParams(
-        context.resources.getDimensionPixelSize(R.dimen.widget_width),
-        WindowManager.LayoutParams.WRAP_CONTENT,
+        context.resources.getDimensionPixelSize(R.dimen.widget_width), WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
             WindowManager.LayoutParams.TYPE_PHONE
         },
-        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-        PixelFormat.TRANSLUCENT
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT
     )
 
     private var x: Int = 0

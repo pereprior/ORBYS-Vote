@@ -49,6 +49,10 @@
         <button type="submit">[SEND]</button>
     </form>
 
+    <script>
+
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
 
     <script>
@@ -59,11 +63,11 @@
                 textColor: "#FFFFFF",
                 backgroundColor: "#010101",
                 title: "✔",
-                content: `<span style="font-size: 2em;"><strong>Respuesta enviada con éxito!</strong></span>`,
+                content: `<span style="font-size: 2em;"><strong>[SUCCESS_MESSAGE]</strong></span>`,
                 borderWidth: ".15em",
                 borderColor: "#FFFFFF",
                 textShadow: "0 0 .3em #000000bb",
-                allowClose: false,
+                allowClose: false
             }
         );
 
@@ -88,7 +92,6 @@
                 .then(text => infoPopup.show())
                 .catch(error => console.error(error));
         };
-
     </script>
 
 </body>

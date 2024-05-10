@@ -26,7 +26,8 @@ import javax.inject.Inject
 /**
  * Clase para gestionar las operaciones con los archivos del servidor.
  *
- * @property repository Repositorio para operaciones HTTP.
+ * @property questionRepository Repositorio de preguntas.
+ * @property usersRepository Repositorio de usuarios.
  * @property appContext Contexto de la aplicacion.
  */
 class FileHandler @Inject constructor(
@@ -143,6 +144,9 @@ class FileHandler @Inject constructor(
         .replace("[QUESTION]", question.question)
         .replace("[MAX_ANSWER]", question.maxNumericAnswer.toString())
         .replace("[SUCCESS_MESSAGE]", appContext.getString(R.string.success_message))
+        .replace("[CONFIRM_MESSAGE]", appContext.getString(R.string.confirm_message))
+        .replace("[ACCESS]", appContext.getString(R.string.access_button_placeholder))
+        .replace("[USER_HINT]", appContext.getString(R.string.username_text_hint))
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 

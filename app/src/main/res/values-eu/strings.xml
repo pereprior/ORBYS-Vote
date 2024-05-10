@@ -70,5 +70,8 @@
 
     <string name="csv_legend_question_type">Mota;</string>
     <string name="graphic_title_text">Erantzunen grafikoa:</string>
+    <string name="confirm_message">Erantzun beste bat bidali nahi duzu?</string>
+    <string name="access_button_placeholder">Sarrera</string>
+    <string name="username_text_hint">Erabiltzaile izena</string>
 
 </resources>

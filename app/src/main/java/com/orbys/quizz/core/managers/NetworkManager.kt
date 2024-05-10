@@ -3,12 +3,14 @@ package com.orbys.quizz.core.managers
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.wifi.WifiManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.reflect.InvocationTargetException
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -36,7 +38,6 @@ class NetworkManager {
      * @param activity La actividad actual.
      */
     suspend fun checkNetworkOnActivity(activity: AppCompatActivity) {
-        // Cambiamos de hilo
         withContext(Dispatchers.IO) {
             if (!isNetworkAvailable(activity)) {
                 withContext(Dispatchers.Main) {
@@ -47,6 +48,37 @@ class NetworkManager {
                 return@withContext
             }
         }
+    }
+
+    /**
+     * Devuelve las credenciales para conectarse al dispositivo mediante hotspot.
+     *
+     * @param context El contexto actual.
+     */
+    fun getHotspotCredentials(context: Context): Pair<String?, String?> {
+        val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        try {
+            val method = wifiManager.javaClass.getDeclaredMethod("getWifiApConfiguration")
+            method.isAccessible = true
+            val wifiConfig = method.invoke(wifiManager) as Any
+            val ssidField = wifiConfig.javaClass.getDeclaredField("SSID")
+            ssidField.isAccessible = true
+            val ssid = ssidField.get(wifiConfig) as String
+            val passwordField = wifiConfig.javaClass.getDeclaredField("preSharedKey")
+            passwordField.isAccessible = true
+            val password = passwordField.get(wifiConfig) as String
+            return Pair(ssid.removeSurrounding("\""), password)
+        } catch (e: NoSuchMethodException) {
+            e.printStackTrace()
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        } catch (e: InvocationTargetException) {
+            e.printStackTrace()
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
+        }
+
+        return Pair(null, null)
     }
 
     // Devuelve la dirección IP local del dispositivo que ejecuta la app

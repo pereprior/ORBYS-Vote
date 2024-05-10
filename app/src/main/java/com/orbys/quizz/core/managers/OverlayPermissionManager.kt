@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
  *
  * @property activity La actividad desde la que se llama a esta clase.
  */
-class OverlayPermissionManager (
-    private val activity: AppCompatActivity
-) {
+class OverlayPermissionManager (private val activity: AppCompatActivity) {
 
     fun checkAndRequestPermission() {
 

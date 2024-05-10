@@ -17,7 +17,6 @@ class FloatingViewService: Service() {
 
     @Inject
     lateinit var manager: LaunchServiceManager
-
     private lateinit var launchQuestionView: LaunchQuestionView
 
     override fun onCreate() {
@@ -35,13 +34,12 @@ class FloatingViewService: Service() {
             )
 
             // Añadir la pregunta a la vista
-            manager.bindWidget(this.binding)
+            manager.setQuestionElements(this.binding)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         // Eliminar la vista del servicio
         launchQuestionView.windowManager.removeView(launchQuestionView)
     }

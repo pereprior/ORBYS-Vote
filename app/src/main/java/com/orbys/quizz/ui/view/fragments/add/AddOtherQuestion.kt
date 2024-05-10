@@ -48,14 +48,14 @@ class AddOtherQuestion: AddFragment() {
     override fun saveQuestion(context: Context) {
         // Controlar que los campos de las preguntas no estén vacíos
         if (fieldsManager.anyAnswerIsEmpty()) {
-            errorMessage(R.string.empty_answers_error)
+            errorMessage(R.string.empty_answers_error, false)
             return
         }
 
         // Controlar que no haya dos preguntas iguales
         val answerTexts = fieldsManager.getAnswersText()
         if (answerTexts.size != answerTexts.toSet().size) {
-            errorMessage(R.string.same_question_error)
+            errorMessage(R.string.same_question_error, false)
             return
         }
 

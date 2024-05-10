@@ -58,15 +58,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
-        android:id="@+id/hotspot_qr"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_margin="@dimen/small_margin"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_qr"
-        android:contentDescription="@string/hotspot_qr_desc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/other_card_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <ImageButton
+            android:id="@+id/hotspot_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="@dimen/small_margin"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/hotspot_qr_desc" />
+
+        <TextView
+            android:id="@+id/hotspot_qr_ssid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/small_margin" />
+
+        <TextView
+            android:id="@+id/hotspot_qr_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/small_margin" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

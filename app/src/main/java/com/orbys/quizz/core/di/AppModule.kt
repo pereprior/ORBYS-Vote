@@ -52,17 +52,13 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFileHandler(@ApplicationContext context: Context) = FileHandler(
-        QuestionRepositoryImpl.getInstance(),
-        UsersRepositoryImpl.getInstance(),
-        context
+        QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance(), context
     )
 
     @Provides
     @Singleton
     fun provideResponseHandler(@ApplicationContext context: Context) = ResponseHandler(
-        QuestionRepositoryImpl.getInstance(),
-        UsersRepositoryImpl.getInstance(),
-        provideFileHandler(context),
+        QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance(), provideFileHandler(context)
     )
 
 }

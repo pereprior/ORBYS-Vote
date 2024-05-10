@@ -48,7 +48,7 @@ class AddNumericQuestion: AddFragment() {
 
     override fun saveQuestion(context: Context) {
         if (answersManager.anyAnswerIsEmpty()) {
-            errorMessage(R.string.empty_answers_error)
+            errorMessage(R.string.empty_answers_error, false)
             return
         }
 

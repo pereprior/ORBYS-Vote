@@ -35,6 +35,7 @@ abstract class GraphicView(
         invalidate()
     }
 
+    // Limpia todas las barras del grafico
     fun clearBars() {
         bars.clear()
         invalidate()

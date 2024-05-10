@@ -40,7 +40,7 @@ fun Int.secondsToMillis(): Long = this * 1000L
 fun EditText.limitLines(maxLines: Int) {
     this.filters = arrayOf(
         // Limita el numero de caracteres por linea
-        InputFilter.LengthFilter(maxLines*33),
+        InputFilter.LengthFilter(maxLines*35),
         InputFilter { source, start, end, dest, dstart, _ ->
             for (index in start until end) {
                 // Si ya hay tres lineas y se presiona enter, no se añade el salto de linea
@@ -67,16 +67,16 @@ fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
  * @param backButtonNavFragment El fragmento al que volvemos al pulsar el botón de retroceder.
  */
 fun Fragment.replaceMainActivityBindingFunctions(
-    titleRedId: Int,
-    closeButtonVisibility: Int = View.GONE,
-    backButtonVisibility: Int = View.GONE,
-    backButtonNavFragment: Fragment? = null
+    titleRedId: Int, closeButtonVisibility: Int = View.GONE,
+    backButtonVisibility: Int = View.GONE, backButtonNavFragment: Fragment? = null
 ) {
     val backButton = activity?.findViewById<ImageButton>(R.id.back_button)
     val closeButton = activity?.findViewById<ImageButton>(R.id.close_button)
     val title = activity?.findViewById<TextView>(R.id.title)
+    val errorMessage = activity?.findViewById<TextView>(R.id.error_message)
 
     title?.text = getString(titleRedId)
+    errorMessage?.visibility = View.GONE
 
     // Muestra u oculta los botones de cerrar y retroceder según requiera el fragmento
     closeButton?.visibility = closeButtonVisibility
@@ -100,9 +100,7 @@ fun Fragment.replaceMainActivityBindingFunctions(
  * @param duration El tiempo que dura el mensaje.
  */
 fun Context.showToastWithCustomView(
-    message: String,
-    duration: Int = Toast.LENGTH_SHORT,
-    textSize: Float = 8f
+    message: String, duration: Int = Toast.LENGTH_SHORT, textSize: Float = 8f
 ) {
     val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val customToastView = inflater.inflate(R.layout.toast_custom, null)

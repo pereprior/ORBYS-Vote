@@ -7,18 +7,14 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.net.wifi.WifiManager
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
-import com.google.zxing.MultiFormatWriter
-import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.orbys.quizz.R
-import java.lang.reflect.InvocationTargetException
 
 /**
  * Clase para generar códigos QR con un logo en el centro.
@@ -27,99 +23,56 @@ import java.lang.reflect.InvocationTargetException
  */
 class QRCodeGenerator(private val context: Context) {
 
-    companion object {
-        private const val DEFAULT_SIZE = 400
-        // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
-        private const val LOGO_SIZE_DIFF = 4
+    private val defaultSize = context.resources.getDimensionPixelSize(R.dimen.qr_code_size)
+    private val defaultLogoResId = R.drawable.ic_orbys
+    // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
+    private val logoSizeDiff = 4
+
+    // Genera un código QR que te conecta a una red wifi
+    fun generateWifiQRCode(
+        ssid: String, password: String, logo: Boolean = false,
+        width: Int = defaultSize, height: Int = defaultSize,
+        logoResId: Int = defaultLogoResId
+    ): Bitmap {
+        val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
+        return encodeAsBitmap(wifiData, logo, width, height, logoResId)
     }
 
-    fun generateWifiQRCode(
-        ssid: String,
-        password: String,
-        logo: Boolean = false,
-        logoResId: Int = R.drawable.ic_orbys
+    // Genera un código QR que te redirige a una URL en tu navegador
+    fun generateUrlQrCode(
+        url: String, logo: Boolean = false,
+        width: Int = defaultSize, height: Int = defaultSize,
+        logoResId: Int = defaultLogoResId
     ): Bitmap {
-        //"WIFI:S:SSID;P:PASSWORD;T:Security;"
-        // Generar cadena QR
-        val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
+        return encodeAsBitmap(url, logo, width, height, logoResId)
+    }
+
+    /**
+     * Codifica un texto en un código QR.
+     *
+     * @param data Texto a codificar.
+     * @param logo Indica si se debe añadir un logo en el centro o no.
+     * @param width Ancho del código QR.
+     * @param height Alto del código QR.
+     * @param logoResId Recurso del logo.
+     *
+     * @return Código QR como mapa de bits.
+     */
+    private fun encodeAsBitmap(
+        data: String, logo: Boolean, width: Int, height: Int, logoResId: Int
+    ): Bitmap {
         val qrCodeWriter = QRCodeWriter()
         val bitMatrix: BitMatrix = qrCodeWriter.encode(
-            wifiData,
-            BarcodeFormat.QR_CODE,
-            DEFAULT_SIZE, DEFAULT_SIZE,
+            data, BarcodeFormat.QR_CODE, width, height,
             mapOf(EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.H)
         )
 
         val qrCode = createBitmapFromBitMatrix(bitMatrix, logo)
-        val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
 
-        return overlayLogoOnQrCode(qrCode, logoBitMap)
-    }
-
-    fun getHotspotCredentials(): Pair<String?, String?> {
-        val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        try {
-            val method = wifiManager.javaClass.getDeclaredMethod("getWifiApConfiguration")
-            method.isAccessible = true
-            val wifiConfig = method.invoke(wifiManager) as Any
-            val ssidField = wifiConfig.javaClass.getDeclaredField("SSID")
-            ssidField.isAccessible = true
-            val ssid = ssidField.get(wifiConfig) as String
-            val passwordField = wifiConfig.javaClass.getDeclaredField("preSharedKey")
-            passwordField.isAccessible = true
-            val password = passwordField.get(wifiConfig) as String
-            return Pair(ssid.removeSurrounding("\""), password)
-        } catch (e: NoSuchMethodException) {
-            e.printStackTrace()
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace()
-        } catch (e: NoSuchFieldException) {
-            e.printStackTrace()
-        }
-
-        return Pair(null, null)
-    }
-
-    //----------------------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------
-
-    /**
-     * Genera un codigo QR a partir de una URL.
-     *
-     * @param url URL a codificar.
-     * @param logo Indica si se debe añadir un logo en el centro.
-     * @param logoResId Identificador del logo.
-     * @param width Ancho del codigo QR.
-     * @param height Alto del codigo QR.
-     * @return Mapa de bits que representa el codigo QR.
-     */
-    fun encodeAsBitmap(
-        url: String,
-        logo: Boolean = false,
-        logoResId: Int = R.drawable.ic_orbys,
-        width: Int = DEFAULT_SIZE,
-        height: Int = DEFAULT_SIZE
-    ): Bitmap? {
-        val bitMatrix = try {
-            MultiFormatWriter().encode(
-                url,
-                BarcodeFormat.QR_CODE,
-                width, height,
-                // Error correction hace que el qr se pueda seguir leyendo con el logo en el centro
-                mapOf(EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.H)
-            )
-        } catch (e: WriterException) {
-            return null
-        }
-
-        // Crea el mapa de bits del qr
-        val qrCode = createBitmapFromBitMatrix(bitMatrix, logo)
-        // Convierte el logo a mapa de bits
-        val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
-
-        return overlayLogoOnQrCode(qrCode, logoBitMap)
+        return if (logo) {
+            val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
+            overlayLogoOnQrCode(qrCode, logoBitMap)
+        } else qrCode
     }
 
     /**
@@ -127,14 +80,14 @@ class QRCodeGenerator(private val context: Context) {
      *
      * @param bitMatrix Matriz de bits.
      * @param blankArea Indica si se debe crear un área en blanco en el centro.
+     *
      * @return Mapa de bits.
      */
     private fun createBitmapFromBitMatrix(
-        bitMatrix: BitMatrix,
-        blankArea: Boolean = false
+        bitMatrix: BitMatrix, blankArea: Boolean = false
     ): Bitmap {
         val size = bitMatrix.width
-        val blankAreaSize = size / LOGO_SIZE_DIFF
+        val blankAreaSize = size / logoSizeDiff
         val blankAreaPosition = (size / 2 - blankAreaSize / 2)..(size / 2 + blankAreaSize / 2)
 
         val pixels = IntArray(size * size) { index ->
@@ -156,11 +109,14 @@ class QRCodeGenerator(private val context: Context) {
      *
      * @param qrCode Código QR como mapa de bits.
      * @param logo Logo como mapa de bits.
+     *
      * @return Código QR con el logo superpuesto.
      */
-    private fun overlayLogoOnQrCode(qrCode: Bitmap, logo: Bitmap?): Bitmap {
+    private fun overlayLogoOnQrCode(
+        qrCode: Bitmap, logo: Bitmap?
+    ): Bitmap {
         val qrSize = qrCode.width
-        val logoSize = qrSize / LOGO_SIZE_DIFF
+        val logoSize = qrSize / logoSizeDiff
         val logoPosition = (qrSize - logoSize) / 2f
 
         // Parametros con los que se dibuja el logo

@@ -18,10 +18,8 @@ import com.orbys.quizz.R
  * @param maxLength Cantidad máxima de digitos.
  */
 class NumericAnswersManager(
-    private val context: Context,
-    private val layout: LinearLayout,
-    private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 4
+    private val context: Context, private val layout: LinearLayout,
+    private val hintText: String = context.getString(R.string.question_answer_hint), private val maxLength: Int = 4
 ): AnswerManager(context, layout) {
 
     override fun addAnswerField() {

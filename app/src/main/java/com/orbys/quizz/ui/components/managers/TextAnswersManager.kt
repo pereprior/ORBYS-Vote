@@ -26,12 +26,8 @@ import com.orbys.quizz.core.extensions.showToastWithCustomView
  * @param fieldLength Longitud de los campos de texto.
  */
 class TextAnswersManager(
-    private val context: Context,
-    private val layout: LinearLayout,
-    private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 33,
-    private val minAnswers: Int = 1,
-    private val maxAnswers: Int = 1,
+    private val context: Context, private val layout: LinearLayout, private val hintText: String = context.getString(R.string.question_answer_hint),
+    private val maxLength: Int = 35, private val minAnswers: Int = 1, private val maxAnswers: Int = 1,
     private val fieldLength: Int = LinearLayout.LayoutParams.WRAP_CONTENT
 ): AnswerManager(context, layout) {
 
