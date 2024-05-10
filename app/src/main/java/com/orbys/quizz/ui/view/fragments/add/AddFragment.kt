@@ -11,12 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.limitLines
-import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.services.FloatingViewService
-import com.orbys.quizz.ui.view.fragments.TypesQuestionFragment
+import com.orbys.quizz.ui.view.fragments.cards.QuestionTypesCard
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +30,7 @@ abstract class AddFragment: Fragment() {
     
     protected abstract val titleResId: Int
     protected abstract val iconResId: Int
+    protected abstract val cardType: QuestionTypesCard
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,17 +38,12 @@ abstract class AddFragment: Fragment() {
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
 
-        // Cambios en los elementos de la actividad principal
-        replaceMainActivityBindingFunctions(
-            titleResId,
-            backButtonVisibility = View.VISIBLE,
-            backButtonNavFragment = TypesQuestionFragment()
-        )
-        
         with(binding) {
-            // Icono del tipo de la pregunta a crear
-            questionTypeIcon.setImageResource(iconResId)
-            
+            // Configurar el título y el icono de la pregunta
+            parentFragmentManager.beginTransaction()
+                .add(cardTypeContainer.id, cardType)
+                .commit()
+
             // Limitar el número de lineas de la pregunta
             questionQuestion.limitLines(3)
 
@@ -56,7 +51,7 @@ abstract class AddFragment: Fragment() {
             launchButton.setOnClickListener { saveQuestion(it.context) }
 
             // Mostrar la configuración adicional
-            configurationsIcon.setOnClickListener {
+            showConfigurationsLayout.setOnClickListener {
                 if (configurationsLayout.visibility == View.VISIBLE)
                     setConfigVisibilityTo(R.drawable.ic_config_hide, View.GONE)
                 else
@@ -124,7 +119,7 @@ abstract class AddFragment: Fragment() {
 
     // Cambiar la visibilidad de la confirguración adicional
     private fun FragmentAddQuestionBinding.setConfigVisibilityTo(icon: Int, visible: Int) {
-        configurationsIcon.setImageResource(icon)
+        iconConfigVisibility.setImageResource(icon)
         configurationsLayout.visibility = visible
     }
 

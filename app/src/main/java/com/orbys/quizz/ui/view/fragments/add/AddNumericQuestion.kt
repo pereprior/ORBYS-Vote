@@ -10,6 +10,7 @@ import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.AnswerManager
 import com.orbys.quizz.ui.components.managers.NumericAnswersManager
+import com.orbys.quizz.ui.view.fragments.cards.NumericCard
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Numerico".
@@ -18,6 +19,7 @@ class AddNumericQuestion: AddFragment() {
 
     override val titleResId: Int = R.string.numeric_question_type_title
     override val iconResId: Int = R.drawable.ic_number
+    override val cardType = NumericCard()
 
     private lateinit var answersManager: AnswerManager
 

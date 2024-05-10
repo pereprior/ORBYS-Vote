@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="@dimen/activity_layout_width"
-    android:layout_height="@dimen/activity_layout_height"
+    android:layout_height="wrap_content"
     tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
 
@@ -24,13 +24,12 @@
     <!-- Botón de cerrar la actividad -->
     <ImageButton
         android:id="@+id/close_button"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:contentDescription="@string/exit_button_desc"
-        android:scaleX="0.65"
-        android:scaleY="0.65"
         android:layout_marginHorizontal="@dimen/medium_margin"
+        android:layout_marginTop="4dp"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,34 +40,33 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small_margin"
-        app:dividerColor="@color/white"
+        app:dividerColor="#666666"
         app:dividerThickness="0.5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
     <!-- Titulo con la funcionalidad del fragmento -->
-    <TextView
-        android:id="@+id/title"
+    <ImageView
+        android:id="@+id/quiz_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/orbys_title_desc"
+        android:src="@drawable/quiz_title"
         android:layout_marginTop="@dimen/medium_margin"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:text="QUIZZ"
-        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <!-- Contenedor de los fragmentos de la actividad-->
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="@dimen/activity_layout_width"
-        android:layout_height="@dimen/activity_layout_height"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/quiz_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,84 +11,62 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/medium_margin"
+        android:paddingHorizontal="20dp"
         android:elevation="@dimen/small_margin"
         android:gravity="start">
+
+        <!-- Tarjeta del tipo de pregunta -->
+        <FrameLayout
+            android:id="@+id/card_type_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"/>
 
         <!-- Título del campo de texto -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="11sp"
             android:text="@string/question_question_title"/>
 
-        <LinearLayout
+        <!-- Text Box para crear la pregunta -->
+        <EditText
+            android:id="@+id/question_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- Icono del tipo de la pregunta a crear -->
-            <ImageView
-                android:id="@+id/question_type_icon"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_gravity="start|center_vertical"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_marginBottom="4dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/exit_button_desc"
-                app:tint="@color/blue_selected" />
-
-            <!-- Text Box para crear la pregunta -->
-            <EditText
-                android:id="@+id/question_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
-                android:autofillHints=""
-                android:background="@drawable/bg_textbox"
-                android:gravity="top"
-                android:hint="@string/question_question_hint"
-                android:lines="3"
-                android:padding="@dimen/small_margin"
-                android:textSize="@dimen/font_size"
-                android:inputType="textMultiLine" />
-
-        </LinearLayout>
+            android:layout_marginVertical="@dimen/small_margin"
+            android:autofillHints=""
+            android:background="@drawable/bg_textbox"
+            android:gravity="top"
+            android:hint="@string/question_question_hint"
+            android:lines="3"
+            android:padding="@dimen/small_margin"
+            android:textSize="@dimen/font_size"
+            android:inputType="textMultiLine" />
 
         <!-- Layout para añadir respuestas personalizadas -->
         <LinearLayout
             android:id="@+id/answersLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="end"
             android:orientation="vertical" />
 
-        <!-- Botón para lanzar la pregunta creada -->
-        <Button
-            android:id="@+id/launch_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="@dimen/small_margin"
-            android:textSize="@dimen/title_font_size"
-            android:text="@string/launch_button_placeholder"
-            android:textAlignment="center"
-            android:textStyle="bold" />
-
         <LinearLayout
+            android:id="@+id/show_configurations_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="@dimen/small_margin"
             android:orientation="horizontal">
 
             <!-- Botón para mostrar la configuración adicional de la pregunta -->
-            <ImageButton
+            <ImageView
                 android:id="@+id/configurations_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleY="0.6"
-                android:scaleX="0.6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_config_hide"
+                android:src="@drawable/ic_config"
                 android:contentDescription="@string/config_icon_desc" />
 
             <!-- Texto para describir el uso del botón anterior -->
@@ -96,9 +74,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/configurations_text"/>
+                android:layout_marginHorizontal="@dimen/small_margin"
+                android:fontFamily="@font/montserrat_family"
+                android:text="@string/additional_config_text"
+                android:textColor="@color/blue_selected" />
+
+            <ImageView
+                android:id="@+id/icon_config_visibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_config_hide"
+                android:contentDescription="@string/config_icon_desc" />
 
         </LinearLayout>
+
+        <!-- Botón para lanzar la pregunta creada -->
+        <Button
+            android:id="@+id/launch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:textSize="@dimen/title_font_size"
+            android:text="@string/launch_button_placeholder"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
         <!-- Layout con las opciones de configuración adicional de la pregunta -->
         <LinearLayout

@@ -5,9 +5,7 @@ import android.content.Intent
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -56,35 +54,6 @@ fun EditText.limitLines(maxLines: Int) {
 fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
     if (!isHttpFragment) { activity?.stopService(Intent(activity, HttpService::class.java)) }
     activity?.stopService(Intent(activity, FloatingViewService::class.java))
-}
-
-/**
- * Gestiona los elementos de la vista de la actividad principal.
- *
- * @param titleRedId El id del string con el titulo del fragmento.
- * @param closeButtonVisibility La visibilidad del botón de cerrar.
- * @param backButtonVisibility La visibilidad del botón de retroceder.
- * @param backButtonNavFragment El fragmento al que volvemos al pulsar el botón de retroceder.
- */
-fun Fragment.replaceMainActivityBindingFunctions(
-    titleRedId: Int, closeButtonVisibility: Int = View.GONE
-) {
-    val closeButton = activity?.findViewById<ImageButton>(R.id.close_button)
-    val title = activity?.findViewById<TextView>(R.id.title)
-
-    title?.text = getString(titleRedId)
-    // Muestra u oculta los botones de cerrar y retroceder según requiera el fragmento
-    closeButton?.visibility = closeButtonVisibility
-
-    /*if (backButtonVisibility == View.VISIBLE && backButtonNavFragment != null) {
-        backButton?.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, backButtonNavFragment)
-                commit()
-            }
-        }
-    }*/
-
 }
 
 /**

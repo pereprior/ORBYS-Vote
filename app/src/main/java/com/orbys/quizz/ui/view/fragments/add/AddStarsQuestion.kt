@@ -4,6 +4,7 @@ import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.view.fragments.cards.StarsCard
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -13,6 +14,7 @@ class AddStarsQuestion: AddFragment() {
 
     override val titleResId: Int = R.string.stars_question_type_title
     override val iconResId: Int = R.drawable.ic_star
+    override val cardType = StarsCard()
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),

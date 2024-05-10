@@ -1,11 +1,7 @@
 package com.orbys.quizz.ui.components.managers
 
 import android.content.Context
-import android.text.InputFilter
 import android.text.InputType
-import android.view.Gravity
-import android.view.View
-import android.widget.EditText
 import android.widget.LinearLayout
 import com.orbys.quizz.R
 
@@ -22,23 +18,13 @@ class NumericAnswersManager(
     private val hintText: String = context.getString(R.string.question_answer_hint), private val maxLength: Int = 4
 ): AnswerManager(context, layout) {
 
+    override val inputType = InputType.TYPE_CLASS_NUMBER
+
     override fun addAnswerField() {
-        val answerField = createAnswerField()
+        val answerField = createAnswerField(hintText, maxLength)
 
         layout.addView(answerField)
         answerFields.add(answerField)
-    }
-
-    override fun createAnswerField() = EditText(context).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        gravity = Gravity.CENTER
-        hint = hintText
-        inputType = InputType.TYPE_CLASS_NUMBER
-        id = View.generateViewId()
-        filters = arrayOf(InputFilter.LengthFilter(maxLength))
     }
 
 }

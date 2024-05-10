@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.orbys.quizz.R
-import com.orbys.quizz.core.extensions.replaceMainActivityBindingFunctions
 import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.databinding.FragmentQrCodeBinding
@@ -33,13 +31,6 @@ class DownloadFragment: Fragment() {
 
         // Detenemos los servicios activos
         stopActiveServices(true)
-
-        // Cambios en los elementos de la actividad principal
-        replaceMainActivityBindingFunctions(
-            titleRedId = R.string.download_title,
-            backButtonVisibility = View.VISIBLE,
-            backButtonNavFragment = TypesQuestionFragment()
-        )
 
         // Cambios en la vista del fragmento
         with(binding) {

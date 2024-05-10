@@ -37,7 +37,7 @@ class HorizontalGraphicView(
             val right = width.toFloat() * countPercent
 
             // Pintamos la barra del grafico
-            val blueSelected = ContextCompat.getColor(context, R.color.blue_selected)
+            val blueSelected = ContextCompat.getColor(context, R.color.blue_selected_60)
             paint.color = blueSelected
             canvas.drawRect(0f, top, right, bottom, paint)
 

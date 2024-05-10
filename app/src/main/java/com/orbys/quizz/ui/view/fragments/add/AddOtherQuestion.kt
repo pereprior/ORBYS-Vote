@@ -3,13 +3,13 @@ package com.orbys.quizz.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.TextAnswersManager
+import com.orbys.quizz.ui.view.fragments.cards.OtherCard
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Otros".
@@ -18,6 +18,7 @@ class AddOtherQuestion: AddFragment() {
 
     override val titleResId: Int = R.string.other_question_type_title
     override val iconResId: Int = R.drawable.ic_others
+    override val cardType = OtherCard()
 
     private lateinit var fieldsManager: TextAnswersManager
 
@@ -35,16 +36,15 @@ class AddOtherQuestion: AddFragment() {
                 context = requireContext(),
                 layout = answersLayout,
                 minAnswers = MIN_ANSWERS,
-                maxAnswers = MAX_ANSWERS,
-                fieldLength = LinearLayout.LayoutParams.MATCH_PARENT
+                maxAnswers = MAX_ANSWERS
             )
 
             setAdditionalConfigurations()
         }
 
         // Añadir dos respuestas por defecto
-        fieldsManager.addButtonForAddAnswers()
         repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }
+        fieldsManager.addButtonForAddAnswers()
     }
 
     override fun saveQuestion(context: Context) {

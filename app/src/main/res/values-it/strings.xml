@@ -1,77 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_question_hint">Domanda:</string>
-    <string name="question_answer_hint">Risposta:</string>
-    <string name="numeric_answer_hint">Numero massimo:\n</string>
-
-    <!-- Sostituzioni del file -->
-    <string name="launch_button_placeholder">Lancio</string>
+    <string name="question_question_hint">Domanda</string>
+    <string name="question_answer_hint">Risposta</string>
+    <string name="numeric_answer_hint">Numero massimo\n</string>
+    <string name="launch_button_placeholder">Avvia</string>
     <string name="send_button_placeholder">Invia</string>
+    <string name="access_button_placeholder">Accesso</string>
+    <string name="username_text_hint">Nome utente</string>
     <string name="yes_answer_placeholder">Sì</string>
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">Vero</string>
     <string name="false_answer_placeholder">Falso</string>
-    <string name="login_title_placeholder">Inserisci un nome utente:</string>
-    <string name="multiple_voting_alert_placeholder">Hai risposto con successo! Puoi rispondere ancora una volta se vuoi</string>
-    <string name="csv_legend_question_title">Domanda ;</string>
-    <string name="csv_legend_answers_title">Risposte ;</string>
-    <string name="csv_legend">Data ;Ora ;IP ;Nome utente ;Risposta</string>
-
-    <!-- Messaggi di errore -->
+    <string name="login_title_placeholder">Inserisci un nome utente</string>
+    <string name="multiple_voting_alert_placeholder">Hai risposto con successo! Puoi rispondere ancora una volta, se vuoi</string>
+    <string name="csv_legend_question_type">Tipo;</string>
+    <string name="csv_legend_question_title">Domanda;</string>
+    <string name="csv_legend_answers_title">Risposte;</string>
+    <string name="csv_legend">Data;Ora;IP;Nome utente;Risposta</string>
     <string name="questions_exists_error">La domanda esiste già</string>
-    <string name="max_answers_error">Non puoi mettere più di 5 risposte</string>
-    <string name="min_answers_error">Non puoi mettere meno di 2 risposte</string>
+    <string name="max_answers_error">Non puoi inserire più di 5 risposte</string>
+    <string name="min_answers_error">Non puoi inserire meno di 2 risposte</string>
     <string name="empty_answers_error">Non puoi salvare se ci sono campi vuoti</string>
     <string name="same_question_error">Non puoi salvare domande con lo stesso contenuto</string>
     <string name="no_network_error">Nessuna connessione Internet, controlla la tua connessione Internet e riprova</string>
-    <string name="storage_permission_denied">Autorizzazione di archiviazione negata</string>
-
-    <!-- Messaggi di avviso -->
+    <string name="storage_permission_denied">Permesso di archiviazione negato</string>
     <string name="success_message">Risposta inviata con successo!</string>
-    <string name="user_already_exists_message">Utente già esistente</string>
+    <string name="confirm_message">Vuoi inviare un\'altra risposta?</string>
+    <string name="user_already_exists_message">L\'utente esiste già</string>
     <string name="file_not_found_message">Errore: impossibile leggere il file HTML</string>
-    <string name="user_responded_message">L\'utente ha già risposto alla domanda</string>
-    <string name="time_out_message">Il tempo per rispondere alla domanda è scaduto</string>
-    <string name="time_in_message">Il server sta ancora ascoltando le risposte</string>
-    <string name="time_up_message">Il tempo per rispondere è scaduto</string>
+    <string name="user_responded_message">L\'utente ha già risposto</string>
+    <string name="time_out_message">Il tempo è scaduto</string>
+    <string name="time_in_message">Il server sta aspettando le risposte</string>
+    <string name="time_up_message">Tempo per rispondere scaduto</string>
     <string name="no_response_message">Il server non ha ricevuto risposte</string>
-
-    <!-- Messaggi dell'attività principale -->
     <string name="activity_question_type_title">Seleziona il tipo di domanda</string>
     <string name="yesno_question_type_title">Sì/No</string>
     <string name="truefalse_question_type_title">Vero/Falso</string>
     <string name="stars_question_type_title">Stelle</string>
     <string name="numeric_question_type_title">Numerico</string>
     <string name="other_question_type_title">Altro</string>
-
-    <!-- Messaggi della nuova domanda -->
-    <string name="question_question_title">Inserisci la domanda:</string>
-    <string name="question_answer_title">Inserisci le risposte:</string>
-    <string name="anonymous_radio_title">Imposta gli utenti:</string>
+    <string name="question_question_title">Inserisci la domanda</string>
+    <string name="question_answer_title">Inserisci le risposte</string>
+    <string name="anonymous_radio_title">Configura gli utenti</string>
     <string name="anonymous_question_option_text">Anonimo</string>
     <string name="non_anonymous_question_option_text">Utente richiesto</string>
-    <string name="filter_users_radio_title">Imposta il numero di risposte per utente:</string>
+    <string name="filter_users_radio_title">Configura il numero di risposte per utente</string>
     <string name="filter_users_question_option_text">Una risposta</string>
     <string name="non_filter_users_question_option_text">Risposte multiple</string>
-    <string name="answers_radio_title">Imposta il numero di risposte possibili:</string>
-    <string name="single_answer_question_option_text">Risposta singola</string>
+    <string name="answers_radio_title">Configura il numero di risposte possibili</string>
+    <string name="single_answer_question_option_text">Una sola risposta</string>
     <string name="multi_answer_question_option_text">Risposte multiple</string>
-    <string name="time_checkbox_title">Imposta il cronometro:</string>
+    <string name="time_checkbox_title">Configura il cronometro</string>
     <string name="timeout_question_option_text">Limite di tempo</string>
     <string name="minutes_help_text">minuti</string>
-
-    <!-- Messaggi del servizio di lancio -->
+    <string name="graphic_title_text">Grafico delle Risposte</string>
     <string name="chronometer_title">Tempo rimanente</string>
-    <string name="download_title">Scansiona per scaricare:</string>
-    <string name="download_format_description">Formato: .csv</string>
-    <string name="configurations_text">Impostazioni aggiuntive</string>
-    <string name="users_count_title">"Utenti: "</string>
-    <string name="time_out_button_text">Fine</string>
-
-    <string name="csv_legend_question_type">Tipo;</string>
-    <string name="graphic_title_text">Grafico delle risposte:</string>
-    <string name="confirm_message">Vuoi inviare un\'altra risposta?</string>
-    <string name="access_button_placeholder">Accesso</string>
-    <string name="username_text_hint">Nome utente</string>
-
+    <string name="download_title">Scansiona per scaricare</string>
+    <string name="additional_config_text">Impostazioni aggiuntive</string>
+    <string name="users_count_title">"Utenti "</string>
+    <string name="time_out_button_text">Finito</string>
 </resources>

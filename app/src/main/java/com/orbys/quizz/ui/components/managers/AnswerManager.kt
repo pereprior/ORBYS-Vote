@@ -1,6 +1,8 @@
 package com.orbys.quizz.ui.components.managers
 
 import android.content.Context
+import android.text.InputFilter
+import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,15 +17,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * @param layout Layout donde se mostrarán las respuestas.
  */
 abstract class AnswerManager(
-    context: Context, layout: LinearLayout
+    private val context: Context, layout: LinearLayout
 ) {
     protected val answerFields = mutableListOf<EditText>()
+    protected abstract val inputType: Int
 
     // Añadir un campo de texto a la vista
     abstract fun addAnswerField()
-
-    // Crear un campo de texto para la respuesta
-    protected abstract fun createAnswerField(): EditText
 
     init {
         // Creamos el titulo para el formulario de respuestas
@@ -33,9 +33,26 @@ abstract class AnswerManager(
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             text = context.getString(R.string.question_answer_title)
+            textSize = 11f
         }
 
         layout.addView(textView)
+    }
+
+    // Crear un campo de texto para la respuesta
+    fun createAnswerField(hintText: String, maxLength: Int) = EditText(context).apply {
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.setMargins(1, 8, 0, 8)
+        layoutParams = params
+        background = context.getDrawable(R.drawable.bg_textbox)
+        hint = hintText
+        inputType = inputType
+        id = View.generateViewId()
+        filters = arrayOf(InputFilter.LengthFilter(maxLength))
+        setPadding(12,12,12,12)
     }
 
     // Comprueba si hay alguna respuesta vacia

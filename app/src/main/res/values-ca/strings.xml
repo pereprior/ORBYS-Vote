@@ -1,77 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="question_question_hint">Pregunta:</string>
-    <string name="question_answer_hint">Resposta:</string>
-    <string name="numeric_answer_hint">Número màxim:\n</string>
-
-    <!-- Marcadors de fitxers -->
-    <string name="launch_button_placeholder">Llançar</string>
+    <string name="question_question_hint">Pregunta</string>
+    <string name="question_answer_hint">Resposta</string>
+    <string name="numeric_answer_hint">Nombre màxim\n</string>
+    <string name="launch_button_placeholder">Iniciar</string>
     <string name="send_button_placeholder">Enviar</string>
+    <string name="access_button_placeholder">Accés</string>
+    <string name="username_text_hint">Nom d\'usuari</string>
     <string name="yes_answer_placeholder">Sí</string>
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">Vertader</string>
     <string name="false_answer_placeholder">Fals</string>
-    <string name="login_title_placeholder">Introdueix un nom d\'usuari:</string>
-    <string name="multiple_voting_alert_placeholder">Has respost amb èxit! Pots respondre una altra vegada si vols</string>
+    <string name="login_title_placeholder">Introdueixi un nom d\'usuari</string>
+    <string name="multiple_voting_alert_placeholder">Ha respost correctament! Podeu respondre una altra vegada, si ho desitgeu</string>
+    <string name="csv_legend_question_type">Tipus;</string>
     <string name="csv_legend_question_title">Pregunta;</string>
     <string name="csv_legend_answers_title">Respostes;</string>
     <string name="csv_legend">Data;Hora;IP;Nom d\'usuari;Resposta</string>
-
-    <!-- Missatges d'error -->
     <string name="questions_exists_error">La pregunta ja existeix</string>
-    <string name="max_answers_error">No pots posar més de 5 respostes</string>
-    <string name="min_answers_error">No pots posar menys de 2 respostes</string>
-    <string name="empty_answers_error">No pots desar si hi ha camps buits</string>
-    <string name="same_question_error">No pots desar preguntes amb el mateix contingut</string>
-    <string name="no_network_error">Sense connexió a Internet, comprova la teva connexió i torna-ho a intentar</string>
+    <string name="max_answers_error">No pot introduir més de 5 respostes</string>
+    <string name="min_answers_error">No pot introduir menys de 2 respostes</string>
+    <string name="empty_answers_error">No pot desar si hi ha camps buits</string>
+    <string name="same_question_error">No pot desar preguntes amb el mateix contingut</string>
+    <string name="no_network_error">Sense connexió a Internet, comprovi la seva connexió a Internet i torni-ho a provar</string>
     <string name="storage_permission_denied">Permís d\'emmagatzematge denegat</string>
-
-    <!-- Missatges d'alerta -->
     <string name="success_message">Resposta enviada amb èxit!</string>
+    <string name="confirm_message">Vol enviar una altra resposta?</string>
     <string name="user_already_exists_message">L\'usuari ja existeix</string>
     <string name="file_not_found_message">Error: no s\'ha pogut llegir el fitxer HTML</string>
-    <string name="user_responded_message">L\'usuari ja ha respost a la pregunta</string>
-    <string name="time_out_message">El temps per respondre la pregunta s\'ha esgotat</string>
-    <string name="time_in_message">El servidor encara està escoltant respostes</string>
-    <string name="time_up_message">El temps per respondre s\'ha esgotat</string>
+    <string name="user_responded_message">L\'usuari ja ha respost</string>
+    <string name="time_out_message">El temps ha expirat</string>
+    <string name="time_in_message">El servidor està esperant respostes</string>
+    <string name="time_up_message">El temps per respondre ha expirat</string>
     <string name="no_response_message">El servidor no ha rebut respostes</string>
-
-    <!-- Missatges de l'activitat principal -->
-    <string name="activity_question_type_title">Selecciona el tipus de pregunta</string>
+    <string name="activity_question_type_title">Seleccioneu el tipus de pregunta</string>
     <string name="yesno_question_type_title">Sí/No</string>
     <string name="truefalse_question_type_title">Vertader/Fals</string>
     <string name="stars_question_type_title">Estrelles</string>
     <string name="numeric_question_type_title">Numèric</string>
     <string name="other_question_type_title">Altres</string>
-
-    <!-- Missatges de la nova pregunta -->
-    <string name="question_question_title">Introdueix la pregunta:</string>
-    <string name="question_answer_title">Introdueix les respostes:</string>
-    <string name="anonymous_radio_title">Configurar usuaris:</string>
+    <string name="question_question_title">Introdueixi la pregunta</string>
+    <string name="question_answer_title">Introdueixi les respostes</string>
+    <string name="anonymous_radio_title">Configurar usuaris</string>
     <string name="anonymous_question_option_text">Anònim</string>
     <string name="non_anonymous_question_option_text">Usuari requerit</string>
-    <string name="filter_users_radio_title">Configurar nombre de respostes per usuari:</string>
+    <string name="filter_users_radio_title">Configureu el nombre de respostes per usuari</string>
     <string name="filter_users_question_option_text">Una resposta</string>
     <string name="non_filter_users_question_option_text">Respostes múltiples</string>
-    <string name="answers_radio_title">Configurar nombre de respostes possibles:</string>
-    <string name="single_answer_question_option_text">Resposta única</string>
+    <string name="answers_radio_title">Configureu el nombre de respostes possibles</string>
+    <string name="single_answer_question_option_text">Una sola resposta</string>
     <string name="multi_answer_question_option_text">Respostes múltiples</string>
-    <string name="time_checkbox_title">Configurar cronòmetre:</string>
+    <string name="time_checkbox_title">Configureu el cronòmetre</string>
     <string name="timeout_question_option_text">Límit de temps</string>
     <string name="minutes_help_text">minuts</string>
-
-    <!-- Missatges del servei de llançament -->
+    <string name="graphic_title_text">Gràfic de Respostes</string>
     <string name="chronometer_title">Temps restant</string>
-    <string name="download_title">Escanejar per descarregar:</string>
-    <string name="download_format_description">Format: .csv</string>
-    <string name="configurations_text">Configuracions addicionals</string>
-    <string name="users_count_title">"Usuaris: "</string>
-    <string name="time_out_button_text">Finalitzar</string>
-
-    <string name="csv_legend_question_type">Tipus;</string>
-    <string name="graphic_title_text">Gràfic de les respostes:</string>
-    <string name="confirm_message">Vols enviar una altra resposta?</string>
-    <string name="access_button_placeholder">Accés</string>
-    <string name="username_text_hint">Nom d\'usuari</string>
-
+    <string name="download_title">Escanejar per descarregar</string>
+    <string name="additional_config_text">Configuracions addicionals</string>
+    <string name="users_count_title">"Usuaris "</string>
+    <string name="time_out_button_text">Finalitzat</string>
 </resources>

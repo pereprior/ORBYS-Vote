@@ -4,6 +4,7 @@ import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -13,6 +14,7 @@ class AddYesNoQuestion: AddFragment() {
 
     override val titleResId: Int = R.string.yesno_question_type_title
     override val iconResId: Int = R.drawable.ic_yesno
+    override val cardType = YesNoCard()
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
