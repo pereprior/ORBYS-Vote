@@ -87,5 +87,6 @@
     <string name="additional_config_text">Additional Settings</string>
     <string name="users_count_title">"Users "</string>
     <string name="time_out_button_text">Finish</string>
+    <string name="add_answer_button_text">Añadir respuestas</string>
 
 </resources>

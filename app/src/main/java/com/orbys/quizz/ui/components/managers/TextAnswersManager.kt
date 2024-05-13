@@ -69,7 +69,7 @@ class TextAnswersManager(
         background = context.getDrawable(R.drawable.bg_textbox).apply {
             this!!.setColorFilter(ContextCompat.getColor(context, R.color.blue_selected_60), PorterDuff.Mode.SRC_ATOP)
         }
-        text = "Añadir respuestas"
+        text = context.getString(R.string.add_answer_button_text)
         setPadding(12,12,12,12)
     }
 

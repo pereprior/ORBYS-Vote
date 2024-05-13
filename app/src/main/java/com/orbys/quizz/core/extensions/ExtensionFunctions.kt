@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
 import com.orbys.quizz.data.services.HttpService
-import com.orbys.quizz.databinding.CardTypesQuestionBinding
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.services.FloatingViewService
@@ -30,15 +29,6 @@ fun Int.minutesToSeconds(): Int = this * 60
 
 // Pasar de segundos a milisegundos
 fun Int.secondsToMillis(): Long = this * 1000L
-
-fun CardTypesQuestionBinding.bindCard(
-    context: Context,
-    textResId: Int,
-    iconResId: Int
-) {
-    cardTitle.text = context.getText(textResId)
-    cardIcon.setImageResource(iconResId)
-}
 
 /**
  * Limita el número de líneas y de caracteres de un EditText.
