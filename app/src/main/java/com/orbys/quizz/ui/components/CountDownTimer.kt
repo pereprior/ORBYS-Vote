@@ -32,6 +32,7 @@ class CountDownTimer(
 
     init {
         textSize = TEXT_SIZE
+        format
     }
 
     fun setTimeInMillis(timeInMillis: Long) { this.timeInMillis = timeInMillis }

@@ -14,7 +14,7 @@
     <dimen name="graphic_height">250dp</dimen>
     <dimen name="widget_width">620dp</dimen>
     <dimen name="bar_width">35dp</dimen>
-    <dimen name="bar_margin">12dp</dimen>
+    <dimen name="bar_margin">15dp</dimen>
 
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>

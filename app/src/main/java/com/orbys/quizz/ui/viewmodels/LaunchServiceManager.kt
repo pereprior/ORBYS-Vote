@@ -145,7 +145,7 @@ class LaunchServiceManager @Inject constructor(
 
                 // Por cada respuesta nueva añadimos una barra al grafico
                 answers.forEach { answer ->
-                    val bar = Bar(answer.answer, height = answer.getCount())
+                    val bar = Bar(answer.answer, answer.getCount())
                     barView.addBar(bar)
 
                     GlobalScope.launch {

@@ -23,7 +23,7 @@ abstract class GraphicView(
 
     private val fontSize = context.resources.getDimensionPixelSize(R.dimen.title_font_size).toFloat()
 
-    protected val bars = mutableListOf<Bar>()
+    val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {
         textSize = fontSize
         color = Color.WHITE

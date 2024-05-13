@@ -8,6 +8,7 @@ import com.orbys.quizz.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.quizz.data.repositories.FileRepository
 import com.orbys.quizz.data.repositories.QuestionRepositoryImpl
 import com.orbys.quizz.data.repositories.UsersRepositoryImpl
+import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import io.ktor.http.ContentType
 import io.ktor.server.application.ApplicationCall
@@ -89,7 +90,7 @@ class FileHandler @Inject constructor(
     fun loadHtmlFile(
         htmlName: String = questionRepository.getQuestion().getAnswerType()
     ): String? {
-        val name = if (htmlName == "yesno") "boolean" else htmlName.lowercase(Locale.ROOT)
+        val name = if (htmlName == AnswerType.YES_NO.name) "boolean" else htmlName.lowercase(Locale.ROOT)
         val fileName = name + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
