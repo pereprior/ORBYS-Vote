@@ -13,8 +13,8 @@
     <dimen name="micro_qr_code_size">35dp</dimen>
     <dimen name="graphic_height">250dp</dimen>
     <dimen name="widget_width">620dp</dimen>
-    <dimen name="bar_width">60dp</dimen>
-    <dimen name="bar_margin">10dp</dimen>
+    <dimen name="bar_width">35dp</dimen>
+    <dimen name="bar_margin">12dp</dimen>
 
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>

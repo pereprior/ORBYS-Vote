@@ -16,7 +16,8 @@ class HorizontalGraphicView(
 ): GraphicView(context, attributes) {
 
     companion object {
-        private const val TEXT_POSITION = 5f
+        private const val TEXT_POSITION = 20f
+        private const val ROUND_RADIUS = 10f
     }
 
     private val barWidth = context.resources.getDimensionPixelSize(R.dimen.bar_width)
@@ -36,18 +37,23 @@ class HorizontalGraphicView(
             // Calculamos la longitud de la barra en funcion del contador y el ancho de la vista
             val right = width.toFloat() * countPercent
 
-            // Pintamos la barra del grafico
+            // Pintamos las barra del grafico
+            val gray3 = ContextCompat.getColor(context, R.color.gray3)
+            paint.color = gray3
+            canvas.drawRoundRect(0f, top, width.toFloat(), bottom, ROUND_RADIUS, ROUND_RADIUS, paint)
             val blueSelected = ContextCompat.getColor(context, R.color.blue_selected_60)
             paint.color = blueSelected
-            canvas.drawRect(0f, top, right, bottom, paint)
+            canvas.drawRoundRect(0f, top, right, bottom, ROUND_RADIUS, ROUND_RADIUS, paint)
 
             // Calculamos la posicion del texto en el centro de la barra
-            val x = TEXT_POSITION
+            var x = TEXT_POSITION
             val y = (top + bottom) / 2 - (paint.descent() + paint.ascent()) / 2
             // Pintamos el texto en la barra segun este vacia o llena
             paint.color = Color.WHITE
             // Pintamos el texto en la barra
-            canvas.drawText("${bar.answer}: ${bar.height}", x, y, paint)
+            canvas.drawText(bar.answer, x, y, paint)
+            x = width - TEXT_POSITION
+            canvas.drawText(bar.height.toString(), x, y, paint)
         }
 
         // Actualizar el tamaño de la vista conforme a la cantidad de barras

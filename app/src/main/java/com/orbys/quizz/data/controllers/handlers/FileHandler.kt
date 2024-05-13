@@ -89,7 +89,8 @@ class FileHandler @Inject constructor(
     fun loadHtmlFile(
         htmlName: String = questionRepository.getQuestion().getAnswerType()
     ): String? {
-        val fileName = htmlName.lowercase(Locale.ROOT) + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
+        val name = if (htmlName == "yesno") "boolean" else htmlName.lowercase(Locale.ROOT)
+        val fileName = name + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
