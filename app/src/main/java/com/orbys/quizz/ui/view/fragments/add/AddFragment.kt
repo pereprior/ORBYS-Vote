@@ -104,10 +104,8 @@ abstract class AddFragment: Fragment() {
     ) {
         filterUsersTitle.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
         filterUsersGroup.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
-        filterUsersDivider.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
         multiAnswerTitle.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
         multiAnswerGroup.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
-        multiAnswerDivider.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
         timeoutQuestionOption.visibility = if (timerConfig) View.VISIBLE else View.GONE
     }
 
@@ -121,6 +119,9 @@ abstract class AddFragment: Fragment() {
     private fun FragmentAddQuestionBinding.setConfigVisibilityTo(icon: Int, visible: Int) {
         iconConfigVisibility.setImageResource(icon)
         configurationsLayout.visibility = visible
+        questionTitle.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+        questionQuestion.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+        answersLayout.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
     }
 
 }

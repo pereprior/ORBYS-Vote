@@ -19,8 +19,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 abstract class AnswerManager(
     private val context: Context, layout: LinearLayout
 ) {
+
     protected val answerFields = mutableListOf<EditText>()
-    protected abstract val inputType: Int
+    abstract val type: Int
 
     // Añadir un campo de texto a la vista
     abstract fun addAnswerField()
@@ -49,7 +50,7 @@ abstract class AnswerManager(
         layoutParams = params
         background = context.getDrawable(R.drawable.bg_textbox)
         hint = hintText
-        inputType = inputType
+        inputType = type
         id = View.generateViewId()
         filters = arrayOf(InputFilter.LengthFilter(maxLength))
         setPadding(12,12,12,12)

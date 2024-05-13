@@ -1,178 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Vista que muestra el servicio de vista flotante cuando se lanza una pregunta -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_width="@dimen/widget_width"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:elevation="@dimen/small_margin"
     android:gravity="center"
-    android:background="@android:color/transparent"
+    android:background="@drawable/bg_main"
     android:theme="@style/Base.Theme.OrbysQuizz">
 
-    <!-- Layout que contiene la información para contestar la pregunta -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/activity_layout_width"
-        android:layout_height="@dimen/widget_layout_size"
-        android:layout_margin="4dp"
-        android:background="@drawable/bg_main"
-        android:gravity="center">
+    <!-- Logo de la empresa -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="65dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_logo_desc"
+        android:src="@drawable/orbys_logo"
+        android:layout_marginHorizontal="@dimen/medium_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Icono con el tipo de la pregunta -->
-        <ImageView
-            android:id="@+id/question_type_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/question_type_icon_desc"
-            android:tint="@color/blue_selected_60"
-            tools:ignore="UseAppTint"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Botón de cerrar la actividad -->
+    <ImageButton
+        android:id="@+id/close_widget_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/exit_button_desc"
+        android:layout_marginHorizontal="@dimen/medium_margin"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Texto para la pregunta -->
-        <TextView
-            android:id="@+id/question_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:textSize="@dimen/url_title_font_size"
-            android:maxWidth="@dimen/qr_code_size"
-            android:ellipsize="none"
-            app:layout_constraintTop_toBottomOf="@id/question_type_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Separador de la actividad y el fragmento -->
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        app:dividerColor="#666666"
+        app:dividerThickness="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
-        <!-- Código QR para contestar la pregunta -->
-        <include
-            layout="@layout/fragment_qr_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Tarjeta del tipo de pregunta -->
+    <FrameLayout
+        android:id="@+id/card_type_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/small_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/question_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:textSize="@dimen/url_title_font_size"
+        android:maxWidth="@dimen/qr_code_size"
+        android:ellipsize="none"
+        app:layout_constraintTop_toBottomOf="@id/card_type_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Layout que contiene el recuento de las respuestas enviadas al servidor -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/widget_layout_size"
-        android:layout_height="@dimen/widget_layout_size"
-        android:layout_margin="4dp"
-        android:background="@drawable/bg_main" >
+    <include
+        layout="@layout/fragment_qr_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/question_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Boton para cerrar el servicio y volver a la actividad principal -->
-        <ImageButton
-            android:id="@+id/close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/exit_button_desc"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
-            android:src="@drawable/ic_back"
-            android:tint="@color/blue_selected_60"
-            tools:ignore="UseAppTint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/graphic_height"
+        app:layout_constraintTop_toBottomOf="@id/close_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
 
-        <!-- Vista del recuento de respuestas de los usuarios -->
-        <ScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/graphic_height"
-            app:layout_constraintTop_toBottomOf="@id/close_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!-- Titulo del grafico -->
-                <TextView
-                    android:id="@+id/graphic_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/small_margin"
-                    android:text="@string/graphic_title_text"
-                    android:gravity="center"
-                    android:textSize="@dimen/title_font_size" />
-
-                <!-- Vista del grafico con las respuestas de los usuarios -->
-                <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
-                    android:id="@+id/barView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="162dp" />
-
-            </LinearLayout>
-
-        </ScrollView>
-
-        <!-- Layout que contiene información adicional sobre la pregunta -->
         <LinearLayout
-            android:id="@+id/chronometer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/scroll_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:orientation="vertical">
 
-            <!-- Texto con el recuento de usuarios que han contestado -->
             <TextView
-                android:id="@+id/responded_users_count"
+                android:id="@+id/graphic_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/small_margin"
+                android:text="@string/graphic_title_text"
                 android:gravity="center"
                 android:textSize="@dimen/title_font_size" />
 
-            <!-- Titulo del temporizador -->
-            <TextView
-                android:id="@+id/chronometer_title"
+            <com.orbys.quizz.ui.components.graphics.HorizontalGraphicView
+                android:id="@+id/barView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/small_margin"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:gravity="center"
-                android:text="@string/chronometer_title"
-                android:textSize="@dimen/title_font_size"
-                android:visibility="gone" />
-
-            <!-- Temporizador con el tiempo restante para contestar la pregunta -->
-            <com.orbys.quizz.ui.components.CountDownTimer
-                android:id="@+id/timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <!-- Boton para finalizar el tiempo para responder la pregunta -->
-            <Button
-                android:id="@+id/time_out_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/font_size"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:text="@string/time_out_button_text"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/chronometer_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:minHeight="162dp" />
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/chronometer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/responded_users_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"
+            android:gravity="center"
+            android:textSize="@dimen/title_font_size" />
+
+        <TextView
+            android:id="@+id/chronometer_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:gravity="center"
+            android:text="@string/chronometer_title"
+            android:textSize="@dimen/title_font_size"
+            android:visibility="gone" />
+
+        <com.orbys.quizz.ui.components.CountDownTimer
+            android:id="@+id/timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/time_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/font_size"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:text="@string/time_out_button_text"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/chronometer_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </LinearLayout> -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

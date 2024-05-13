@@ -20,4 +20,5 @@ class YesNoCard: QuestionTypesCard() {
             commit()
         }
     }
+
 }

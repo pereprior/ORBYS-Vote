@@ -26,10 +26,10 @@ import com.orbys.quizz.core.extensions.showToastWithCustomView
  */
 class TextAnswersManager(
     private val context: Context, private val layout: LinearLayout, private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 35, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
+    private val maxLength: Int = 50, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
 ): AnswerManager(context, layout) {
 
-    override val inputType = InputType.TYPE_CLASS_TEXT
+    override val type = InputType.TYPE_CLASS_TEXT
 
     override fun addAnswerField() {
         val answerField = createAnswerField(hintText, maxLength)
@@ -84,7 +84,7 @@ class TextAnswersManager(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        gravity = Gravity.END
+        gravity = Gravity.CENTER_VERTICAL
         addView(answer)
         addView(button)
 
@@ -98,13 +98,14 @@ class TextAnswersManager(
     }
 
     private fun deleteButton(resId: Int) = ImageButton(context).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+        val params = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
         )
+        params.addRule(RelativeLayout.ALIGN_PARENT_END)
+        layoutParams = params
         background = ContextCompat.getDrawable(context, android.R.color.transparent)
         setImageResource(resId)
-        foregroundGravity = Gravity.END
         setPadding(12,12,12,12)
     }
 

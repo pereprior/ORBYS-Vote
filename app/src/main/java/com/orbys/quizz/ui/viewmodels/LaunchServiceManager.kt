@@ -4,14 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.orbys.quizz.R
-import com.orbys.quizz.core.extensions.getCount
-import com.orbys.quizz.core.extensions.minutesToSeconds
-import com.orbys.quizz.core.extensions.secondsToMillis
 import com.orbys.quizz.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.quizz.databinding.ServiceLaunchQuestionBinding
-import com.orbys.quizz.domain.models.Bar
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.domain.usecases.ClearUsersListUseCase
 import com.orbys.quizz.domain.usecases.GetHttpServiceUseCase
@@ -66,6 +60,9 @@ class LaunchServiceManager @Inject constructor(
         val question = getQuestionUseCase()
 
         with(binding) {
+            // Agregar la vista al FrameLayout
+
+
             // Información de la pregunta
             setQuestionElements(question)
 
@@ -82,28 +79,28 @@ class LaunchServiceManager @Inject constructor(
 
     private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {
         // Titulo y tipo de la pregunta
-        questionTypeIcon.setImageResource(question.icon)
+        //questionTypeIcon.setImageResource(question.icon)
         questionText.text = question.question
 
-        closeButton.setOnClickListener { stopService() }
+        //closeButton.setOnClickListener { stopService() }
 
         // Si el tiempo de espera no es nulo se muestra el temporizador
         if (question.timeOut!! > 0)
             setTimerCount(question.timeOut)
 
         // Boton para finalizar la pregunta
-        timeOutButton.setOnClickListener {
+        /*timeOutButton.setOnClickListener {
             setTimeOutUseCase(true)
             timer.cancelTimer()
 
             stopService(true)
-        }
+        }*/
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
         // Muestra el temporizador
-        chronometerTitle.visibility = ConstraintLayout.VISIBLE
+        /*chronometerTitle.visibility = ConstraintLayout.VISIBLE
         timer.visibility = ConstraintLayout.VISIBLE
 
         // Convertimos los minutos a milisegundos
@@ -117,7 +114,7 @@ class LaunchServiceManager @Inject constructor(
         // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
         GlobalScope.launch {
             timer.isFinished.collect { setTimeOutUseCase(it) }
-        }
+        }*/
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -126,7 +123,7 @@ class LaunchServiceManager @Inject constructor(
         GlobalScope.launch {
             getUsersListUseCase().collect { usersList ->
                 withContext(Dispatchers.Main) {
-                    respondedUsersCount.text = context.getString(R.string.users_count_title) + usersList.size
+                    //respondedUsersCount.text = context.getString(R.string.users_count_title) + usersList.size
                 }
             }
         }
@@ -134,7 +131,7 @@ class LaunchServiceManager @Inject constructor(
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
-        GlobalScope.launch {
+        /*GlobalScope.launch {
             // Recogemos los cambios en el numero de respuestas de la pregunta
             question.answers.collect { answers ->
                 barView.clearBars()
@@ -154,7 +151,7 @@ class LaunchServiceManager @Inject constructor(
 
                 }
             }
-        }
+        }*/
 
     }
 

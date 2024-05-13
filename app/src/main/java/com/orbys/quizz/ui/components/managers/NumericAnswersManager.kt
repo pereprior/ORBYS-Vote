@@ -18,7 +18,7 @@ class NumericAnswersManager(
     private val hintText: String = context.getString(R.string.question_answer_hint), private val maxLength: Int = 4
 ): AnswerManager(context, layout) {
 
-    override val inputType = InputType.TYPE_CLASS_NUMBER
+    override val type = InputType.TYPE_CLASS_NUMBER
 
     override fun addAnswerField() {
         val answerField = createAnswerField(hintText, maxLength)
