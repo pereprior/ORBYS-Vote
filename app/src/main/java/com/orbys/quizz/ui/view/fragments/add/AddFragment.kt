@@ -13,9 +13,10 @@ import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.limitLines
 import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.databinding.FragmentAddQuestionBinding
+import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
+import com.orbys.quizz.ui.components.QuestionTypesCard
 import com.orbys.quizz.ui.services.FloatingViewService
-import com.orbys.quizz.ui.view.fragments.cards.QuestionTypesCard
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,22 +28,21 @@ abstract class AddFragment: Fragment() {
 
     private lateinit var viewModel: QuestionViewModel
     protected lateinit var binding: FragmentAddQuestionBinding
-    
-    protected abstract val titleResId: Int
-    protected abstract val iconResId: Int
-    protected abstract val cardType: QuestionTypesCard
+
+    protected abstract val answerType: AnswerType
+    private lateinit var cardType: QuestionTypesCard
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
+        cardType = QuestionTypesCard(requireContext())
 
         with(binding) {
             // Configurar el título y el icono de la pregunta
-            parentFragmentManager.beginTransaction()
-                .add(cardTypeContainer.id, cardType)
-                .commit()
+            cardTypeContainer.addView(cardType)
+            cardType.bindCard(answerType)
 
             // Limitar el número de lineas de la pregunta
             questionQuestion.limitLines(3)

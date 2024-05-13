@@ -1,10 +1,8 @@
 package com.orbys.quizz.ui.view.fragments.add
 
-import com.orbys.quizz.R
 import com.orbys.quizz.domain.models.Answer
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
-import com.orbys.quizz.ui.view.fragments.cards.StarsCard
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -12,13 +10,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 class AddStarsQuestion: AddFragment() {
 
-    override val titleResId: Int = R.string.stars_question_type_title
-    override val iconResId: Int = R.drawable.ic_star
-    override val cardType = StarsCard()
+    override val answerType = AnswerType.STARS
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = iconResId,
         answers = MutableStateFlow(
             listOf(
                 Answer("1"),
@@ -28,7 +23,7 @@ class AddStarsQuestion: AddFragment() {
                 Answer("5")
             )
         ),
-        answerType = AnswerType.STARS,
+        answerType = answerType,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )

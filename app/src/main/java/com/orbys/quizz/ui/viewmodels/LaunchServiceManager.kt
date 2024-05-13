@@ -14,6 +14,7 @@ import com.orbys.quizz.domain.usecases.GetServerUrlUseCase
 import com.orbys.quizz.domain.usecases.GetUsersListUseCase
 import com.orbys.quizz.domain.usecases.SetTimeOutUseCase
 import com.orbys.quizz.ui.components.QRCodeGenerator
+import com.orbys.quizz.ui.components.QuestionTypesCard
 import com.orbys.quizz.ui.services.FloatingViewService
 import com.orbys.quizz.ui.view.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -61,7 +62,9 @@ class LaunchServiceManager @Inject constructor(
 
         with(binding) {
             // Agregar la vista al FrameLayout
-
+            cardTypeContainer.addView(
+                QuestionTypesCard(context).apply { bindCard(question.answerType) }
+            )
 
             // Información de la pregunta
             setQuestionElements(question)

@@ -11,29 +11,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.quizz.R
 import com.orbys.quizz.data.services.HttpService
+import com.orbys.quizz.databinding.CardTypesQuestionBinding
 import com.orbys.quizz.domain.models.Answer
-import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.services.FloatingViewService
-import com.orbys.quizz.ui.view.fragments.cards.NumericCard
-import com.orbys.quizz.ui.view.fragments.cards.OtherCard
-import com.orbys.quizz.ui.view.fragments.cards.StarsCard
-import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
 
 // Devuelve el valor del flow con la lista de respuestas de una pregunta
 fun Question.getAnswers() = answers.value
 
 // Devuelve el nombre del tipo de las respuestas de una pregunta
 fun Question.getAnswerType() = answerType.name
-
-// Devuelve el nombre del tipo de las respuestas de una pregunta
-fun Question.getCardType() = when (answerType) {
-    AnswerType.BOOLEAN -> YesNoCard()
-    AnswerType.STARS -> StarsCard()
-    AnswerType.NUMERIC -> NumericCard()
-    AnswerType.OTHER -> OtherCard()
-    else -> null
-}
 
 // Devuelve el valor del flow con la respuesta seleccionada de una pregunta
 fun Answer.getCount() = count.value
@@ -43,6 +30,15 @@ fun Int.minutesToSeconds(): Int = this * 60
 
 // Pasar de segundos a milisegundos
 fun Int.secondsToMillis(): Long = this * 1000L
+
+fun CardTypesQuestionBinding.bindCard(
+    context: Context,
+    textResId: Int,
+    iconResId: Int
+) {
+    cardTitle.text = context.getText(textResId)
+    cardIcon.setImageResource(iconResId)
+}
 
 /**
  * Limita el número de líneas y de caracteres de un EditText.

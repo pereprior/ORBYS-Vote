@@ -9,16 +9,13 @@ import com.orbys.quizz.core.extensions.showToastWithCustomView
 import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.domain.models.Question
 import com.orbys.quizz.ui.components.managers.TextAnswersManager
-import com.orbys.quizz.ui.view.fragments.cards.OtherCard
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Otros".
  */
 class AddOtherQuestion: AddFragment() {
 
-    override val titleResId: Int = R.string.other_question_type_title
-    override val iconResId: Int = R.drawable.ic_others
-    override val cardType = OtherCard()
+    override val answerType = AnswerType.OTHER
 
     private lateinit var fieldsManager: TextAnswersManager
 
@@ -66,9 +63,8 @@ class AddOtherQuestion: AddFragment() {
 
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        icon = R.drawable.ic_others,
         answers = fieldsManager.getAnswers(),
-        answerType = AnswerType.OTHER,
+        answerType = answerType,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
         timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
         isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,

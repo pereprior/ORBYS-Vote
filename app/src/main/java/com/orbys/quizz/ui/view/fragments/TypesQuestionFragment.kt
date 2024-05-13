@@ -4,17 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.orbys.quizz.R
 import com.orbys.quizz.core.extensions.stopActiveServices
 import com.orbys.quizz.databinding.FragmentQuestionTypesBinding
+import com.orbys.quizz.domain.models.AnswerType
 import com.orbys.quizz.ui.components.QRCodeGenerator
-import com.orbys.quizz.ui.view.fragments.cards.BooleanCard
-import com.orbys.quizz.ui.view.fragments.cards.NumericCard
-import com.orbys.quizz.ui.view.fragments.cards.OtherCard
-import com.orbys.quizz.ui.view.fragments.cards.StarsCard
-import com.orbys.quizz.ui.view.fragments.cards.YesNoCard
+import com.orbys.quizz.ui.components.QuestionTypesCard
+import com.orbys.quizz.ui.view.fragments.add.AddBooleanQuestion
+import com.orbys.quizz.ui.view.fragments.add.AddFragment
+import com.orbys.quizz.ui.view.fragments.add.AddNumericQuestion
+import com.orbys.quizz.ui.view.fragments.add.AddOtherQuestion
+import com.orbys.quizz.ui.view.fragments.add.AddStarsQuestion
+import com.orbys.quizz.ui.view.fragments.add.AddYesNoQuestion
 import com.orbys.quizz.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,19 +44,32 @@ class TypesQuestionFragment: Fragment() {
         with(binding) {
 
             // Configura las tarjetas de los tipos de preguntas
-            parentFragmentManager.beginTransaction()
-                .add(yesNoCardContainer.id, YesNoCard())
-                .add(booleanCardContainer.id, BooleanCard())
-                .add(starsCardContainer.id, StarsCard())
-                .add(numericCardContainer.id, NumericCard())
-                .add(otherCardContainer.id, OtherCard())
-                .commit()
+            yesNoCardContainer.addCardTypeView(AnswerType.YES_NO, AddYesNoQuestion())
+            booleanCardContainer.addCardTypeView(AnswerType.BOOLEAN, AddBooleanQuestion())
+            starsCardContainer.addCardTypeView(AnswerType.STARS, AddStarsQuestion())
+            numericCardContainer.addCardTypeView(AnswerType.NUMERIC, AddNumericQuestion())
+            otherCardContainer.addCardTypeView(AnswerType.OTHER, AddOtherQuestion())
 
             bindHotspotCredentials()
 
             return root
         }
 
+    }
+
+    private fun FrameLayout.addCardTypeView(answerType: AnswerType, fragment: AddFragment) {
+        addView(
+            QuestionTypesCard(requireContext()).apply {
+                bindCard(answerType)
+            }
+        )
+        setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, fragment)
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     private fun FragmentQuestionTypesBinding.bindHotspotCredentials() {
