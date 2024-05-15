@@ -4,7 +4,7 @@
     <title>Orbys Quizz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         input[type="radio"] {
             display: none;
@@ -33,25 +33,29 @@
 </head>
 <body>
 
-    <form id="myForm">
-        <br><br><br>
-        <h1 id="questionText">[QUESTION]</h1>
-        <br><br><br>
+    <div id="orbys_logo">
+        <img src="orbys.svg" alt="ORBYS">
+    </div>
 
-        <div class="rowGroup">
-            <input type="radio" id="btn1" name="choice" value="[ANSWER0]">
-            <label for="btn1">[ANSWER0]</label>
-            <input type="radio" id="btn2" name="choice" value="[ANSWER1]">
-            <label for="btn2">[ANSWER1]</label>
-        </div>
-        <br><br><br>
+    <div id="quiz_logo">
+        <img src="vote.svg" alt="QUIZ">
 
-        <button type="submit">[SEND]</button>
-    </form>
+        <form id="myForm">
+            <h1 id="questionText">[QUESTION]</h1>
+            <br><br><br>
 
-    <script>
+            <div class="rowGroup">
+                <input type="radio" id="btn1" name="choice" value="[ANSWER0]">
+                <label for="btn1">[ANSWER0]</label>
+                <input type="radio" id="btn2" name="choice" value="[ANSWER1]">
+                <label for="btn2">[ANSWER1]</label>
+            </div>
+            <br><br><br>
 
-    </script>
+            <button type="submit">[SEND]</button>
+        </form>
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
 

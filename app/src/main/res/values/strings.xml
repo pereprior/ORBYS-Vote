@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name" translatable="false">Orbys Quizz</string>
+    <string name="app_name" translatable="false">ORBYS Vote</string>
 
     <!-- Elements description -->
     <string name="menu_button_desc" translatable="false">Boton de menu del top bar</string>
@@ -87,6 +87,6 @@
     <string name="additional_config_text">Additional Settings</string>
     <string name="users_count_title">"Users "</string>
     <string name="time_out_button_text">Finish</string>
-    <string name="add_answer_button_text">Añadir respuestas</string>
+    <string name="add_answer_button_text">Add answers</string>
 
 </resources>

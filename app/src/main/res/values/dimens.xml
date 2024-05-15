@@ -2,7 +2,7 @@
 <resources>
     <dimen name="rounded_background">20dp</dimen>
 
-    <dimen name="activity_layout_width">300dp</dimen>
+    <dimen name="activity_layout_width">260dp</dimen>
     <dimen name="activity_layout_height">260dp</dimen>
     <dimen name="widget_layout_size">340dp</dimen>
 
@@ -21,8 +21,9 @@
     <dimen name="large_margin">36dp</dimen>
     <dimen name="qr_code_padding">10dp</dimen>
 
-    <dimen name="font_size">8sp</dimen>
-    <dimen name="title_font_size">10sp</dimen>
+    <dimen name="small_font_size">8sp</dimen>
+    <dimen name="font_size">9sp</dimen>
+    <dimen name="title_font_size">11sp</dimen>
     <dimen name="url_font_size">12sp</dimen>
     <dimen name="type_fragment_title_size">14sp</dimen>
     <dimen name="url_title_font_size">16sp</dimen>

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.orbys.quizz"
+    namespace = "com.orbys.vote"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.orbys.quizz"
+        applicationId = "com.orbys.vote"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

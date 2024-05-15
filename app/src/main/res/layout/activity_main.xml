@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:layout_width="@dimen/activity_layout_width"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
@@ -12,12 +12,13 @@
     <!-- Logo de la empresa -->
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="65dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
         android:background="@android:color/transparent"
         android:contentDescription="@string/app_logo_desc"
         android:src="@drawable/orbys_logo"
-        android:layout_marginHorizontal="@dimen/medium_margin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -26,10 +27,10 @@
         android:id="@+id/close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
         android:background="@android:color/transparent"
         android:contentDescription="@string/exit_button_desc"
-        android:layout_marginHorizontal="@dimen/medium_margin"
-        android:layout_marginTop="4dp"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +40,7 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginTop="4dp"
         app:dividerColor="#666666"
         app:dividerThickness="1dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +52,11 @@
         android:id="@+id/quiz_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleY="0.75"
+        android:scaleX="0.75"
+        android:layout_marginTop="@dimen/small_font_size"
         android:contentDescription="@string/orbys_title_desc"
-        android:src="@drawable/quiz_title"
-        android:layout_marginTop="@dimen/medium_margin"
+        android:src="@drawable/vote_app_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
