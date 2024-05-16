@@ -39,7 +39,7 @@ class FileHandler @Inject constructor(
 ) {
     private val fileRepository = FileRepository.getInstance(appContext)
     private companion object {
-        const val HTTP_FILES_FOLDER = "/assets"
+        const val HTTP_FILES_FOLDER = "/assets/templates"
         const val HTTP_FILES_PLACEHOLDER = "_index"
         const val HTTP_FILES_EXTENSION = ".html"
         const val MULTIPLE_CHOICE = "multiple"
@@ -64,21 +64,21 @@ class FileHandler @Inject constructor(
      * @return GET
      */
     private fun Route.staticContent() {
-        get("/styles.css") {
+        get("/css/styles.css") {
             try {
-                val css = this::class.java.classLoader!!.getResource("assets/styles.css")!!.readText()
+                val css = this::class.java.classLoader!!.getResource("assets/css/styles.css")!!.readText()
                 call.respondText(css, ContentType.Text.CSS)
             } catch (e: Exception) {
                 call.respondRedirect("/error/1")
             }
         }
 
-        get("/background.png") {
+        get("/images/background.png") {
             try {
                 // Almacenamos la imagen en la cache del navegador durante 24 horas.
                 call.response.headers.append("Cache-Control", "max-age=86400")
 
-                val image = this::class.java.classLoader!!.getResource("assets/background.png")
+                val image = this::class.java.classLoader!!.getResource("assets/images/background.png")
                 val bytes = image.readBytes()
                 call.respondBytes(bytes, ContentType.Image.PNG)
             } catch (e: Exception) {
@@ -86,12 +86,12 @@ class FileHandler @Inject constructor(
             }
         }
 
-        get("/vote.svg") {
+        get("/images/vote.svg") {
             try {
                 // Almacenamos la imagen en la cache del navegador durante 24 horas.
                 call.response.headers.append("Cache-Control", "max-age=86400")
 
-                val image = this::class.java.classLoader!!.getResource("assets/vote.svg")
+                val image = this::class.java.classLoader!!.getResource("assets/images/vote.svg")
                 val bytes = image.readBytes()
                 call.respondBytes(bytes, ContentType.Image.SVG)
             } catch (e: Exception) {
@@ -99,12 +99,64 @@ class FileHandler @Inject constructor(
             }
         }
 
-        get("/orbys.svg") {
+        get("/images/orbys.svg") {
             try {
                 // Almacenamos la imagen en la cache del navegador durante 24 horas.
                 call.response.headers.append("Cache-Control", "max-age=86400")
 
-                val image = this::class.java.classLoader!!.getResource("assets/orbys.svg")
+                val image = this::class.java.classLoader!!.getResource("assets/images/orbys.svg")
+                val bytes = image.readBytes()
+                call.respondBytes(bytes, ContentType.Image.SVG)
+            } catch (e: Exception) {
+                call.respondRedirect("/error/1")
+            }
+        }
+
+        get("/images/boolean.svg") {
+            try {
+                // Almacenamos la imagen en la cache del navegador durante 24 horas.
+                call.response.headers.append("Cache-Control", "max-age=86400")
+
+                val image = this::class.java.classLoader!!.getResource("assets/images/boolean.svg")
+                val bytes = image.readBytes()
+                call.respondBytes(bytes, ContentType.Image.SVG)
+            } catch (e: Exception) {
+                call.respondRedirect("/error/1")
+            }
+        }
+
+        get("/images/numeric.svg") {
+            try {
+                // Almacenamos la imagen en la cache del navegador durante 24 horas.
+                call.response.headers.append("Cache-Control", "max-age=86400")
+
+                val image = this::class.java.classLoader!!.getResource("assets/images/numeric.svg")
+                val bytes = image.readBytes()
+                call.respondBytes(bytes, ContentType.Image.SVG)
+            } catch (e: Exception) {
+                call.respondRedirect("/error/1")
+            }
+        }
+
+        get("/images/others.svg") {
+            try {
+                // Almacenamos la imagen en la cache del navegador durante 24 horas.
+                call.response.headers.append("Cache-Control", "max-age=86400")
+
+                val image = this::class.java.classLoader!!.getResource("assets/images/others.svg")
+                val bytes = image.readBytes()
+                call.respondBytes(bytes, ContentType.Image.SVG)
+            } catch (e: Exception) {
+                call.respondRedirect("/error/1")
+            }
+        }
+
+        get("/images/stars.svg") {
+            try {
+                // Almacenamos la imagen en la cache del navegador durante 24 horas.
+                call.response.headers.append("Cache-Control", "max-age=86400")
+
+                val image = this::class.java.classLoader!!.getResource("assets/images/stars.svg")
                 val bytes = image.readBytes()
                 call.respondBytes(bytes, ContentType.Image.SVG)
             } catch (e: Exception) {

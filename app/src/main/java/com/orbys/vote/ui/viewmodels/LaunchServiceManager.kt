@@ -62,7 +62,7 @@ class LaunchServiceManager @Inject constructor(
 
             // Agregar la vista al FrameLayout
             respondContainer.setOnClickListener {
-                url = getServerUrlUseCase(endpoint)!!
+                url = getServerUrlUseCase(endpoint) ?: return@setOnClickListener
 
                 lanQrCode.visibility = LinearLayout.VISIBLE
                 lanQrText.visibility = LinearLayout.VISIBLE
@@ -74,7 +74,7 @@ class LaunchServiceManager @Inject constructor(
             }
 
             respondHotspotContainer.setOnClickListener {
-                url = getServerUrlUseCase(endpoint, true)!!
+                url = getServerUrlUseCase(endpoint, true) ?: return@setOnClickListener
 
                 lanQrCode.visibility = LinearLayout.GONE
                 lanQrText.visibility = LinearLayout.GONE

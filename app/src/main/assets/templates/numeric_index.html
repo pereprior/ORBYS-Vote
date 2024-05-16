@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Orbys Quizz</title>
+    <title>ORBYS Vote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
+    <div id="orbys_logo">
+        <img src="../images/orbys.svg" alt="ORBYS">
+    </div>
+
+    <div id="vote_logo">
+        <img src="../images/vote.svg" alt="QUIZ">
+    </div>
+
     <form id="myForm">
-        <br><br><br>
+    <img class="type_icon" src="../images/numeric.svg" alt="NUMERIC">
+
         <h1 id="questionText">[QUESTION]</h1>
-        <br><br><br>
+        <br><br>
 
         <div style="text-align: center">
             <div class="min-max-indicator">Min: 1, Max: [MAX_ANSWER]</div>
             <label for="myNumber"></label><input type="number" min="1" max="[MAX_ANSWER]" value="1" id="myNumber">
         </div>
-        <br><br><br>
+        <br><br>
 
         <button type="submit">[SEND]</button>
     </form>

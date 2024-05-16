@@ -1,61 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Orbys Quizz</title>
+    <title>ORBYS Vote</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        input[type="radio"] {
-            display: none;
-        }
-
-        input[type="radio"] + label {
-            padding: 20px 40px;
-            background-color: #ccc;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        input[type="radio"]#btn1:checked + label {
-            background-color: #4caf50;
-            color: white;
-        }
-
-        input[type="radio"]#btn2:checked + label {
-            background-color: #f44336;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
     <div id="orbys_logo">
-        <img src="orbys.svg" alt="ORBYS">
+        <img src="../images/orbys.svg" alt="ORBYS">
     </div>
 
-    <div id="quiz_logo">
-        <img src="vote.svg" alt="QUIZ">
-
-        <form id="myForm">
-            <h1 id="questionText">[QUESTION]</h1>
-            <br><br><br>
-
-            <div class="rowGroup">
-                <input type="radio" id="btn1" name="choice" value="[ANSWER0]">
-                <label for="btn1">[ANSWER0]</label>
-                <input type="radio" id="btn2" name="choice" value="[ANSWER1]">
-                <label for="btn2">[ANSWER1]</label>
-            </div>
-            <br><br><br>
-
-            <button type="submit">[SEND]</button>
-        </form>
-
+    <div id="vote_logo">
+        <img src="../images/vote.svg" alt="QUIZ">
     </div>
+
+    <form id="myForm">
+    <img class="type_icon" src="../images/stars.svg" alt="STARS">
+
+        <h1 id="questionText">[QUESTION]</h1>
+        <br><br>
+
+        <div id="stars">
+            <span class="star" data-value="[ANSWER0]">★</span>
+            <span class="star" data-value="[ANSWER1]">★</span>
+            <span class="star" data-value="[ANSWER2]">★</span>
+            <span class="star" data-value="[ANSWER3]">★</span>
+            <span class="star" data-value="[ANSWER4]">★</span>
+        </div>
+        <br><br>
+
+        <button type="submit">[SEND]</button>
+    </form>
+
+    <script>
+        // Añade un evento de clic a cada estrella
+        document.querySelectorAll('.star').forEach(function(star, index, starList) {
+            star.addEventListener('click', function() {
+                // Por defecto todas las estrellas no están seleccionadas
+                starList.forEach(function(otherStar) {
+                    otherStar.classList.remove('selected');
+                });
+
+                // Al seleccionar una estrella, se seleccionan también las anteriores
+                for (let i = 0; i <= index; i++) {
+                    starList[i].classList.add('selected');
+                }
+            });
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
 
@@ -71,7 +65,7 @@
                 borderWidth: ".15em",
                 borderColor: "#FFFFFF",
                 textShadow: "0 0 .3em #000000bb",
-                allowClose: false
+                allowClose: false,
             }
         );
 
@@ -80,8 +74,9 @@
             // Evita que se envien datos vacios o por defecto
             event.preventDefault();
 
-            // Obtenemos el valor del boton seleccionado
-            var choice = document.querySelector('input[name="choice"]:checked').value;
+            // Obtenemos el valor de las estrellas seleccionadas
+            var stars = document.querySelectorAll('.star.selected');
+            var choice = stars[stars.length - 1].getAttribute('data-value');
 
             // Realizamos la peticion al servidor
             fetch(
@@ -96,6 +91,7 @@
                 .then(text => infoPopup.show())
                 .catch(error => console.error(error));
         };
+
     </script>
 
 </body>
