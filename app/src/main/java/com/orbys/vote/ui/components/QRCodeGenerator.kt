@@ -28,16 +28,6 @@ class QRCodeGenerator(private val context: Context) {
     // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
     private val logoSizeDiff = 4
 
-    // Genera un código QR que te conecta a una red wifi
-    /*fun generateWifiQRCode(
-        ssid: String, password: String, logo: Boolean = false,
-        width: Int = defaultSize, height: Int = defaultSize,
-        logoResId: Int = defaultLogoResId
-    ): Bitmap {
-        val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
-        return encodeAsBitmap(wifiData, logo, width, height, logoResId)
-    }*/
-
     // Genera un código QR que te redirige a una URL en tu navegador
     fun generateUrlQrCode(
         url: String, logo: Boolean = false,

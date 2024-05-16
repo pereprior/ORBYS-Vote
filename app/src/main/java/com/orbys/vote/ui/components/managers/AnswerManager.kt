@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.orbys.vote.R
 import com.orbys.vote.domain.models.Answer
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,7 +51,7 @@ abstract class AnswerManager(
         )
         params.setMargins(1, 8, 0, 8)
         layoutParams = params
-        background = context.getDrawable(R.drawable.bg_textbox)
+        background = AppCompatResources.getDrawable(context, R.drawable.bg_textbox)
         hint = hintText
         inputType = type
         id = View.generateViewId()

@@ -15,7 +15,7 @@ import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 /**
  * Clase que representa una vista para lanzar una pregunta a ser contestada.
  *
- * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
+ * @property floatingBinding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  * @property windowManager Gestor de ventanas para controlar la vista.
  * @property layoutParams Parámetros de diseño de la ventana.
  * @property x Coordenada x de la vista.
@@ -26,7 +26,7 @@ import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 class LaunchQuestionView(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ): ConstraintLayout(context, attrs, defStyleAttr), View.OnTouchListener {
-    var binding: ServiceLaunchQuestionBinding
+    var floatingBinding: ServiceLaunchQuestionBinding
         private set
     var windowManager: WindowManager
         private set
@@ -47,9 +47,9 @@ class LaunchQuestionView(
     private var onChangeY: Float = 0f
 
     init {
-        binding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
+        floatingBinding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        addView(binding.root)
+        addView(floatingBinding.root)
 
         layoutParams.x = x
         layoutParams.y = y

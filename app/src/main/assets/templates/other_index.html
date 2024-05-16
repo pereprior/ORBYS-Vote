@@ -25,6 +25,7 @@
         <div id="answers">
             <!-- Los botones de las preguntas con respuesta única se generarán aquí -->
             <div id="radioContainer"></div>
+
             <!-- Los checkboxes de las preguntas con respuesta multiple se generarán aquí -->
             <div id="checkboxContainer"></div>
         </div>
@@ -107,49 +108,54 @@
         const infoPopup = new Popup(
             {
                 id: "popup_message",
-                titleColor: "#00a135",
                 textColor: "#FFFFFF",
                 backgroundColor: "#010101",
-                title: "✔",
-                content: `<span style="font-size: 2em;"><strong>[SUCCESS_MESSAGE]</strong></span>`,
-                borderWidth: ".15em",
-                borderColor: "#FFFFFF",
+                title: " ",
+                content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
+                                <br><br>
+
+                                <span><strong> [SUCCESS_MESSAGE] </strong></span>
+                                <button id="closeButton" type="submit">      [CLOSE]      </button>`,
                 textShadow: "0 0 .3em #000000bb",
                 allowClose: false,
+                loadCallback: () => {
+                    document
+                        .getElementById("closeButton")
+                        .addEventListener("click", () => {
+                        window.close();
+                        window.location.href = 'https://www.google.com';
+                    });
+                },
             }
         );
 
         const confirmPopup = new Popup(
             {
                 id: "popup_confirm",
-                titleColor: "#55c1f2",
                 textColor: "#FFFFFF",
                 backgroundColor: "#010101",
-                title: "?",
+                title: " ",
                 content: `
-                <span style="font-size: 2em;"><strong>[SUCCESS_MESSAGE]</strong></span>
+                <img src="../images/alert.svg" alt="ALERT" class="logo">
+                                <br><br>
+                <span><strong>[CONFIRM_MESSAGE]</strong></span>
                 <br>
-                <button id="btn-refuse-override" style="padding: 20px 30px;">No</button>                   <button id="btn-accept-override" style="padding: 20px 30px;">Si</button>
-                `,
-                borderWidth: ".15em",
-                borderColor: "#FFFFFF",
+                <button id="btn-refuse">No</button>                   <button id="btn-accept">Si</button>`,
                 textShadow: "0 0 .3em #000000bb",
                 allowClose: false,
                 loadCallback: () => {
                     document
-                        .getElementById("btn-refuse-override")
+                        .getElementById("btn-refuse")
                         .addEventListener("click", () => {
-                        infoPopup.show();
-                        confirmPopup.hide();
-                    })
-                    ;
+                            infoPopup.show();
+                            confirmPopup.hide();
+                    });
 
                     document
-                        .getElementById("btn-accept-override")
+                        .getElementById("btn-accept")
                         .addEventListener("click", () => {
-                        confirmPopup.hide();
-                    })
-                    ;
+                            confirmPopup.hide();
+                    });
                 },
             }
         );

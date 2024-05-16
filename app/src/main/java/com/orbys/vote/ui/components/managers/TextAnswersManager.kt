@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
@@ -26,7 +27,7 @@ import com.orbys.vote.core.extensions.showToastWithCustomView
  */
 class TextAnswersManager(
     private val context: Context, private val layout: LinearLayout, private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 50, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
+    private val maxLength: Int = 40, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
 ): AnswerManager(context, layout) {
 
     override val type = InputType.TYPE_CLASS_TEXT
@@ -66,7 +67,7 @@ class TextAnswersManager(
         )
         params.setMargins(1, 8, 0, 8)
         layoutParams = params
-        background = context.getDrawable(R.drawable.bg_textbox).apply {
+        background = AppCompatResources.getDrawable(context, R.drawable.bg_textbox).apply {
             this!!.setColorFilter(ContextCompat.getColor(context, R.color.blue_selected_60), PorterDuff.Mode.SRC_ATOP)
         }
         text = context.getString(R.string.add_answer_button_text)

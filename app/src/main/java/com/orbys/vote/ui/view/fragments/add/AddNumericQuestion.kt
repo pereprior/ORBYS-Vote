@@ -24,7 +24,7 @@ class AddNumericQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            addContainer.layoutParams.height = 880
+            addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.medium_fragment_layout_height)
 
             // Configurar el formulario para añadir el número máximo para la respuesta
             answersManager = NumericAnswersManager(

@@ -3,6 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_container"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginVertical="4dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/card_icon"
@@ -63,19 +65,26 @@
         android:textSize="@dimen/small_font_size"
         android:inputType="textMultiLine" />
 
-    <!-- Layout para añadir respuestas personalizadas -->
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone" >
+
+        <!-- TODO: RESPUESTAS DESLIZANTES -->
+
+        <!-- Layout para añadir respuestas personalizadas -->
+        <LinearLayout
+            android:id="@+id/answersLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:minHeight="200dp" />
 
     </ScrollView>
-    <LinearLayout
-        android:id="@+id/answersLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="vertical" />
 
+
+    <!-- Layout de las configuraciones adicionales -->
     <LinearLayout
         android:id="@+id/show_configurations_layout"
         android:layout_width="match_parent"

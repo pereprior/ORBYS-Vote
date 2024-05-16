@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
+import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.extensions.stopActiveServices
 import com.orbys.vote.databinding.FragmentQuestionTypesBinding
 import com.orbys.vote.domain.models.AnswerType
@@ -23,7 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * Fragmento que contiene los tipos de preguntas que se pueden crear.
  */
 @AndroidEntryPoint
-class TypesQuestionFragment: Fragment() {
+class TypesQuestionFragment(
+    private val isNetworkAvaliable: Boolean
+): Fragment() {
 
     private lateinit var binding: FragmentQuestionTypesBinding
 
@@ -45,8 +49,6 @@ class TypesQuestionFragment: Fragment() {
             numericCardContainer.addCardTypeView(AnswerType.NUMERIC, AddNumericQuestion())
             otherCardContainer.addCardTypeView(AnswerType.OTHER, AddOtherQuestion())
 
-            //bindHotspotCredentials()
-
             return root
         }
 
@@ -59,31 +61,17 @@ class TypesQuestionFragment: Fragment() {
             }
         )
         setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, fragment)
-                addToBackStack(null)
-                commit()
+            if (!isNetworkAvaliable) {
+                activity?.showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
+                return@setOnClickListener
+            } else {
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, fragment)
+                    addToBackStack(null)
+                    commit()
+                }
             }
         }
     }
-
-    /*private fun FragmentQuestionTypesBinding.bindHotspotCredentials() {
-        val credentials = viewModel.getHotspotCredentials()
-        val ssid = credentials.first ?: "123456789"
-        val password = credentials.second ?: "Hola01"
-
-        val qrSize = context?.resources?.getDimensionPixelSize(R.dimen.micro_qr_code_size) ?: 0
-
-        hotspotQrSsid.text = ssid
-        hotspotQrPassword.text = password
-        hotspotQr.setImageBitmap(
-            QRCodeGenerator(requireContext())
-                .generateWifiQRCode(ssid, password, false, qrSize, qrSize)
-        )
-
-        hotspotQr.setOnClickListener {
-            HotspotDialogFragment().show(parentFragmentManager, "HotspotDialog")
-        }
-    }*/
 
 }

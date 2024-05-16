@@ -23,11 +23,11 @@
         <br><br>
 
         <div id="stars">
-            <span class="star" data-value="[ANSWER0]">★</span>
-            <span class="star" data-value="[ANSWER1]">★</span>
-            <span class="star" data-value="[ANSWER2]">★</span>
-            <span class="star" data-value="[ANSWER3]">★</span>
-            <span class="star" data-value="[ANSWER4]">★</span>
+            <img class="star" data-value="[ANSWER0]" src="../images/empty_star.svg" alt="STAR">
+            <img class="star" data-value="[ANSWER1]" src="../images/empty_star.svg" alt="STAR">
+            <img class="star" data-value="[ANSWER2]" src="../images/empty_star.svg" alt="STAR">
+            <img class="star" data-value="[ANSWER3]" src="../images/empty_star.svg" alt="STAR">
+            <img class="star" data-value="[ANSWER4]" src="../images/empty_star.svg" alt="STAR">
         </div>
         <br><br>
 
@@ -41,11 +41,13 @@
                 // Por defecto todas las estrellas no están seleccionadas
                 starList.forEach(function(otherStar) {
                     otherStar.classList.remove('selected');
+                    otherStar.src = "../images/empty_star.svg"; // Cambia la imagen a estrella vacía
                 });
 
                 // Al seleccionar una estrella, se seleccionan también las anteriores
                 for (let i = 0; i <= index; i++) {
                     starList[i].classList.add('selected');
+                    starList[i].src = "../images/filled_star.svg"; // Cambia la imagen a estrella llena
                 }
             });
         });
@@ -57,15 +59,24 @@
         const infoPopup = new Popup(
             {
                 id: "popup_message",
-                titleColor: "#00a135",
                 textColor: "#FFFFFF",
                 backgroundColor: "#010101",
-                title: "✔",
-                content: `<span style="font-size: 2em;"><strong>[SUCCESS_MESSAGE]</strong></span>`,
-                borderWidth: ".15em",
-                borderColor: "#FFFFFF",
+                title: " ",
+                content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
+                                <br><br>
+
+                                <span><strong> [SUCCESS_MESSAGE] </strong></span>
+                                <button id="closeButton" type="submit">      [CLOSE]      </button>`,
                 textShadow: "0 0 .3em #000000bb",
                 allowClose: false,
+                loadCallback: () => {
+                    document
+                        .getElementById("closeButton")
+                        .addEventListener("click", () => {
+                        window.close();
+                        window.location.href = 'https://www.google.com';
+                    });
+                },
             }
         );
 

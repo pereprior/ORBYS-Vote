@@ -19,6 +19,7 @@ import io.ktor.server.response.respondRedirect
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
+import io.ktor.util.pipeline.PipelineContext
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -73,97 +74,36 @@ class FileHandler @Inject constructor(
             }
         }
 
-        get("/images/background.png") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
+        // Rutas para obtener las imagenes de la web.
+        get("/images/background.png") { loadImage("background.png", ContentType.Image.PNG) }
+        get("/images/vote.svg") { loadImage("vote.svg") }
+        get("/images/orbys.svg") { loadImage("orbys.svg") }
+        get("/images/boolean.svg") { loadImage("boolean.svg") }
+        get("/images/numeric.svg") { loadImage("numeric.svg") }
+        get("/images/others.svg") { loadImage("others.svg") }
+        get("/images/stars.svg") { loadImage("stars.svg") }
+        get("/images/empty_star.svg") { loadImage("empty_star.svg") }
+        get("/images/filled_star.svg") { loadImage("filled_star.svg") }
+        get("/images/error.svg") { loadImage("error.svg") }
+        get("/images/timeout.svg") { loadImage("timeout.svg") }
+        get("/images/alert.svg") { loadImage("alert.svg") }
+        get("/images/success.svg") { loadImage("success.svg") }
 
-                val image = this::class.java.classLoader!!.getResource("assets/images/background.png")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.PNG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
+    }
+
+    private suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
+        imagePath: String, contentType: ContentType = ContentType.Image.SVG
+    ) {
+        try {
+            // Almacenamos la imagen en la cache del navegador durante 24 horas.
+            call.response.headers.append("Cache-Control", "max-age=86400")
+
+            val image = this::class.java.classLoader!!.getResource("assets/images/$imagePath")
+            val bytes = image.readBytes()
+            call.respondBytes(bytes, contentType)
+        } catch (e: Exception) {
+            call.respondRedirect("/error/1")
         }
-
-        get("/images/vote.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/vote.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/images/orbys.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/orbys.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/images/boolean.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/boolean.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/images/numeric.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/numeric.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/images/others.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/others.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/images/stars.svg") {
-            try {
-                // Almacenamos la imagen en la cache del navegador durante 24 horas.
-                call.response.headers.append("Cache-Control", "max-age=86400")
-
-                val image = this::class.java.classLoader!!.getResource("assets/images/stars.svg")
-                val bytes = image.readBytes()
-                call.respondBytes(bytes, ContentType.Image.SVG)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
     }
 
     /**
@@ -246,6 +186,7 @@ class FileHandler @Inject constructor(
         .replace("[CONFIRM_MESSAGE]", appContext.getString(R.string.confirm_message))
         .replace("[ACCESS]", appContext.getString(R.string.access_button_placeholder))
         .replace("[USER_HINT]", appContext.getString(R.string.username_text_hint))
+        .replace("[CLOSE]", appContext.getString(R.string.close_button_placeholder))
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 
@@ -269,7 +210,6 @@ class FileHandler @Inject constructor(
             .replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
             .replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
             .replace("MULTIPLE_ANSWERS_PLACEHOLDER", multipleAnswers)
-            .replace("MULTIPLE_VOTING_ALERT_PLACEHOLDER", appContext.getString(R.string.multiple_voting_alert_placeholder))
     }
 
 }

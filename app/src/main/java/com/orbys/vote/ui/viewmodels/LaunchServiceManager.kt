@@ -3,10 +3,13 @@ package com.orbys.vote.ui.viewmodels
 import android.content.Context
 import android.content.Intent
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getCount
 import com.orbys.vote.core.extensions.minutesToSeconds
 import com.orbys.vote.core.extensions.secondsToMillis
+import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.Bar
@@ -46,47 +49,19 @@ class LaunchServiceManager @Inject constructor(
     private val getUsersListUseCase: GetUsersListUseCase,
     private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
-
     fun getHttpService() = getHttpServiceUseCase()
 
     fun setQuestionElements(
-        endpoint: String = QUESTION_ENDPOINT,
-        binding: ServiceLaunchQuestionBinding
+        launchBinding: ServiceLaunchQuestionBinding,
+        endpoint: String = QUESTION_ENDPOINT
     ) {
         val question = getQuestionUseCase()
-        var url = getServerUrlUseCase(endpoint)!!
 
-        with(binding) {
-            lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url, true))
-            lanQrText.text = url
-
-            // Agregar la vista al FrameLayout
-            respondContainer.setOnClickListener {
-                url = getServerUrlUseCase(endpoint) ?: return@setOnClickListener
-
-                lanQrCode.visibility = LinearLayout.VISIBLE
-                lanQrText.visibility = LinearLayout.VISIBLE
-                hotspotQrCode.visibility = LinearLayout.GONE
-                hotspotQrText.visibility = LinearLayout.GONE
-
-                lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url, true))
-                lanQrText.text = url
-            }
-
-            respondHotspotContainer.setOnClickListener {
-                url = getServerUrlUseCase(endpoint, true) ?: return@setOnClickListener
-
-                lanQrCode.visibility = LinearLayout.GONE
-                lanQrText.visibility = LinearLayout.GONE
-                hotspotQrCode.visibility = LinearLayout.VISIBLE
-                hotspotQrText.visibility = LinearLayout.VISIBLE
-
-                hotspotQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url, true))
-                hotspotQrText.text = url
-            }
-
+        with(launchBinding) {
             // Información de la pregunta
             setQuestionElements(question)
+
+            setQrOptions(endpoint)
 
             // Recuento de usuarios que han respondido
             setUsersCount()
@@ -96,6 +71,64 @@ class LaunchServiceManager @Inject constructor(
 
             // Ponemos el servidor escuchando respuestas
             setTimeOutUseCase(false)
+        }
+    }
+
+    private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String) {
+        var url = getServerUrlUseCase(endpoint)
+
+        try {
+            lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url!!, true))
+            lanQrText.text = url
+        } catch (e: Exception) {
+            context.showToastWithCustomView(
+                context.getString(R.string.no_network_error),
+                Toast.LENGTH_LONG
+            )
+        }
+
+        // Agregar la vista al FrameLayout
+        respondContainer.setOnClickListener {
+            try {
+                url = getServerUrlUseCase(endpoint)
+
+                lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url!!, true))
+                lanQrText.text = url
+
+                lanQrCode.visibility = LinearLayout.VISIBLE
+                lanQrText.visibility = LinearLayout.VISIBLE
+                hotspotQrCode.visibility = LinearLayout.GONE
+                hotspotQrText.visibility = LinearLayout.GONE
+            } catch (e: Exception) {
+                context.showToastWithCustomView(
+                    context.getString(R.string.no_network_error),
+                    Toast.LENGTH_LONG
+                )
+            }
+        }
+
+        respondHotspotContainer.setOnClickListener {
+            try {
+                url = getServerUrlUseCase(endpoint, true)
+
+                hotspotQrCode.setImageBitmap(
+                    QRCodeGenerator(context).generateUrlQrCode(
+                        url!!,
+                        true
+                    )
+                )
+                hotspotQrText.text = url
+
+                lanQrCode.visibility = LinearLayout.GONE
+                lanQrText.visibility = LinearLayout.GONE
+                hotspotQrCode.visibility = LinearLayout.VISIBLE
+                hotspotQrText.visibility = LinearLayout.VISIBLE
+            } catch (e: Exception) {
+                context.showToastWithCustomView(
+                    context.getString(R.string.no_network_error),
+                    Toast.LENGTH_LONG
+                )
+            }
         }
     }
 

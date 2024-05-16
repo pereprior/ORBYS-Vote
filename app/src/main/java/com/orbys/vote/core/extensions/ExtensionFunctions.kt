@@ -1,5 +1,6 @@
 package com.orbys.vote.core.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.InputFilter
@@ -38,7 +39,7 @@ fun Int.secondsToMillis(): Long = this * 1000L
 fun EditText.limitLines(maxLines: Int) {
     this.filters = arrayOf(
         // Limita el numero de caracteres por linea
-        InputFilter.LengthFilter(maxLines*55),
+        InputFilter.LengthFilter(maxLines*40),
         InputFilter { source, start, end, dest, dstart, _ ->
             for (index in start until end) {
                 // Si ya hay tres lineas y se presiona enter, no se añade el salto de linea
@@ -62,6 +63,7 @@ fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
  * @param message El mensaje que muestra.
  * @param duration El tiempo que dura el mensaje.
  */
+@SuppressLint("InflateParams")
 fun Context.showToastWithCustomView(
     message: String, duration: Int = Toast.LENGTH_SHORT, textSize: Float = 8f
 ) {

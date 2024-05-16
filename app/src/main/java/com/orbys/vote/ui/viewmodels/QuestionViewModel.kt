@@ -18,6 +18,6 @@ class QuestionViewModel @Inject constructor(
     private val getHttpServiceUseCase: GetHttpServiceUseCase
 ): ViewModel() {
     fun addQuestion(question: Question) { addQuestionUseCase(question) }
-    fun getServerUrl(endpoint: String) = getSeverUrlUseCase(endpoint)
+    fun getServerUrl(endpoint: String, isHotspot: Boolean = false) = getSeverUrlUseCase(endpoint, isHotspot)
     fun getHttpService() = getHttpServiceUseCase()
 }

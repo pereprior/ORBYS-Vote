@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                     DownloadFragment(viewModel)
                 } else {
                     // Mostrar el fragmento de selección de tipos de preguntas
-                    TypesQuestionFragment()
+                    TypesQuestionFragment(networkManager.isNetworkAvailable(this@MainActivity))
                 }
                 replace(fragmentContainer.id, fragment)
                 commit()

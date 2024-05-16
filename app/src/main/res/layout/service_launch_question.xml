@@ -2,6 +2,7 @@
 <!-- Vista que muestra el servicio de vista flotante cuando se lanza una pregunta -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="@dimen/small_margin"
@@ -47,151 +48,166 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
-    <!-- Layout con la información para responder la pregunta -->
     <LinearLayout
-        android:id="@+id/respond_container"
-        android:layout_width="@dimen/qr_code_size"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/bg_main"
-        android:backgroundTint="@color/white"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:layout_constraintStart_toStartOf="parent" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_wifi" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:text="LAN/WLAN"
-                android:textStyle="bold"
-                android:textColor="@color/blue_selected" />
-
-        </LinearLayout>
-
-        <!-- Fragmento que contiene la información del codigo qr -->
-        <ImageView
-            android:id="@+id/lan_qr_code"
-            android:layout_width="@dimen/qr_code_size"
-            android:layout_height="@dimen/qr_code_size"
-            android:layout_gravity="center"
-            android:contentDescription="@string/qr_code_desc" />
-
-        <!-- Texto con el texto del codigo qr -->
-        <TextView
-            android:id="@+id/lan_qr_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:visibility="visible"
-            android:textColor="@color/blue_selected"
-            android:textSize="@dimen/font_size" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/respond_hotspot_container"
-        android:layout_width="@dimen/qr_code_size"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/bg_main"
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="8dp"
-        android:layout_marginHorizontal="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@id/respond_container"
-        app:layout_constraintStart_toStartOf="parent" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_hotspot" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
-                android:text="HOTSPOT"
-                android:textStyle="bold"
-                android:textColor="@color/blue_selected" />
-
-        </LinearLayout>
-
-        <!-- Fragmento que contiene la información del codigo qr -->
-        <ImageView
-            android:id="@+id/hotspot_qr_code"
-            android:layout_width="@dimen/qr_code_size"
-            android:layout_height="@dimen/qr_code_size"
-            android:layout_gravity="center"
-            android:contentDescription="@string/qr_code_desc"
-            android:visibility="gone"/>
-
-        <!-- Texto con el texto del codigo qr -->
-        <TextView
-            android:id="@+id/hotspot_qr_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:textColor="@color/blue_selected"
-            android:textSize="@dimen/font_size" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/results_container"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/small_margin"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="start"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        app:layout_constraintEnd_toEndOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <!-- Layout con la información para responder la pregunta -->
+        <LinearLayout
+            android:id="@+id/respond_container"
+            android:layout_width="@dimen/qr_code_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_main"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/ic_wifi_desc"
+                    android:src="@drawable/ic_wifi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:text="LAN/WLAN"
+                    android:textColor="@color/blue_selected"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- Fragmento que contiene la información del codigo qr -->
+            <ImageView
+                android:id="@+id/lan_qr_code"
+                android:layout_width="@dimen/qr_code_size"
+                android:layout_height="@dimen/qr_code_size"
+                android:layout_gravity="center"
+                android:contentDescription="@string/qr_code_desc" />
+
+            <!-- Texto con el texto del codigo qr -->
+            <TextView
+                android:id="@+id/lan_qr_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/blue_selected"
+                android:textSize="@dimen/font_size"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/respond_hotspot_container"
+            android:layout_width="@dimen/qr_code_size"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/medium_margin"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_main"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/respond_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/ic_wifi_desc"
+                    android:src="@drawable/ic_hotspot" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:text="HOTSPOT"
+                    android:textColor="@color/blue_selected"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+            <!-- Fragmento que contiene la información del codigo qr -->
+            <ImageView
+                android:id="@+id/hotspot_qr_code"
+                android:layout_width="@dimen/qr_code_size"
+                android:layout_height="@dimen/qr_code_size"
+                android:layout_gravity="center"
+                android:contentDescription="@string/qr_code_desc"
+                android:visibility="gone" />
+
+            <!-- Texto con el texto del codigo qr -->
+            <TextView
+                android:id="@+id/hotspot_qr_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/blue_selected"
+                android:textSize="@dimen/font_size"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/small_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider">
 
         <!-- Texto de la pregunta -->
         <TextView
             android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_margin"
+            android:ellipsize="none"
             android:gravity="center"
-            android:layout_margin="4dp"
-            android:textSize="@dimen/url_title_font_size"
             android:maxWidth="280dp"
-            android:ellipsize="none" />
+            android:textSize="@dimen/url_title_font_size" />
 
         <com.orbys.vote.ui.components.CountDownTimer
             android:id="@+id/timer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="@dimen/small_margin"
             android:visibility="gone" />
 
         <ScrollView
             android:id="@+id/scroll_view"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="140dp"
-            android:layout_marginVertical="4dp" >
+            android:layout_marginVertical="@dimen/small_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -206,7 +222,7 @@
                     android:id="@+id/barView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minHeight="140dp"/>
+                    android:minHeight="140dp" />
 
             </LinearLayout>
 
@@ -234,20 +250,18 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/time_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:backgroundTint="@color/blue_selected_60"
+            android:text="@string/time_out_button_text"
+            android:textSize="@dimen/font_size"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/time_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="4dp"
-        android:textSize="@dimen/font_size"
-        android:text="@string/time_out_button_text"
-        android:layout_marginBottom="@dimen/small_margin"
-        android:backgroundTint="@color/blue_selected_60"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/results_container"
-        app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

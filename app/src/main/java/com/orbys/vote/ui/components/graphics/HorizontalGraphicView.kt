@@ -16,7 +16,7 @@ class HorizontalGraphicView(
 ): GraphicView(context, attributes) {
 
     companion object {
-        private const val TEXT_POSITION = 20f
+        private const val TEXT_POSITION = 40f
         private const val ROUND_RADIUS = 10f
     }
 

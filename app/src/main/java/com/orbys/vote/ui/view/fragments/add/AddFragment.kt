@@ -38,7 +38,7 @@ abstract class AddFragment: Fragment() {
 
         with(binding) {
             // Configurar el título y el icono de la pregunta
-            addContainer.layoutParams.height = 760
+            addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.small_fragment_layout_height)
 
             // Configurar el tipo de pregunta
             cardIcon.setImageResource(answerType.iconResId)

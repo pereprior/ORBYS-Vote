@@ -86,7 +86,9 @@ class ErrorHandler @Inject constructor(
             else -> "ERROR"
         }
 
-        return content?.replace(POPUP_CONTENT_PLACEHOLDER, errorMessage)
+        return content
+            ?.replace(POPUP_CONTENT_PLACEHOLDER, errorMessage)
+            ?.replace("[ERROR_TYPE]", errorType.code.toString())
     }
 
     /**

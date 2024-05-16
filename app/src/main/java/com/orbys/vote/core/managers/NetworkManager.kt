@@ -38,7 +38,6 @@ class NetworkManager {
             if (!isNetworkAvailable(activity)) {
                 withContext(Dispatchers.Main) {
                     activity.showToastWithCustomView(activity.getString(R.string.no_network_error), Toast.LENGTH_LONG)
-                    activity.finish()
                 }
 
                 return@withContext
@@ -70,7 +69,7 @@ class NetworkManager {
      * @param activity La actividad actual.
      * @return true si hay conexión a Internet.
      */
-    private fun isNetworkAvailable(activity: AppCompatActivity): Boolean {
+    fun isNetworkAvailable(activity: AppCompatActivity): Boolean {
         val connectivityManager = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         // Comprueba si hay una conexión a Internet activa
         val activeNetwork = connectivityManager.activeNetwork ?: return false

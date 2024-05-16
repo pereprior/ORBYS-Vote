@@ -1,5 +1,6 @@
 package com.orbys.vote.data.repositories
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import com.orbys.vote.R
@@ -19,6 +20,7 @@ class FileRepository private constructor(
     private val context: Context,
 ) : IFileRepository {
     companion object {
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: FileRepository? = null
 

@@ -28,8 +28,8 @@ class FloatingViewService: Service() {
             setOnTouchListener(this)
 
             // Añadir la pregunta a la vista
-            with(binding) {
-                manager.setQuestionElements(binding = this)
+            with(floatingBinding) {
+                manager.setQuestionElements(this)
             }
         }
     }

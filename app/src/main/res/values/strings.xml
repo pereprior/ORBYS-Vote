@@ -14,14 +14,13 @@
     <string name="alert_icon_desc" translatable="false">Icono de alerta</string>
     <string name="hotspot_qr_desc" translatable="false">Qr para conectarse al wifi</string>
     <string name="orbys_title_desc" translatable="false">Foto con el logo de la aplicacion</string>
+    <string name="ic_wifi_desc" translatable="false">Icono de wifi</string>
 
-    <!-- Add dialog hint -->
+    <!-- Interface Elements -->
     <string name="question_question_hint">Question</string>
     <string name="question_answer_hint">Answer</string>
-    <string name="numeric_answer_hint">Max Number\n</string>
-
-    <!-- File placeholders -->
-    <string name="launch_button_placeholder">Launch</string>
+    <string name="numeric_answer_hint">Maximum number\n</string>
+    <string name="launch_button_placeholder">Start</string>
     <string name="send_button_placeholder">Send</string>
     <string name="access_button_placeholder">Access</string>
     <string name="username_text_hint">Username</string>
@@ -29,64 +28,49 @@
     <string name="no_answers_placeholder">No</string>
     <string name="true_answer_placeholder">True</string>
     <string name="false_answer_placeholder">False</string>
-    <string name="login_title_placeholder">Enter a username</string>
-    <string name="multiple_voting_alert_placeholder">You have successfully answered! You can answer one more time if you wish</string>
+    <string name="login_title_placeholder">Enter username</string>
     <string name="csv_legend_question_type">Type;</string>
     <string name="csv_legend_question_title">Question;</string>
     <string name="csv_legend_answers_title">Answers;</string>
     <string name="csv_legend">Date;Time;IP;Username;Answer</string>
-
-    <!-- Error messages -->
-    <string name="questions_exists_error">Question already exists</string>
-    <string name="max_answers_error">You can\'t put more than 5 answers</string>
-    <string name="min_answers_error">You can\'t put less than 2 answers</string>
-    <string name="empty_answers_error">You can\'t save if there are empty fields</string>
-    <string name="same_question_error">You can\'t save questions with the same content</string>
-    <string name="no_network_error">No internet connection, please check your internet connection and try again</string>
-    <string name="storage_permission_denied">Storage Permission Denied</string>
-
-    <!-- Alert messages -->
-    <string name="success_message">Response sent successfully!</string>
-    <string name="confirm_message">Do you send another answer?</string>
-    <string name="user_already_exists_message">User already exists</string>
-    <string name="file_not_found_message">Error: could not read the HTML file</string>
-    <string name="user_responded_message">The user has already responded</string>
-    <string name="time_out_message">The time has expired</string>
-    <string name="time_in_message">The server is listening for responses</string>
-    <string name="time_up_message">Time to respond is up</string>
-    <string name="no_response_message">The server has not received responses</string>
-
-    <!-- Main Activity messages -->
+    <string name="max_answers_error">A question cannot have more than 5 answers</string>
+    <string name="min_answers_error">A question cannot have less than 2 answers</string>
+    <string name="empty_answers_error">Cannot start the question if there are empty fields</string>
+    <string name="same_question_error">Cannot start if there are two identical answers</string>
+    <string name="no_network_error">No internet connection!</string>
+    <string name="storage_permission_denied">Storage permission denied!</string>
+    <string name="success_message">Answer successfully sent!</string>
+    <string name="confirm_message">You have already answered the question. Do you want to send another answer?</string>
+    <string name="user_already_exists_message">A user with the same name already exists</string>
+    <string name="file_not_found_message">Could not find the file with the page content</string>
+    <string name="user_responded_message">This user has already answered the question</string>
+    <string name="time_out_message">The time to answer the question has expired</string>
+    <string name="time_in_message">The time to answer the question has not yet expired</string>
+    <string name="no_response_message">The server did not receive any response, so no file was generated</string>
     <string name="activity_question_type_title">Select the type of question</string>
     <string name="yesno_question_type_title">Yes/No</string>
     <string name="truefalse_question_type_title">True/False</string>
     <string name="stars_question_type_title">Stars</string>
     <string name="numeric_question_type_title">Numeric</string>
     <string name="other_question_type_title">Others</string>
-
-    <!-- New Question Activity messages -->
     <string name="question_question_title">Enter the question</string>
     <string name="question_answer_title">Enter the answers</string>
-    <string name="anonymous_radio_title">Set up users</string>
+    <string name="anonymous_radio_title">Users</string>
     <string name="anonymous_question_option_text">Anonymous</string>
     <string name="non_anonymous_question_option_text">User required</string>
-    <string name="filter_users_radio_title">Set up number of responses per user</string>
-    <string name="filter_users_question_option_text">One response</string>
-    <string name="non_filter_users_question_option_text">Multiple responses</string>
-    <string name="answers_radio_title">Set up number of possible responses</string>
+    <string name="filter_users_radio_title">Number of answers per user</string>
+    <string name="filter_users_question_option_text">One answer</string>
+    <string name="non_filter_users_question_option_text">Multiple answers</string>
+    <string name="answers_radio_title">Number of possible answers</string>
     <string name="single_answer_question_option_text">Single answer</string>
     <string name="multi_answer_question_option_text">Multiple answers</string>
-    <string name="time_checkbox_title">Set up stopwatch</string>
+    <string name="time_checkbox_title">Timer</string>
     <string name="timeout_question_option_text">Time limit</string>
     <string name="minutes_help_text">minutes</string>
-
-    <!-- Launch Service messages -->
-    <string name="graphic_title_text">Answers graphic</string>
-    <string name="chronometer_title">Time remaining</string>
-    <string name="download_title">Scan to download</string>
-    <string name="additional_config_text">Additional Settings</string>
-    <string name="users_count_title">"Users "</string>
+    <string name="download_title">Scan to download the question data</string>
+    <string name="additional_config_text">Additional settings</string>
+    <string name="users_count_title">Users who have responded:</string>
     <string name="time_out_button_text">Finish</string>
     <string name="add_answer_button_text">Add answers</string>
-
+    <string name="close_button_placeholder">Close</string>
 </resources>
