@@ -1,6 +1,7 @@
 package com.orbys.vote.ui.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,6 +113,7 @@ class DownloadFragment(
     private fun ImageButton.backButtonFunctions() {
         // Detenemos el servicio
         this.setOnClickListener {
+            Log.d("DownloadFragment", "ESTA ES LA FUNCION DE VOLVER ATRAS")
             stopActiveServices()
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, TypesQuestionFragment(true))

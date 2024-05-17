@@ -65,24 +65,45 @@
         android:textSize="@dimen/small_font_size"
         android:inputType="textMultiLine" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/add_answers_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:visibility="gone" >
 
-        <!-- TODO: RESPUESTAS DESLIZANTES -->
-
-        <!-- Layout para añadir respuestas personalizadas -->
-        <LinearLayout
-            android:id="@+id/answersLayout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="vertical"
-            android:minHeight="200dp" />
+            android:text="@string/question_answer_title"
+            android:textSize="@dimen/font_size"/>
 
-    </ScrollView>
+        <ScrollView
+            android:id="@+id/answers_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="4dp" >
 
+            <!-- Layout para añadir respuestas personalizadas -->
+            <LinearLayout
+                android:id="@+id/answersLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical"
+                android:minHeight="60dp" />
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/add_answer_button"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="@string/add_answer_button_text"
+            android:textSize="@dimen/font_size"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <!-- Layout de las configuraciones adicionales -->
     <LinearLayout
@@ -293,7 +314,7 @@
                 android:layout_height="30dp"
                 android:scaleX="0.6"
                 android:scaleY="0.6"
-                android:textSize="@dimen/type_fragment_title_size"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.orbys.vote"
+        applicationId = "com.orbys.vote1"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

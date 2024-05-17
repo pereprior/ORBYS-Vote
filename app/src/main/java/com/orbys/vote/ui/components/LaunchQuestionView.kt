@@ -32,7 +32,7 @@ class LaunchQuestionView(
         private set
 
     private val layoutParams = WindowManager.LayoutParams(
-        context.resources.getDimensionPixelSize(R.dimen.widget_width), WindowManager.LayoutParams.WRAP_CONTENT,
+        context.resources.getDimensionPixelSize(R.dimen.widget_layout_size), WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {

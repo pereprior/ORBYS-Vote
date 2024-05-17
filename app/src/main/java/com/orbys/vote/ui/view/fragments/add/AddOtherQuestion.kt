@@ -3,7 +3,6 @@ package com.orbys.vote.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
@@ -28,7 +27,7 @@ class AddOtherQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            addContainer.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+            addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.large_fragment_layout_height)
 
             // Configurar el formulario para añadir las respuestas
             fieldsManager = TextAnswersManager(
@@ -38,12 +37,15 @@ class AddOtherQuestion: AddFragment() {
                 maxAnswers = MAX_ANSWERS
             )
 
+            addAnswersLayout.visibility = View.VISIBLE
+            addAnswerButton.visibility = View.VISIBLE
+            fieldsManager.setAddButtonListener(addAnswerButton)
+
             setAdditionalConfigurations()
         }
 
         // Añadir dos respuestas por defecto
         repeat(MIN_ANSWERS) { fieldsManager.addAnswerField() }
-        fieldsManager.addButtonForAddAnswers()
     }
 
     override fun saveQuestion(context: Context) {
@@ -72,5 +74,10 @@ class AddOtherQuestion: AddFragment() {
         isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,
         isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
     )
+
+    override fun setConfigVisibilityTo(icon: Int, visible: Int) {
+        super.setConfigVisibilityTo(icon, visible)
+        binding.addAnswersLayout.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+    }
 
 }

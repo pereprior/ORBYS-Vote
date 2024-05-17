@@ -20,9 +20,6 @@ class HorizontalGraphicView(
         private const val ROUND_RADIUS = 10f
     }
 
-    private val barWidth = context.resources.getDimensionPixelSize(R.dimen.bar_width)
-    private val barMargin = context.resources.getDimensionPixelSize(R.dimen.bar_margin)
-
     override fun onDraw(canvas: Canvas) {
         // Obtenemos el total de todas las respuestas
         val totalCount = bars.sumOf { it.height }
@@ -52,7 +49,7 @@ class HorizontalGraphicView(
             paint.color = Color.WHITE
             // Pintamos el texto en la barra
             canvas.drawText(bar.answer, x, y, paint)
-            x = (width - TEXT_POSITION) - ROUND_RADIUS
+            x = width - TEXT_POSITION
             canvas.drawText(bar.height.toString(), x, y, paint)
         }
 

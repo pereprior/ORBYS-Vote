@@ -16,7 +16,7 @@ import com.orbys.vote.R
 class NumericAnswersManager(
     private val context: Context, private val layout: LinearLayout,
     private val hintText: String = context.getString(R.string.question_answer_hint), private val maxLength: Int = 4
-): AnswerManager(context, layout) {
+): AnswerManager(context) {
 
     override val type = InputType.TYPE_CLASS_NUMBER
 

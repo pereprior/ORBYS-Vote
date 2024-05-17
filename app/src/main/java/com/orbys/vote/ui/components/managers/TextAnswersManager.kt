@@ -1,7 +1,6 @@
 package com.orbys.vote.ui.components.managers
 
 import android.content.Context
-import android.graphics.PorterDuff
 import android.text.InputType
 import android.view.Gravity
 import android.widget.Button
@@ -10,7 +9,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
@@ -27,8 +25,8 @@ import com.orbys.vote.core.extensions.showToastWithCustomView
  */
 class TextAnswersManager(
     private val context: Context, private val layout: LinearLayout, private val hintText: String = context.getString(R.string.question_answer_hint),
-    private val maxLength: Int = 40, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
-): AnswerManager(context, layout) {
+    private val maxLength: Int = 30, private val minAnswers: Int = 1, private val maxAnswers: Int = 1
+): AnswerManager(context) {
 
     override val type = InputType.TYPE_CLASS_TEXT
 
@@ -43,36 +41,12 @@ class TextAnswersManager(
         answerFields.add(answerField)
     }
 
-    fun addButtonForAddAnswers() {
-        // Creamos un boton para añadir nuevos campos para más respuestas
-        val addButton = addButton()
-
-        addButton.setOnClickListener {
+    fun setAddButtonListener(button: Button) {
+        button.setOnClickListener {
             // Si no se ha llegado al límite de respuestas, se añade un nuevo campo
-            if (answerFields.size < maxAnswers) {
-                layout.removeView(addButton)
-                addAnswerField()
-                layout.addView(addButton)
-            } else context.showToastWithCustomView(context.getString(R.string.max_answers_error), Toast.LENGTH_SHORT)
+            if (answerFields.size < maxAnswers) addAnswerField()
+            else context.showToastWithCustomView(context.getString(R.string.max_answers_error), Toast.LENGTH_SHORT)
         }
-
-        layout.addView(addButton)
-    }
-
-    // Crea un botón con un icono escalado
-    private fun addButton() = Button(context).apply {
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            80
-        )
-        params.setMargins(1, 8, 0, 8)
-        layoutParams = params
-        background = AppCompatResources.getDrawable(context, R.drawable.bg_textbox).apply {
-            this!!.setColorFilter(ContextCompat.getColor(context, R.color.blue_selected_60), PorterDuff.Mode.SRC_ATOP)
-        }
-        text = context.getString(R.string.add_answer_button_text)
-        textSize = 9f
-        setPadding(12,12,12,12)
     }
 
     /**

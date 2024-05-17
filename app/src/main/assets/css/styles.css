@@ -1,6 +1,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
-    background-image: url("/background.png");
+    background-image: url("/images/background.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -112,8 +112,6 @@ img.logo {
     color: white;
     accent-color: #3587f2;
     border-block-color: #3587f2;
-    max-width: 90%;
-    word-wrap: break-word;
     align-items: center;
     margin: 16px 4px;
 }
@@ -122,15 +120,13 @@ img.logo {
 #checkboxContainer div {
     display: flex;
     accent-color: #3587f2;
-    max-width: 90%;
-    word-wrap: break-word;
     color: white;
     margin: 16px 4px;
 }
 
 #answers {
     text-align: left;
-    width: 80%;
+    width: 100%;
     font-size: 1em;
 }
 
@@ -141,14 +137,14 @@ img.logo {
 }
 
 #btn-refuse {
-    padding: 10px 60px;
+    padding: 10px 30px;
     background-color: #f44336;
     border: none;
     border-radius: 40px;
 }
 
 #btn-accept {
-    padding: 10px 60px;
+    padding: 10px 30px;
     background-color: #4caf50;
     border: none;
     border-radius: 40px;
@@ -175,7 +171,7 @@ img.logo {
 }
 
 .type_icon {
-    width: 50px;
+    width: 30px;
     height: auto;
 }
 

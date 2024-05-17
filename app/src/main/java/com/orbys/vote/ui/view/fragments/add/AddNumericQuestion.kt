@@ -33,6 +33,9 @@ class AddNumericQuestion: AddFragment() {
                 hintText = getString(R.string.numeric_answer_hint)
             )
 
+            answersScrollView.layoutParams.height = 100
+            answersLayout.minimumHeight = 100
+            addAnswersLayout.visibility = View.VISIBLE
             setAdditionalConfigurations(multiAnswerConfig = false)
         }
 
@@ -55,6 +58,11 @@ class AddNumericQuestion: AddFragment() {
         }
 
         super.saveQuestion(context)
+    }
+
+    override fun setConfigVisibilityTo(icon: Int, visible: Int) {
+        super.setConfigVisibilityTo(icon, visible)
+        binding.addAnswersLayout.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
     }
 
 }

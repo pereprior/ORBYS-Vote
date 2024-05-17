@@ -39,7 +39,7 @@ fun Int.secondsToMillis(): Long = this * 1000L
 fun EditText.limitLines(maxLines: Int) {
     this.filters = arrayOf(
         // Limita el numero de caracteres por linea
-        InputFilter.LengthFilter(maxLines*40),
+        InputFilter.LengthFilter(maxLines*42),
         InputFilter { source, start, end, dest, dstart, _ ->
             for (index in start until end) {
                 // Si ya hay tres lineas y se presiona enter, no se añade el salto de linea

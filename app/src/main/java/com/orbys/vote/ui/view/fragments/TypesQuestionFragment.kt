@@ -1,10 +1,12 @@
 package com.orbys.vote.ui.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
@@ -20,14 +22,13 @@ import com.orbys.vote.ui.view.fragments.add.AddOtherQuestion
 import com.orbys.vote.ui.view.fragments.add.AddStarsQuestion
 import com.orbys.vote.ui.view.fragments.add.AddYesNoQuestion
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 /**
  * Fragmento que contiene los tipos de preguntas que se pueden crear.
  */
 @AndroidEntryPoint
-class TypesQuestionFragment(
-    private val isNetworkAvaliable: Boolean
-): Fragment() {
+class TypesQuestionFragment(private val isNetworkAvaliable: Boolean): Fragment() {
 
     private lateinit var binding: FragmentQuestionTypesBinding
 
@@ -36,6 +37,9 @@ class TypesQuestionFragment(
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
+
+        val backButton: ImageButton? = activity?.findViewById(R.id.close_button)
+        backButton!!.backButtonFunctions()
 
         // Detiene los servicios activos
         stopActiveServices()
@@ -60,6 +64,7 @@ class TypesQuestionFragment(
                 bindCard(answerType)
             }
         )
+
         setOnClickListener {
             if (!isNetworkAvaliable) {
                 activity?.showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
@@ -71,6 +76,15 @@ class TypesQuestionFragment(
                     commit()
                 }
             }
+        }
+    }
+
+    private fun ImageButton.backButtonFunctions() {
+        // Detenemos el servicio
+        this.setOnClickListener {
+            Log.d("DownloadFragment", "ESTA ES LA FUNCION DE CERRAR")
+            activity?.finish()
+            exitProcess(0)
         }
     }
 

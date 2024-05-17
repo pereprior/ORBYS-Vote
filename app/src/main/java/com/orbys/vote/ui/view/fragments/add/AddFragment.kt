@@ -110,12 +110,13 @@ abstract class AddFragment: Fragment() {
     }
 
     // Cambiar la visibilidad de la confirguración adicional
-    private fun FragmentAddQuestionBinding.setConfigVisibilityTo(icon: Int, visible: Int) {
-        iconConfigVisibility.setImageResource(icon)
-        configurationsLayout.visibility = visible
-        questionTitle.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
-        questionQuestion.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
-        answersLayout.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+    protected open fun setConfigVisibilityTo(icon: Int, visible: Int) {
+        with(binding) {
+            iconConfigVisibility.setImageResource(icon)
+            configurationsLayout.visibility = visible
+            questionTitle.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+            questionQuestion.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+        }
     }
 
 }

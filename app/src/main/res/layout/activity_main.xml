@@ -64,7 +64,7 @@
     <!-- Contenedor de los fragmentos de la actividad-->
     <LinearLayout
         android:id="@+id/fragment_container"
-        android:layout_width="@dimen/activity_layout_width"
+        android:layout_width="@dimen/activity_layout_size"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

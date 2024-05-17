@@ -1,8 +1,6 @@
 package com.orbys.vote.ui.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.orbys.vote.core.managers.NetworkManager
@@ -15,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.system.exitProcess
 
 /**
  * Actividad principal de la aplicación
@@ -60,14 +57,6 @@ class MainActivity : AppCompatActivity() {
     private fun printFragments() {
 
         with(binding) {
-
-            closeButton.setOnClickListener {
-                // Cierra la aplicación
-                Log.d("MainActivity", "LA APP SE VA A CERRAR")
-                stopService(Intent(this@MainActivity, viewModel.getHttpService()::class.java))
-                finish()
-                exitProcess(0)
-            }
 
             supportFragmentManager.beginTransaction().apply {
                 val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {

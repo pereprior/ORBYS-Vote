@@ -19,7 +19,7 @@ class CountDownTimer(
 ) : Chronometer(context, attrs) {
 
     companion object {
-        const val TIME_OUT = ": TIME OUT"
+        const val TIME_OUT = "TIME OUT"
         const val COUNT_DOWN_INTERVAL = 1000L
         const val TEXT_SIZE = 30f
     }
@@ -32,7 +32,7 @@ class CountDownTimer(
 
     init {
         textSize = TEXT_SIZE
-        format
+        format = "%s"
     }
 
     fun setTimeInMillis(timeInMillis: Long) { this.timeInMillis = timeInMillis }

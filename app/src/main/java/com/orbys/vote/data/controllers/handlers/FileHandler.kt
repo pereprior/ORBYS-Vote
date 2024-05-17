@@ -75,7 +75,7 @@ class FileHandler @Inject constructor(
         }
 
         // Rutas para obtener las imagenes de la web.
-        get("/images/background.png") { loadImage("background.png", ContentType.Image.PNG) }
+        get("/images/background.svg") { loadImage("background.svg") }
         get("/images/vote.svg") { loadImage("vote.svg") }
         get("/images/orbys.svg") { loadImage("orbys.svg") }
         get("/images/boolean.svg") { loadImage("boolean.svg") }

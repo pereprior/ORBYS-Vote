@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="rounded_background">30dp</dimen>
-
     <dimen name="small_fragment_layout_height">180dp</dimen>
     <dimen name="medium_fragment_layout_height">220dp</dimen>
-
-    <dimen name="activity_layout_width">260dp</dimen>
-    <dimen name="activity_layout_height">260dp</dimen>
-    <dimen name="widget_layout_size">340dp</dimen>
+    <dimen name="activity_layout_size">260dp</dimen>
+    <dimen name="large_fragment_layout_height">280dp</dimen>
+    <dimen name="widget_layout_size">620dp</dimen>
 
     <dimen name="icon_size">16dp</dimen>
-    <dimen name="icon_size_large">30dp</dimen>
-    <dimen name="card_width">100dp</dimen>
+    <dimen name="bar_size">35dp</dimen>
     <dimen name="qr_code_size">200dp</dimen>
-    <dimen name="micro_qr_code_size">35dp</dimen>
-    <dimen name="graphic_height">250dp</dimen>
-    <dimen name="widget_width">620dp</dimen>
-    <dimen name="bar_width">35dp</dimen>
-    <dimen name="bar_margin">15dp</dimen>
+    <dimen name="toast_layout_size">340dp</dimen>
 
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="large_margin">36dp</dimen>
-    <dimen name="qr_code_padding">10dp</dimen>
 
     <dimen name="small_font_size">8sp</dimen>
     <dimen name="font_size">9sp</dimen>
     <dimen name="title_font_size">11sp</dimen>
-    <dimen name="url_font_size">12sp</dimen>
-    <dimen name="type_fragment_title_size">14sp</dimen>
-    <dimen name="url_title_font_size">16sp</dimen>
+    <dimen name="large_font_size">16sp</dimen>
 </resources>
