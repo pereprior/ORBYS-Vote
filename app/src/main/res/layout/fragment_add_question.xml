@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginVertical="4dp"
+        android:layout_marginVertical="@dimen/minimum_margin"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
@@ -27,7 +27,7 @@
             android:layout_height="@dimen/icon_size"
             android:padding="0.5dp"
             android:layout_gravity="center"
-            android:layout_marginVertical="4dp"
+            android:layout_marginVertical="@dimen/minimum_margin"
             android:contentDescription="@string/card_type_icon_desc" />
 
         <!-- Nombre del tipo de pregunta que representa la tarjeta -->
@@ -82,7 +82,7 @@
             android:id="@+id/answers_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginVertical="4dp" >
+            android:layout_marginVertical="@dimen/minimum_margin" >
 
             <!-- Layout para añadir respuestas personalizadas -->
             <LinearLayout
@@ -149,7 +149,7 @@
         android:id="@+id/configurations_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/minimum_margin"
         android:visibility="gone"
         android:orientation="vertical">
 

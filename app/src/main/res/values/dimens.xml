@@ -11,6 +11,7 @@
     <dimen name="qr_code_size">200dp</dimen>
     <dimen name="toast_layout_size">340dp</dimen>
 
+    <dimen name="minimum_margin">4dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="large_margin">36dp</dimen>

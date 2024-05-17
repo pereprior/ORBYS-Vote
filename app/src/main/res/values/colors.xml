@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background_black">#010101</color>
     <color name="gray3">#333333</color>
+    <color name="gray6">#666666</color>
     <color name="blue_selected_60">#993587f2</color>
     <color name="blue_selected">#3587f2</color>
     <color name="light_blue_50">#FFE1F5FE</color>

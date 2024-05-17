@@ -136,8 +136,6 @@ class LaunchServiceManager @Inject constructor(
         // Titulo y tipo de la pregunta
         questionText.text = question.question
 
-        closeWidgetButton.setOnClickListener { stopService() }
-
         // Si el tiempo de espera no es nulo se muestra el temporizador
         if (question.timeOut!! > 0)
             setTimerCount(question.timeOut)

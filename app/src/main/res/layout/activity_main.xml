@@ -1,53 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Actividad principal -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
 
-    <!-- Logo de la empresa -->
-    <ImageView
-        android:id="@+id/app_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/app_logo_desc"
-        android:src="@drawable/orbys_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!-- Banner de la aplicacion -->
+    <include
+        layout="@layout/fragment_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <!-- Botón de cerrar la actividad -->
-    <ImageButton
-        android:id="@+id/close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/exit_button_desc"
-        android:src="@drawable/ic_close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Separador de la actividad y el fragmento -->
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:dividerColor="#666666"
-        app:dividerThickness="1dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_logo" />
-
-    <!-- Titulo con la funcionalidad del fragmento -->
+    <!-- Logo de la aplicacion -->
     <ImageView
         android:id="@+id/quiz_title"
         android:layout_width="wrap_content"
@@ -56,20 +25,13 @@
         android:scaleX="0.75"
         android:layout_marginTop="@dimen/small_font_size"
         android:contentDescription="@string/orbys_title_desc"
-        android:src="@drawable/vote_app_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        android:src="@drawable/vote_app_title" />
 
-    <!-- Contenedor de los fragmentos de la actividad-->
+    <!-- Contenedor con el fragmento correspondiente -->
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="@dimen/activity_layout_size"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/quiz_title" />
+        android:orientation="vertical" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
