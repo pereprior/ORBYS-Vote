@@ -21,9 +21,9 @@ abstract class GraphicView(
     attributes: AttributeSet
 ) : View(context, attributes) {
 
-    private val fontSize = context.resources.getDimensionPixelSize(R.dimen.title_font_size).toFloat()
+    private val fontSize = context.resources.getDimensionPixelSize(R.dimen.font_size).toFloat()
     protected val barWidth = context.resources.getDimensionPixelSize(R.dimen.bar_size)
-    protected val barMargin = context.resources.getDimensionPixelSize(R.dimen.medium_margin)
+    protected val barMargin = context.resources.getDimensionPixelSize(R.dimen.small_margin)
 
     val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {

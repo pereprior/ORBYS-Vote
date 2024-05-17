@@ -81,7 +81,7 @@
         <ScrollView
             android:id="@+id/answers_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:layout_marginVertical="@dimen/minimum_margin" >
 
             <!-- Layout para añadir respuestas personalizadas -->
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:orientation="vertical"
-                android:minHeight="60dp" />
+                android:minHeight="48dp" />
 
         </ScrollView>
 

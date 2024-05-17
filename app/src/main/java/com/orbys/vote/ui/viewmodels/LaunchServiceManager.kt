@@ -145,7 +145,7 @@ class LaunchServiceManager @Inject constructor(
             setTimeOutUseCase(true)
             timer.cancelTimer()
 
-            stopService(true)
+            stopService()
         }
     }
 
@@ -206,10 +206,10 @@ class LaunchServiceManager @Inject constructor(
 
     }
 
-    private fun stopService(isDownloadFragment: Boolean = false) {
+    private fun stopService() {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            if (isDownloadFragment) putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
+            putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
         }
 
         // Iniciamos la actividad principal

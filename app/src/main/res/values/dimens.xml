@@ -4,11 +4,12 @@
     <dimen name="medium_fragment_layout_height">220dp</dimen>
     <dimen name="activity_layout_size">260dp</dimen>
     <dimen name="large_fragment_layout_height">280dp</dimen>
-    <dimen name="widget_layout_size">620dp</dimen>
+    <dimen name="widget_layout_size">500dp</dimen>
+    <dimen name="widget_small_layout_size">270dp</dimen>
 
     <dimen name="icon_size">16dp</dimen>
-    <dimen name="bar_size">35dp</dimen>
-    <dimen name="qr_code_size">200dp</dimen>
+    <dimen name="bar_size">25dp</dimen>
+    <dimen name="qr_code_size">171dp</dimen>
     <dimen name="toast_layout_size">340dp</dimen>
 
     <dimen name="minimum_margin">4dp</dimen>
@@ -19,5 +20,5 @@
     <dimen name="small_font_size">8sp</dimen>
     <dimen name="font_size">9sp</dimen>
     <dimen name="title_font_size">11sp</dimen>
-    <dimen name="large_font_size">16sp</dimen>
+    <dimen name="large_font_size">14sp</dimen>
 </resources>

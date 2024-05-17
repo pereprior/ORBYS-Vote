@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Vista que muestra un codigo qr -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,6 +9,14 @@
     android:padding="@dimen/small_margin"
     android:background="@android:color/transparent"
     android:layout_gravity="center">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/download_title"
+        android:gravity="center"
+        android:textSize="@dimen/title_font_size"
+        android:layout_margin="@dimen/small_margin"/>
 
     <LinearLayout
         android:id="@+id/respond_container"
@@ -71,9 +79,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/medium_margin"
         android:layout_marginTop="@dimen/small_margin"
+        android:layout_gravity="center"
         android:background="@drawable/bg_main"
         android:backgroundTint="@color/white"
-        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/respond_container">

@@ -15,7 +15,7 @@ import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 /**
  * Clase que representa una vista para lanzar una pregunta a ser contestada.
  *
- * @property floatingBinding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
+ * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  * @property windowManager Gestor de ventanas para controlar la vista.
  * @property layoutParams Parámetros de diseño de la ventana.
  * @property x Coordenada x de la vista.
@@ -26,13 +26,14 @@ import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 class LaunchQuestionView(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ): ConstraintLayout(context, attrs, defStyleAttr), View.OnTouchListener {
-    var floatingBinding: ServiceLaunchQuestionBinding
+    var binding: ServiceLaunchQuestionBinding
         private set
     var windowManager: WindowManager
         private set
 
     private val layoutParams = WindowManager.LayoutParams(
-        context.resources.getDimensionPixelSize(R.dimen.widget_layout_size), WindowManager.LayoutParams.WRAP_CONTENT,
+        context.resources.getDimensionPixelSize(R.dimen.widget_layout_size),
+        WindowManager.LayoutParams.WRAP_CONTENT,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
@@ -47,9 +48,26 @@ class LaunchQuestionView(
     private var onChangeY: Float = 0f
 
     init {
-        floatingBinding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
+        binding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        addView(floatingBinding.root)
+
+        with(binding) {
+            minimizeButton.setOnClickListener {
+                if (qrContainer.visibility == GONE) {
+                    minimizeButton.setImageResource(R.drawable.ic_minimize)
+                    qrContainer.visibility = VISIBLE
+                    layoutParams.width = context.resources.getDimensionPixelSize(R.dimen.widget_layout_size)
+                    windowManager.updateViewLayout(this@LaunchQuestionView, layoutParams)
+                } else {
+                    minimizeButton.setImageResource(R.drawable.ic_qr)
+                    qrContainer.visibility = GONE
+                    layoutParams.width = context.resources.getDimensionPixelSize(R.dimen.widget_small_layout_size)
+                    windowManager.updateViewLayout(this@LaunchQuestionView, layoutParams)
+                }
+            }
+        }
+
+        addView(binding.root)
 
         layoutParams.x = x
         layoutParams.y = y

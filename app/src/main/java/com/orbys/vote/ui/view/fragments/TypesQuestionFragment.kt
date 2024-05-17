@@ -1,12 +1,12 @@
 package com.orbys.vote.ui.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
@@ -39,6 +39,8 @@ class TypesQuestionFragment(private val isNetworkAvaliable: Boolean): Fragment()
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
 
         val backButton: ImageButton? = activity?.findViewById(R.id.close_button)
+        val appLogo: ImageView? = activity?.findViewById(R.id.quiz_title)
+        appLogo?.visibility = View.VISIBLE
         backButton!!.backButtonFunctions()
 
         // Detiene los servicios activos
@@ -82,7 +84,6 @@ class TypesQuestionFragment(private val isNetworkAvaliable: Boolean): Fragment()
     private fun ImageButton.backButtonFunctions() {
         // Detenemos el servicio
         this.setOnClickListener {
-            Log.d("DownloadFragment", "ESTA ES LA FUNCION DE CERRAR")
             activity?.finish()
             exitProcess(0)
         }

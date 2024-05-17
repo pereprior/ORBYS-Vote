@@ -1,11 +1,11 @@
 package com.orbys.vote.ui.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -35,6 +35,8 @@ class DownloadFragment(
         stopActiveServices(true)
 
         val backButton: ImageButton? = activity?.findViewById(R.id.close_button)
+        val appLogo: ImageView? = activity?.findViewById(R.id.quiz_title)
+        appLogo?.visibility = View.GONE
         backButton!!.backButtonFunctions()
 
         // Cambios en la vista del fragmento
@@ -113,8 +115,6 @@ class DownloadFragment(
     private fun ImageButton.backButtonFunctions() {
         // Detenemos el servicio
         this.setOnClickListener {
-            Log.d("DownloadFragment", "ESTA ES LA FUNCION DE VOLVER ATRAS")
-            stopActiveServices()
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, TypesQuestionFragment(true))
                 addToBackStack(null)

@@ -21,7 +21,7 @@ class CountDownTimer(
     companion object {
         const val TIME_OUT = "TIME OUT"
         const val COUNT_DOWN_INTERVAL = 1000L
-        const val TEXT_SIZE = 30f
+        const val TEXT_SIZE = 20f
     }
 
     private var timeInMillis: Long = 0
