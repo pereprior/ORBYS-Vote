@@ -10,8 +10,8 @@
     <!-- Icono de alerta -->
     <ImageView
         android:id="@+id/custom_toast_icon"
-        android:layout_width="@dimen/icon_size_large"
-        android:layout_height="@dimen/icon_size_large"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_info"
         android:contentDescription="@string/alert_icon_desc" />
