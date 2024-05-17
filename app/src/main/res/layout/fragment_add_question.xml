@@ -332,7 +332,7 @@
             <LinearLayout
                 android:id="@+id/timeout_input_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="28dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_border_textbox"
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/medium_margin"
@@ -345,10 +345,9 @@
                 <!-- Campo de texto para indicar el tiempo limite de la pregunta -->
                 <EditText
                     android:id="@+id/timeout_input"
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:autofillHints=""
-                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:autofillHints="1"
                     android:inputType="number"
                     android:maxLength="3"
                     android:textSize="6sp" />
@@ -357,7 +356,7 @@
                 <TextView
                     android:id="@+id/minutes_help_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/minutes_help_text"
                     android:textSize="6sp" />
