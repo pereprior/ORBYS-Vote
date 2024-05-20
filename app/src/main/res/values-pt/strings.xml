@@ -53,7 +53,7 @@
     <string name="download_title">Escaneie para baixar os dados da pergunta</string>
     <string name="additional_config_text">Configurações adicionais</string>
     <string name="users_count_title">Usuários que responderam:</string>
-    <string name="time_out_button_text">Finalizar</string>
+    <string name="time_out_button_text">Terminar</string>
     <string name="add_answer_button_text">Adicionar respostas</string>
     <string name="close_button_placeholder">Fechar</string>
 </resources>

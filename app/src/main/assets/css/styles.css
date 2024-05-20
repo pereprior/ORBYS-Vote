@@ -40,12 +40,12 @@ button {
 
 button:hover { background-color: #3587f2; }
 
-span { font-size: 1.5em; }
+span { font-size: 1.25em; }
 
 h1 {
     text-align: center;
     color: white;
-    font-size: 2em;
+    font-size: 1.5em;
     max-width: 100%;
     word-wrap: break-word;
     margin-bottom: 20px;
@@ -93,7 +93,7 @@ img.logo {
 #loginButton:hover { background-color: #1c5480; }
 
 #myNumber {
-    font-size: 1.5em;
+    font-size: 1.25em;
     width: 80%;
     padding: 10px;
     border: 2px solid #3587f2;
@@ -127,7 +127,9 @@ img.logo {
 #answers {
     text-align: left;
     width: 100%;
-    font-size: 1em;
+    font-size: 0.8em;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 
 #stars {
@@ -184,11 +186,13 @@ img.logo {
 }
 
 input[type="text"] {
-    font-size: 1em;
+    font-size: 0.8em;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 20px;
+    max-width: 100%;
+    word-wrap: break-word;
 }

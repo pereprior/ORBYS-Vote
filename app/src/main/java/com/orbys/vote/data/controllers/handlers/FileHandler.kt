@@ -39,16 +39,6 @@ class FileHandler @Inject constructor(
     private val appContext: Context
 ) {
     private val fileRepository = FileRepository.getInstance(appContext)
-    private companion object {
-        const val HTTP_FILES_FOLDER = "/assets/templates"
-        const val HTTP_FILES_PLACEHOLDER = "_index"
-        const val HTTP_FILES_EXTENSION = ".html"
-        const val MULTIPLE_CHOICE = "multiple"
-        const val SINGLE_CHOICE = "single"
-        const val CSV_FILE_NAME = "data"
-        const val TIME_FORMAT = "HH:mm:ss"
-        const val DATE_FORMAT = "dd/MM/yyyy"
-    }
 
     fun setupRoutes(route: Route) {
 
@@ -65,6 +55,7 @@ class FileHandler @Inject constructor(
      * @return GET
      */
     private fun Route.staticContent() {
+        // Rutas para obtener los archivos para el estilo de la web.
         get("/css/styles.css") {
             try {
                 val css = this::class.java.classLoader!!.getResource("assets/css/styles.css")!!.readText()
@@ -74,7 +65,7 @@ class FileHandler @Inject constructor(
             }
         }
 
-        // Rutas para obtener las imagenes de la web.
+        // Rutas para obtener proporcionar las imagenes a la web.
         get("/images/background.svg") { loadImage("background.svg") }
         get("/images/vote.svg") { loadImage("vote.svg") }
         get("/images/orbys.svg") { loadImage("orbys.svg") }
@@ -88,22 +79,6 @@ class FileHandler @Inject constructor(
         get("/images/timeout.svg") { loadImage("timeout.svg") }
         get("/images/alert.svg") { loadImage("alert.svg") }
         get("/images/success.svg") { loadImage("success.svg") }
-
-    }
-
-    private suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
-        imagePath: String, contentType: ContentType = ContentType.Image.SVG
-    ) {
-        try {
-            // Almacenamos la imagen en la cache del navegador durante 24 horas.
-            call.response.headers.append("Cache-Control", "max-age=86400")
-
-            val image = this::class.java.classLoader!!.getResource("assets/images/$imagePath")
-            val bytes = image.readBytes()
-            call.respondBytes(bytes, contentType)
-        } catch (e: Exception) {
-            call.respondRedirect("/error/1")
-        }
     }
 
     /**
@@ -163,6 +138,20 @@ class FileHandler @Inject constructor(
         )
     }
 
+    private suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
+        imagePath: String, contentType: ContentType = ContentType.Image.SVG
+    ) {
+        try {
+            // Almacenamos la imagen en la cache del navegador durante 24 horas.
+            call.response.headers.append("Cache-Control", "max-age=86400")
+
+            val image = this::class.java.classLoader!!.getResource("assets/images/$imagePath").readBytes()
+            call.respondBytes(image, contentType)
+        } catch (e: Exception) {
+            call.respondRedirect("/error/1")
+        }
+    }
+
     private suspend fun checkPossibleErrors(file: File, call: ApplicationCall) {
         // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
         if (!questionRepository.getTimerState()) call.respondRedirect("/error/3")
@@ -210,6 +199,17 @@ class FileHandler @Inject constructor(
             .replace("ANSWERS_STRING_PLACEHOLDER", answersToString)
             .replace("MULTIPLE_CHOICES_PLACEHOLDER", multipleChoices)
             .replace("MULTIPLE_ANSWERS_PLACEHOLDER", multipleAnswers)
+    }
+
+    private companion object {
+        const val HTTP_FILES_FOLDER = "/assets/templates"
+        const val HTTP_FILES_PLACEHOLDER = "_index"
+        const val HTTP_FILES_EXTENSION = ".html"
+        const val MULTIPLE_CHOICE = "multiple"
+        const val SINGLE_CHOICE = "single"
+        const val CSV_FILE_NAME = "data"
+        const val TIME_FORMAT = "HH:mm:ss"
+        const val DATE_FORMAT = "dd/MM/yyyy"
     }
 
 }

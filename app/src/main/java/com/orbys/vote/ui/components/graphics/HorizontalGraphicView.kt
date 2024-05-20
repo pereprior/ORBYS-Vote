@@ -15,11 +15,6 @@ class HorizontalGraphicView(
     attributes: AttributeSet
 ): GraphicView(context, attributes) {
 
-    companion object {
-        private const val TEXT_POSITION = 40f
-        private const val ROUND_RADIUS = 10f
-    }
-
     override fun onDraw(canvas: Canvas) {
         // Obtenemos el total de todas las respuestas
         val totalCount = bars.sumOf { it.height }
@@ -56,6 +51,11 @@ class HorizontalGraphicView(
         // Actualizar el tamaño de la vista conforme a la cantidad de barras
         layoutParams.height = bars.size * (barWidth + barMargin)
         requestLayout()
+    }
+
+    companion object {
+        private const val TEXT_POSITION = 40f
+        private const val ROUND_RADIUS = 10f
     }
 
 }

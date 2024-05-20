@@ -2,7 +2,7 @@ package com.orbys.vote.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
-import android.widget.LinearLayout
+import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
@@ -61,6 +61,7 @@ class LaunchServiceManager @Inject constructor(
             // Información de la pregunta
             setQuestionElements(question)
 
+            // Opciones para responder la pregunta
             setQrOptions(endpoint)
 
             // Recuento de usuarios que han respondido
@@ -75,61 +76,41 @@ class LaunchServiceManager @Inject constructor(
     }
 
     private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String) {
-        var url = getServerUrlUseCase(endpoint)
+        setQrCode(endpoint)
+        respondContainer.setOnClickListener { setQrCode(endpoint) }
+        respondHotspotContainer.setOnClickListener { setQrCode(endpoint, true) }
+    }
 
+    private fun ServiceLaunchQuestionBinding.setQrCode(
+        endpoint: String, isHotspot: Boolean = false
+    ) {
         try {
-            lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url!!, true))
-            lanQrText.text = url
+            val url = getServerUrlUseCase(endpoint, isHotspot)!!
+            val qrCodeBitmap = QRCodeGenerator(context).generateUrlQrCode(url, true)
+
+            lanQrCode.apply {
+                visibility = if (isHotspot) View.GONE else View.VISIBLE
+                setImageBitmap(if (isHotspot) null else qrCodeBitmap)
+            }
+
+            lanQrText.apply {
+                visibility = if (isHotspot) View.GONE else View.VISIBLE
+                text = if (isHotspot) null else url
+            }
+
+            hotspotQrCode.apply {
+                visibility = if (isHotspot) View.VISIBLE else View.GONE
+                setImageBitmap(if (isHotspot) qrCodeBitmap else null)
+            }
+
+            hotspotQrText.apply {
+                visibility = if (isHotspot) View.VISIBLE else View.GONE
+                text = if (isHotspot) url else null
+            }
         } catch (e: Exception) {
-            context.showToastWithCustomView(
-                context.getString(R.string.no_network_error),
-                Toast.LENGTH_LONG
-            )
+            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
         }
 
-        // Agregar la vista al FrameLayout
-        respondContainer.setOnClickListener {
-            try {
-                url = getServerUrlUseCase(endpoint)
-
-                lanQrCode.setImageBitmap(QRCodeGenerator(context).generateUrlQrCode(url!!, true))
-                lanQrText.text = url
-
-                lanQrCode.visibility = LinearLayout.VISIBLE
-                lanQrText.visibility = LinearLayout.VISIBLE
-                hotspotQrCode.visibility = LinearLayout.GONE
-                hotspotQrText.visibility = LinearLayout.GONE
-            } catch (e: Exception) {
-                context.showToastWithCustomView(
-                    context.getString(R.string.no_network_error),
-                    Toast.LENGTH_LONG
-                )
-            }
-        }
-
-        respondHotspotContainer.setOnClickListener {
-            try {
-                url = getServerUrlUseCase(endpoint, true)
-
-                hotspotQrCode.setImageBitmap(
-                    QRCodeGenerator(context).generateUrlQrCode(
-                        url!!,
-                        true
-                    )
-                )
-                hotspotQrText.text = url
-
-                lanQrCode.visibility = LinearLayout.GONE
-                lanQrText.visibility = LinearLayout.GONE
-                hotspotQrCode.visibility = LinearLayout.VISIBLE
-                hotspotQrText.visibility = LinearLayout.VISIBLE
-            } catch (e: Exception) {
-                context.showToastWithCustomView(
-                    context.getString(R.string.no_network_error),
-                    Toast.LENGTH_LONG
-                )
-            }
-        }
     }
 
     private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {

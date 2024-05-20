@@ -28,11 +28,6 @@ class ErrorHandler @Inject constructor(
         USER_RESPONDED(7)
     }
 
-    private companion object {
-        const val POPUP_CONTENT_PLACEHOLDER = "[POPUP_CONTENT]"
-        const val ERROR_ENDPOINT = "/error"
-    }
-
     fun setupRoutes(route: Route, fileHandler: FileHandler) {
 
         route.apply {
@@ -113,6 +108,11 @@ class ErrorHandler @Inject constructor(
 
         else -> ErrorType.ERROR
 
+    }
+
+    private companion object {
+        const val POPUP_CONTENT_PLACEHOLDER = "[POPUP_CONTENT]"
+        const val ERROR_ENDPOINT = "/error"
     }
 
 }

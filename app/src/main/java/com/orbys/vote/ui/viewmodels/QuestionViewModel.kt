@@ -3,7 +3,6 @@ package com.orbys.vote.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.domain.usecases.AddQuestionUseCase
-import com.orbys.vote.domain.usecases.GetHttpServiceUseCase
 import com.orbys.vote.domain.usecases.GetServerUrlUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,10 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class QuestionViewModel @Inject constructor(
     private val addQuestionUseCase: AddQuestionUseCase,
-    private val getSeverUrlUseCase: GetServerUrlUseCase,
-    private val getHttpServiceUseCase: GetHttpServiceUseCase
+    private val getSeverUrlUseCase: GetServerUrlUseCase
 ): ViewModel() {
     fun addQuestion(question: Question) { addQuestionUseCase(question) }
     fun getServerUrl(endpoint: String, isHotspot: Boolean = false) = getSeverUrlUseCase(endpoint, isHotspot)
-    fun getHttpService() = getHttpServiceUseCase()
 }
