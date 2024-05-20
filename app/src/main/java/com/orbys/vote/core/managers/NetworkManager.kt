@@ -18,49 +18,22 @@ import java.net.NetworkInterface
  */
 class NetworkManager {
 
-    companion object {
-        const val SERVER_PORT = 8888
-        const val QUESTION_ENDPOINT = "/question"
-        const val DOWNLOAD_ENDPOINT = "/download"
-        const val USER_ENDPOINT = "/user"
-    }
-
     // Devuelve la URL del servidor con el endpoint especificado
-    fun getServerWifiUrl(endpoint: String, isHotspot: Boolean = false)= if (getIpAddress(isHotspot).isNullOrEmpty()) null else "http://${getIpAddress(isHotspot)}:$SERVER_PORT$endpoint"
+    fun getServerWifiUrl(endpoint: String, isHotspot: Boolean = false) =
+        if (getIpAddress(isHotspot).isNullOrEmpty()) null
+        else "http://${getIpAddress(isHotspot)}:$SERVER_PORT$endpoint"
 
-    /**
-     * Comprueba si hay conexión a Internet y muestra un mensaje de error si no la hay.
-     *
-     * @param activity La actividad actual.
-     */
     suspend fun checkNetworkOnActivity(activity: AppCompatActivity) {
         withContext(Dispatchers.IO) {
             if (!isNetworkAvailable(activity)) {
                 withContext(Dispatchers.Main) {
+                    // Muestra un mensaje de error si no hay conexión a Internet
                     activity.showToastWithCustomView(activity.getString(R.string.no_network_error), Toast.LENGTH_LONG)
                 }
 
                 return@withContext
             }
         }
-    }
-
-    // Devuelve la dirección IP local del dispositivo que ejecuta la app
-    private fun getIpAddress(hotspot: Boolean = false): String? {
-        val ipAddresses = getLocalIpFromNetworkInterfaces()
-
-        // Filtramos las direcciones IP basándonos en si queremos una dirección de hotspot o no
-        ipAddresses.mapNotNull {
-            if (hotspot) {
-                if (it.isHotspotIPv4Address())
-                    return it
-            } else {
-                if (!it.isHotspotIPv4Address())
-                    return it
-            }
-        }
-
-        return ""
     }
 
     /**
@@ -78,9 +51,33 @@ class NetworkManager {
         return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
-    // Obtiene la dirección IP local del dispositivo que ejecuta la app
+    /**
+     * Obtiene la dirección IP local del dispositivo que ejecuta la app.
+     *
+     * @param hotspot Indica si se quiere obtener la dirección IP de un hotspot o no.
+     * @return La dirección IP local del dispositivo.
+     */
+    private fun getIpAddress(hotspot: Boolean = false): String? {
+        val ipAddresses = getLocalIpFromNetworkInterfaces()
+
+        // Filtramos las direcciones IP basándonos en si queremos una dirección de hotspot o no
+        ipAddresses.mapNotNull {
+            if (hotspot) {
+                // Si queremos una dirección de hotspot, devolvemos la primera que sea de hotspot
+                if (it.isHotspotIPv4Address())
+                    return it
+            } else {
+                // Si no queremos una dirección de hotspot, devolvemos la primera que no sea de hotspot
+                if (!it.isHotspotIPv4Address())
+                    return it
+            }
+        }
+
+        return null
+    }
+
+    // Obtiene la lista con las direcciones IPv4 del dispositivo
     private fun getLocalIpFromNetworkInterfaces(): List<String?> {
-        // Obtengo una lista de todas las interfaces de red en el dispositivo
         val interfaces = NetworkInterface.getNetworkInterfaces().toList()
         val ipAddresses = mutableListOf<String?>()
 
@@ -104,4 +101,11 @@ class NetworkManager {
 
     // Comprueba si la dirección IP es una dirección de hotspot
     private fun String?.isHotspotIPv4Address() = this!!.startsWith("192.168.43") || this.startsWith("172.16")
+
+    companion object {
+        const val SERVER_PORT = 8888
+        const val QUESTION_ENDPOINT = "/question"
+        const val DOWNLOAD_ENDPOINT = "/download"
+        const val USER_ENDPOINT = "/user"
+    }
 }

@@ -15,10 +15,6 @@ import androidx.core.content.ContextCompat
 class StoragePermissionManager(
     private val activity: AppCompatActivity
 ) {
-    companion object {
-        private const val STORAGE_PERMISSION_CODE = 2
-    }
-
     fun checkAndRequestPermission() {
         // Si no tiene ya el permiso lo solicita
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -44,6 +40,10 @@ class StoragePermissionManager(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val STORAGE_PERMISSION_CODE = 2
     }
 
 }

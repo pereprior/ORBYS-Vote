@@ -19,7 +19,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * Módulo Dagger que proporciona las dependencias para el servidor y sus controladores.
+ * Módulo Dagger que proporciona las dependencias.
  */
 @Module
 @InstallIn(SingletonComponent::class)

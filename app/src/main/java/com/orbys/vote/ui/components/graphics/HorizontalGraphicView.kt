@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import androidx.core.content.ContextCompat
 import com.orbys.vote.R
 
@@ -19,10 +18,8 @@ class HorizontalGraphicView(
     override fun onDraw(canvas: Canvas) {
         // Obtenemos el total de todas las respuestas
         val totalCount = bars.sumOf { it.height }
-        Log.d("MANAGER4-graphic", "EL TOTAL DE BARRAS ES ${bars.size}")
 
         bars.forEachIndexed { index, bar ->
-            Log.d("MANAGER3", "VOY A PINTAR LA BARRA $index")
             // Calculamos las coordenadas en las que se dibuja la barra
             val top = index * (barWidth + barMargin).toFloat()
             val bottom = top + barWidth
