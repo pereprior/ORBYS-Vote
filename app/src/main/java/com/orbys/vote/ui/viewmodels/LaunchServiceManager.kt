@@ -2,6 +2,7 @@ package com.orbys.vote.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -56,6 +57,7 @@ class LaunchServiceManager @Inject constructor(
         endpoint: String = QUESTION_ENDPOINT
     ) {
         val question = getQuestionUseCase()
+        Log.d("MANAGER1", "ESTAMOS AQUI")
 
         with(launchBinding) {
             // Información de la pregunta
@@ -167,6 +169,7 @@ class LaunchServiceManager @Inject constructor(
             // Recogemos los cambios en el numero de respuestas de la pregunta
             question.answers.collect { answers ->
                 barView.clearBars()
+                Log.d("MANAGER4-launch", "EL TOTAL DE RESPUESTAS ES ${answers.size}")
 
                 // Por cada respuesta nueva añadimos una barra al grafico
                 answers.forEach { answer ->
@@ -180,6 +183,7 @@ class LaunchServiceManager @Inject constructor(
                             barView.invalidate()
                         }
                     }
+                    Log.d("MANAGER4-launch", "EL TOTAL DE BARRAS ES ${barView.bars.size}")
 
                 }
             }

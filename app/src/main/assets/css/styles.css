@@ -61,6 +61,7 @@ img {
 img.logo {
     width: 50px;
     height: auto;
+    margin-bottom: 20px;
 }
 
 #orbys_logo {

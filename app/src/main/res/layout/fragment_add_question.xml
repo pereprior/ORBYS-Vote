@@ -78,22 +78,13 @@
             android:text="@string/question_answer_title"
             android:textSize="@dimen/font_size"/>
 
-        <ScrollView
-            android:id="@+id/answers_scroll_view"
+        <!-- Layout para añadir respuestas personalizadas -->
+        <LinearLayout
+            android:id="@+id/answersLayout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginVertical="@dimen/minimum_margin" >
-
-            <!-- Layout para añadir respuestas personalizadas -->
-            <LinearLayout
-                android:id="@+id/answersLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="vertical"
-                android:minHeight="48dp" />
-
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical" />
 
         <Button
             android:id="@+id/add_answer_button"
@@ -164,7 +155,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin"
+            android:layout_marginVertical="@dimen/minimum_margin"
             android:orientation="horizontal" >
 
             <!-- Boton para que todos los usuarios sean anonimos -->
@@ -211,7 +202,7 @@
             android:id="@+id/filter_users_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin"
+            android:layout_marginVertical="@dimen/minimum_margin"
 
             android:orientation="horizontal" >
 
@@ -259,7 +250,7 @@
             android:id="@+id/multi_answer_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin"
+            android:layout_marginVertical="@dimen/minimum_margin"
 
             android:orientation="horizontal" >
 
@@ -305,7 +296,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/small_margin">
+            android:layout_marginVertical="@dimen/minimum_margin">
 
             <!-- CheckBox para poner tiempo limite a una pregunta -->
             <CheckBox

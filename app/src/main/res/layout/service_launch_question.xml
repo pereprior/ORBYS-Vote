@@ -194,12 +194,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:minHeight="90dp">
 
                 <com.orbys.vote.ui.components.graphics.HorizontalGraphicView
                     android:id="@+id/barView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:visibility="visible"
+                    android:layout_weight="1"
                     android:minHeight="90dp" />
 
             </LinearLayout>

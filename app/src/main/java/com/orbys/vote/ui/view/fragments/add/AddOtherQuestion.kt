@@ -3,6 +3,7 @@ package com.orbys.vote.ui.view.fragments.add
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
@@ -27,7 +28,7 @@ class AddOtherQuestion: AddFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.large_fragment_layout_height)
+            addContainer.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
 
             // Configurar el formulario para añadir las respuestas
             fieldsManager = TextAnswersManager(

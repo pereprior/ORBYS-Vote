@@ -33,8 +33,6 @@ class AddNumericQuestion: AddFragment() {
                 hintText = getString(R.string.numeric_answer_hint)
             )
 
-            answersScrollView.layoutParams.height = 100
-            answersLayout.minimumHeight = 100
             addAnswersLayout.visibility = View.VISIBLE
             setAdditionalConfigurations(multiAnswerConfig = false)
         }
