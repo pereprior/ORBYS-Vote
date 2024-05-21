@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.core.extensions.stopActiveServices
 import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
-import com.orbys.vote.ui.components.QRCodeGenerator
+import com.orbys.vote.ui.components.qr.QRCodeGenerator
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
@@ -33,8 +32,6 @@ class DownloadFragment(
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQrCodeBinding.inflate(inflater, container, false)
-        // Detenemos los servicios activos
-        stopActiveServices(true)
 
         val answersFileContent = "Answers;${viewModel.getQuestion().getAnswersAsString().joinToString(";")}"
         viewModel.modifyFile(2, answersFileContent)

@@ -2,7 +2,11 @@ package com.orbys.vote.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
@@ -20,7 +24,8 @@ import com.orbys.vote.domain.usecases.GetQuestionUseCase
 import com.orbys.vote.domain.usecases.GetServerUrlUseCase
 import com.orbys.vote.domain.usecases.GetUsersListUseCase
 import com.orbys.vote.domain.usecases.SetTimeOutUseCase
-import com.orbys.vote.ui.components.QRCodeGenerator
+import com.orbys.vote.ui.components.qr.QRCodeGenerator
+import com.orbys.vote.ui.components.qr.QrDialog
 import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -43,21 +48,18 @@ import javax.inject.Inject
  */
 class LaunchServiceManager @Inject constructor(
     private val context: Context, private val getServerUrlUseCase: GetServerUrlUseCase,
-    private val getQuestionUseCase: GetQuestionUseCase,
-    private val clearUsersListUseCase: ClearUsersListUseCase,
-    private val setTimeOutUseCase: SetTimeOutUseCase,
-    private val getUsersListUseCase: GetUsersListUseCase,
+    private val getQuestionUseCase: GetQuestionUseCase, private val clearUsersListUseCase: ClearUsersListUseCase,
+    private val setTimeOutUseCase: SetTimeOutUseCase, private val getUsersListUseCase: GetUsersListUseCase,
     private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
     fun getHttpService() = getHttpServiceUseCase()
 
     fun setQuestionElements(
-        launchBinding: ServiceLaunchQuestionBinding,
-        endpoint: String = QUESTION_ENDPOINT
+        binding: ServiceLaunchQuestionBinding, endpoint: String = QUESTION_ENDPOINT
     ) {
         val question = getQuestionUseCase()
 
-        with(launchBinding) {
+        with(binding) {
             // Información de la pregunta
             setQuestionElements(question)
 
@@ -86,7 +88,9 @@ class LaunchServiceManager @Inject constructor(
     ) {
         try {
             val url = getServerUrlUseCase(endpoint, isHotspot)!!
-            val qrCodeBitmap = QRCodeGenerator(context).generateUrlQrCode(url, true)
+            val qrGenerator = QRCodeGenerator(context)
+            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true, 456, 456)
+            val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false, 456, 456)
 
             lanQrCode.apply {
                 visibility = if (isHotspot) View.GONE else View.VISIBLE
@@ -98,17 +102,22 @@ class LaunchServiceManager @Inject constructor(
                 text = if (isHotspot) null else url
             }
 
-            hotspotQrCode.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
-                setImageBitmap(if (isHotspot) qrCodeBitmap else null)
-            }
-
             hotspotQrText.apply {
                 visibility = if (isHotspot) View.VISIBLE else View.GONE
                 text = if (isHotspot) url else null
             }
 
-            otherQrCode.visibility = if (isHotspot) View.VISIBLE else View.GONE
+            hotspotQrCode.apply {
+                visibility = if (isHotspot) View.VISIBLE else View.GONE
+                setImageBitmap(if (isHotspot) qrCodeBitmap else null)
+                setOnClickListener { showQrDialog(qrCodeBitmap) }
+            }
+
+            otherQrText.visibility = if (isHotspot) View.VISIBLE else View.GONE
+            otherQrCode.apply {
+                visibility = if (isHotspot) View.VISIBLE else View.GONE
+                setOnClickListener { showQrDialog(qrCodeImage) }
+            }
         } catch (e: Exception) {
             context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
         }
@@ -187,6 +196,17 @@ class LaunchServiceManager @Inject constructor(
             }
         }
 
+    }
+
+    private fun ImageView.showQrDialog(qrCodeBitmap: Bitmap) {
+        // Muestra un dialogo con el qr ampliado
+        val dialog = QrDialog(context, qrCodeBitmap)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        else
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        dialog.show()
     }
 
     private fun stopService() {

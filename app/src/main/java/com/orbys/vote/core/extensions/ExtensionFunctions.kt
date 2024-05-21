@@ -2,19 +2,15 @@ package com.orbys.vote.core.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.orbys.vote.R
-import com.orbys.vote.data.services.HttpService
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.Question
-import com.orbys.vote.ui.services.FloatingViewService
 
 // Devuelve el valor del flow con la lista de respuestas de una pregunta
 fun Question.getAnswers() = answers.value
@@ -52,12 +48,6 @@ fun EditText.limitLines(maxLines: Int, maxCharsForLine: Int = 42) {
             null
         }
     )
-}
-
-// Cierra los servicios activos de la actividad
-fun Fragment.stopActiveServices(isHttpFragment: Boolean = false) {
-    if (!isHttpFragment) { activity?.stopService(Intent(activity, HttpService::class.java)) }
-    activity?.stopService(Intent(activity, FloatingViewService::class.java))
 }
 
 /**

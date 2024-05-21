@@ -1,5 +1,6 @@
 package com.orbys.vote.ui.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,15 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.core.extensions.stopActiveServices
 import com.orbys.vote.core.managers.NetworkManager
+import com.orbys.vote.data.services.HttpService
 import com.orbys.vote.databinding.FragmentQuestionTypesBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.ui.components.QuestionTypesCard
+import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.fragments.add.AddBooleanQuestion
 import com.orbys.vote.ui.view.fragments.add.AddFragment
 import com.orbys.vote.ui.view.fragments.add.AddNumericQuestion
@@ -46,7 +49,7 @@ class TypesQuestionFragment(private val networkManager: NetworkManager): Fragmen
         backButton!!.backButtonFunctions()
 
         // Detiene los servicios activos
-        stopActiveServices()
+        activity?.stopActiveServices()
 
         with(binding) {
 
@@ -89,6 +92,12 @@ class TypesQuestionFragment(private val networkManager: NetworkManager): Fragmen
             activity?.finish()
             exitProcess(0)
         }
+    }
+
+    // Cierra los servicios activos de la actividad
+    private fun FragmentActivity.stopActiveServices() {
+        this.stopService(Intent(this, HttpService::class.java))
+        this.stopService(Intent(this, FloatingViewService::class.java))
     }
 
 }

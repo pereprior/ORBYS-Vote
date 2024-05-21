@@ -1,7 +1,6 @@
 package com.orbys.vote.ui.components.graphics
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
@@ -27,7 +26,6 @@ abstract class GraphicView(
     val bars = mutableListOf<Bar>()
     protected val paint = Paint().apply {
         textSize = context.resources.getDimensionPixelSize(R.dimen.font_size).toFloat()
-        color = Color.WHITE
     }
 
     // Añade una nueva barra al grafico

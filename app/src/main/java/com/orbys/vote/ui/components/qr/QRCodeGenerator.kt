@@ -1,7 +1,8 @@
-package com.orbys.vote.ui.components
+package com.orbys.vote.ui.components.qr
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -28,14 +29,27 @@ class QRCodeGenerator(private val context: Context) {
     // Factor por el que se divide el tamaño del qr para obtener el tamaño del logo
     private val logoSizeDiff = 4
 
+    // Genera un mapa de bits a partir de una imagen
+    fun generateBitmapFromImage(
+        resId: Int, logo: Boolean = false,
+        width: Int = defaultSize, height: Int = defaultSize,
+        logoResId: Int = defaultLogoResId
+    ): Bitmap {
+        var imageBitmap = BitmapFactory.decodeResource(context.resources, resId)
+        imageBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, true)
+
+        return if (logo) {
+            val logoBitMap = ContextCompat.getDrawable(context, logoResId)?.toBitmap()
+            overlayLogoOnQrCode(imageBitmap, logoBitMap)
+        } else imageBitmap
+    }
+
     // Genera un código QR que te redirige a una URL en tu navegador
     fun generateUrlQrCode(
         url: String, logo: Boolean = false,
         width: Int = defaultSize, height: Int = defaultSize,
         logoResId: Int = defaultLogoResId
-    ): Bitmap {
-        return encodeAsBitmap(url, logo, width, height, logoResId)
-    }
+    ) = encodeAsBitmap(url, logo, width, height, logoResId)
 
     /**
      * Codifica un texto en un código QR.
