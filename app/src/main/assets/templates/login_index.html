@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        #username { width: 80%; }
+    </style>
 </head>
 <body>
 
@@ -22,7 +25,7 @@
 
         <label for="username"></label>
         <input type="text" id="username" name="username" maxlength="10" placeholder="[USER_HINT]" required>
-        <br><br>
+        <br>
 
         <button id="loginButton" type="submit">Acceder</button>
     </form>
@@ -33,22 +36,21 @@
         const alertPopup = new Popup(
             {
                 id: "popup_message",
-                titleColor: "#b81414",
+                title: " ",
                 textColor: "#FFFFFF",
-                closeColor: "#FFFFFF",
                 backgroundColor: "#010101",
-                title: "!",
-                content: `<span style="font-size: 2em;"><strong>[POPUP_CONTENT]</strong></span>`,
-                borderWidth: ".15em",
-                borderColor: "#FFFFFF",
+                content: `<img src="../images/error.svg" alt="ERROR" class="logo">
+                                <span><strong>[USER_ALREADY_EXISTS]</strong></span>
+                                <button id="closeButton" type="submit">      [CLOSE]      </button>`,
                 textShadow: "0 0 .3em #000000bb",
+                allowClose: false,
                 loadCallback: () => {
                     document
-                        .querySelector(".popup.board button")
+                        .getElementById("closeButton")
                         .addEventListener("click", () => {
-                        popup.hide();
+                            alertPopup.hide();
                     });
-                }
+                },
             }
         );
 

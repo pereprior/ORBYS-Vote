@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.domain.models.AnswerType
@@ -52,14 +51,20 @@ class AddOtherQuestion: AddFragment() {
     override fun saveQuestion(context: Context) {
         // Controlar que los campos de las preguntas no estén vacíos
         if (fieldsManager.anyAnswerIsEmpty()) {
-            context.showToastWithCustomView(getString(R.string.empty_answers_error), Toast.LENGTH_LONG)
+            context.showToastWithCustomView(getString(R.string.empty_answers_error))
             return
         }
 
         // Controlar que no haya dos preguntas iguales
         val answerTexts = fieldsManager.getAnswersText()
         if (answerTexts.size != answerTexts.toSet().size) {
-            context.showToastWithCustomView(getString(R.string.same_question_error), Toast.LENGTH_LONG)
+            context.showToastWithCustomView(getString(R.string.same_question_error))
+            return
+        }
+
+        // Controlar que no haya caracteres no permitidos en las respuestas
+        if (fieldsManager.anyAnswerContainsInvalidCharacter()) {
+            context.showToastWithCustomView(getString(R.string.char_unavailable_message))
             return
         }
 

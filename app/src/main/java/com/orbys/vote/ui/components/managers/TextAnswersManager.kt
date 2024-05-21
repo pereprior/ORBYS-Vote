@@ -44,8 +44,8 @@ class TextAnswersManager(
     fun setAddButtonListener(button: Button) {
         button.setOnClickListener {
             // Si no se ha llegado al límite de respuestas, se añade un nuevo campo
-            if (answerFields.size < maxAnswers) addAnswerField()
-            else context.showToastWithCustomView(context.getString(R.string.max_answers_error), Toast.LENGTH_SHORT)
+            if (answerFields.size > maxAnswers) context.showToastWithCustomView(context.getString(R.string.max_answers_error))
+            else addAnswerField()
         }
     }
 

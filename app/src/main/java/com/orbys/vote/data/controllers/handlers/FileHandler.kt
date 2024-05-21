@@ -173,6 +173,7 @@ class FileHandler @Inject constructor(
         .replace("[MAX_ANSWER]", question.maxNumericAnswer.toString())
         .replace("[SUCCESS_MESSAGE]", appContext.getString(R.string.success_message))
         .replace("[CONFIRM_MESSAGE]", appContext.getString(R.string.confirm_message))
+        .replace("[USER_ALREADY_EXISTS]", appContext.getString(R.string.user_already_exists_message))
         .replace("[ACCESS]", appContext.getString(R.string.access_button_placeholder))
         .replace("[USER_HINT]", appContext.getString(R.string.username_text_hint))
         .replace("[CLOSE]", appContext.getString(R.string.close_button_placeholder))

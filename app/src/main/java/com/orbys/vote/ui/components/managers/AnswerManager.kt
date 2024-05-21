@@ -48,4 +48,7 @@ abstract class AnswerManager(private val context: Context) {
 
     // Devuelve el flow con la lista de respuestas
     fun getAnswers() = MutableStateFlow(answerFields.map { Answer(it.text.toString()) })
+
+    // Comprueba si alguna respuesta contiene un caracter incompatible (";" o "\")
+    fun anyAnswerContainsInvalidCharacter() = answerFields.any { it.text.contains(Regex("[;\\\\]")) }
 }
