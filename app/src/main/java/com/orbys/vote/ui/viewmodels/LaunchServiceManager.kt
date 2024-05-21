@@ -107,6 +107,8 @@ class LaunchServiceManager @Inject constructor(
                 visibility = if (isHotspot) View.VISIBLE else View.GONE
                 text = if (isHotspot) url else null
             }
+
+            otherQrCode.visibility = if (isHotspot) View.VISIBLE else View.GONE
         } catch (e: Exception) {
             context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
         }

@@ -34,7 +34,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     private val isTimerOut = MutableStateFlow(false)
 
     override fun getQuestion(): Question = question.value
-    override fun addQuestion(question: Question) { this.question.value = question }
+    override fun addQuestion(question: Question) { this.question.tryEmit(question) }
     override fun setTimeOut(isTimeOut: Boolean) { isTimerOut.tryEmit(isTimeOut) }
 
     // Devuelve si el tiempo de la pregunta ha terminado

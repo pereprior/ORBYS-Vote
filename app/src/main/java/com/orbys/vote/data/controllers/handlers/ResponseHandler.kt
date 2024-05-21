@@ -29,10 +29,9 @@ class ResponseHandler@Inject constructor(
     private val questionRepository: QuestionRepositoryImpl,
     private val usersRepository: UsersRepositoryImpl,
     private val fileHandler: FileHandler
-) {
+): IHttpHandler {
 
-    fun setupRoutes(route: Route) {
-
+    override fun setupRoutes(route: Route) {
         route.apply {
             handleGetQuestionRoute()
             handleSubmitQuestionRoute()
@@ -40,7 +39,6 @@ class ResponseHandler@Inject constructor(
             handleNewUserRoute()
             handleLoginRoute()
         }
-
     }
 
     /**

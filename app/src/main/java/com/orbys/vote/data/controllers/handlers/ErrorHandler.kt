@@ -15,39 +15,27 @@ import javax.inject.Inject
  * @param appContext Contexto de la aplicación.
  */
 class ErrorHandler @Inject constructor(
-    private val appContext: Context
-) {
+    private val appContext: Context,
+    private val fileHandler: FileHandler
+): IHttpHandler {
 
-    enum class ErrorType(val code: Int) {
-        ERROR(0),
-        FILE_NOT_FOUND(1),
-        USER_ALREADY_EXISTS(2),
-        TIME_IN(3),
-        TIME_OUT(5),
-        NO_RESPONSE(6),
-        USER_RESPONDED(7)
-    }
-
-    fun setupRoutes(route: Route, fileHandler: FileHandler) {
-
+    override fun setupRoutes(route: Route) {
         route.apply {
-            handleError(fileHandler)
+            handleError()
         }
-
     }
 
     /**
      * Ruta con la página con el error correspondiente.
      *
-     * @param fileHandler Gestor de archivos.
      * @return GET
      */
-    private fun Route.handleError(
-        fileHandler: FileHandler
-    ) = get("$ERROR_ENDPOINT/{id}") {
+    private fun Route.handleError() = get("$ERROR_ENDPOINT/{id}") {
         val id = call.parameters["id"]?.toIntOrNull() ?: 0
-        val errorType = getErrorById(id)
-        val fileContent = replacePopupPlaceHolders(fileHandler.loadHtmlFile("error"), errorType)
+        val fileContent = replacePopupPlaceHolders(
+            content = fileHandler.loadHtmlFile("error"),
+            errorType = getErrorById(id)
+        )
 
         call.respondText(
             text = fileContent ?: appContext.getString(R.string.file_not_found_message),
@@ -108,6 +96,16 @@ class ErrorHandler @Inject constructor(
 
         else -> ErrorType.ERROR
 
+    }
+
+    enum class ErrorType(val code: Int) {
+        ERROR(0),
+        FILE_NOT_FOUND(1),
+        USER_ALREADY_EXISTS(2),
+        TIME_IN(3),
+        TIME_OUT(5),
+        NO_RESPONSE(6),
+        USER_RESPONDED(7)
     }
 
     private companion object {

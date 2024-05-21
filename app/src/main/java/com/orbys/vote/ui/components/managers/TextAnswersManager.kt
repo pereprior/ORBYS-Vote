@@ -66,7 +66,7 @@ class TextAnswersManager(
 
         button.setOnClickListener {
             // Si no se ha superado el número mínimo de respuestas, se elimina el campo
-            if(answerFields.size > minAnswers) {
+            if(answerFields.size >= minAnswers) {
                 layout.removeView(this)
                 answerFields.remove(answer)
             } else context.showToastWithCustomView(context.getString(R.string.min_answers_error), Toast.LENGTH_SHORT)

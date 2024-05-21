@@ -12,6 +12,7 @@ import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.extensions.stopActiveServices
+import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
 import com.orbys.vote.ui.components.QRCodeGenerator
@@ -21,7 +22,8 @@ import com.orbys.vote.ui.viewmodels.QuestionViewModel
  * Fragmento que contiene los elementos para descargar el fichero con los resultados de la pregunta.
  */
 class DownloadFragment(
-    private val viewModel: QuestionViewModel
+    private val viewModel: QuestionViewModel,
+    private val networkManager: NetworkManager
 ): Fragment() {
 
     private lateinit var binding: FragmentQrCodeBinding
@@ -89,7 +91,7 @@ class DownloadFragment(
         // Detenemos el servicio
         this.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, TypesQuestionFragment(true))
+                replace(R.id.fragment_container, TypesQuestionFragment(networkManager))
                 addToBackStack(null)
                 commit()
             }

@@ -8,10 +8,12 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.extensions.stopActiveServices
+import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.databinding.FragmentQuestionTypesBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.ui.components.QuestionTypesCard
@@ -28,7 +30,7 @@ import kotlin.system.exitProcess
  * Fragmento que contiene los tipos de preguntas que se pueden crear.
  */
 @AndroidEntryPoint
-class TypesQuestionFragment(private val isNetworkAvaliable: Boolean): Fragment() {
+class TypesQuestionFragment(private val networkManager: NetworkManager): Fragment() {
 
     private lateinit var binding: FragmentQuestionTypesBinding
 
@@ -68,7 +70,7 @@ class TypesQuestionFragment(private val isNetworkAvaliable: Boolean): Fragment()
         )
 
         setOnClickListener {
-            if (!isNetworkAvaliable) {
+            if (!networkManager.isNetworkAvailable(requireActivity() as AppCompatActivity)) {
                 activity?.showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
                 return@setOnClickListener
             } else {

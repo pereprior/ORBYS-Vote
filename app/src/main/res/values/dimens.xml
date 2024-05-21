@@ -10,6 +10,7 @@
     <dimen name="icon_size">16dp</dimen>
     <dimen name="bar_size">25dp</dimen>
     <dimen name="qr_code_size">171dp</dimen>
+    <dimen name="small_qr_code_size">92dp</dimen>
     <dimen name="toast_layout_size">340dp</dimen>
 
     <dimen name="minimum_margin">4dp</dimen>

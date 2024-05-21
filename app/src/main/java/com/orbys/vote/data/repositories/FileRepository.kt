@@ -44,11 +44,7 @@ class FileRepository private constructor(
      * @param question Pregunta a la que corresponde el nuevo fichero.
      * @param answers Lista de respuestas de la pregunta del fichero.
      */
-    fun createFile(
-        fileName: String,
-        question: Question,
-        answers: List<String>
-    ) {
+    fun createFile(fileName: String, question: Question, answers: List<String>) {
         val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
         file = File(filePath)
 
@@ -68,13 +64,7 @@ class FileRepository private constructor(
      * @param username Nombre del usuario que ha respondido.
      * @param answer Respuesta seleccionada por el usuario.
      */
-    fun writeLine(
-        date: String,
-        time: String,
-        ip: String,
-        username: String,
-        answer: String
-    ) {
+    fun writeLine(date: String, time: String, ip: String, username: String, answer: String) {
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)

@@ -29,7 +29,7 @@ class HttpController @Inject constructor(
             fileHandler.setupRoutes(this)
 
             // Gestionar errores
-            errorHandler.setupRoutes(this, fileHandler)
+            errorHandler.setupRoutes(this)
         }
 
     }

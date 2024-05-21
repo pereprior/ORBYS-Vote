@@ -21,7 +21,6 @@ import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.ktor.util.pipeline.PipelineContext
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -38,16 +37,14 @@ class FileHandler @Inject constructor(
     private val questionRepository: QuestionRepositoryImpl,
     private val usersRepository: UsersRepositoryImpl,
     private val appContext: Context
-) {
+): IHttpHandler {
     private val fileRepository = FileRepository.getInstance(appContext)
 
-    fun setupRoutes(route: Route) {
-
+    override fun setupRoutes(route: Route) {
         route.apply {
             handleDownloadRoute()
             staticContent()
         }
-
     }
 
     /**
@@ -88,8 +85,14 @@ class FileHandler @Inject constructor(
      * @return GET
      */
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
-        checkPossibleErrors(fileRepository.getFile(), call)
-        call.respondFile(fileRepository.getFile())
+        val file = fileRepository.getFile()
+
+        // Si el temporizador de la pregunta esta activo no se podra descargar el archivo.
+        if (!questionRepository.getTimerState()) call.respondRedirect("/error/3")
+        // Si nadie a contestado la pregunta no se podra descargar el archivo.
+        if (!file.exists()) call.respondRedirect("/error/6")
+
+        call.respondFile(file)
     }
 
     fun deleteFile() { fileRepository.deleteFile() }
@@ -100,9 +103,7 @@ class FileHandler @Inject constructor(
      * @param htmlName Nombre del archivo HTML.
      * @return Contenido del archivo HTML.
      */
-    fun loadHtmlFile(
-        htmlName: String = questionRepository.getQuestion().getAnswerType()
-    ): String? {
+    fun loadHtmlFile(htmlName: String = questionRepository.getQuestion().getAnswerType()): String? {
         val name = if (htmlName == AnswerType.YES_NO.name) "boolean" else htmlName.lowercase(Locale.ROOT)
         val fileName = name + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
@@ -152,13 +153,6 @@ class FileHandler @Inject constructor(
         } catch (e: Exception) {
             call.respondRedirect("/error/1")
         }
-    }
-
-    private suspend fun checkPossibleErrors(file: File, call: ApplicationCall) {
-        // Si aun no se ha terminado el tiempo no se podra descargar el archivo.
-        if (!questionRepository.getTimerState()) call.respondRedirect("/error/3")
-        // Si nadie a contestado la pregunta no se podra descargar el archivo.
-        if (!file.exists()) call.respondRedirect("/error/6")
     }
 
     /**

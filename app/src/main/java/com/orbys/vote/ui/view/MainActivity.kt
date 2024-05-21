@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().apply {
                 val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {
                     // Mostrar el fragmento de descarga del fichero
-                    DownloadFragment(viewModel)
+                    DownloadFragment(viewModel, networkManager)
                 } else {
                     // Mostrar el fragmento de selección de tipos de preguntas
-                    TypesQuestionFragment(networkManager.isNetworkAvailable(this@MainActivity))
+                    TypesQuestionFragment(networkManager)
                 }
                 replace(fragmentContainer.id, fragment)
                 commit()
