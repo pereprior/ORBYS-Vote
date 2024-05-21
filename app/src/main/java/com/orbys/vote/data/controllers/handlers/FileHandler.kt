@@ -4,6 +4,7 @@ import android.content.Context
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswerType
 import com.orbys.vote.core.extensions.getAnswers
+import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.data.repositories.FileRepository
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
@@ -122,11 +123,12 @@ class FileHandler @Inject constructor(
         val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
+        val question = questionRepository.getQuestion()
 
         fileRepository.createFile(
             fileName = CSV_FILE_NAME,
-            question = questionRepository.getQuestion(),
-            answers = questionRepository.getAnswersAsString()
+            question = question,
+            answers = question.getAnswersAsString()
         )
 
         fileRepository.writeLine(

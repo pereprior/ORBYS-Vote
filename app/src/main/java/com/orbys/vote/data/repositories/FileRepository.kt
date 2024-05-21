@@ -7,6 +7,7 @@ import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswerType
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.domain.repositories.IFileRepository
+import kotlinx.coroutines.Dispatchers
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
@@ -23,6 +24,7 @@ class FileRepository private constructor(
         @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: FileRepository? = null
+        const val ANSWERS_LINE = 2
 
         // Instancia unica para el repositorio.
         fun getInstance(context: Context): FileRepository {
@@ -82,6 +84,19 @@ class FileRepository private constructor(
 
             bufferedWriter.write(csvData)
             bufferedWriter.close()
+        }
+    }
+
+    override suspend fun modifyLineInFile(lineNumber: Int, newContent: String) {
+        with(Dispatchers.IO) {
+            if (file.exists()) {
+                val lines = file.readLines().toMutableList()
+
+                if (lineNumber < 0 || lineNumber >= lines.size) return
+
+                lines[lineNumber] = newContent
+                file.writeText(lines.joinToString(separator = "\n"))
+            }
         }
     }
 

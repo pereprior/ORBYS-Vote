@@ -43,9 +43,6 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     // Devuelve si la respuesta existe en la lista de respuestas
     fun answerExists(answer: String?) = question.value.getAnswers().any { it.answer == answer }
 
-    // Devuelve la lista de respuestas como una lista de strings
-    fun getAnswersAsString() = question.value.getAnswers().map { it.answer }
-
     // Añade una respuesta a la lista de respuestas
     fun addAnswer(answerText: String?) {
         if (answerText == null) return

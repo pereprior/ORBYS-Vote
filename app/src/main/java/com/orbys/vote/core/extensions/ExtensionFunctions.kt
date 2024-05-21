@@ -22,6 +22,9 @@ fun Question.getAnswers() = answers.value
 // Devuelve el nombre del tipo de las respuestas de una pregunta
 fun Question.getAnswerType() = answerType.name
 
+// Devuelve la lista de respuestas como una lista de strings
+fun Question.getAnswersAsString() = this.answers.value.map { it.answer }
+
 // Devuelve el valor del flow con la respuesta seleccionada de una pregunta
 fun Answer.getCount() = count.value
 
