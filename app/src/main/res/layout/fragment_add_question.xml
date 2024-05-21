@@ -76,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/question_answer_title"
+            android:layout_marginBottom="@dimen/minimum_margin"
             android:textSize="@dimen/font_size"/>
 
         <!-- Layout para añadir respuestas personalizadas -->
@@ -320,10 +321,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/timeout_input_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="15dp"
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/medium_margin"
                 android:paddingHorizontal="6dp"
@@ -335,23 +336,26 @@
                 <!-- Campo de texto para indicar el tiempo limite de la pregunta -->
                 <EditText
                     android:id="@+id/timeout_input"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:autofillHints="1"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
                     android:inputType="number"
                     android:maxLength="3"
+                    android:padding="@dimen/minimum_margin"
+                    android:background="@drawable/bg_border_textbox"
                     android:textSize="6sp" />
 
                 <!-- Texto que indica en que unidad de tiempo se debe indicar el tiempo limite -->
                 <TextView
                     android:id="@+id/minutes_help_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/minutes_help_text"
+                    android:layout_marginStart="@dimen/medium_margin"
+                    android:text="min"
                     android:textSize="6sp" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

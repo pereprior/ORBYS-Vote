@@ -56,4 +56,5 @@
     <string name="time_out_button_text">Finalizar</string>
     <string name="add_answer_button_text">Añadir respuestas</string>
     <string name="close_button_placeholder">Cerrar</string>
+    <string name="char_unavailable_message">Las respuestas no admiten caracteres especiales</string>
 </resources>

@@ -111,9 +111,10 @@ class FileRepository private constructor(
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
             val answersToCsv = answers.joinToString(";")
+            val modifiedQuestion = question.question.replace("\n", " ")
 
             bufferedWriter.write("${context.getString(R.string.csv_legend_question_type)}${question.getAnswerType()}\n")
-            bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}${question.question}\n")
+            bufferedWriter.write("${context.getString(R.string.csv_legend_question_title)}$modifiedQuestion\n")
             bufferedWriter.write("${context.getString(R.string.csv_legend_answers_title)}$answersToCsv\n\n")
             bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")
 

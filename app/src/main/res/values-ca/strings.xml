@@ -56,4 +56,5 @@
     <string name="time_out_button_text">Finalitzar</string>
     <string name="add_answer_button_text">Afegeix respostes</string>
     <string name="close_button_placeholder">Tancar</string>
+    <string name="char_unavailable_message">Les respostes no admeten caràcters especials</string>
 </resources>

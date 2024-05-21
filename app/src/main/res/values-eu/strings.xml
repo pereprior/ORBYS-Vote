@@ -56,4 +56,5 @@
     <string name="time_out_button_text">Amaitu</string>
     <string name="add_answer_button_text">Gehitu erantzunak</string>
     <string name="close_button_placeholder">Itxi</string>
+    <string name="char_unavailable_message">Erantzunek ez dituzte karaktere bereziak onartzen</string>
 </resources>

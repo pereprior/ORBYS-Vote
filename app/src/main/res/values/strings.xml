@@ -66,12 +66,12 @@
     <string name="multi_answer_question_option_text">Multiple answers</string>
     <string name="time_checkbox_title">Timer</string>
     <string name="timeout_question_option_text">Time limit</string>
-    <string name="minutes_help_text">minutes</string>
+    <string name="minutes_help_text">min</string>
     <string name="download_title">Scan to download the question data</string>
     <string name="additional_config_text">Additional settings</string>
     <string name="users_count_title">Users who have responded:</string>
     <string name="time_out_button_text">Finish</string>
     <string name="add_answer_button_text">Add answers</string>
     <string name="close_button_placeholder">Close</string>
-    <string name="char_unavailable_message">Las respuestas no admiten caracteres especiales</string>
+    <string name="char_unavailable_message">Answers do not support special characters</string>
 </resources>

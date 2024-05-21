@@ -56,4 +56,5 @@
     <string name="time_out_button_text">Finalizare</string>
     <string name="add_answer_button_text">Adăugați răspunsuri</string>
     <string name="close_button_placeholder">Închide</string>
+    <string name="char_unavailable_message">Răspunsurile nu acceptă caractere speciale</string>
 </resources>

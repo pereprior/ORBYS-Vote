@@ -56,4 +56,5 @@
     <string name="time_out_button_text">Beëindigen</string>
     <string name="add_answer_button_text">Antwoorden toevoegen</string>
     <string name="close_button_placeholder">Sluiten</string>
+    <string name="char_unavailable_message">Antwoorden ondersteunen geen speciale tekens</string>
 </resources>
