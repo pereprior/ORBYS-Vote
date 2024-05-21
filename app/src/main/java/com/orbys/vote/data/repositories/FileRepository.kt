@@ -24,7 +24,6 @@ class FileRepository private constructor(
         @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: FileRepository? = null
-        const val ANSWERS_LINE = 2
 
         // Instancia unica para el repositorio.
         fun getInstance(context: Context): FileRepository {
