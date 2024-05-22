@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswersAsString
+import com.orbys.vote.core.extensions.showImageDialog
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
@@ -36,7 +37,10 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
 
         // Cambios en la vista del fragmento
         with(binding) {
-            setQrCode(DOWNLOAD_ENDPOINT)
+            val hotspotUrl = viewModel.getServerUrl(DOWNLOAD_ENDPOINT, true)
+
+            setQrCode(DOWNLOAD_ENDPOINT, !hotspotUrl.isNullOrEmpty())
+
             respondContainer.setOnClickListener { setQrCode(DOWNLOAD_ENDPOINT) }
             respondHotspotContainer.setOnClickListener { setQrCode(DOWNLOAD_ENDPOINT, true) }
 
@@ -48,9 +52,15 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
     private fun FragmentQrCodeBinding.setQrCode(
         endpoint: String, isHotspot: Boolean = false
     ) {
-        try {
-            val url = viewModel.getServerUrl(endpoint, isHotspot)!!
-            val qrCodeBitmap = QRCodeGenerator(requireContext()).generateUrlQrCode(url, true)
+        val url = viewModel.getServerUrl(endpoint, isHotspot)
+
+        if (url.isNullOrEmpty()) {
+            context?.showToastWithCustomView(requireContext().getString(R.string.no_network_error), Toast.LENGTH_LONG)
+            return
+        } else {
+            val qrGenerator = QRCodeGenerator(requireContext())
+            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true, 456, 456)
+            val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false, 456, 456)
 
             lanQrCode.apply {
                 visibility = if (isHotspot) View.GONE else View.VISIBLE
@@ -62,17 +72,18 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
                 text = if (isHotspot) null else url
             }
 
+            hotspotQrText.text = if (isHotspot) url else null
             hotspotQrCode.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
                 setImageBitmap(if (isHotspot) qrCodeBitmap else null)
+                setOnClickListener { showImageDialog(qrCodeBitmap) }
             }
 
-            hotspotQrText.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
-                text = if (isHotspot) url else null
+            otherQrCode.apply {
+                setOnClickListener { showImageDialog(qrCodeImage) }
             }
-        } catch (e: Exception) {
-            requireContext().showToastWithCustomView(requireContext().getString(R.string.no_network_error), Toast.LENGTH_LONG)
+
+            step1HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
+            step2HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
         }
 
     }

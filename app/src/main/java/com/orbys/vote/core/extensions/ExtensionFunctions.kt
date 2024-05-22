@@ -2,15 +2,20 @@ package com.orbys.vote.core.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
+import android.os.Build
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.orbys.vote.R
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.Question
+import com.orbys.vote.ui.components.qr.ImageDialog
 
 // Devuelve el valor del flow con la lista de respuestas de una pregunta
 fun Question.getAnswers() = answers.value
@@ -48,6 +53,22 @@ fun EditText.limitLines(maxLines: Int, maxCharsForLine: Int = 42) {
             null
         }
     )
+}
+
+/**
+ * Muestra un dialogo con la imagen ampliada.
+ *
+ * @param imageBitmap La imagen que se muestra.
+ */
+fun ImageView.showImageDialog(imageBitmap: Bitmap) {
+    // Muestra un dialogo con el qr ampliado
+    val dialog = ImageDialog(context, imageBitmap)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+    else
+        dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+    dialog.show()
 }
 
 /**

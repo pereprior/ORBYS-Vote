@@ -2,17 +2,14 @@ package com.orbys.vote.ui.viewmodels
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.os.Build
 import android.view.View
-import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getCount
 import com.orbys.vote.core.extensions.minutesToSeconds
 import com.orbys.vote.core.extensions.secondsToMillis
+import com.orbys.vote.core.extensions.showImageDialog
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
@@ -26,7 +23,6 @@ import com.orbys.vote.domain.usecases.GetServerUrlUseCase
 import com.orbys.vote.domain.usecases.GetUsersListUseCase
 import com.orbys.vote.domain.usecases.SetTimeOutUseCase
 import com.orbys.vote.ui.components.qr.QRCodeGenerator
-import com.orbys.vote.ui.components.qr.QrDialog
 import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -113,11 +109,11 @@ class LaunchServiceManager @Inject constructor(
             hotspotQrText.text = if (isHotspot) url else null
             hotspotQrCode.apply {
                 setImageBitmap(if (isHotspot) qrCodeBitmap else null)
-                setOnClickListener { showQrDialog(qrCodeBitmap) }
+                setOnClickListener { showImageDialog(qrCodeBitmap) }
             }
 
             otherQrCode.apply {
-                setOnClickListener { showQrDialog(qrCodeImage) }
+                setOnClickListener { showImageDialog(qrCodeImage) }
             }
 
             step1HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
@@ -205,17 +201,6 @@ class LaunchServiceManager @Inject constructor(
             }
         }
 
-    }
-
-    private fun ImageView.showQrDialog(qrCodeBitmap: Bitmap) {
-        // Muestra un dialogo con el qr ampliado
-        val dialog = QrDialog(context, qrCodeBitmap)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
-        else
-            dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
-        dialog.show()
     }
 
     private fun stopService() {

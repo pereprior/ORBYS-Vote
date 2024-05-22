@@ -59,4 +59,5 @@
     <string name="char_unavailable_message">Le risposte non supportano caratteri speciali</string>
     <string name="step_2_hotspot_text">VOTA</string>
     <string name="step_1_hotspot_text">CONNETTI</string>
+    <string name="step_3_hotspot_text">SCARICARE</string>
 </resources>

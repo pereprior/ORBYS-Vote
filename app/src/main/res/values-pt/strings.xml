@@ -57,6 +57,7 @@
     <string name="add_answer_button_text">Adicionar respostas</string>
     <string name="close_button_placeholder">Fechar</string>
     <string name="char_unavailable_message">As respostas não suportam caracteres especiais</string>
-    <string name="step_2_hotspot_text">VOTAR</string>
+    <string name="step_2_hotspot_text">VOTO</string>
     <string name="step_1_hotspot_text">CONECTAR</string>
+    <string name="step_3_hotspot_text">BAIXAR</string>
 </resources>

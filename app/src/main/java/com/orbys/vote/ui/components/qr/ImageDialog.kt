@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import com.orbys.vote.databinding.DialogQrCodeBinding
 
-class QrDialog(context: Context, qr: Bitmap): Dialog(context) {
+class ImageDialog(context: Context, qr: Bitmap): Dialog(context) {
 
     private var binding: DialogQrCodeBinding = DialogQrCodeBinding.inflate(layoutInflater)
 

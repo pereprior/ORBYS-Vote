@@ -144,6 +144,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/step_1_hotspot_text"
                     android:layout_gravity="center"
+                    android:textSize="@dimen/small_font_size"
                     android:textColor="@color/background_black"/>
 
                 <!-- Fragmento que contiene la información del codigo qr -->
@@ -181,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/step_2_hotspot_text"
                     android:layout_gravity="center"
+                    android:textSize="@dimen/small_font_size"
                     android:textColor="@color/background_black"/>
 
                 <FrameLayout
