@@ -50,11 +50,13 @@
     <string name="time_checkbox_title">Temporizador</string>
     <string name="timeout_question_option_text">Límite de tiempo</string>
     <string name="minutes_help_text">minutos</string>
-    <string name="download_title">Escanear para descargar los datos de la pregunta</string>
+    <string name="download_title">Escanear para descargar la pregunta</string>
     <string name="additional_config_text">Configuraciones adicionales</string>
     <string name="users_count_title">Usuarios que han respondido:</string>
     <string name="time_out_button_text">Finalizar</string>
     <string name="add_answer_button_text">Añadir respuestas</string>
     <string name="close_button_placeholder">Cerrar</string>
     <string name="char_unavailable_message">Las respuestas no admiten caracteres especiales</string>
+    <string name="step_2_hotspot_text">VOTAR</string>
+    <string name="step_1_hotspot_text">CONECTAR</string>
 </resources>

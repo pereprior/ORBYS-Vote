@@ -16,6 +16,7 @@ import com.orbys.vote.core.extensions.secondsToMillis
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
+import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Bar
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.domain.usecases.ClearUsersListUseCase
@@ -78,7 +79,7 @@ class LaunchServiceManager @Inject constructor(
     }
 
     private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String) {
-        setQrCode(endpoint)
+        setQrCode(endpoint, true)
         respondContainer.setOnClickListener { setQrCode(endpoint) }
         respondHotspotContainer.setOnClickListener { setQrCode(endpoint, true) }
     }
@@ -86,8 +87,13 @@ class LaunchServiceManager @Inject constructor(
     private fun ServiceLaunchQuestionBinding.setQrCode(
         endpoint: String, isHotspot: Boolean = false
     ) {
-        try {
-            val url = getServerUrlUseCase(endpoint, isHotspot)!!
+        //val url = getServerUrlUseCase(endpoint, isHotspot)
+        val url = "http://192.168.9.164:8888/$QUESTION_ENDPOINT"
+
+        if (url.isNullOrEmpty()) {
+            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+            return
+        } else {
             val qrGenerator = QRCodeGenerator(context)
             val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true, 456, 456)
             val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false, 456, 456)
@@ -102,24 +108,18 @@ class LaunchServiceManager @Inject constructor(
                 text = if (isHotspot) null else url
             }
 
-            hotspotQrText.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
-                text = if (isHotspot) url else null
-            }
-
+            hotspotQrText.text = if (isHotspot) url else null
             hotspotQrCode.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
                 setImageBitmap(if (isHotspot) qrCodeBitmap else null)
                 setOnClickListener { showQrDialog(qrCodeBitmap) }
             }
 
-            otherQrText.visibility = if (isHotspot) View.VISIBLE else View.GONE
             otherQrCode.apply {
-                visibility = if (isHotspot) View.VISIBLE else View.GONE
                 setOnClickListener { showQrDialog(qrCodeImage) }
             }
-        } catch (e: Exception) {
-            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+
+            step1HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
+            step2HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
         }
 
     }
@@ -131,6 +131,12 @@ class LaunchServiceManager @Inject constructor(
         // Si el tiempo de espera no es nulo se muestra el temporizador
         if (question.timeOut!! > 0)
             setTimerCount(question.timeOut)
+
+        if (question.answerType == AnswerType.NUMERIC) {
+            // Tamaño fijo para la pregunta de tipo numérico debido a que puede tener más de 5 respuestas
+            scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * 5
+            // Tamaño variable dependiendo del número de respuestas para las preguntas con respuestas fijas
+        } else scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * question.answers.value.size
 
         // Boton para finalizar la pregunta
         timeOutButton.setOnClickListener {

@@ -57,4 +57,6 @@
     <string name="add_answer_button_text">Afegeix respostes</string>
     <string name="close_button_placeholder">Tancar</string>
     <string name="char_unavailable_message">Les respostes no admeten caràcters especials</string>
+    <string name="step_2_hotspot_text">VOTAR</string>
+    <string name="step_1_hotspot_text">CONECTAR</string>
 </resources>

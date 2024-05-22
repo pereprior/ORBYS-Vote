@@ -57,4 +57,6 @@
     <string name="add_answer_button_text">أضف إجابات</string>
     <string name="close_button_placeholder">إغلاق</string>
     <string name="char_unavailable_message">الإجابات لا تدعم الأحرف الخاصة</string>
+    <string name="step_2_hotspot_text">صوت</string>
+    <string name="step_1_hotspot_text">اتصل</string>
 </resources>

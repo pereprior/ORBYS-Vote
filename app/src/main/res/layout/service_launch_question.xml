@@ -21,7 +21,7 @@
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_margin="@dimen/small_margin"
+        android:layout_margin="@dimen/medium_margin"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_main"
+            android:background="@drawable/bg_dialog"
             android:backgroundTint="@color/white"
             android:gravity="center"
             android:orientation="vertical">
@@ -68,7 +68,8 @@
                 android:layout_width="@dimen/qr_code_size"
                 android:layout_height="@dimen/qr_code_size"
                 android:layout_gravity="center"
-                android:contentDescription="@string/qr_code_desc" />
+                android:contentDescription="@string/qr_code_desc"
+                android:visibility="gone"/>
 
             <!-- Texto con el texto del codigo qr -->
             <TextView
@@ -79,7 +80,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/blue_selected"
                 android:textSize="@dimen/font_size"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -89,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
-            android:background="@drawable/bg_main"
+            android:background="@drawable/bg_dialog"
             android:backgroundTint="@color/white"
             android:gravity="center"
             android:orientation="vertical"
@@ -120,47 +121,106 @@
 
             </LinearLayout>
 
-            <!-- Fragmento que contiene la información del codigo qr -->
-            <ImageView
-                android:id="@+id/other_qr_code"
-                android:layout_width="75dp"
+            <LinearLayout
+                android:id="@+id/step_1_hotspot_container"
+                android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/small_margin"
-                android:contentDescription="@string/qr_code_desc"
-                android:src="@drawable/qr"
-                android:visibility="gone" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/other_qr_text"
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/background_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_1_hotspot_text"
+                        android:layout_gravity="center"
+                        android:textColor="@color/background_black"/>
+
+                </LinearLayout>
+
+                <!-- Fragmento que contiene la información del codigo qr -->
+                <ImageView
+                    android:id="@+id/other_qr_code"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="@dimen/small_margin"
+                    android:contentDescription="@string/qr_code_desc"
+                    android:src="@drawable/qr" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/step_2_hotspot_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/blue_selected"
-                android:text="WLAN"
-                android:textSize="@dimen/small_font_size"
-                android:visibility="gone" />
+                android:layout_marginTop="@dimen/small_margin"
+                android:orientation="horizontal">
 
-            <!-- Fragmento que contiene la información del codigo qr -->
-            <ImageView
-                android:id="@+id/hotspot_qr_code"
-                android:layout_width="@dimen/small_qr_code_size"
-                android:layout_height="@dimen/small_qr_code_size"
-                android:layout_gravity="center"
-                android:contentDescription="@string/qr_code_desc"
-                android:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-            <!-- Texto con el texto del codigo qr -->
-            <TextView
-                android:id="@+id/hotspot_qr_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/blue_selected"
-                android:textSize="@dimen/font_size"
-                android:visibility="gone" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/background_black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/step_2_hotspot_text"
+                        android:layout_gravity="center"
+                        android:textColor="@color/background_black"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="@dimen/small_qr_code_size"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <!-- Fragmento que contiene la información del codigo qr -->
+                    <ImageView
+                        android:id="@+id/hotspot_qr_code"
+                        android:layout_width="@dimen/small_qr_code_size"
+                        android:layout_height="@dimen/small_qr_code_size"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/qr_code_desc" />
+
+                    <!-- Texto con el texto del codigo qr -->
+                    <TextView
+                        android:id="@+id/hotspot_qr_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="http://192.168.9.164:8888/question"
+                        android:textAlignment="center"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/blue_selected"
+                        android:textSize="5sp"
+                        tools:ignore="RtlCompat" />
+
+                </FrameLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -183,7 +243,7 @@
     <LinearLayout
         android:layout_width="260dp"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/small_margin"
+        android:layout_margin="@dimen/medium_margin"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -211,14 +271,13 @@
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="wrap_content"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/small_margin">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:minHeight="90dp">
+                android:orientation="vertical">
 
                 <com.orbys.vote.ui.components.graphics.HorizontalGraphicView
                     android:id="@+id/barView"
@@ -226,7 +285,7 @@
                     android:layout_height="0dp"
                     android:visibility="visible"
                     android:layout_weight="1"
-                    android:minHeight="90dp" />
+                    android:minHeight="160dp" />
 
             </LinearLayout>
 

@@ -69,7 +69,7 @@ img.logo {
     top: 0;
     left: 0;
     margin-top: 20px;
-    width: 30%;
+    width: 40%;
     height: auto;
 }
 
@@ -92,8 +92,7 @@ img.logo {
 #loginButton:hover { background-color: #1c5480; }
 
 #myNumber {
-    font-size: 1.25em;
-    width: 65%;
+    width: 50%;
     padding: 10px;
     border: 2px solid #3587f2;
     border-radius: 40px;

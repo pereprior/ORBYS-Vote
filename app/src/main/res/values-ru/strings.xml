@@ -57,4 +57,6 @@
     <string name="add_answer_button_text">Добавить ответы</string>
     <string name="close_button_placeholder">Закрыть</string>
     <string name="char_unavailable_message">Ответы не поддерживают специальные символы</string>
+    <string name="step_2_hotspot_text">ГОЛОСОВАТЬ</string>
+    <string name="step_1_hotspot_text">ПОДКЛЮЧИТЬСЯ</string>
 </resources>

@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/small_margin"
@@ -22,10 +21,11 @@
         android:id="@+id/respond_container"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_main"
+        android:layout_marginHorizontal="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:background="@drawable/bg_dialog"
         android:backgroundTint="@color/white"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
@@ -79,12 +79,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/medium_margin"
         android:layout_marginTop="@dimen/small_margin"
-        android:layout_gravity="center"
-        android:background="@drawable/bg_main"
+        android:background="@drawable/bg_dialog"
         android:backgroundTint="@color/white"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/respond_container">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
