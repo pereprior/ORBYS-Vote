@@ -9,18 +9,19 @@ import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.components.managers.TextAnswersManager
+import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Otros".
  */
-class AddOtherQuestion: AddFragment() {
+class AddOtherQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
 
     override val answerType = AnswerType.OTHER
     private lateinit var fieldsManager: TextAnswersManager
 
     companion object {
         private const val MIN_ANSWERS = 2
-        private const val MAX_ANSWERS = 5
+        private const val MAX_ANSWERS = 4
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

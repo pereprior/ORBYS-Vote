@@ -297,7 +297,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/minimum_margin">
+            android:layout_marginTop="@dimen/minimum_margin">
 
             <!-- CheckBox para poner tiempo limite a una pregunta -->
             <CheckBox
@@ -336,12 +336,13 @@
                 <!-- Campo de texto para indicar el tiempo limite de la pregunta -->
                 <EditText
                     android:id="@+id/timeout_input"
-                    android:layout_width="30dp"
+                    android:layout_width="32dp"
                     android:layout_height="match_parent"
                     android:autofillHints=""
                     android:inputType="number"
                     android:maxLength="3"
                     android:padding="@dimen/minimum_margin"
+                    android:gravity="start"
                     android:background="@drawable/bg_border_textbox"
                     android:textSize="6sp" />
 
@@ -351,7 +352,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_marginStart="@dimen/medium_margin"
+                    android:layout_marginStart="20dp"
                     android:text="min"
                     android:textSize="6sp" />
 

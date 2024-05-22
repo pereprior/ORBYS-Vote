@@ -3,12 +3,13 @@ package com.orbys.vote.ui.view.fragments.add
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
+import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Estrellas".
  */
-class AddStarsQuestion: AddFragment() {
+class AddStarsQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
 
     override val answerType = AnswerType.STARS
 

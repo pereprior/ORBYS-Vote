@@ -10,11 +10,12 @@ import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.components.managers.AnswerManager
 import com.orbys.vote.ui.components.managers.NumericAnswersManager
+import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Numerico".
  */
-class AddNumericQuestion: AddFragment() {
+class AddNumericQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
 
     override val answerType = AnswerType.NUMERIC
 

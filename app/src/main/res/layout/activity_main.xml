@@ -16,17 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Logo de la aplicacion -->
-    <ImageView
-        android:id="@+id/quiz_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleY="0.75"
-        android:scaleX="0.75"
-        android:layout_marginTop="@dimen/small_font_size"
-        android:contentDescription="@string/orbys_title_desc"
-        android:src="@drawable/vote_app_title" />
-
     <!-- Contenedor con el fragmento correspondiente -->
     <LinearLayout
         android:id="@+id/fragment_container"

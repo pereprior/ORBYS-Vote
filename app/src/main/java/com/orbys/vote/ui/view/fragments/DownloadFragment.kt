@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
 import com.orbys.vote.ui.components.qr.QRCodeGenerator
@@ -20,10 +18,7 @@ import com.orbys.vote.ui.viewmodels.QuestionViewModel
 /**
  * Fragmento que contiene los elementos para descargar el fichero con los resultados de la pregunta.
  */
-class DownloadFragment(
-    private val viewModel: QuestionViewModel,
-    private val networkManager: NetworkManager
-): Fragment() {
+class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
 
     private lateinit var binding: FragmentQrCodeBinding
 
@@ -37,8 +32,6 @@ class DownloadFragment(
         viewModel.modifyFile(2, answersFileContent)
 
         val backButton: ImageButton? = activity?.findViewById(R.id.close_button)
-        val appLogo: ImageView? = activity?.findViewById(R.id.quiz_title)
-        appLogo?.visibility = View.GONE
         backButton!!.backButtonFunctions()
 
         // Cambios en la vista del fragmento
@@ -88,7 +81,7 @@ class DownloadFragment(
         // Detenemos el servicio
         this.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, TypesQuestionFragment(networkManager))
+                replace(R.id.fragment_container, TypesQuestionFragment(viewModel))
                 addToBackStack(null)
                 commit()
             }

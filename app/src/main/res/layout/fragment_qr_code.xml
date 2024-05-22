@@ -75,13 +75,13 @@
 
     <LinearLayout
         android:id="@+id/respond_hotspot_container"
-        android:layout_width="@dimen/qr_code_size"
+        android:layout_width="168dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginVertical="@dimen/small_margin"
         android:background="@drawable/bg_dialog"
         android:backgroundTint="@color/white"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
         <LinearLayout

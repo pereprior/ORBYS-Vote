@@ -128,28 +128,23 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:text="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_blue_circle"
+                    android:textStyle="bold"/>
+
+                <TextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
+                    android:text="@string/step_1_hotspot_text"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/background_black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/step_1_hotspot_text"
-                        android:layout_gravity="center"
-                        android:textColor="@color/background_black"/>
-
-                </LinearLayout>
+                    android:textColor="@color/background_black"/>
 
                 <!-- Fragmento que contiene la información del codigo qr -->
                 <ImageView
@@ -170,28 +165,23 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:text="2"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/bg_blue_circle"
+                    android:textStyle="bold"/>
+
+                <TextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
+                    android:text="@string/step_2_hotspot_text"
                     android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/background_black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/step_2_hotspot_text"
-                        android:layout_gravity="center"
-                        android:textColor="@color/background_black"/>
-
-                </LinearLayout>
+                    android:textColor="@color/background_black"/>
 
                 <FrameLayout
                     android:layout_width="@dimen/small_qr_code_size"
@@ -211,7 +201,6 @@
                         android:id="@+id/hotspot_qr_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="http://192.168.9.164:8888/question"
                         android:textAlignment="center"
                         android:layout_gravity="bottom"
                         android:textColor="@color/blue_selected"
@@ -316,13 +305,13 @@
         <Button
             android:id="@+id/time_out_button"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_gravity="end"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="@dimen/small_margin"
-            android:backgroundTint="@color/blue_selected_60"
+            android:background="@drawable/bg_button"
             android:text="@string/time_out_button_text"
-            android:textSize="@dimen/font_size"
+            android:textSize="@dimen/small_font_size"
             android:textStyle="bold" />
 
     </LinearLayout>

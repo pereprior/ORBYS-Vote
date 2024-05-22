@@ -4,12 +4,13 @@ import com.orbys.vote.R
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
+import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
  */
-class AddYesNoQuestion: AddFragment() {
+class AddYesNoQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
 
     override val answerType = AnswerType.YES_NO
 

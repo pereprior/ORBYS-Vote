@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.limitLines
 import com.orbys.vote.core.extensions.showToastWithCustomView
@@ -16,6 +16,7 @@ import com.orbys.vote.databinding.FragmentAddQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.services.FloatingViewService
+import com.orbys.vote.ui.view.fragments.TypesQuestionFragment
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,9 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * Clase abstracta que representa un Fragmento para añadir nueva pregunta a lanzar
  */
 @AndroidEntryPoint
-abstract class AddFragment: Fragment() {
+abstract class AddFragment(private val viewModel: QuestionViewModel): Fragment() {
 
-    private lateinit var viewModel: QuestionViewModel
     protected lateinit var binding: FragmentAddQuestionBinding
 
     protected abstract val answerType: AnswerType
@@ -33,8 +33,16 @@ abstract class AddFragment: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[QuestionViewModel::class.java]
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
+
+        val backButton: ImageView = activity?.findViewById(R.id.app_logo)!!
+        backButton.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, TypesQuestionFragment(viewModel))
+                addToBackStack(null)
+                commit()
+            }
+        }
 
         with(binding) {
             // Configurar el título y el icono de la pregunta

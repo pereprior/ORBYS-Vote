@@ -58,7 +58,7 @@ class TextAnswersManager(
     private fun createAnswerLayout(answer: EditText, button: ImageButton) = RelativeLayout(context).apply {
         layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+            LinearLayout.LayoutParams.WRAP_CONTENT,
         )
         gravity = Gravity.CENTER_VERTICAL
         addView(answer)
@@ -79,6 +79,7 @@ class TextAnswersManager(
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
         params.addRule(RelativeLayout.ALIGN_PARENT_END)
+        params.addRule(RelativeLayout.CENTER_VERTICAL)
         layoutParams = params
         background = ContextCompat.getDrawable(context, android.R.color.transparent)
         setImageResource(resId)

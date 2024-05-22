@@ -17,11 +17,6 @@
     </div>
 
     <form id="myForm">
-    <img class="type_icon" src="../images/stars.svg" alt="STARS">
-
-        <h1 id="questionText">[QUESTION]</h1>
-        <br>
-
         <div id="stars">
             <img class="star" data-value="[ANSWER0]" src="../images/empty_star.svg" alt="STAR">
             <img class="star" data-value="[ANSWER1]" src="../images/empty_star.svg" alt="STAR">
@@ -34,7 +29,12 @@
         <button type="submit">[SEND]</button>
     </form>
 
-    <div class="triangulo"></div>
+    <div id="triangulo"></div>
+
+    <form id="questionForm" style="flex-direction: row; padding: 10px;">
+        <img class="type_icon" src="../images/stars.svg" alt="STARS">
+        <h1 id="questionText">[QUESTION]</h1>
+    </form>
 
     <script>
         // Añade un evento de clic a cada estrella
@@ -99,7 +99,12 @@
             )   // Si la respuesta es correcta la almacenamos. Si no, mostramos un error
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 // Si la respuesta es correcta, mostramos un pop-up con el mensaje de éxito
-                .then(text => infoPopup.show())
+                .then(text => {
+                    document.getElementById('myForm').classList.add('hidden');
+                    document.getElementById('triangulo').classList.add('hidden');
+                    document.getElementById('questionForm').classList.add('hidden');
+                    infoPopup.show()
+                })
                 .catch(error => console.error(error));
         };
 

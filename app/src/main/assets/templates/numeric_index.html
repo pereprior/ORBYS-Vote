@@ -17,11 +17,6 @@
     </div>
 
     <form id="myForm">
-    <img class="type_icon" src="../images/numeric.svg" alt="NUMERIC">
-
-        <h1 id="questionText">[QUESTION]</h1>
-        <br>
-
         <div style="text-align: center">
             <div class="min-max-indicator">Min: 1, Max: [MAX_ANSWER]</div>
             <label for="myNumber"></label><input type="number" min="1" max="[MAX_ANSWER]" value="1" id="myNumber">
@@ -31,7 +26,12 @@
         <button type="submit">[SEND]</button>
     </form>
 
-    <div class="triangulo"></div>
+    <div id="triangulo"></div>
+
+    <form id="questionForm" style="flex-direction: row; padding: 10px;">
+        <img class="type_icon" src="../images/numeric.svg" alt="NUMERIC">
+        <h1 id="questionText">[QUESTION]</h1>
+    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
 
@@ -108,8 +108,18 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 .then(text => {
                     // Si la respuesta es multiple, mostramos un popup por si el usuario quiere seguir contestando
-                    if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") confirmPopup.show();
-                    else infoPopup.show();
+                    if ("MULTIPLE_ANSWERS_PLACEHOLDER" == "multiple") {
+                        document.getElementById('myForm').classList.add('hidden');
+                        document.getElementById('triangulo').classList.add('hidden');
+                        document.getElementById('questionForm').classList.add('hidden');
+                        confirmPopup.show();
+                    }
+                    else {
+                        document.getElementById('myForm').classList.add('hidden');
+                        document.getElementById('triangulo').classList.add('hidden');
+                        document.getElementById('questionForm').classList.add('hidden');
+                        infoPopup.show();
+                    }
                 })
                 .catch(console.error);
         };

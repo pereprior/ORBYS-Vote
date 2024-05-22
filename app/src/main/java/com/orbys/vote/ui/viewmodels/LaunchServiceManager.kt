@@ -79,7 +79,10 @@ class LaunchServiceManager @Inject constructor(
     }
 
     private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String) {
-        setQrCode(endpoint, true)
+        val hotspotUrl = getServerUrlUseCase(endpoint, true)
+
+        setQrCode(endpoint, !hotspotUrl.isNullOrEmpty())
+
         respondContainer.setOnClickListener { setQrCode(endpoint) }
         respondHotspotContainer.setOnClickListener { setQrCode(endpoint, true) }
     }
@@ -87,8 +90,7 @@ class LaunchServiceManager @Inject constructor(
     private fun ServiceLaunchQuestionBinding.setQrCode(
         endpoint: String, isHotspot: Boolean = false
     ) {
-        //val url = getServerUrlUseCase(endpoint, isHotspot)
-        val url = "http://192.168.9.164:8888/$QUESTION_ENDPOINT"
+        val url = getServerUrlUseCase(endpoint, isHotspot)
 
         if (url.isNullOrEmpty()) {
             context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
@@ -127,6 +129,7 @@ class LaunchServiceManager @Inject constructor(
     private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {
         // Titulo y tipo de la pregunta
         questionText.text = question.question
+        banner.closeButton.visibility = View.GONE
 
         // Si el tiempo de espera no es nulo se muestra el temporizador
         if (question.timeOut!! > 0)
