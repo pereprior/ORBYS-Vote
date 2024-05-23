@@ -96,7 +96,6 @@ img.logo {
     height: auto;
 }
 
-/* El estilo del boton de login es distinto */
 #loginButton {
     border: none;
     background-color: #016dc2;
@@ -220,6 +219,7 @@ input[type="text"] {
     word-wrap: break-word;
 }
 
+/* RESPONSIVE PARA MOVIL */
 @media (max-width: 800px) and (orientation: landscape) {
     form { width: 40%; }
     h1 { font-size: 0.8em; }
@@ -246,6 +246,7 @@ input[type="text"] {
     img.logo { width: 40px; margin-bottom: 15px; }
 }
 
+/* RESPONSIVE PARA TABLETS */
 @media (min-width: 600px) and (orientation: portrait) {
     form { width: 70%; padding: 25px; }
     h1 { font-size: 1.5em; }
@@ -264,4 +265,9 @@ input[type="text"] {
     .min-max-indicator { font-size: 1.5em; }
     .star { width: 80px; margin: 5px 10px;}
     .type_icon { width: 30px; }
+}
+
+/* RESPONSIVE PARA MONITORES */
+@media (min-width: 800px) and (orientation: landscape) {
+
 }
