@@ -224,19 +224,7 @@ input[type="text"] {
     form { width: 40%; }
     h1 { font-size: 0.8em; }
     span { font-size: 0.8em; }
-    button {
-        padding: 5px;
-        margin: 5px 10px;
-        width: 120px;
-        font-size: 0.8em;
-    }
-
-    #closeButton {
-        padding: 5px;
-        margin: 5px 10px;
-        width: 120px;
-        font-size: 0.8em;
-    }
+    button { margin: 5px 10px; width: 120px; font-size: 0.8em; }
 
     #orbys_logo { margin-top: 10px; width: 15%; }
     #vote_logo { display: none; }
@@ -245,18 +233,35 @@ input[type="text"] {
     #username { width: 50%; }
     #btn-refuse { padding: 10px 20px; font-size: 0.5em; }
     #btn-accept { padding: 10px 20px; font-size: 0.5em; }
-
-    #radioContainer div {
-        font-size: 0.8em;
-    }
-    #checkboxContainer div {
-        display: flex;
-        accent-color: #3587f2;
-        color: white;
-        margin: 8px 4px;
+    #radioContainer div { font-size: 0.8em; }
+    #checkboxContainer div { font-size: 0.8em; }
+    #triangulo {
+        border-top: 15px solid;
+        border-right: 15px solid transparent;
+        border-left: 15px solid transparent;
     }
 
     .min-max-indicator { font-size: 0.8em; }
     .star { width: 40px; }
     img.logo { width: 40px; margin-bottom: 15px; }
+}
+
+@media (min-width: 600px) and (orientation: portrait) {
+    form { width: 70%; padding: 25px; }
+    h1 { font-size: 1.5em; }
+    button { padding: 10px; width: 220px; border-radius: 40px; font-size: 1.5em; }
+
+    #vote_logo { margin-bottom: 50px;}
+    #questionForm { max-width: 60%; padding: 16px; }
+    #radioContainer div { font-size: 1.5em; margin: 12px 4px; }
+    #checkboxContainer div { font-size: 1.5em; margin: 12px 4px; }
+    #triangulo {
+        border-top: 25px solid;
+        border-right: 25px solid transparent;
+        border-left: 25px solid transparent;
+    }
+
+    .min-max-indicator { font-size: 1.5em; }
+    .star { width: 80px; margin: 5px 10px;}
+    .type_icon { width: 30px; }
 }
