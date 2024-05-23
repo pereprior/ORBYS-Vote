@@ -62,7 +62,19 @@
             {
                 id: "popup_message",
                 textColor: "#FFFFFF",
+                widthMultiplier: window.innerWidth > window.innerHeight ? 0.5 : 1,
+                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
+                css: `
+                    #closeButton { padding: 5px; margin: 10px 20px; width: 150px; box-sizing: border-box;
+                        border: 1px solid #3587f2; border-radius: 20px; color: white; background-color: #3587f2;
+                        cursor: pointer; font-size: 1em; transition: background-color 0.3s;
+                    }
+
+                    @media (max-width: 800px) and (orientation: landscape) {
+                        #closeButton { padding: 5px; margin: 5px 10px; width: 120px; font-size: 0.5em; }
+                    }
+                `,
                 title: " ",
                 content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
                                 <span><strong> [SUCCESS_MESSAGE] </strong></span>

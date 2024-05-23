@@ -21,10 +21,22 @@
                 id: "popup_message",
                 title: " ",
                 textColor: "#FFFFFF",
+                widthMultiplier: window.innerWidth > window.innerHeight ? 0.5 : 1,
+                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
+                css: `
+                    #closeButton { padding: 5px; margin: 10px 20px; width: 150px; box-sizing: border-box;
+                        border: 1px solid #3587f2; border-radius: 20px; color: white; background-color: #3587f2;
+                        cursor: pointer; font-size: 1em; transition: background-color 0.3s;
+                    }
+
+                    @media (max-width: 800px) and (orientation: landscape) {
+                        #closeButton { padding: 5px; margin: 5px 10px; width: 120px; font-size: 0.5em; }
+                    }
+                `,
                 content: `<img src="../images/${errorIcon}" alt="ERROR" class="logo">
                                 <span><strong>[POPUP_CONTENT]</strong></span>
-                                <button id="closeButton" type="submit">      [CLOSE]      </button>`,
+                                <button id="closeButton" type="submit">[CLOSE]</button>`,
                 textShadow: "0 0 .3em #000000bb",
                 allowClose: false,
                 showImmediately: true,
@@ -42,6 +54,10 @@
         // Muestra el pop-up inmediatamente cuando se carga la página
         errorPopup.show();
 
+        window.addEventListener('resize', function() {
+            // Ajustar el widthMultiplier según la orientación
+            errorPopup.widthMultiplier = window.innerWidth > window.innerHeight ? 0.5 : 0.8;
+        });
     </script>
 
 </body>

@@ -31,6 +31,11 @@
         input[type="radio"]:checked {
             background: url('../images/filled_radio.svg') no-repeat center center;
         }
+
+        @media (max-width: 800px) and (orientation: landscape) {
+            input[type="checkbox"] { width: 15px; height: 15px;}
+            input[type="radio"] { width: 15px; height: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -51,8 +56,6 @@
             <!-- Los checkboxes de las preguntas con respuesta multiple se generarán aquí -->
             <div id="checkboxContainer"></div>
         </div>
-        <br>
-
         <button type="submit">[SEND]</button>
     </form>
 
@@ -138,7 +141,19 @@
             {
                 id: "popup_message",
                 textColor: "#FFFFFF",
+                widthMultiplier: window.innerWidth > window.innerHeight ? 0.5 : 1,
+                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
+                css: `
+                    #closeButton { padding: 5px; margin: 10px 20px; width: 150px; box-sizing: border-box;
+                        border: 1px solid #3587f2; border-radius: 20px; color: white; background-color: #3587f2;
+                        cursor: pointer; font-size: 1em; transition: background-color 0.3s;
+                    }
+
+                    @media (max-width: 800px) and (orientation: landscape) {
+                        #closeButton { padding: 5px; margin: 5px 10px; width: 120px; font-size: 0.5em; }
+                    }
+                `,
                 title: " ",
                 content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
                                 <span><strong> [SUCCESS_MESSAGE] </strong></span>
@@ -160,13 +175,14 @@
             {
                 id: "popup_confirm",
                 textColor: "#FFFFFF",
+                widthMultiplier: window.innerWidth > window.innerHeight ? 0.5 : 1,
+                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
                 title: " ",
                 content: `
                 <img src="../images/alert.svg" alt="ALERT" class="logo">
                 <span><strong>[CONFIRM_MESSAGE]</strong></span>
-                <br>
-                <button id="btn-refuse">No</button>                   <button id="btn-accept">Si</button>`,
+                <button id="btn-refuse">No</button>       <button id="btn-accept">Si</button>`,
                 textShadow: "0 0 .3em #000000bb",
                 allowClose: false,
                 loadCallback: () => {
