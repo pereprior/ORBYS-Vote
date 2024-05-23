@@ -77,6 +77,10 @@ class FileHandler @Inject constructor(
         get("/images/timeout.svg") { loadImage("timeout.svg") }
         get("/images/alert.svg") { loadImage("alert.svg") }
         get("/images/success.svg") { loadImage("success.svg") }
+        get("/images/empty_radio.svg") { loadImage("empty_radio.svg") }
+        get("/images/empty_checkbox.svg") { loadImage("empty_checkbox.svg") }
+        get("/images/filled_radio.svg") { loadImage("filled_radio.svg") }
+        get("/images/filled_checkbox.svg") { loadImage("filled_checkbox.svg") }
     }
 
     /**

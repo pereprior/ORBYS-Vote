@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import android.text.InputFilter
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -81,16 +82,21 @@ fun ImageView.showImageDialog(imageBitmap: Bitmap) {
 fun Context.showToastWithCustomView(
     message: String, duration: Int = Toast.LENGTH_SHORT, textSize: Float = 8f
 ) {
+    Log.d("Toast", "VAMOS A EMPEZAR A INFLAR EL TOAST")
     val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val customToastView = inflater.inflate(R.layout.toast_custom, null)
 
+    Log.d("Toast", "SE VA A PONER LA PLANTILLA DEL TOAST")
     val toastText = customToastView.findViewById<TextView>(R.id.custom_toast_text)
     toastText.text = message
     toastText.textSize = textSize
 
+    Log.d("Toast", "SE VA A CREAR EL TOAST")
     val toast = Toast(this)
     toast.duration = duration
     toast.setGravity(Gravity.BOTTOM, 0, 200)
     toast.view = customToastView
+    Log.d("Toast", "SE VA A MOSTRAR EL TOAST")
     toast.show()
+    Log.d("Toast", "SE HA MOSTRADO EL TOAST")
 }

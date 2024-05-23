@@ -84,6 +84,9 @@
                         .getElementById("btn-accept")
                         .addEventListener("click", () => {
                         confirmPopup.hide();
+                        document.getElementById('myForm').classList.remove('hidden');
+                        document.getElementById('triangulo').classList.remove('hidden');
+                        document.getElementById('questionForm').classList.remove('hidden');
                     });
                 },
             }
