@@ -4,7 +4,6 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,198 +12,35 @@ body {
 }
 
 form {
-    background-color: #010101;
+    width: 40%;
     padding: 20px;
+    background-color: #010101;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#questionForm {
-    width: auto;
-    max-width: 70%;
-    flex-direction: row;
-    padding: 20px;
-    justify-content: flex-start;
-    align-items: center;
-}
-
 button {
-    padding: 5px;
-    margin: 10px 20px;
-    width: 150px;
     box-sizing: border-box;
     border: 1px solid #3587f2;
-    border-radius: 20px;
     color: white;
     background-color: #3587f2;
     cursor: pointer;
-    font-size: 1em;
     transition: background-color 0.3s;
 }
-
-span { font-size: 1em; }
-
 button:hover { background-color: #1F5191; }
 
+span { font-size: 1.5em; }
+
 h1 {
-    color: white;
+    font-size: 1.5em;
     max-width: 80%;
-    font-size: 1em;
+    color: white;
     font-style: normal;
     word-wrap: break-word;
-}
-
-img {
-    display: flex;
-    width: 50%;
-    height: auto;
-    margin: 0 auto 0px;
-}
-
-img.logo {
-    width: 50px;
-    height: auto;
-    margin-bottom: 20px;
-}
-
-#username {
-    width: auto;
-    background-color: #666666;
-    border: none;
-    color: white;
-}
-
-#orbys_logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 20px;
-    width: 50%;
-    height: auto;
-}
-
-#vote_logo {
-    position: relative;
-    top: 0;
-    margin-bottom: 40px;
-    width: 80%;
-    height: auto;
-}
-
-#loginButton {
-    border: none;
-    background-color: #016dc2;
-    color: white;
-    font-size: 1em;
-}
-
-#loginButton:hover { background-color: #1c5480; }
-
-#myNumber {
-    width: 50%;
-    padding: 10px;
-    border: 2px solid #3587f2;
-    border-radius: 40px;
-    background-color: #010101;
-    color: white;
-    text-align: center;
-}
-
-#radioContainer div label {
-    margin-left: 16px;
-}
-#radioContainer div {
-    display: flex;
-    color: white;
-    background-color: #010101;
-    accent-color: #3587f2;
-    border-block-color: #3587f2;
-    align-items: center;
-    margin: 8px 4px;
-}
-
-#checkboxContainer div label { margin-left: 16px; }
-#checkboxContainer div {
-    display: flex;
-    accent-color: #3587f2;
-    color: white;
-    margin: 8px 4px;
-}
-
-#answers {
-    text-align: left;
-    width: 100%;
-    font-size: 0.8em;
-    max-width: 100%;
-    word-wrap: break-word;
-}
-
-#answers label {
-    align-content: center;
-}
-
-#stars {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8px;
-}
-
-#btn-refuse {
-    padding: 10px 30px;
-    background-color: #f44336;
-    border: none;
-    border-radius: 40px;
-}
-
-#btn-accept {
-    padding: 10px 30px;
-    background-color: #4caf50;
-    border: none;
-    border-radius: 40px;
-}
-
-.hidden {
-    display: none;
-}
-
-.star {
-    width: 50px;
-    height: auto;
-    margin: 0 5px;
-}
-
-.rowGroup {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.min-max-indicator {
-    font-size: 1em;
-    color: #3587f2;
-    margin-bottom: 10px;
-}
-
-.type_icon {
-    width: 15px;
-    height: auto;
-    margin: 0 20px 0 5px;
-}
-
-#triangulo {
-    position: relative;
-    border-top: 20px solid;
-    border-right: 20px solid transparent;
-    border-left: 20px solid transparent;
-    height: 0;
-    width: 0;
-    margin-bottom: 20px;
 }
 
 input[type="text"] {
@@ -219,65 +55,218 @@ input[type="text"] {
     word-wrap: break-word;
 }
 
+/* Logo de la empresa */
+#orbys_logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px 0 0 40px;
+    width: 25%;
+    height: auto;
+}
+
+/* Logo de la app */
+#vote_logo div { width: auto; }
+#vote_logo {
+    position: relative;
+    align-content: center;
+    margin: 40px;
+    width: 40%;
+    height: auto;
+}
+
+/* Contenedor con la pregunta y el logo del tipo de la pregunta */
+#questionForm {
+    width: auto;
+    max-width: 60%;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Input para introducir el nombre de usuario */
+#username {
+    width: auto;
+    font-size: 1em;
+    background-color: #666666;
+    border: none;
+    color: white;
+}
+
+/* Input para introducir la respuesta en la pregunta tipo númerico */
+#myNumber {
+    width: 50%;
+    padding: 10px;
+    border: 2px solid #3587f2;
+    border-radius: 40px;
+    background-color: #010101;
+    color: white;
+    text-align: center;
+}
+
+/* Contenedor con las respuestas de la pregunta tipo otros */
+#answers label { align-content: center; }
+#answers {
+    text-align: left;
+    width: 100%;
+    font-size: 0.8em;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+/* Input para introducir la respuesta en la pregunta tipo otros simple */
+#radioContainer div label { margin-left: 16px; }
+#radioContainer div {
+    display: flex;
+    color: white;
+    margin: 8px 4px;
+}
+
+/* Input para introducir la respuesta en la pregunta tipo otros múltiple */
+#checkboxContainer div label { margin-left: 16px; }
+#checkboxContainer div {
+    display: flex;
+    color: white;
+    margin: 8px 4px;
+}
+
+/* Contenedor con las respuestas de la pregunta tipo estrellas */
+#stars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+/* Boton para rechazar una petición del popup */
+#btn-refuse {
+    padding: 10px 30px;
+    background-color: #f44336;
+    border: none;
+    border-radius: 40px;
+}
+
+/* Boton para aceptar una petición del popup */
+#btn-accept {
+    padding: 10px 30px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 40px;
+}
+
+/* Clase para ocultar algún elemento */
+.hidden { display: none; }
+
+/* Clase para aplicar el estilo a una respuesta de tipo estrella */
+.star {
+    width: 80px;
+    height: auto;
+    margin: 5px 10px;
+}
+
+/* Clase para ordenar elementos dentro del formulario de forma horizontal */
+.rowGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Muestra el número máximo y el mínimo que podemos introducir en la pregunta tipo númerico */
+.min-max-indicator {
+    font-size: 1.5em;
+    color: #3587f2;
+    margin-bottom: 10px;
+}
+
+/* Clase para aplicar el estilo sobre el icono del tipo de la pregunta */
+.type_icon {
+    width: 15px;
+    height: auto;
+    margin: 0 20px 0 5px;
+}
+
+/* Clase para aplicar el estilo al icono del tipo de mensaje para el popup */
+.logo {
+    width: 50px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Clase para crear un triangulo */
+#triangulo {
+    position: relative;
+    border-top: 25px solid;
+    border-right: 25px solid transparent;
+    border-left: 25px solid transparent;
+    height: 0;
+    width: 0;
+    margin-bottom: 20px;
+}
+
+/* RESPONSIVE PARA MOVIL EN HORIZONTAL */
+@media (max-width: 600px) and (orientation: portrait) {
+    form { width: 80%;  }
+    span { font-size: 1em; }
+    h1 { font-size: 1em; }
+    button { padding: 5px; margin: 10px 20px; width: 150px; border-radius: 20px; font-size: 1em; }
+
+    #questionForm { max-width: 70%; }
+
+    .star { width: 50px; margin: 0px 5px;}
+    .min-max-indicator { font-size: 1em; }
+
+    #triangulo { border-top: 20px solid; border-right: 20px solid transparent; border-left: 20px solid transparent; }
+}
+
 /* RESPONSIVE PARA TABLETS */
 @media (min-width: 600px) and (orientation: portrait) {
     form { width: 70%; padding: 25px; }
-    h1 { font-size: 1.5em; }
     button { padding: 10px; width: 220px; border-radius: 40px; font-size: 1.5em; }
 
-    #vote_logo { margin-bottom: 50px;}
-    #questionForm { max-width: 60%; padding: 16px; }
     #username { font-size: 1.25em; }
+    #myNumber { font-size: 1.25em; }
     #radioContainer div { font-size: 1.5em; margin: 12px 16px; }
     #checkboxContainer div { font-size: 1.5em; margin: 12px 16px; }
-    #triangulo { border-top: 25px solid; border-right: 25px solid transparent; border-left: 25px solid transparent; }
     #btn-refuse { padding: 10px 40px; }
     #btn-accept { padding: 10px 40px;}
 
-    .min-max-indicator { font-size: 1.5em; }
-    .star { width: 80px; margin: 5px 10px;}
     .type_icon { width: 30px; }
-    img.logo { width: 60px; margin-bottom: 20px; }
+    .logo { width: 60px; }
 }
 
 /* RESPONSIVE PARA MOVIL EN VERTICAL */
 @media (max-width: 800px) and (orientation: landscape) {
-    form { width: 40%; }
     h1 { font-size: 0.8em; }
     span { font-size: 1.25em; }
-    button { margin: 5px 10px; width: 120px; font-size: 0.8em; }
+    button {  padding: 5px; margin: 5px 10px; width: 120px; border-radius: 20px; font-size: 0.8em; }
 
-    #orbys_logo { margin-top: 10px; width: 15%; }
+    #orbys_logo { margin-top: 10px; width: 10%; }
     #vote_logo { display: none; }
-    #questionForm { max-width: 60%; padding: 10px; }
     #btn-refuse { font-size: 0.8em; }
     #btn-accept { font-size: 0.8em; }
     #radioContainer div { font-size: 0.8em; }
     #checkboxContainer div { font-size: 0.8em; }
-    #triangulo { border-top: 15px solid; border-right: 15px solid transparent; border-left: 15px solid transparent; }
 
     .min-max-indicator { font-size: 0.8em; }
     .star { width: 40px; }
-    img.logo { width: 60px; margin-bottom: 15px; }
+    .logo { width: 60px; }
 }
 
 /* RESPONSIVE PARA MONITORES */
 @media (min-width: 800px) and (orientation: landscape) {
-    form { width: 40%; }
-    h1 { font-size: 1.5em; max-width: 90%;}
-    span { font-size: 1.5em; }
+    h1 { max-width: 90%; }
     button { padding: 10px; width: 220px; border-radius: 40px; font-size: 1.5em; }
 
-    #orbys_logo { margin-top: 10px; width: 15%; }
-    #vote_logo { margin-bottom: 50px; width: 40%; }
-    #questionForm { max-width: 55%; padding: 10px; }
+    #orbys_logo { margin-top: 10px; width: 10%; }
+    #vote_logo { width: 20%; }
+    #questionForm { max-width: 55%; }
     #username { font-size: 1.25em; }
+    #myNumber { font-size: 1.5em; }
     #radioContainer div { font-size: 1.5em; margin: 16px 50px; }
     #checkboxContainer div { font-size: 1.5em; margin: 16px 50px; }
-    #triangulo { border-top: 25px solid; border-right: 25px solid transparent; border-left: 25px solid transparent; }
-    #myNumber { font-size: 1.5em; }
+    #btn-refuse { padding: 10px 40px; }
+    #btn-accept { padding: 10px 40px;}
 
-    .min-max-indicator { font-size: 1.5em; }
-    .star { width: 80px; margin: 5px 10px;}
     .type_icon { width: 30px; margin: 0 25px 0 10px; }
 }
