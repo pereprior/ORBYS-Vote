@@ -23,6 +23,7 @@
     --icon-size-small: 30px;
     --icon-size-medium: 50px;
     --icon-size-large: 80px;
+    --button-size-xsmall: 120px;
     --button-size-small: 150px;
     --button-size-medium: 200px;
     --button-size-large: 220px;
@@ -34,8 +35,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     font-family: var(--font-family);
     height: 100vh;
     justify-content: center;
@@ -46,7 +46,6 @@ form {
     background-color: var(--background-color);
     border-radius: var(--border-radius-medium);
     box-shadow: 0 0 var(--margin-small) rgba(0, 0, 0, 0.1);
-    display: flex;
     flex-direction: column;
     justify-content: center;
     padding: var(--margin-medium);
@@ -56,9 +55,9 @@ form {
 button {
     background-color: var(--background-color-button);
     box-sizing: border-box;
+    border: none;
     color: white;
-    cursor: pointer;
-    transition: var(--transition-button);
+    cursor: pointer; transition: var(--transition-button);
 }
 button:hover { background-color: var(--background-color-button-hover); }
 
@@ -75,22 +74,19 @@ h1 {
 input[type="text"] {
     font-size: var(--font-size-small);
     padding: var(--margin-small);
-    width: 100%;
+    width: 100%; max-width: 100%;
     box-sizing: border-box;
     border-radius: var(--border-radius-small);
     margin-bottom: var(--margin-medium);
-    max-width: 100%;
     word-wrap: break-word;
 }
 
 /* Logo de la empresa */
 #orbys_logo {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     margin: var(--margin-medium) 0 0 var(--margin-large);
-    width: 25%;
-    height: auto;
+    width: 25%; height: auto;
 }
 
 /* Logo de la app */
@@ -99,14 +95,12 @@ input[type="text"] {
     position: relative;
     align-content: center;
     margin: var(--margin-large);
-    width: 40%;
-    height: auto;
+    width: 40%; height: auto;
 }
 
 /* Contenedor con la pregunta y el logo del tipo de la pregunta */
 #questionForm {
-    width: auto;
-    max-width: 60%;
+    width: auto; max-width: 60%;
     padding: var(--margin-medium);
     flex-direction: row;
     justify-content: flex-start;
@@ -116,10 +110,9 @@ input[type="text"] {
 /* Input para introducir el nombre de usuario */
 #username {
     width: auto;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-small); color: white;
     background-color: var(--background-color-input);
     border: none;
-    color: white;
 }
 
 /* Input para introducir la respuesta en la pregunta tipo númerico */
@@ -129,17 +122,15 @@ input[type="text"] {
     border: 2px solid var(--background-color-button);
     border-radius: var(--margin-large);
     background-color: var(--background-color);
-    color: white;
-    text-align: center;
+    color: white; text-align: center;
 }
 
 /* Contenedor con las respuestas de la pregunta tipo otros */
 #answers label { align-content: center; }
 #answers {
+    width: 100%; max-width: 100%;
     text-align: left;
-    width: 100%;
     font-size: var(--font-size-xsmall);
-    max-width: 100%;
     word-wrap: break-word;
 }
 
@@ -170,16 +161,14 @@ input[type="text"] {
 #btn-refuse {
     padding: var(--margin-small) var(--icon-size-small);
     background-color: var(--background-color-button-refuse);
-    border: none;
-    border-radius: var(--margin-large);
+    border: none; border-radius: var(--margin-large);
 }
 
 /* Boton para aceptar una petición del popup */
 #btn-accept {
     padding: var(--margin-small) var(--icon-size-small);
     background-color: var(--background-color-button-accept);
-    border: none;
-    border-radius: var(--margin-large);
+    border: none; border-radius: var(--margin-large);
 }
 
 #closeButton {
@@ -189,11 +178,9 @@ input[type="text"] {
     box-sizing: border-box;
     border: 1px solid var(--background-color-button);
     border-radius: var(--margin-large);
-    color: white;
+    font-size: var(--font-size-xsmall); color: white;
     background-color: var(--background-color-button);
-    cursor: pointer;
-    font-size: var(--font-size-xsmall);
-    transition: var(--transition-button);
+    cursor: pointer; transition: var(--transition-button);
 }
 
 /* Clase para ocultar algún elemento */
@@ -201,15 +188,13 @@ input[type="text"] {
 
 /* Clase para aplicar el estilo a una respuesta de tipo estrella */
 .star {
-    width: var(--icon-size-large);
-    height: auto;
+    width: var(--icon-size-large); height: auto;
     margin: var(--margin-small) var(--margin-small);
 }
 
 /* Clase para ordenar elementos dentro del formulario de forma horizontal */
 .rowGroup {
-    display: flex;
-    flex-direction: row;
+    display: flex; flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
@@ -223,15 +208,13 @@ input[type="text"] {
 
 /* Clase para aplicar el estilo sobre el icono del tipo de la pregunta */
 .type_icon {
-    width: var(--icon-size-xsmall);
-    height: auto;
+    width: var(--icon-size-xsmall); height: auto;
     margin: 0 var(--margin-medium) 0 var(--margin-small);
 }
 
 /* Clase para aplicar el estilo al icono del tipo de mensaje para el popup */
 .logo {
-    width: var(--icon-size-medium);
-    height: auto;
+    width: var(--icon-size-medium); height: auto;
     margin-bottom: var(--margin-medium);
 }
 
@@ -241,8 +224,7 @@ input[type="text"] {
     border-top: var(--icon-size-small) solid;
     border-right: var(--icon-size-small) solid transparent;
     border-left: var(--icon-size-small) solid transparent;
-    height: 0;
-    width: 0;
+    height: 0; width: 0;
     margin-bottom: var(--margin-medium);
 }
 
@@ -251,11 +233,25 @@ input[type="text"] {
     form { width: 80%;  }
     span { font-size: var(--font-size-small); }
     h1 { font-size: var(--font-size-small); }
-    button { padding: var(--margin-small); margin: var(--margin-small) var(--margin-medium); width: var(--button-size-small); border-radius: var(--margin-medium); font-size: var(--font-size-small); }
+    button {
+        width: var(--button-size-small);
+        padding: var(--margin-small);
+        margin: var(--margin-small) var(--margin-medium);
+        border-radius: var(--margin-medium);
+        font-size: var(--font-size-small);
+    }
 
     #questionForm { max-width: 70%; }
-    #closeButton { padding: var(--margin-small); width: var(--button-size-small); border-radius: var(--margin-medium); }
-    #triangulo { border-top: var(--margin-medium) solid; border-right: var(--margin-medium) solid transparent; border-left: var(--margin-medium) solid transparent; }
+    #closeButton {
+        padding: var(--margin-small);
+        width: var(--button-size-small);
+        border-radius: var(--margin-medium);
+    }
+    #triangulo {
+        border-top: var(--margin-medium) solid;
+        border-right: var(--margin-medium) solid transparent;
+        border-left: var(--margin-medium) solid transparent;
+    }
 
     .star { width: var(--icon-size-medium); margin: 0 var(--margin-small);}
     .min-max-indicator { font-size: var(--font-size-small); }
@@ -264,7 +260,12 @@ input[type="text"] {
 /* RESPONSIVE PARA TABLETS */
 @media (min-width: 600px) and (orientation: portrait) {
     form { width: 70%; padding: var(--icon-size-small); }
-    button { padding: var(--margin-small); width: var(--button-size-large); border-radius: var(--margin-large); font-size: var(--font-size-large); }
+    button {
+        padding: var(--margin-small);
+        width: var(--button-size-large);
+        border-radius: var(--margin-large);
+        font-size: var(--font-size-large);
+    }
 
     #username { font-size: var(--font-size-medium); }
     #myNumber { font-size: var(--font-size-medium); }
@@ -274,14 +275,19 @@ input[type="text"] {
     #btn-accept { padding: var(--margin-small) var(--margin-large);}
 
     .type_icon { width: var(--icon-size-small); }
-    .logo { width: 60px; }
 }
 
 /* RESPONSIVE PARA MOVIL EN VERTICAL */
 @media (max-width: 800px) and (orientation: landscape) {
     h1 { font-size: var(--font-size-xsmall); }
     span { font-size: var(--font-size-medium); }
-    button {  padding: var(--margin-small); margin: var(--margin-small) var(--margin-small); width: 120px; border-radius: var(--margin-medium); font-size: var(--font-size-xsmall); }
+    button {
+        width: var(--button-size-xsmall);
+        padding: var(--margin-small);
+        margin: var(--margin-small) var(--margin-small);
+        border-radius: var(--margin-medium);
+        font-size: var(--font-size-xsmall);
+    }
 
     #orbys_logo { margin-top: var(--margin-small); width: 10%; }
     #vote_logo { display: none; }
@@ -289,17 +295,26 @@ input[type="text"] {
     #btn-accept { font-size: var(--font-size-xsmall); }
     #radioContainer div { font-size: var(--font-size-xsmall); }
     #checkboxContainer div { font-size: var(--font-size-xsmall); }
-    #closeButton { padding: var(--margin-small); margin: var(--margin-small) var(--margin-small); width: var(--button-size-small); border-radius: var(--margin-medium); }
+    #closeButton {
+        width: var(--button-size-small);
+        padding: var(--margin-small);
+        margin: var(--margin-small) var(--margin-small);
+        border-radius: var(--margin-medium);
+    }
 
     .min-max-indicator { font-size: var(--font-size-xsmall); }
     .star { width: var(--margin-large); }
-    .logo { width: 60px; }
 }
 
 /* RESPONSIVE PARA MONITORES */
 @media (min-width: 800px) and (orientation: landscape) {
     h1 { max-width: 90%; }
-    button { padding: var(--margin-small); width: var(--button-size-large); border-radius: var(--margin-large); font-size: var(--font-size-large); }
+    button {
+        width: var(--button-size-large);
+        padding: var(--margin-small);
+        border-radius: var(--margin-large);
+        font-size: var(--font-size-large);
+    }
 
     #orbys_logo { margin-top: var(--margin-small); width: 10%; }
     #vote_logo { width: 20%; }
