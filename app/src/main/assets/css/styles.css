@@ -244,21 +244,21 @@ input[type="text"] {
 @media (max-width: 800px) and (orientation: landscape) {
     form { width: 40%; }
     h1 { font-size: 0.8em; }
-    span { font-size: 0.8em; }
+    span { font-size: 1.25em; }
     button { margin: 5px 10px; width: 120px; font-size: 0.8em; }
 
     #orbys_logo { margin-top: 10px; width: 15%; }
     #vote_logo { display: none; }
     #questionForm { max-width: 60%; padding: 10px; }
-    #btn-refuse { padding: 10px 20px; font-size: 0.5em; }
-    #btn-accept { padding: 10px 20px; font-size: 0.5em; }
+    #btn-refuse { font-size: 0.8em; }
+    #btn-accept { font-size: 0.8em; }
     #radioContainer div { font-size: 0.8em; }
     #checkboxContainer div { font-size: 0.8em; }
     #triangulo { border-top: 15px solid; border-right: 15px solid transparent; border-left: 15px solid transparent; }
 
     .min-max-indicator { font-size: 0.8em; }
     .star { width: 40px; }
-    img.logo { width: 40px; margin-bottom: 15px; }
+    img.logo { width: 60px; margin-bottom: 15px; }
 }
 
 /* RESPONSIVE PARA MONITORES */
