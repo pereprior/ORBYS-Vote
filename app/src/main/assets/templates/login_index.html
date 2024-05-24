@@ -40,24 +40,6 @@
                 widthMultiplier: window.innerWidth > window.innerHeight ? 0.8 : 0.9,
                 heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
-                css: `
-                    #closeButton { padding: 5px; margin: 10px 20px; width: 120px; box-sizing: border-box;
-                        border: 1px solid #3587f2; border-radius: 20px; color: white; background-color: #3587f2;
-                        cursor: pointer; font-size: 0.8em; transition: background-color 0.3s;
-                    }
-
-                    @media (max-width: 800px) and (orientation: landscape) {
-                        #closeButton { margin: 5px 10px; width: 150px; font-size: 0.8em; }
-                    }
-
-                    @media (min-width: 600px) and (orientation: portrait) {
-                        #closeButton { padding: 10px; width: 200px; border-radius: 40px; }
-                    }
-
-                    @media (min-width: 800px) and (orientation: landscape) {
-                        #closeButton { padding: 10px; width: 200px; border-radius: 40px; }
-                    }
-                `,
                 content: `<img src="../images/error.svg" alt="ERROR" class="logo">
                                 <span><strong>[USER_ALREADY_EXISTS]</strong></span>
                                 <button id="closeButton" type="submit">      [CLOSE]      </button>`,

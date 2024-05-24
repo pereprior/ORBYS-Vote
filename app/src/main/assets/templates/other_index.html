@@ -8,8 +8,8 @@
     <style>
         input[type="checkbox"] {
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             align-items: center;
             background: url('../images/empty_checkbox.svg') no-repeat center center;
             cursor: pointer;
@@ -21,8 +21,8 @@
 
         input[type="radio"] {
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             align-items: center;
             background: url('../images/empty_radio.svg') no-repeat center center;
             cursor: pointer;
@@ -32,19 +32,14 @@
             background: url('../images/filled_radio.svg') no-repeat center center;
         }
 
+        @media (max-width: 600px) and (orientation: portrait) {
+            input[type="checkbox"] { width: 20px; height: 20px;}
+            input[type="radio"] { width: 20px; height: 20px; }
+        }
+
         @media (max-width: 800px) and (orientation: landscape) {
             input[type="checkbox"] { width: 15px; height: 15px;}
             input[type="radio"] { width: 15px; height: 15px; }
-        }
-
-        @media (min-width: 600px) and (orientation: portrait) {
-            input[type="checkbox"] { width: 25px; height: 25px;}
-            input[type="radio"] { width: 25px; height: 25px; }
-        }
-
-        @media (min-width: 800px) and (orientation: landscape) {
-            input[type="checkbox"] { width: 25px; height: 25px;}
-            input[type="radio"] { width: 25px; height: 25px; }
         }
     </style>
 </head>
@@ -154,24 +149,6 @@
                 widthMultiplier: window.innerWidth > window.innerHeight ? 0.8 : 0.9,
                 heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
                 backgroundColor: "#010101",
-                css: `
-                    #closeButton { padding: 5px; margin: 10px 20px; width: 120px; box-sizing: border-box;
-                        border: 1px solid #3587f2; border-radius: 20px; color: white; background-color: #3587f2;
-                        cursor: pointer; font-size: 0.8em; transition: background-color 0.3s;
-                    }
-
-                    @media (max-width: 800px) and (orientation: landscape) {
-                        #closeButton { margin: 5px 10px; width: 150px; font-size: 0.8em; }
-                    }
-
-                    @media (min-width: 600px) and (orientation: portrait) {
-                        #closeButton { padding: 10px; width: 200px; border-radius: 40px; }
-                    }
-
-                    @media (min-width: 800px) and (orientation: landscape) {
-                        #closeButton { padding: 10px; width: 200px; border-radius: 40px; }
-                    }
-                `,
                 title: " ",
                 content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
                                 <span><strong> [SUCCESS_MESSAGE] </strong></span>

@@ -154,6 +154,20 @@ input[type="text"] {
     border-radius: 40px;
 }
 
+#closeButton {
+    padding: 10px;
+    margin: 10px 20px;
+    width: 200px;
+    box-sizing: border-box;
+    border: 1px solid #3587f2;
+    border-radius: 40px;
+    color: white;
+    background-color: #3587f2;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s;
+}
+
 /* Clase para ocultar algún elemento */
 .hidden { display: none; }
 
@@ -212,11 +226,11 @@ input[type="text"] {
     button { padding: 5px; margin: 10px 20px; width: 150px; border-radius: 20px; font-size: 1em; }
 
     #questionForm { max-width: 70%; }
+    #closeButton { padding: 5px; width: 150px; border-radius: 20px; }
+    #triangulo { border-top: 20px solid; border-right: 20px solid transparent; border-left: 20px solid transparent; }
 
     .star { width: 50px; margin: 0px 5px;}
     .min-max-indicator { font-size: 1em; }
-
-    #triangulo { border-top: 20px solid; border-right: 20px solid transparent; border-left: 20px solid transparent; }
 }
 
 /* RESPONSIVE PARA TABLETS */
@@ -247,6 +261,7 @@ input[type="text"] {
     #btn-accept { font-size: 0.8em; }
     #radioContainer div { font-size: 0.8em; }
     #checkboxContainer div { font-size: 0.8em; }
+    #closeButton { padding: 5px; margin: 5px 10px; width: 150px; border-radius: 20px; }
 
     .min-max-indicator { font-size: 0.8em; }
     .star { width: 40px; }
