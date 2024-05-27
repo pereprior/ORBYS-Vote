@@ -8,10 +8,11 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
+import com.orbys.vote.core.extensions.DOWNLOAD_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswersAsString
+import com.orbys.vote.core.extensions.getServerUrl
 import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
 import com.orbys.vote.ui.components.qr.QRCodeGenerator
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
@@ -37,8 +38,7 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
 
         // Cambios en la vista del fragmento
         with(binding) {
-            val hotspotUrl = viewModel.getServerUrl(DOWNLOAD_ENDPOINT, true)
-
+            val hotspotUrl = getServerUrl(DOWNLOAD_ENDPOINT, true)
             setQrCode(DOWNLOAD_ENDPOINT, !hotspotUrl.isNullOrEmpty())
 
             respondContainer.setOnClickListener { setQrCode(DOWNLOAD_ENDPOINT) }
@@ -52,7 +52,7 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
     private fun FragmentQrCodeBinding.setQrCode(
         endpoint: String, isHotspot: Boolean = false
     ) {
-        val url = viewModel.getServerUrl(endpoint, isHotspot)
+        val url = getServerUrl(endpoint, isHotspot)
 
         if (url.isNullOrEmpty()) {
             context?.showToastWithCustomView(requireContext().getString(R.string.no_network_error), Toast.LENGTH_LONG)

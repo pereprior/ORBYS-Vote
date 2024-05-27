@@ -1,7 +1,7 @@
 package com.orbys.vote.data.controllers.handlers
 
-import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
-import com.orbys.vote.core.managers.NetworkManager.Companion.USER_ENDPOINT
+import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
+import com.orbys.vote.core.extensions.USER_ENDPOINT
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
 import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.domain.models.User

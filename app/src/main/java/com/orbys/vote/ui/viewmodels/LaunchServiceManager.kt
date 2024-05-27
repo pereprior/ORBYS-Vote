@@ -6,12 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
+import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
 import com.orbys.vote.core.extensions.getCount
+import com.orbys.vote.core.extensions.getServerUrl
 import com.orbys.vote.core.extensions.minutesToMillis
 import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.core.managers.NetworkManager
-import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Bar
@@ -100,19 +100,18 @@ class LaunchServiceManager @Inject constructor(
      * Añade a los elementos de la vista las diferentes opciones para responder la pregunta
      */
     private fun ServiceLaunchQuestionBinding.setQrOptions() {
-        val manager = NetworkManager()
-        val hotspotUrl = manager.getServerWifiUrl(QUESTION_ENDPOINT, true)
+        val hotspotUrl = getServerUrl(QUESTION_ENDPOINT, true)
 
-        setQrCode(manager, !hotspotUrl.isNullOrEmpty())
+        setQrCode(!hotspotUrl.isNullOrEmpty())
 
-        respondContainer.setOnClickListener { setQrCode(manager) }
-        respondHotspotContainer.setOnClickListener { setQrCode(manager, true) }
+        respondContainer.setOnClickListener { setQrCode() }
+        respondHotspotContainer.setOnClickListener { setQrCode( true) }
     }
 
     private fun ServiceLaunchQuestionBinding.setQrCode(
-        manager: NetworkManager, isHotspot: Boolean = false, endpoint: String = QUESTION_ENDPOINT
+        isHotspot: Boolean = false, endpoint: String = QUESTION_ENDPOINT
     ) {
-        val url = manager.getServerWifiUrl(endpoint, isHotspot)
+        val url = getServerUrl(endpoint, isHotspot)
         if (url.isNullOrEmpty()) {
             context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
             return
@@ -120,7 +119,6 @@ class LaunchServiceManager @Inject constructor(
 
         val qrGenerator = QRCodeGenerator(context)
         val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
-        val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false)
 
         if (isHotspot) {
             lanQrCode.visibility = View.GONE

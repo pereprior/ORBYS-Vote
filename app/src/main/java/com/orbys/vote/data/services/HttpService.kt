@@ -3,7 +3,7 @@ package com.orbys.vote.data.services
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.orbys.vote.core.managers.NetworkManager.Companion.SERVER_PORT
+import com.orbys.vote.core.extensions.SERVER_PORT
 import com.orbys.vote.data.controllers.HttpController
 import dagger.hilt.android.AndroidEntryPoint
 import freemarker.cache.ClassTemplateLoader

@@ -2,10 +2,10 @@ package com.orbys.vote.data.controllers.handlers
 
 import android.content.Context
 import com.orbys.vote.R
+import com.orbys.vote.core.extensions.DOWNLOAD_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswerType
 import com.orbys.vote.core.extensions.getAnswers
 import com.orbys.vote.core.extensions.getAnswersAsString
-import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.data.repositories.FileRepository
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
 import com.orbys.vote.data.repositories.UsersRepositoryImpl
