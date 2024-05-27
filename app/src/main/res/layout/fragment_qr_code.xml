@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/download_title"
         android:gravity="center"
+        android:visibility="gone"
         android:textSize="@dimen/title_font_size"
         android:layout_margin="@dimen/small_margin"/>
 

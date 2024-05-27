@@ -2,7 +2,6 @@
 <!-- Vista que muestra el servicio de vista flotante cuando se lanza una pregunta -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:theme="@style/Base.Theme.OrbysVote"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -16,206 +15,15 @@
         android:layout_width="@dimen/widget_layout_size"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <include
         android:id="@+id/qr_container"
-        android:layout_width="@dimen/qr_code_size"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:layout_margin="@dimen/medium_margin"
-        android:orientation="vertical"
+        layout="@layout/fragment_qr_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/medium_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/banner">
-
-        <!-- Layout con la información para responder la pregunta -->
-        <LinearLayout
-            android:id="@+id/respond_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_dialog"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/ic_wifi_desc"
-                    android:src="@drawable/ic_wifi" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin"
-                    android:text="LAN/WLAN"
-                    android:textColor="@color/blue_selected"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
-
-            <!-- Fragmento que contiene la información del codigo qr -->
-            <ImageView
-                android:id="@+id/lan_qr_code"
-                android:layout_width="@dimen/qr_code_size"
-                android:layout_height="@dimen/qr_code_size"
-                android:layout_gravity="center"
-                android:contentDescription="@string/qr_code_desc"
-                android:visibility="gone"/>
-
-            <!-- Texto con el texto del codigo qr -->
-            <TextView
-                android:id="@+id/lan_qr_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/blue_selected"
-                android:textSize="@dimen/font_size"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/respond_hotspot_container"
-            android:layout_width="@dimen/qr_code_size"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:background="@drawable/bg_dialog"
-            android:backgroundTint="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/respond_container">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/ic_wifi_desc"
-                    android:src="@drawable/ic_hotspot" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/small_margin"
-                    android:text="HOTSPOT"
-                    android:textColor="@color/blue_selected"
-                    android:textStyle="bold"
-                    tools:ignore="HardcodedText" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/step_1_hotspot_container"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="@dimen/small_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:text="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:layout_marginEnd="4dp"
-                    android:background="@drawable/bg_blue_circle"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/step_1_hotspot_text"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/small_font_size"
-                    android:textColor="@color/background_black"/>
-
-                <!-- Fragmento que contiene la información del codigo qr -->
-                <ImageView
-                    android:id="@+id/other_qr_code"
-                    android:layout_width="75dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/small_margin"
-                    android:contentDescription="@string/qr_code_desc"
-                    android:src="@drawable/qr" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/step_2_hotspot_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:text="2"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:layout_marginEnd="4dp"
-                    android:background="@drawable/bg_blue_circle"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/step_2_hotspot_text"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/small_font_size"
-                    android:textColor="@color/background_black"/>
-
-                <FrameLayout
-                    android:layout_width="@dimen/small_qr_code_size"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <!-- Fragmento que contiene la información del codigo qr -->
-                    <ImageView
-                        android:id="@+id/hotspot_qr_code"
-                        android:layout_width="@dimen/small_qr_code_size"
-                        android:layout_height="@dimen/small_qr_code_size"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/qr_code_desc" />
-
-                    <!-- Texto con el texto del codigo qr -->
-                    <TextView
-                        android:id="@+id/hotspot_qr_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_gravity="bottom"
-                        android:textColor="@color/blue_selected"
-                        android:textSize="5sp"
-                        tools:ignore="RtlCompat" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/banner" />
 
     <ImageButton
         android:id="@+id/minimize_button"

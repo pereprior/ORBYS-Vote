@@ -51,22 +51,6 @@ class LaunchQuestionView(
         binding = ServiceLaunchQuestionBinding.inflate(LayoutInflater.from(context))
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        with(binding) {
-            minimizeButton.setOnClickListener {
-                if (qrContainer.visibility == GONE) {
-                    minimizeButton.setImageResource(R.drawable.ic_minimize)
-                    qrContainer.visibility = VISIBLE
-                    layoutParams.width = context.resources.getDimensionPixelSize(R.dimen.widget_layout_size)
-                    windowManager.updateViewLayout(this@LaunchQuestionView, layoutParams)
-                } else {
-                    minimizeButton.setImageResource(R.drawable.ic_qr)
-                    qrContainer.visibility = GONE
-                    layoutParams.width = context.resources.getDimensionPixelSize(R.dimen.widget_small_layout_size)
-                    windowManager.updateViewLayout(this@LaunchQuestionView, layoutParams)
-                }
-            }
-        }
-
         addView(binding.root)
 
         layoutParams.x = x

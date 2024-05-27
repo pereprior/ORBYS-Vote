@@ -104,8 +104,10 @@ class LaunchServiceManager @Inject constructor(
 
         setQrCode(!hotspotUrl.isNullOrEmpty())
 
-        respondContainer.setOnClickListener { setQrCode() }
-        respondHotspotContainer.setOnClickListener { setQrCode( true) }
+        with(qrContainer) {
+            respondContainer.setOnClickListener { setQrCode() }
+            respondHotspotContainer.setOnClickListener { setQrCode( true) }
+        }
     }
 
     private fun ServiceLaunchQuestionBinding.setQrCode(
@@ -120,29 +122,31 @@ class LaunchServiceManager @Inject constructor(
         val qrGenerator = QRCodeGenerator(context)
         val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
 
-        if (isHotspot) {
-            lanQrCode.visibility = View.GONE
-            lanQrText.visibility = View.GONE
-            step1HotspotContainer.visibility = View.VISIBLE
-            step2HotspotContainer.visibility = View.VISIBLE
+        with(qrContainer) {
+            if (isHotspot) {
+                lanQrCode.visibility = View.GONE
+                lanQrText.visibility = View.GONE
+                step1HotspotContainer.visibility = View.VISIBLE
+                step2HotspotContainer.visibility = View.VISIBLE
 
-            hotspotQrText.text = url
-            otherQrCode.setExpandOnClick()
-            hotspotQrCode.apply {
-                setImageBitmap(qrCodeBitmap)
-                setExpandOnClick()
-            }
-        } else {
-            step1HotspotContainer.visibility = View.GONE
-            step2HotspotContainer.visibility = View.GONE
+                hotspotQrText.text = url
+                otherQrCode.setExpandOnClick()
+                hotspotQrCode.apply {
+                    setImageBitmap(qrCodeBitmap)
+                    setExpandOnClick()
+                }
+            } else {
+                step1HotspotContainer.visibility = View.GONE
+                step2HotspotContainer.visibility = View.GONE
 
-            lanQrCode.apply {
-                visibility = View.VISIBLE
-                setImageBitmap(qrCodeBitmap)
-            }
-            lanQrText.apply {
-                visibility = View.VISIBLE
-                text = url
+                lanQrCode.apply {
+                    visibility = View.VISIBLE
+                    setImageBitmap(qrCodeBitmap)
+                }
+                lanQrText.apply {
+                    visibility = View.VISIBLE
+                    text = url
+                }
             }
         }
 

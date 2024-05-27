@@ -1,8 +1,12 @@
 package com.orbys.vote.ui.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.orbys.vote.R
+import com.orbys.vote.core.extensions.isNetworkAvailable
+import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.PermissionManager
 import com.orbys.vote.databinding.ActivityMainBinding
 import com.orbys.vote.ui.view.fragments.DownloadFragment
@@ -26,7 +30,9 @@ class MainActivity : AppCompatActivity() {
         permissionManager = PermissionManager(this)
 
         // Comprobar si hay conexión a Internet
-        viewModel.checkNetworkOnActivity(this)
+        if(!isNetworkAvailable())
+            showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
+
         // Verificar si tenemos los permisos necesarios
         permissionManager.checkAndRequestPermissions()
 
