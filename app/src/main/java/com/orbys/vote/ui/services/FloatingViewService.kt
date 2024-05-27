@@ -29,7 +29,7 @@ class FloatingViewService: Service() {
 
             // Añadir la pregunta a la vista
             with(binding) {
-                manager.setQuestionElements(this)
+                manager.bind(this)
             }
         }
     }

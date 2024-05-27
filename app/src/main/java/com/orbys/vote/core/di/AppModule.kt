@@ -1,7 +1,6 @@
 package com.orbys.vote.core.di
 
 import android.content.Context
-import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.data.controllers.handlers.FileHandler
 import com.orbys.vote.data.controllers.handlers.ResponseHandler
 import com.orbys.vote.data.repositories.FileRepository
@@ -36,10 +35,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideUsersRepository(): IUsersRepository = UsersRepositoryImpl.getInstance()
-
-    @Provides
-    @Singleton
-    fun provideNetworkManager() = NetworkManager()
 
     @Provides
     @Singleton

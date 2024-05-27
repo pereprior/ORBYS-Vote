@@ -76,6 +76,12 @@ class FileRepository private constructor(
         }
     }
 
+    /**
+     * Modifica una línea en el archivo CSV.
+     *
+     * @param lineNumber Número de la línea a modificar.
+     * @param newContent Nuevo contenido de la línea.
+     */
     override suspend fun modifyLineInFile(lineNumber: Int, newContent: String) {
         with(Dispatchers.IO) {
             if (file.exists()) {

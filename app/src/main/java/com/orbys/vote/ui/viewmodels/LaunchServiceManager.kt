@@ -11,6 +11,7 @@ import com.orbys.vote.core.extensions.minutesToSeconds
 import com.orbys.vote.core.extensions.secondsToMillis
 import com.orbys.vote.core.extensions.showImageDialog
 import com.orbys.vote.core.extensions.showToastWithCustomView
+import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
@@ -19,7 +20,6 @@ import com.orbys.vote.domain.models.Question
 import com.orbys.vote.domain.usecases.ClearUsersListUseCase
 import com.orbys.vote.domain.usecases.GetHttpServiceUseCase
 import com.orbys.vote.domain.usecases.GetQuestionUseCase
-import com.orbys.vote.domain.usecases.GetServerUrlUseCase
 import com.orbys.vote.domain.usecases.GetUsersListUseCase
 import com.orbys.vote.domain.usecases.SetTimeOutUseCase
 import com.orbys.vote.ui.components.qr.QRCodeGenerator
@@ -36,7 +36,6 @@ import javax.inject.Inject
  * Clase que gestiona los datos que se muestran en la vista flotante
  *
  * @param context Contexto de la aplicación
- * @param getServerUrlUseCase Caso de uso para obtener la url del servidor
  * @param getQuestionUseCase Caso de uso para obtener la pregunta del repositorio
  * @param clearUsersListUseCase Caso de uso para limpiar la lista de usuarios
  * @param setTimeOutUseCase Caso de uso para cambiar el estado del temporizador
@@ -44,16 +43,12 @@ import javax.inject.Inject
  * @param getHttpServiceUseCase Caso de uso para obtener el servicio http
  */
 class LaunchServiceManager @Inject constructor(
-    private val context: Context, private val getServerUrlUseCase: GetServerUrlUseCase,
-    private val getQuestionUseCase: GetQuestionUseCase, private val clearUsersListUseCase: ClearUsersListUseCase,
-    private val setTimeOutUseCase: SetTimeOutUseCase, private val getUsersListUseCase: GetUsersListUseCase,
-    private val getHttpServiceUseCase: GetHttpServiceUseCase
+    private val context: Context, private val getQuestionUseCase: GetQuestionUseCase, 
+    private val clearUsersListUseCase: ClearUsersListUseCase, private val setTimeOutUseCase: SetTimeOutUseCase, 
+    private val getUsersListUseCase: GetUsersListUseCase, private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
-    fun getHttpService() = getHttpServiceUseCase()
 
-    fun setQuestionElements(
-        binding: ServiceLaunchQuestionBinding, endpoint: String = QUESTION_ENDPOINT
-    ) {
+    fun bind(binding: ServiceLaunchQuestionBinding) {
         val question = getQuestionUseCase()
 
         with(binding) {
@@ -61,7 +56,7 @@ class LaunchServiceManager @Inject constructor(
             setQuestionElements(question)
 
             // Opciones para responder la pregunta
-            setQrOptions(endpoint)
+            setQrOptions()
 
             // Recuento de usuarios que han respondido
             setUsersCount()
@@ -74,19 +69,22 @@ class LaunchServiceManager @Inject constructor(
         }
     }
 
-    private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String) {
-        val hotspotUrl = getServerUrlUseCase(endpoint, true)
+    fun getHttpService() = getHttpServiceUseCase()
 
-        setQrCode(endpoint, !hotspotUrl.isNullOrEmpty())
+    private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String = QUESTION_ENDPOINT) {
+        val manager = NetworkManager()
+        val hotspotUrl = manager.getServerWifiUrl(endpoint, true)
 
-        respondContainer.setOnClickListener { setQrCode(endpoint) }
-        respondHotspotContainer.setOnClickListener { setQrCode(endpoint, true) }
+        setQrCode(manager, endpoint, !hotspotUrl.isNullOrEmpty())
+
+        respondContainer.setOnClickListener { setQrCode(manager, endpoint) }
+        respondHotspotContainer.setOnClickListener { setQrCode(manager, endpoint, true) }
     }
 
     private fun ServiceLaunchQuestionBinding.setQrCode(
-        endpoint: String, isHotspot: Boolean = false
+        manager: NetworkManager, endpoint: String, isHotspot: Boolean = false
     ) {
-        val url = getServerUrlUseCase(endpoint, isHotspot)
+        val url = manager.getServerWifiUrl(endpoint, isHotspot)
 
         if (url.isNullOrEmpty()) {
             context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)

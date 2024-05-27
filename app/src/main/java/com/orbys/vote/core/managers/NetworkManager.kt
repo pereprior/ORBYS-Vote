@@ -98,7 +98,6 @@ class NetworkManager {
 
     // Comprueba si la direccion es IPv4 no loopback
     private fun InetAddress.isNonLoopbackIPv4Address() = !isLoopbackAddress && this is Inet4Address
-
     // Comprueba si la dirección IP es una dirección de hotspot
     private fun String?.isHotspotIPv4Address() = this!!.startsWith("192.168.43") || this.startsWith("172.16")
 
