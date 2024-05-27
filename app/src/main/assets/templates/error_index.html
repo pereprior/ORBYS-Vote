@@ -12,42 +12,14 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+    <script src="../js/utils.js"></script>
 
     <script>
         const errorIcon = "[ERROR_TYPE]" == 3 || "[ERROR_TYPE]" == 5 ? "timeout.svg" : "error.svg";
-
-        const errorPopup = new Popup(
-            {
-                id: "popup_message",
-                title: " ",
-                textColor: "#FFFFFF",
-                widthMultiplier: window.innerWidth > window.innerHeight ? 0.8 : 0.9,
-                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
-                backgroundColor: "#010101",
-                content: `<img src="../images/${errorIcon}" alt="ERROR" class="logo">
-                                <span><strong>[POPUP_CONTENT]</strong></span>
-                                <button id="closeButton" type="submit">[CLOSE]</button>`,
-                textShadow: "0 0 .3em #000000bb",
-                allowClose: false,
-                showImmediately: true,
-                loadCallback: () => {
-                    document
-                        .getElementById("closeButton")
-                        .addEventListener("click", () => {
-                            window.close();
-                            window.location.href = 'https://www.google.com';
-                    });
-                },
-            }
-        );
+        const errorPopup = createInfoPopup(errorIcon, "[POPUP_CONTENT]", "[CLOSE]");
 
         // Muestra el pop-up inmediatamente cuando se carga la página
         errorPopup.show();
-
-        window.addEventListener('resize', function() {
-            // Ajustar el widthMultiplier según la orientación
-            errorPopup.widthMultiplier = window.innerWidth > window.innerHeight ? 0.5 : 0.8;
-        });
     </script>
 
 </body>

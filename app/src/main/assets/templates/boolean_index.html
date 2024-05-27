@@ -62,37 +62,15 @@
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+    <script src="../js/utils.js"></script>
 
     <script>
-        const infoPopup = new Popup(
-            {
-                id: "popup_message",
-                textColor: "#FFFFFF",
-                widthMultiplier: window.innerWidth > window.innerHeight ? 0.8 : 0.9,
-                heightMultiplier: window.innerWidth > window.innerHeight ? 0.1 : 0.4,
-                backgroundColor: "#010101",
-                title: " ",
-                content: `<img src="../images/success.svg" alt="SUCCESS" class="logo">
-                                <span><strong> [SUCCESS_MESSAGE] </strong></span>
-                                <button id="closeButton" type="submit">      [CLOSE]      </button>`,
-                textShadow: "0 0 .3em #000000bb",
-                allowClose: false,
-                loadCallback: () => {
-                    document
-                        .getElementById("closeButton")
-                        .addEventListener("click", () => {
-                        window.close();
-                        window.location.href = 'https://www.google.com';
-                    });
-                },
-            }
-        );
+        const successPopup = createInfoPopup("success.svg", "[SUCCESS_MESSAGE]", "[CLOSE]");
 
         // El codigo se ejecuta cuando pulso el boton enviar
         document.getElementById('myForm').onsubmit = function(event) {
             // Evita que se envien datos vacios o por defecto
             event.preventDefault();
-
             // Obtenemos el valor del boton seleccionado
             var choice = document.querySelector('input[name="choice"]:checked').value;
 
@@ -107,12 +85,10 @@
                 .then(response => response.ok ? response.text() : Promise.reject('Error en la respuesta del servidor'))
                 // Si la respuesta es correcta, mostramos un pop-up con el mensaje de éxito
                 .then(text => {
-                    document.getElementById('myForm').classList.add('hidden');
-                    document.getElementById('triangulo').classList.add('hidden');
-                    document.getElementById('questionForm').classList.add('hidden');
-                    infoPopup.show()
+                    hideElements();
+                    successPopup.show();
                 })
-                .catch(error => console.error(error));
+                .catch(console.error);
         };
     </script>
 

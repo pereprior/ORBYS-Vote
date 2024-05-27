@@ -63,6 +63,15 @@ class FileHandler @Inject constructor(
             }
         }
 
+        get("/js/utils.js") {
+            try {
+                val js = this::class.java.classLoader!!.getResource("assets/js/utils.js")!!.readText()
+                call.respondText(js, ContentType.Application.JavaScript)
+            } catch (e: Exception) {
+                call.respondRedirect("/error/1")
+            }
+        }
+
         // Rutas para obtener proporcionar las imagenes a la web.
         get("/images/background.svg") { loadImage("background.svg") }
         get("/images/vote.svg") { loadImage("vote.svg") }
