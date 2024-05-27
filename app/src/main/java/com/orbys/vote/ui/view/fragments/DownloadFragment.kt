@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswersAsString
-import com.orbys.vote.core.extensions.showImageDialog
+import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager.Companion.DOWNLOAD_ENDPOINT
 import com.orbys.vote.databinding.FragmentQrCodeBinding
@@ -59,8 +59,7 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
             return
         } else {
             val qrGenerator = QRCodeGenerator(requireContext())
-            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true, 456, 456)
-            val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false, 456, 456)
+            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
 
             lanQrCode.apply {
                 visibility = if (isHotspot) View.GONE else View.VISIBLE
@@ -75,12 +74,10 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
             hotspotQrText.text = if (isHotspot) url else null
             hotspotQrCode.apply {
                 setImageBitmap(if (isHotspot) qrCodeBitmap else null)
-                setOnClickListener { showImageDialog(qrCodeBitmap) }
+                setExpandOnClick()
             }
 
-            otherQrCode.apply {
-                setOnClickListener { showImageDialog(qrCodeImage) }
-            }
+            otherQrCode.setExpandOnClick()
 
             step1HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
             step2HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE

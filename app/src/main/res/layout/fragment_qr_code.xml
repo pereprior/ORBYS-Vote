@@ -79,7 +79,7 @@
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginVertical="@dimen/small_margin"
         android:layout_gravity="center"
         android:background="@drawable/bg_dialog"
         android:backgroundTint="@color/white"

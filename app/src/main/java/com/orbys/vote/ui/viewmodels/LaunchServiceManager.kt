@@ -7,9 +7,8 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getCount
-import com.orbys.vote.core.extensions.minutesToSeconds
-import com.orbys.vote.core.extensions.secondsToMillis
-import com.orbys.vote.core.extensions.showImageDialog
+import com.orbys.vote.core.extensions.minutesToMillis
+import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.core.managers.NetworkManager
 import com.orbys.vote.core.managers.NetworkManager.Companion.QUESTION_ENDPOINT
@@ -69,73 +68,26 @@ class LaunchServiceManager @Inject constructor(
         }
     }
 
+    // Devuelve una instancia del servicio http
     fun getHttpService() = getHttpServiceUseCase()
 
-    private fun ServiceLaunchQuestionBinding.setQrOptions(endpoint: String = QUESTION_ENDPOINT) {
-        val manager = NetworkManager()
-        val hotspotUrl = manager.getServerWifiUrl(endpoint, true)
 
-        setQrCode(manager, endpoint, !hotspotUrl.isNullOrEmpty())
-
-        respondContainer.setOnClickListener { setQrCode(manager, endpoint) }
-        respondHotspotContainer.setOnClickListener { setQrCode(manager, endpoint, true) }
-    }
-
-    private fun ServiceLaunchQuestionBinding.setQrCode(
-        manager: NetworkManager, endpoint: String, isHotspot: Boolean = false
-    ) {
-        val url = manager.getServerWifiUrl(endpoint, isHotspot)
-
-        if (url.isNullOrEmpty()) {
-            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
-            return
-        } else {
-            val qrGenerator = QRCodeGenerator(context)
-            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true, 456, 456)
-            val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false, 456, 456)
-
-            lanQrCode.apply {
-                visibility = if (isHotspot) View.GONE else View.VISIBLE
-                setImageBitmap(if (isHotspot) null else qrCodeBitmap)
-            }
-
-            lanQrText.apply {
-                visibility = if (isHotspot) View.GONE else View.VISIBLE
-                text = if (isHotspot) null else url
-            }
-
-            hotspotQrText.text = if (isHotspot) url else null
-            hotspotQrCode.apply {
-                setImageBitmap(if (isHotspot) qrCodeBitmap else null)
-                setOnClickListener { showImageDialog(qrCodeBitmap) }
-            }
-
-            otherQrCode.apply {
-                setOnClickListener { showImageDialog(qrCodeImage) }
-            }
-
-            step1HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
-            step2HotspotContainer.visibility = if (isHotspot) View.VISIBLE else View.GONE
-        }
-
-    }
-
+    /**
+     * Añade a los elementos de la vista la pregunta lanzada en el widget
+     *
+     * @param question Pregunta lanzada
+     */
     private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {
-        // Titulo y tipo de la pregunta
+        // Titulo de la pregunta
         questionText.text = question.question
+        // Ocultamos el botón de cerrar la aplicación en el widget
         banner.closeButton.visibility = View.GONE
 
         // Si el tiempo de espera no es nulo se muestra el temporizador
         if (question.timeOut!! > 0)
             setTimerCount(question.timeOut)
 
-        if (question.answerType == AnswerType.NUMERIC) {
-            // Tamaño fijo para la pregunta de tipo numérico debido a que puede tener más de 5 respuestas
-            scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * 5
-            // Tamaño variable dependiendo del número de respuestas para las preguntas con respuestas fijas
-        } else scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * question.answers.value.size
-
-        // Boton para finalizar la pregunta
+        // Accion para finalizar una pregunta
         timeOutButton.setOnClickListener {
             setTimeOutUseCase(true)
             timer.cancelTimer()
@@ -144,23 +96,58 @@ class LaunchServiceManager @Inject constructor(
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
-        // Muestra el temporizador
-        timer.visibility = ConstraintLayout.VISIBLE
+    /**
+     * Añade a los elementos de la vista las diferentes opciones para responder la pregunta
+     */
+    private fun ServiceLaunchQuestionBinding.setQrOptions() {
+        val manager = NetworkManager()
+        val hotspotUrl = manager.getServerWifiUrl(QUESTION_ENDPOINT, true)
 
-        // Convertimos los minutos a milisegundos
-        val timeInSeconds = timeInMinutes.minutesToSeconds()
-        val timeInMillis = timeInSeconds.secondsToMillis()
+        setQrCode(manager, !hotspotUrl.isNullOrEmpty())
 
-        // Iniciamos el temporizador
-        timer.setTimeInMillis(timeInMillis)
-        timer.startCountDown()
+        respondContainer.setOnClickListener { setQrCode(manager) }
+        respondHotspotContainer.setOnClickListener { setQrCode(manager, true) }
+    }
 
-        // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
-        GlobalScope.launch {
-            timer.isFinished.collect { setTimeOutUseCase(it) }
+    private fun ServiceLaunchQuestionBinding.setQrCode(
+        manager: NetworkManager, isHotspot: Boolean = false, endpoint: String = QUESTION_ENDPOINT
+    ) {
+        val url = manager.getServerWifiUrl(endpoint, isHotspot)
+        if (url.isNullOrEmpty()) {
+            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+            return
         }
+
+        val qrGenerator = QRCodeGenerator(context)
+        val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
+        val qrCodeImage = qrGenerator.generateBitmapFromImage(R.drawable.qr, false)
+
+        if (isHotspot) {
+            lanQrCode.visibility = View.GONE
+            lanQrText.visibility = View.GONE
+            step1HotspotContainer.visibility = View.VISIBLE
+            step2HotspotContainer.visibility = View.VISIBLE
+
+            hotspotQrText.text = url
+            otherQrCode.setExpandOnClick()
+            hotspotQrCode.apply {
+                setImageBitmap(qrCodeBitmap)
+                setExpandOnClick()
+            }
+        } else {
+            step1HotspotContainer.visibility = View.GONE
+            step2HotspotContainer.visibility = View.GONE
+
+            lanQrCode.apply {
+                visibility = View.VISIBLE
+                setImageBitmap(qrCodeBitmap)
+            }
+            lanQrText.apply {
+                visibility = View.VISIBLE
+                text = url
+            }
+        }
+
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -177,6 +164,12 @@ class LaunchServiceManager @Inject constructor(
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
+        if (question.answerType == AnswerType.NUMERIC) {
+            // Tamaño fijo para la pregunta de tipo numérico debido a que puede tener más de 5 respuestas
+            scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * 5
+            // Tamaño variable dependiendo del número de respuestas para las preguntas con respuestas fijas
+        } else scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * question.answers.value.size
+
         GlobalScope.launch {
             // Recogemos los cambios en el numero de respuestas de la pregunta
             question.answers.collect { answers ->
@@ -199,6 +192,24 @@ class LaunchServiceManager @Inject constructor(
             }
         }
 
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
+        // Muestra el temporizador
+        timer.visibility = ConstraintLayout.VISIBLE
+
+        // Convertimos los minutos a milisegundos
+        val timeInMillis = timeInMinutes.minutesToMillis()
+
+        // Iniciamos el temporizador
+        timer.setTimeInMillis(timeInMillis)
+        timer.startCountDown()
+
+        // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
+        GlobalScope.launch {
+            timer.isFinished.collect { setTimeOutUseCase(it) }
+        }
     }
 
     private fun stopService() {

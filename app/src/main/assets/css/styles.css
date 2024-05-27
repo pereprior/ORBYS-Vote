@@ -254,7 +254,7 @@ input[type="text"] {
         border-left: var(--margin-medium) solid transparent;
     }
 
-    .star { width: var(--icon-size-medium); margin: 0 var(--margin-small);}
+    .star { width: var(--icon-size-medium); margin: 0 5px;}
     .min-max-indicator { font-size: var(--font-size-small); }
 }
 
@@ -280,8 +280,9 @@ input[type="text"] {
 
 /* RESPONSIVE PARA MOVIL EN VERTICAL */
 @media (max-width: 800px) and (orientation: landscape) {
-    h1 { font-size: var(--font-size-xsmall); }
+    h1 { font-size: var(--font-size-xsmall); max-width: 90%; }
     span { font-size: var(--font-size-medium); }
+    form: { padding: var(--margin-small); }
     button {
         width: var(--button-size-xsmall);
         padding: var(--margin-small);
@@ -304,7 +305,7 @@ input[type="text"] {
     }
 
     .min-max-indicator { font-size: var(--font-size-xsmall); }
-    .star { width: var(--margin-large); }
+    .star { width: var(--margin-large); margin: 0 5px; }
 }
 
 /* RESPONSIVE PARA MONITORES */

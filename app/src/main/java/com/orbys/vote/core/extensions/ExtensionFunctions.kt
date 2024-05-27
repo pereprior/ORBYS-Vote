@@ -2,7 +2,6 @@ package com.orbys.vote.core.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Build
 import android.text.InputFilter
 import android.util.Log
@@ -30,11 +29,8 @@ fun Question.getAnswersAsString() = this.answers.value.map { it.answer }
 // Devuelve el valor del flow con la respuesta seleccionada de una pregunta
 fun Answer.getCount() = count.value
 
-// Pasar de minutos a segundos
-fun Int.minutesToSeconds(): Int = this * 60
-
-// Pasar de segundos a milisegundos
-fun Int.secondsToMillis(): Long = this * 1000L
+// Pasar de minutos a milisegundos
+fun Int.minutesToMillis(): Long = this * 60 * 1000L
 
 /**
  * Limita el número de líneas y de caracteres de un EditText.
@@ -57,19 +53,19 @@ fun EditText.limitLines(maxLines: Int, maxCharsForLine: Int = 42) {
 }
 
 /**
- * Muestra un dialogo con la imagen ampliada.
- *
- * @param imageBitmap La imagen que se muestra.
+ * Al pulsar en la imagen, se mostrará un dialogo con esta misma ampliada.
  */
-fun ImageView.showImageDialog(imageBitmap: Bitmap) {
+fun ImageView.setExpandOnClick() {
     // Muestra un dialogo con el qr ampliado
-    val dialog = ImageDialog(context, imageBitmap)
+    this.setOnClickListener { 
+        val dialog = ImageDialog(context, drawable)
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
-    else
-        dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
-    dialog.show()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        else
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        dialog.show()
+    }
 }
 
 /**
