@@ -16,25 +16,26 @@ import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.components.qr.ImageDialog
 
-// Devuelve el valor del flow con la lista de respuestas de una pregunta
+/** Devuelve el valor del flow con la lista de respuestas de una pregunta */
 fun Question.getAnswers() = answers.value
 
-// Devuelve el nombre del tipo de las respuestas de una pregunta
+/** Devuelve el nombre del tipo de las respuestas de una pregunta */
 fun Question.getAnswerType() = answerType.name
 
-// Devuelve la lista de respuestas como una lista de strings
+/** Devuelve la lista de respuestas como una lista de strings */
 fun Question.getAnswersAsString() = this.answers.value.map { it.answer }
 
-// Devuelve el valor del flow con la respuesta seleccionada de una pregunta
+/** Devuelve el valor del flow con la respuesta seleccionada de una pregunta */
 fun Answer.getCount() = count.value
 
-// Pasar de minutos a milisegundos
+/** Convertir los minutos a milisegundos */
 fun Int.minutesToMillis(): Long = this * 60 * 1000L
 
 /**
  * Limita el número de líneas y de caracteres de un EditText.
  *
  * @param maxLines El número máximo de líneas.
+ * @param maxCharsForLine El número máximo de caracteres por línea (por defecto es 42).
  */
 fun EditText.limitLines(maxLines: Int, maxCharsForLine: Int = 42) {
     this.filters = arrayOf(
@@ -52,12 +53,14 @@ fun EditText.limitLines(maxLines: Int, maxCharsForLine: Int = 42) {
 }
 
 /**
- * Al pulsar en la imagen, se mostrará un dialogo con esta misma ampliada.
+ * Al pulsar en la imagen, se mostrará un dialogo con la imagen ampliada.
+ *
+ * @param size El tamaño de la imagen ampliada (por defecto es 1024).
  */
-fun ImageView.setExpandOnClick() {
+fun ImageView.setExpandOnClick(size: Int = 1024) {
     // Muestra un dialogo con el qr ampliado
     this.setOnClickListener { 
-        val dialog = ImageDialog(context, drawable)
+        val dialog = ImageDialog(context, drawable, size)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
@@ -72,7 +75,8 @@ fun ImageView.setExpandOnClick() {
  * No se muestra si el dispositivo no tiene permisos de notificación activos o los tiene bloqueados
  *
  * @param message El mensaje que muestra.
- * @param duration El tiempo que dura el mensaje.
+ * @param duration El tiempo que dura el mensaje (por defecto el lapso es corto).
+ * @param textSize El tamaño del texto del mensaje (por defecto es 8).
  */
 @SuppressLint("InflateParams")
 fun Context.showToastWithCustomView(

@@ -54,23 +54,8 @@ class FileHandler @Inject constructor(
      */
     private fun Route.staticContent() {
         // Rutas para obtener los archivos para el estilo de la web.
-        get("/css/styles.css") {
-            try {
-                val css = this::class.java.classLoader!!.getResource("assets/css/styles.css")!!.readText()
-                call.respondText(css, ContentType.Text.CSS)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
-
-        get("/js/utils.js") {
-            try {
-                val js = this::class.java.classLoader!!.getResource("assets/js/utils.js")!!.readText()
-                call.respondText(js, ContentType.Application.JavaScript)
-            } catch (e: Exception) {
-                call.respondRedirect("/error/1")
-            }
-        }
+        get("/css/styles.css") { loadStylesFile("styles.css") }
+        get("/js/utils.js") { loadStylesFile("utils.js", ContentType.Application.JavaScript) }
 
         // Rutas para obtener proporcionar las imagenes a la web.
         get("/images/background.svg") { loadImage("background.svg") }
@@ -152,6 +137,17 @@ class FileHandler @Inject constructor(
             username = usersRepository.getUsernameByIp(userIP),
             answer = choice
         )
+    }
+
+    private suspend fun PipelineContext<Unit, ApplicationCall>.loadStylesFile(
+        imagePath: String, contentType: ContentType = ContentType.Text.CSS
+    ) {
+        try {
+            val file = this::class.java.classLoader!!.getResource("assets/css/$imagePath")!!.readText()
+            call.respondText(file, contentType)
+        } catch (e: Exception) {
+            call.respondRedirect("/error/1")
+        }
     }
 
     private suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(

@@ -18,7 +18,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * Módulo Dagger que proporciona las dependencias.
+ * Módulo Dagger que proporciona las dependencias a las diferentes clases de la aplicación.
  */
 @Module
 @InstallIn(SingletonComponent::class)

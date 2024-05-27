@@ -5,17 +5,21 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.orbys.vote.databinding.DialogQrCodeBinding
 
-class ImageDialog(context: Context, qr: Drawable): Dialog(context) {
+class ImageDialog(
+    context: Context,
+    imageDrawable: Drawable,
+    size: Int
+): Dialog(context) {
 
     private var binding: DialogQrCodeBinding = DialogQrCodeBinding.inflate(layoutInflater)
 
     init {
         with(binding) {
             setContentView(root)
-            qrCode.setImageDrawable(qr)
+            qrCode.setImageDrawable(imageDrawable)
         }
 
-        window?.setLayout(1024, 1024)
+        window?.setLayout(size, size)
     }
 
 }

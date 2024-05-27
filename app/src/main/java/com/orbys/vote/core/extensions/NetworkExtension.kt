@@ -4,21 +4,21 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.appcompat.app.AppCompatActivity
+import com.orbys.vote.databinding.FragmentQrCodeBinding
 import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.NetworkInterface
 
-// Comprueba si la direccion es IPv4 no loopback
+/** Comprueba si la direccion es IPv4 no loopback */
 private fun InetAddress.isNonLoopbackIPv4Address() = !isLoopbackAddress && this is Inet4Address
 
-// Comprueba si la dirección IP pertenece a la red de Hotspot
+/** Comprueba si la dirección IP pertenece a la red de Hotspot */
 private fun String?.isHotspotIPv4Address() = this!!.startsWith("192.168.43") || this.startsWith("172.16")
 
 /**
  * Comprueba si el dispositivo tiene conexión a Internet.
  *
  * @param activity La actividad actual.
- * @return true si hay conexión a Internet.
  */
 fun AppCompatActivity.isNetworkAvailable(): Boolean {
     val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -35,7 +35,7 @@ fun AppCompatActivity.isNetworkAvailable(): Boolean {
  * @param endpoint El endpoint al que se quiere acceder.
  * @param isHotspot Indica si se quiere obtener la dirección IP de un hotspot o no.
  */
-fun getServerUrl(endpoint: String, isHotspot: Boolean = false): String? {
+fun FragmentQrCodeBinding.getServerUrl(endpoint: String, isHotspot: Boolean = false): String? {
     val ip = getIpAddress(isHotspot)
 
     // Si no tenemos una IP válida, devolvemos null
@@ -47,7 +47,6 @@ fun getServerUrl(endpoint: String, isHotspot: Boolean = false): String? {
  * Obtiene la dirección IP local del dispositivo que ejecuta la app.
  *
  * @param hotspot Indica si se quiere obtener la dirección IP de un hotspot o no.
- * @return La dirección IP local del dispositivo.
  */
 private fun getIpAddress(hotspot: Boolean = false): String? {
     val ipAddresses = getLocalIpFromNetworkInterfaces()
@@ -68,7 +67,7 @@ private fun getIpAddress(hotspot: Boolean = false): String? {
     return null
 }
 
-// Obtiene la lista con las direcciones IPv4 del dispositivo
+/** Obtiene la lista con las direcciones IPv4 del dispositivo */
 private fun getLocalIpFromNetworkInterfaces(): List<String?> {
     val interfaces = NetworkInterface.getNetworkInterfaces().toList()
     val ipAddresses = mutableListOf<String?>()
@@ -88,6 +87,7 @@ private fun getLocalIpFromNetworkInterfaces(): List<String?> {
     return ipAddresses
 }
 
+/** Constantes del servidor */
 const val SERVER_PORT = 8888
 const val QUESTION_ENDPOINT = "/question"
 const val DOWNLOAD_ENDPOINT = "/download"

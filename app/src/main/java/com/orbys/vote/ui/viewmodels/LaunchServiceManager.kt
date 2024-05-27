@@ -100,11 +100,10 @@ class LaunchServiceManager @Inject constructor(
      * Añade a los elementos de la vista las diferentes opciones para responder la pregunta
      */
     private fun ServiceLaunchQuestionBinding.setQrOptions() {
-        val hotspotUrl = getServerUrl(QUESTION_ENDPOINT, true)
-
-        setQrCode(!hotspotUrl.isNullOrEmpty())
-
         with(qrContainer) {
+            val hotspotUrl = getServerUrl(QUESTION_ENDPOINT, true)
+            setQrCode(!hotspotUrl.isNullOrEmpty())
+
             respondContainer.setOnClickListener { setQrCode() }
             respondHotspotContainer.setOnClickListener { setQrCode( true) }
         }
@@ -113,16 +112,16 @@ class LaunchServiceManager @Inject constructor(
     private fun ServiceLaunchQuestionBinding.setQrCode(
         isHotspot: Boolean = false, endpoint: String = QUESTION_ENDPOINT
     ) {
-        val url = getServerUrl(endpoint, isHotspot)
-        if (url.isNullOrEmpty()) {
-            context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
-            return
-        }
-
-        val qrGenerator = QRCodeGenerator(context)
-        val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
-
         with(qrContainer) {
+            val url = getServerUrl(endpoint, isHotspot)
+            if (url.isNullOrEmpty()) {
+                context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+                return
+            }
+
+            val qrGenerator = QRCodeGenerator(context)
+            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
+
             if (isHotspot) {
                 lanQrCode.visibility = View.GONE
                 lanQrText.visibility = View.GONE
@@ -149,7 +148,6 @@ class LaunchServiceManager @Inject constructor(
                 }
             }
         }
-
     }
 
     @OptIn(DelicateCoroutinesApi::class)
