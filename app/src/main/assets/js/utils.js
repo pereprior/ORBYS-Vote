@@ -4,7 +4,7 @@ function generateId() { return 'popup_' + Math.random().toString(36).substr(2, 9
 function getPopupSizeMultiplier(portraitValue, landscapeValue) { return window.innerWidth > window.innerHeight ? landscapeValue : portraitValue; }
 
 // Función que crea un popup con un mensaje
-function createInfoPopup(icon, message, buttonText) {
+function createInfoPopup(icon, message, buttonText, showImmediately = false) {
     return new Popup({
         id: generateId(),
         title: " ",
@@ -17,6 +17,7 @@ function createInfoPopup(icon, message, buttonText) {
                                 <button id="closeButton" type="submit">${buttonText}</button>`,
         textShadow: "0 0 .3em #000000bb",
         allowClose: false,
+        showImmediately: showImmediately,
         loadCallback: () => {
             document
                 .getElementById("closeButton")

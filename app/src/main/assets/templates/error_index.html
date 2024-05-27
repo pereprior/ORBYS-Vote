@@ -16,7 +16,7 @@
 
     <script>
         const errorIcon = "[ERROR_TYPE]" == 3 || "[ERROR_TYPE]" == 5 ? "timeout.svg" : "error.svg";
-        const errorPopup = createInfoPopup(errorIcon, "[POPUP_CONTENT]", "[CLOSE]");
+        const errorPopup = createInfoPopup(errorIcon, "[POPUP_CONTENT]", "[CLOSE]", true);
 
         // Muestra el pop-up inmediatamente cuando se carga la página
         errorPopup.show();
