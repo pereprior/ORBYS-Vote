@@ -2,27 +2,33 @@
 :root {
     --font-family: 'Montserrat', sans-serif;
     --background-image: url("/images/background.svg");
-    --background-color: #010101;
-    --background-color-input: #666666;
-    --background-color-button: #3587f2;
-    --background-color-button-hover: #1F5191;
-    --background-color-button-refuse: #f44336;
-    --background-color-button-accept: #4caf50;
+    --color-background: #010101;
+    --color-text-input: #666666;
+    --color-button: #3587f2;
+    --color-button-hover: #1F5191;
+    --color-button-refuse: #f44336;
+    --color-button-accept: #4caf50;
     --transition-button: background-color 0.3s;
-    --font-size-xsmall: 0.8em;
-    --font-size-small: 1em;
-    --font-size-medium: 1.25em;
-    --font-size-large: 1.5em;
+    --font-size-xsmall: 0.6em;
+    --font-size-small: 0.8em;
+    --font-size-medium: 1em;
+    --font-size-large: 1.25em;
+    --font-size-xlarge: 1.5em;
     --border-radius-small: 4px;
     --border-radius-medium: 8px;
-    --border-radius-large: 16px;
-    --margin-small: 10px;
+    --border-radius-large: 20px;
+    --margin-xxsmall: 5px;
+    --margin-xsmall: 10px;
+    --margin-small: 15px;
     --margin-medium: 20px;
-    --margin-large: 40px;
-    --icon-size-xsmall: 15px;
-    --icon-size-small: 30px;
+    --margin-large: 30px;
+    --margin-xlarge: 40px;
+    --margin-xxlarge: 50px;
+    --icon-size-xsmall: 30px;
+    --icon-size-small: 40px;
     --icon-size-medium: 50px;
-    --icon-size-large: 80px;
+    --icon-size-large: 60px;
+    --icon-size-xlarge: 80px;
     --button-size-xsmall: 120px;
     --button-size-small: 150px;
     --button-size-medium: 200px;
@@ -43,9 +49,9 @@ body {
 
 form {
     align-items: center;
-    background-color: var(--background-color);
+    background-color: var(--color-background);
     border-radius: var(--border-radius-medium);
-    box-shadow: 0 0 var(--margin-small) rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 var(--margin-xsmall) rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -54,27 +60,27 @@ form {
 }
 
 button {
-    background-color: var(--background-color-button);
+    background-color: var(--color-button);
     box-sizing: border-box;
     border: none;
     color: white;
     cursor: pointer; transition: var(--transition-button);
 }
-button:hover { background-color: var(--background-color-button-hover); }
+button:hover { background-color: var(--color-button-hover); }
 
-span { font-size: var(--font-size-large); }
+span { font-size: var(--font-size-xlarge); }
 
 h1 {
     color: white;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xlarge);
     font-style: normal;
     max-width: 80%;
     word-wrap: break-word;
 }
 
 input[type="text"] {
-    font-size: var(--font-size-small);
-    padding: var(--margin-small);
+    font-size: var(--font-size-medium);
+    padding: var(--margin-xsmall);
     width: 100%; max-width: 100%;
     box-sizing: border-box;
     border-radius: var(--border-radius-small);
@@ -86,7 +92,7 @@ input[type="text"] {
 #orbys_logo {
     position: absolute;
     top: 0; left: 0;
-    margin: var(--margin-medium) 0 0 var(--margin-large);
+    margin: var(--margin-medium) 0 0 var(--margin-xlarge);
     width: 25%; height: auto;
 }
 
@@ -95,7 +101,7 @@ input[type="text"] {
 #vote_logo {
     position: relative;
     align-content: center;
-    margin: var(--margin-large);
+    margin: var(--margin-xlarge);
     width: 40%; height: auto;
 }
 
@@ -111,18 +117,18 @@ input[type="text"] {
 /* Input para introducir el nombre de usuario */
 #username {
     width: auto;
-    font-size: var(--font-size-small); color: white;
-    background-color: var(--background-color-input);
+    font-size: var(--font-size-medium); color: white;
+    background-color: var(--color-text-input);
     border: none;
 }
 
 /* Input para introducir la respuesta en la pregunta tipo númerico */
 #myNumber {
     width: 50%;
-    padding: var(--margin-small);
-    border: 2px solid var(--background-color-button);
-    border-radius: var(--margin-large);
-    background-color: var(--background-color);
+    padding: var(--margin-xsmall);
+    border: 2px solid var(--color-button);
+    border-radius: var(--margin-xlarge);
+    background-color: var(--color-background);
     color: white; text-align: center;
 }
 
@@ -131,61 +137,61 @@ input[type="text"] {
 #answers {
     width: 100%; max-width: 100%;
     text-align: left;
-    font-size: var(--font-size-xsmall);
+    font-size: var(--font-size-small);
     word-wrap: break-word;
 }
 
 /* Input para introducir la respuesta en la pregunta tipo otros simple */
-#radioContainer div label { margin-left: var(--border-radius-large); }
+#radioContainer div label { margin-left: var(--margin-small); }
 #radioContainer div {
     display: flex;
     color: white;
-    margin: var(--border-radius-medium) var(--border-radius-small);
+    margin: var(--margin-xsmall) var(--margin-xxsmall);
 }
 
 /* Input para introducir la respuesta en la pregunta tipo otros múltiple */
-#checkboxContainer div label { margin-left: var(--border-radius-large); }
+#checkboxContainer div label { margin-left: var(--margin-small); }
 #checkboxContainer div {
     display: flex;
     color: white;
-    margin: var(--border-radius-medium) var(--border-radius-small);
+    margin: var(--margin-xsmall) var(--margin-xxsmall);
 }
 
 /* Contenedor con las respuestas de la pregunta tipo estrellas */
 #stars {
     display: flex;
     justify-content: center;
-    margin-bottom: var(--border-radius-medium);
+    margin-bottom: var(--margin-xsmall);
 }
 
 /* Boton para rechazar una petición del popup */
 #btn-refuse {
-    padding: var(--margin-small) var(--icon-size-small);
-    background-color: var(--background-color-button-refuse);
-    border: none; border-radius: var(--margin-large);
+    padding: var(--margin-xsmall) var(--margin-large);
+    background-color: var(--color-button-refuse);
+    border: none; border-radius: var(--margin-xlarge);
 }
 
 /* Boton para aceptar una petición del popup */
 #btn-accept {
-    padding: var(--margin-small) var(--icon-size-small);
-    background-color: var(--background-color-button-accept);
-    border: none; border-radius: var(--margin-large);
+    padding: var(--margin-xsmall) var(--margin-large);
+    background-color: var(--color-button-accept);
+    border: none; border-radius: var(--margin-xlarge);
 }
 
 #closeButton {
-    padding: var(--margin-small);
-    margin: var(--margin-small) var(--margin-medium);
+    padding: var(--margin-xsmall);
+    margin: var(--margin-xsmall) var(--margin-medium);
     width: var(--button-size-medium);
     box-sizing: border-box;
-    border: 1px solid var(--background-color-button);
-    border-radius: var(--margin-large);
-    font-size: var(--font-size-xsmall); color: white;
-    background-color: var(--background-color-button);
+    border: 1px solid var(--color-button);
+    border-radius: var(--margin-xlarge);
+    font-size: var(--font-size-small); color: white;
+    background-color: var(--color-button);
     cursor: pointer; transition: var(--transition-button);
 }
 
 #triangle {
-    height: 60px;
+    height: var(--icon-size-large);
     width: auto;
 }
 
@@ -194,8 +200,8 @@ input[type="text"] {
 
 /* Clase para aplicar el estilo a una respuesta de tipo estrella */
 .star {
-    width: var(--icon-size-large); height: auto;
-    margin: var(--margin-small) var(--margin-small);
+    width: var(--icon-size-xlarge); height: auto;
+    margin: var(--margin-xsmall) var(--margin-xsmall);
 }
 
 /* Clase para ordenar elementos dentro del formulario de forma horizontal */
@@ -207,15 +213,15 @@ input[type="text"] {
 
 /* Muestra el número máximo y el mínimo que podemos introducir en la pregunta tipo númerico */
 .min-max-indicator {
-    font-size: var(--font-size-large);
-    color: var(--background-color-button);
-    margin-bottom: var(--margin-small);
+    font-size: var(--font-size-xlarge);
+    color: var(--color-button);
+    margin-bottom: var(--margin-xsmall);
 }
 
 /* Clase para aplicar el estilo sobre el icono del tipo de la pregunta */
 .type_icon {
-    width: var(--icon-size-small); height: auto;
-    margin: 0 var(--margin-medium) 0 var(--margin-small);
+    width: var(--icon-size-xsmall); height: auto;
+    margin: 0 var(--margin-medium) 0 var(--margin-xsmall);
 }
 
 /* Clase para aplicar el estilo al icono del tipo de mensaje para el popup */
@@ -227,81 +233,81 @@ input[type="text"] {
 /* RESPONSIVE PARA MOVIL EN VERTICAL */
 @media (max-width: 600px) and (orientation: portrait) {
     form { width: 80%;  }
-    span { font-size: var(--font-size-medium); }
-    h1 { font-size: var(--font-size-small); }
+    span { font-size: var(--font-size-large); }
+    h1 { font-size: var(--font-size-medium); }
     button {
         width: var(--button-size-small);
-        padding: var(--margin-small);
-        margin: var(--margin-small) var(--margin-medium);
-        border-radius: var(--margin-medium);
-        font-size: var(--font-size-small);
+        padding: var(--margin-xsmall);
+        margin: var(--margin-xsmall) var(--margin-medium);
+        border-radius: var(--border-radius-large);
+        font-size: var(--font-size-medium);
     }
 
     #vote_logo { margin: var(--margin-medium); }
     #questionForm { max-width: 70%; }
     #closeButton {
-        padding: var(--border-radius-small);
+        padding: var(--margin-xxsmall);
         width: var(--button-size-xsmall);
-        border-radius: var(--margin-medium);
-        font-size: var(--font-size-xsmall);
+        border-radius: var(--border-radius-large);
+        font-size: var(--font-size-small);
     }
-    #triangle { height: 40px; }
+    #triangle { height: var(--icon-size-small); }
 
-    .star { width: var(--icon-size-medium); margin: 0 5px;}
-    .min-max-indicator { font-size: var(--font-size-small); }
-    .logo { width: var(--margin-large); margin-bottom: var(--margin-small); }
+    .star { width: var(--icon-size-medium); margin: 0 var(--margin-xxsmall);}
+    .min-max-indicator { font-size: var(--font-size-medium); }
+    .logo { width: var(--margin-xlarge); margin-bottom: var(--margin-xsmall); }
 }
 
 /* RESPONSIVE PARA TABLETS */
 @media (min-width: 600px) and (orientation: portrait) {
-    form { width: 70%; padding: var(--icon-size-small); }
+    form { width: 70%; padding: var(--margin-large); }
     button {
-        padding: var(--margin-small);
+        padding: var(--margin-xsmall);
         width: var(--button-size-large);
-        border-radius: var(--margin-large);
-        font-size: var(--font-size-large);
+        border-radius: var(--margin-xlarge);
+        font-size: var(--font-size-xlarge);
     }
 
-    #username { font-size: var(--font-size-medium); }
-    #myNumber { font-size: var(--font-size-medium); }
-    #radioContainer div { font-size: var(--font-size-large); margin: var(--margin-small) var(--border-radius-large); }
-    #checkboxContainer div { font-size: var(--font-size-large); margin: var(--margin-small) var(--border-radius-large); }
-    #btn-refuse { padding: var(--margin-small) var(--margin-large); }
-    #btn-accept { padding: var(--margin-small) var(--margin-large);}
+    #username { font-size: var(--font-size-large); }
+    #myNumber { font-size: var(--font-size-large); }
+    #radioContainer div { font-size: var(--font-size-xlarge); margin: var(--margin-xsmall) var(--margin-small); }
+    #checkboxContainer div { font-size: var(--font-size-xlarge); margin: var(--margin-xsmall) var(--margin-small); }
+    #btn-refuse { padding: var(--margin-xsmall) var(--margin-xlarge); }
+    #btn-accept { padding: var(--margin-xsmall) var(--margin-xlarge);}
 
     .type_icon { width: var(--icon-size-medium); }
 }
 
 /* RESPONSIVE PARA MOVIL EN HORIZONTAL */
 @media (max-width: 800px) and (orientation: landscape) {
-    h1 { font-size: var(--font-size-xsmall); max-width: 90%; }
-    span { font-size: var(--font-size-small); }
-    form: { padding: var(--margin-small); }
+    h1 { font-size: var(--font-size-small); max-width: 90%; }
+    span { font-size: var(--font-size-medium); }
+    form: { padding: var(--margin-xsmall); }
     button {
         width: var(--button-size-xsmall);
-        padding: var(--margin-small);
-        margin: var(--margin-small) var(--margin-small);
-        border-radius: var(--margin-medium);
+        padding: var(--margin-xsmall);
+        margin: var(--margin-xsmall) var(--margin-xsmall);
+        border-radius: var(--border-radius-large);
+        font-size: var(--font-size-small);
+    }
+
+    #orbys_logo { margin-top: var(--margin-xsmall); width: 10%; }
+    #vote_logo { display: none; }
+    #btn-refuse { font-size: var(--font-size-small); }
+    #btn-accept { font-size: var(--font-size-small); }
+    #radioContainer div { font-size: var(--font-size-small); }
+    #checkboxContainer div { font-size: var(--font-size-small); }
+    #triangle { height: var(--icon-size-small); }
+    #closeButton {
+        padding: var(--margin-xxsmall);
+        width: var(--button-size-xsmall);
+        border-radius: var(--border-radius-large);
         font-size: var(--font-size-xsmall);
     }
 
-    #orbys_logo { margin-top: var(--margin-small); width: 10%; }
-    #vote_logo { display: none; }
-    #btn-refuse { font-size: var(--font-size-xsmall); }
-    #btn-accept { font-size: var(--font-size-xsmall); }
-    #radioContainer div { font-size: var(--font-size-xsmall); }
-    #checkboxContainer div { font-size: var(--font-size-xsmall); }
-    #triangle { height: 40px; }
-    #closeButton {
-        padding: var(--border-radius-small);
-        width: var(--button-size-xsmall);
-        border-radius: var(--margin-medium);
-        font-size: 0.6em;
-    }
-
-    .min-max-indicator { font-size: var(--font-size-xsmall); }
-    .star { width: var(--margin-large); margin: 0 5px; }
-    .logo { width: var(--margin-large); margin-bottom: var(--margin-small); }
+    .min-max-indicator { font-size: var(--font-size-small); }
+    .star { width: var(--margin-xlarge); margin: 0 var(--margin-xxsmall); }
+    .logo { width: var(--margin-xlarge); margin-bottom: var(--margin-xsmall); }
 }
 
 /* RESPONSIVE PARA MONITORES */
@@ -309,22 +315,22 @@ input[type="text"] {
     h1 { max-width: 90%; }
     button {
         width: var(--button-size-large);
-        padding: var(--margin-small);
-        border-radius: var(--margin-large);
-        font-size: var(--font-size-large);
+        padding: var(--margin-xsmall);
+        border-radius: var(--margin-xlarge);
+        font-size: var(--font-size-xlarge);
     }
 
-    #orbys_logo { margin-top: var(--margin-small); width: 10%; }
+    #orbys_logo { margin-top: var(--margin-xsmall); width: 10%; }
     #vote_logo { width: 20%; }
     #questionForm { max-width: 55%; }
-    #username { font-size: var(--font-size-medium); }
-    #myNumber { font-size: var(--font-size-large); }
-    #radioContainer div { font-size: var(--font-size-large); margin: var(--border-radius-large) var(--icon-size-medium); }
-    #checkboxContainer div { font-size: var(--font-size-large); margin: var(--border-radius-large) var(--icon-size-medium); }
-    #btn-refuse { padding: var(--margin-small) var(--margin-large); }
-    #btn-accept { padding: var(--margin-small) var(--margin-large);}
+    #username { font-size: var(--font-size-large); }
+    #myNumber { font-size: var(--font-size-xlarge); }
+    #radioContainer div { font-size: var(--font-size-xlarge); margin: var(--margin-small) var(--margin-xxlarge); }
+    #checkboxContainer div { font-size: var(--font-size-xlarge); margin: var(--margin-small) var(--margin-xxlarge); }
+    #btn-refuse { padding: var(--margin-xsmall) var(--margin-xlarge); }
+    #btn-accept { padding: var(--margin-xsmall) var(--margin-xlarge);}
 
-    .type_icon { width: var(--icon-size-medium); margin: 0 var(--icon-size-small) 0 var(--margin-small); }
+    .type_icon { width: var(--icon-size-medium); margin: 0 var(--margin-large) 0 var(--margin-xsmall); }
 }
 
 @media print { body { display: none; } }
