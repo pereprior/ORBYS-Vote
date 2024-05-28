@@ -15,6 +15,13 @@ import com.orbys.vote.R
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.components.qr.ImageDialog
+import io.ktor.http.ContentType
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.application.call
+import io.ktor.server.response.respondBytes
+import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
+import io.ktor.util.pipeline.PipelineContext
 
 /** Devuelve el valor del flow con la lista de respuestas de una pregunta */
 fun Question.getAnswers() = answers.value
@@ -94,4 +101,40 @@ fun Context.showToastWithCustomView(
     toast.setGravity(Gravity.BOTTOM, 0, 200)
     toast.view = customToastView
     toast.show()
+}
+
+/**
+ * Carga un archivo de texto de la carpeta de assets.
+ *
+ * @param filePath La ruta del archivo.
+ * @param contentType El tipo de contenido del archivo (por defecto es CSS).
+ */
+suspend fun PipelineContext<Unit, ApplicationCall>.loadFile(
+    filePath: String, contentType: ContentType = ContentType.Text.CSS
+) {
+    try {
+        val fileContent = this::class.java.classLoader!!.getResource("assets/$filePath")!!.readText()
+        call.respondText(fileContent, contentType)
+    } catch (e: Exception) {
+        call.respondRedirect("/error/1")
+    }
+}
+
+/**
+ * Carga una imagen de la carpeta de assets.
+ *
+ * @param imagePath La ruta del archivo.
+ * @param contentType El tipo de contenido del archivo (por defecto es SVG).
+ */
+suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
+    imagePath: String, contentType: ContentType = ContentType.Image.SVG
+) {
+    try {
+        // Almacenamos la imagen en la cache del navegador durante 24 horas.
+        call.response.headers.append("Cache-Control", "max-age=86400")
+        val imageContent = this::class.java.classLoader!!.getResource("assets/images/$imagePath").readBytes()
+        call.respondBytes(imageContent, contentType)
+    } catch (e: Exception) {
+        call.respondRedirect("/error/1")
+    }
 }

@@ -15,11 +15,7 @@ private fun InetAddress.isNonLoopbackIPv4Address() = !isLoopbackAddress && this 
 /** Comprueba si la dirección IP pertenece a la red de Hotspot */
 private fun String?.isHotspotIPv4Address() = this!!.startsWith("192.168.43") || this.startsWith("172.16")
 
-/**
- * Comprueba si el dispositivo tiene conexión a Internet.
- *
- * @param activity La actividad actual.
- */
+/** Comprueba si el dispositivo tiene conexión a Internet */
 fun AppCompatActivity.isNetworkAvailable(): Boolean {
     val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     // Comprueba si hay una conexión a Internet activa
@@ -92,3 +88,4 @@ const val SERVER_PORT = 8888
 const val QUESTION_ENDPOINT = "/question"
 const val DOWNLOAD_ENDPOINT = "/download"
 const val USER_ENDPOINT = "/user"
+const val ERROR_ENDPOINT = "/error"

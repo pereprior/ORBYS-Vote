@@ -1,9 +1,7 @@
 package com.orbys.vote.core.di
 
 import android.content.Context
-import com.orbys.vote.data.controllers.handlers.FileHandler
-import com.orbys.vote.data.controllers.handlers.ResponseHandler
-import com.orbys.vote.data.repositories.FileRepository
+import com.orbys.vote.data.repositories.FileRepositoryImpl
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
 import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.data.services.HttpService
@@ -38,22 +36,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepository.getInstance(context)
+    fun provideFileRepository(@ApplicationContext context: Context): IFileRepository = FileRepositoryImpl.getInstance(context)
 
     @Provides
     @Singleton
     fun provideHttpService() = HttpService()
-
-    @Provides
-    @Singleton
-    fun provideFileHandler(@ApplicationContext context: Context) = FileHandler(
-        QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance(), context
-    )
-
-    @Provides
-    @Singleton
-    fun provideResponseHandler(@ApplicationContext context: Context) = ResponseHandler(
-        QuestionRepositoryImpl.getInstance(), UsersRepositoryImpl.getInstance(), provideFileHandler(context)
-    )
 
 }

@@ -1,7 +1,10 @@
 package com.orbys.vote.data.controllers.handlers
 
+import android.content.Context
+import com.orbys.vote.core.extensions.ERROR_ENDPOINT
 import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
 import com.orbys.vote.core.extensions.USER_ENDPOINT
+import com.orbys.vote.core.extensions.getAnswerType
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
 import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.domain.models.User
@@ -19,19 +22,17 @@ import io.ktor.server.routing.post
 import javax.inject.Inject
 
 /**
- * Clase para gstionar las peticiones del servidor.
+ * Clase para gestionar las peticiones de los clientes del servidor http.
  *
- * @property questionRepository Repositorio de preguntas.
- * @property usersRepository Repositorio de usuarios.
- * @property fileHandler Gestor de archivos.
+ * @param appContext Contexto de la aplicación.
  */
-class ResponseHandler@Inject constructor(
-    private val questionRepository: QuestionRepositoryImpl,
-    private val usersRepository: UsersRepositoryImpl,
-    private val fileHandler: FileHandler
-): IHttpHandler {
+class ResponseHandler@Inject constructor(appContext: Context) {
 
-    override fun setupRoutes(route: Route) {
+    private val questionRepository = QuestionRepositoryImpl.getInstance()
+    private val usersRepository = UsersRepositoryImpl.getInstance()
+    private val fileHandler = FileHandler(appContext)
+
+    fun setupRoutes(route: Route) {
         route.apply {
             handleGetQuestionRoute()
             handleSubmitQuestionRoute()
@@ -41,15 +42,11 @@ class ResponseHandler@Inject constructor(
         }
     }
 
-    /**
-     * Ruta que muestra el formulario para contestar la pregunta.
-     *
-     * @return GET
-     */
+    /** Ruta GET que proporciona al cliente el formulario para contestar la pregunta */
     private fun Route.handleGetQuestionRoute() = get(QUESTION_ENDPOINT) {
         val userIP = call.request.origin.remoteHost
         val question = questionRepository.getQuestion()
-        val fileContent = fileHandler.loadHtmlFile()
+        val fileContent = fileHandler.loadHtmlFile(question.getAnswerType())
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
         if(!question.isAnonymous && usersRepository.userNotExists(userIP))
@@ -57,29 +54,25 @@ class ResponseHandler@Inject constructor(
 
         // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
         if (questionRepository.getTimerState())
-            call.respondRedirect("/error/5")
+            call.respondRedirect("$ERROR_ENDPOINT/5")
 
         // Si la pregunta no es de multiples respuestas y el usuario ya ha respondido, redirigimos a la pagina de error
         if (usersRepository.userResponded(userIP) && !question.isMultipleAnswers)
-            call.respondRedirect("/error/7")
+            call.respondRedirect("$ERROR_ENDPOINT/7")
 
         try {
-            call.respondText(
-                text = fileContent!!,
-                contentType = ContentType.Text.Html
-            )
-        } catch (e: Exception) { call.respondRedirect("/error/1") }
+            call.respondText(fileContent!!, ContentType.Text.Html)
+        } catch (e: Exception) {
+            call.respondRedirect("$ERROR_ENDPOINT/1")
+        }
     }
 
-    /**
-     * Ruta que recibe y gestiona la respuesta del usuario.
-     *
-     * @return POST
-     */
+    /** Ruta POST que recibe y gestiona la respuesta del cliente */
     private fun Route.handleSubmitQuestionRoute() = post("/submit") {
         val userIP = call.request.origin.remoteHost
         val choice = call.receiveParameters()["choice"]
 
+        // Si la respuesta está vacía, no se registra
         if (choice == "") return@post
 
         // Si aún no ha terminado el tiempo, se registra la respuesta
@@ -89,28 +82,18 @@ class ResponseHandler@Inject constructor(
         call.respond(HttpStatusCode.OK)
     }
 
-    /**
-     * Ruta que muestra el formulario para acceder a la pregunta con nombre de usuario.
-     *
-     * @return GET
-     */
+    /** Ruta GET que proporciona al cliente el formulario para introducir un nombre de usuario asociado a su dirección IP */
     private fun Route.handleNewUserRoute() = get(USER_ENDPOINT) {
-        // Pintamos el popup de error por si el usuario que introduce ya existe
         val fileContent = fileHandler.loadHtmlFile("login")
 
         try {
-            call.respondText(
-                text = fileContent!!,
-                contentType = ContentType.Text.Html
-            )
-        } catch (e: Exception) { call.respondRedirect("/error/1") }
+            call.respondText(fileContent!!, ContentType.Text.Html)
+        } catch (e: Exception) {
+            call.respondRedirect("$ERROR_ENDPOINT/1")
+        }
     }
 
-    /**
-     * Ruta que recibe y gestiona el nombre de usuario.
-     *
-     * @return POST
-     */
+    /** Ruta que recibe y gestiona el nombre de usuario seleccionado por el cliente */
     private fun Route.handleLoginRoute() = post("/login") {
         val userIP = call.request.origin.remoteHost
         val username = call.receiveParameters()["user"] ?: ""
@@ -128,21 +111,29 @@ class ResponseHandler@Inject constructor(
         call.respondRedirect(QUESTION_ENDPOINT)
     }
 
-    private fun answerRegister(choice: String?, userIP: String) {
+    /**
+     * Función para registrar una respuesta enviada al servidor por un cliente
+     *
+     * @param choice Respuesta seleccionada por el cliente.
+     * @param user Identificador del cliente.
+     */
+    private fun answerRegister(choice: String?, user: String) {
         // Si la respuesta no existe, se añade
         if (!questionRepository.answerExists(choice) && choice?.contains(";") == false)
             questionRepository.addAnswer(choice)
 
+        // Se incrementa el contador de la respuesta seleccionada
         questionRepository.incAnswerCount(choice)
 
         // Si el usuario no existe, se registra
-        if (usersRepository.userNotExists(userIP))
-            usersRepository.addUser(User(userIP, usersRepository.getUsernameByIp(userIP), true))
+        if (usersRepository.userNotExists(user))
+            usersRepository.addUser(User(user, usersRepository.getUsernameByIp(user), true))
         else
-            usersRepository.setUserResponded(userIP)
+            usersRepository.setUserResponded(user)
 
+        // Si la respuesta no es nula, se añade al archivo de datos
         if (choice != null)
-            fileHandler.createDataFile(choice, userIP)
+            fileHandler.createDataFile(choice, user)
     }
 
 }

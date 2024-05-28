@@ -5,30 +5,36 @@ import android.content.Context
 import android.os.Environment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getAnswerType
+import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.domain.repositories.IFileRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 /**
  * Repositorio para manejar las operaciones de archivos.
  *
  * @property context Contexto de la aplicación.
  */
-class FileRepository private constructor(
+class FileRepositoryImpl private constructor(
     private val context: Context,
 ) : IFileRepository {
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var INSTANCE: FileRepository? = null
+        private var INSTANCE: FileRepositoryImpl? = null
+        const val CSV_FILE_NAME = "data"
 
         // Instancia unica para el repositorio.
-        fun getInstance(context: Context): FileRepository {
+        fun getInstance(context: Context): FileRepositoryImpl {
             return INSTANCE ?: synchronized(this) {
-                FileRepository(context).also { INSTANCE = it }
+                FileRepositoryImpl(context).also { INSTANCE = it }
             }
         }
     }
@@ -42,29 +48,35 @@ class FileRepository private constructor(
      *
      * @param fileName Nombre del nuevo archivo.
      * @param question Pregunta a la que corresponde el nuevo fichero.
-     * @param answers Lista de respuestas de la pregunta del fichero.
      */
-    fun createFile(fileName: String, question: Question, answers: List<String>) {
+    fun createFile(question: Question, fileName: String = CSV_FILE_NAME) {
         val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
         file = File(filePath)
 
         // Si el archivo no existe, se crea y se escribe la leyenda de la pregunta.
         if (!file.exists()) {
             file.createNewFile()
-            writeLegend(question, answers)
+            writeLegend(question, question.getAnswersAsString())
         }
     }
 
     /**
      * Escribe una línea en el archivo CSV correspondiente a una respuesta.
      *
-     * @param date Fecha de la respuesta.
-     * @param time Hora de la respuesta.
      * @param ip Dirección IP del usuario que ha respondido.
      * @param username Nombre del usuario que ha respondido.
      * @param answer Respuesta seleccionada por el usuario.
      */
-    fun writeLine(date: String, time: String, ip: String, username: String, answer: String) {
+    fun writeLine(
+        ip: String,
+        username: String,
+        answer: String
+    ) {
+        val dateFormatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val timeFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = dateFormatter.format(Calendar.getInstance().time)
+        val time = timeFormatter.format(Calendar.getInstance().time)
+
         if (file.exists()) {
             val fileWriter = FileWriter(file, true)
             val bufferedWriter = BufferedWriter(fileWriter)
@@ -83,11 +95,11 @@ class FileRepository private constructor(
      * @param newContent Nuevo contenido de la línea.
      */
     override suspend fun modifyLineInFile(lineNumber: Int, newContent: String) {
-        with(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             if (file.exists()) {
                 val lines = file.readLines().toMutableList()
 
-                if (lineNumber < 0 || lineNumber >= lines.size) return
+                if (lineNumber < 0 || lineNumber >= lines.size) return@withContext
 
                 lines[lineNumber] = newContent
                 file.writeText(lines.joinToString(separator = "\n"))

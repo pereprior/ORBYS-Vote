@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
  */
 class OverlayPermissionManager (private val activity: AppCompatActivity) {
 
+    /** Comprueba y solicita en caso de no tener los permisos para mostrar elementos por encima de otras aplicaciones. */
     fun checkAndRequestPermission() {
 
         if(!Settings.canDrawOverlays(activity)) {
-            // Crea un intent para abrir la configuración de permisos de superposición para esta aplicación.
+            // Abre la pantalla de permisos de superposición del dispositivo.
             val intent = Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:${activity.packageName}")

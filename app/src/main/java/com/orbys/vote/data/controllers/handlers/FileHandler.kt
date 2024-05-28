@@ -3,61 +3,49 @@ package com.orbys.vote.data.controllers.handlers
 import android.content.Context
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.DOWNLOAD_ENDPOINT
-import com.orbys.vote.core.extensions.getAnswerType
+import com.orbys.vote.core.extensions.ERROR_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswers
-import com.orbys.vote.core.extensions.getAnswersAsString
-import com.orbys.vote.data.repositories.FileRepository
+import com.orbys.vote.core.extensions.loadFile
+import com.orbys.vote.core.extensions.loadImage
+import com.orbys.vote.data.repositories.FileRepositoryImpl
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
 import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import io.ktor.http.ContentType
-import io.ktor.server.application.ApplicationCall
 import io.ktor.server.application.call
-import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondFile
 import io.ktor.server.response.respondRedirect
-import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
-import io.ktor.util.pipeline.PipelineContext
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
 
 /**
- * Clase para gestionar las operaciones con los archivos del servidor.
+ * Clase para gestionar las operaciones relacionadas con los ficheros que maneja el servidor.
  *
- * @property questionRepository Repositorio de preguntas.
- * @property usersRepository Repositorio de usuarios.
- * @property appContext Contexto de la aplicacion.
+ * @property appContext Contexto de la aplicación.
  */
-class FileHandler @Inject constructor(
-    private val questionRepository: QuestionRepositoryImpl,
-    private val usersRepository: UsersRepositoryImpl,
-    private val appContext: Context
-): IHttpHandler {
-    private val fileRepository = FileRepository.getInstance(appContext)
+class FileHandler @Inject constructor(private val appContext: Context) {
 
-    override fun setupRoutes(route: Route) {
+    private val questionRepository = QuestionRepositoryImpl.getInstance()
+    private val usersRepository = UsersRepositoryImpl.getInstance()
+    private val fileRepository = FileRepositoryImpl.getInstance(appContext)
+
+    fun setupRoutes(route: Route) {
         route.apply {
             handleDownloadRoute()
             staticContent()
         }
     }
 
-    /**
-     * Ruta para obtener los archivos almacenados en la carpeta de assets.
-     *
-     * @return GET
-     */
+    /** Rutas GET para proporcionar a los ficheros de la p�gina web las dependencias y los estilos necesarios */
     private fun Route.staticContent() {
-        // Rutas para obtener los archivos para el estilo de la web.
-        get("/css/styles.css") { loadStylesFile("styles.css") }
-        get("/js/utils.js") { loadStylesFile("utils.js", ContentType.Application.JavaScript) }
+        // Rutas para proporcionar los archivos para el estilo de la web.
+        get("/css/styles.css") { loadFile("css/styles.css") }
+        get("/js/utils.js") { loadFile("js/utils.js", ContentType.Application.JavaScript) }
 
-        // Rutas para obtener proporcionar las imagenes a la web.
+        // Rutas para proporcionar las imagenes a la web.
         get("/images/background.svg") { loadImage("background.svg") }
         get("/images/vote.svg") { loadImage("vote.svg") }
         get("/images/orbys.svg") { loadImage("orbys.svg") }
@@ -77,91 +65,53 @@ class FileHandler @Inject constructor(
         get("/images/filled_checkbox.svg") { loadImage("filled_checkbox.svg") }
     }
 
-    /**
-     * Ruta para descargar el archivo con los datos de la pregunta.
-     *
-     * @return GET
-     */
+    /** Ruta GET para que los usuarios puedan descargar un fichero con los resultados de la votación */
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
         val file = fileRepository.getFile()
 
-        // Si el temporizador de la pregunta esta activo no se podra descargar el archivo.
-        if (!questionRepository.getTimerState()) call.respondRedirect("/error/3")
-        // Si nadie a contestado la pregunta no se podra descargar el archivo.
-        if (!file.exists()) call.respondRedirect("/error/6")
+        // Si el tiempo para responder la pregunta esta activo, no se puede descargar el archivo.
+        if (!questionRepository.getTimerState()) call.respondRedirect("$ERROR_ENDPOINT/3")
+        // Si nadie a contestado la pregunta, no se puede descargar el archivo.
+        if (!file.exists()) call.respondRedirect("$ERROR_ENDPOINT/6")
 
         call.respondFile(file)
     }
 
+    /** Función para eliminar el fichero de los resultados una vez los usuarios eliminan la pregunta */
     fun deleteFile() { fileRepository.deleteFile() }
 
     /**
-     * Carga el archivo HTML correspondiente a la pregunta.
+     * Carga el archivo HTML correspondiente a la pregunta lanzada.
      *
      * @param htmlName Nombre del archivo HTML.
-     * @return Contenido del archivo HTML.
+     * @return Cadena con el contenido del archivo.
      */
-    fun loadHtmlFile(htmlName: String = questionRepository.getQuestion().getAnswerType()): String? {
+    fun loadHtmlFile(htmlName: String): String? {
         val name = if (htmlName == AnswerType.YES_NO.name) "boolean" else htmlName.lowercase(Locale.ROOT)
         val fileName = name + HTTP_FILES_PLACEHOLDER + HTTP_FILES_EXTENSION
 
         return this::class.java.getResource("$HTTP_FILES_FOLDER/$fileName")?.readText()?.let {
             // Reemplaza los marcadores de posición del archivo HTML por los valores correspondientes.
-            replace(it, questionRepository.getQuestion())
+            replaceHolders(it, questionRepository.getQuestion())
         }
     }
 
     /**
-     * Crea el archivo de datos y añade la respuesta del usuario.
+     * Crea el archivo para almacenar los resultados si no existe. Si existe, lo sobrescribe.
+     * Crea una nueva línea en el archivo con la respuesta del usuario.
      *
      * @param choice Respuesta del usuario.
      * @param userIP IP del usuario que ha contestado.
      */
     fun createDataFile(choice: String, userIP: String) {
-        val dateFormatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-        val timeFormatter = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
-        val date = dateFormatter.format(Calendar.getInstance().time)
-        val time = timeFormatter.format(Calendar.getInstance().time)
         val question = questionRepository.getQuestion()
 
-        fileRepository.createFile(
-            fileName = CSV_FILE_NAME,
-            question = question,
-            answers = question.getAnswersAsString()
-        )
-
+        fileRepository.createFile(question)
         fileRepository.writeLine(
-            date = date,
-            time = time,
             ip = userIP,
             username = usersRepository.getUsernameByIp(userIP),
             answer = choice
         )
-    }
-
-    private suspend fun PipelineContext<Unit, ApplicationCall>.loadStylesFile(
-        imagePath: String, contentType: ContentType = ContentType.Text.CSS
-    ) {
-        try {
-            val file = this::class.java.classLoader!!.getResource("assets/css/$imagePath")!!.readText()
-            call.respondText(file, contentType)
-        } catch (e: Exception) {
-            call.respondRedirect("/error/1")
-        }
-    }
-
-    private suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
-        imagePath: String, contentType: ContentType = ContentType.Image.SVG
-    ) {
-        try {
-            // Almacenamos la imagen en la cache del navegador durante 24 horas.
-            call.response.headers.append("Cache-Control", "max-age=86400")
-
-            val image = this::class.java.classLoader!!.getResource("assets/images/$imagePath").readBytes()
-            call.respondBytes(image, contentType)
-        } catch (e: Exception) {
-            call.respondRedirect("/error/1")
-        }
     }
 
     /**
@@ -169,9 +119,8 @@ class FileHandler @Inject constructor(
      *
      * @param content Contenido del archivo HTML.
      * @param question Pregunta a la que se refiere el archivo HTML.
-     * @return Contenido del archivo HTML con los marcadores reemplazados.
      */
-    private fun replace(content: String, question: Question): String = content
+    private fun replaceHolders(content: String, question: Question) = content
         .replace("[SEND]", appContext.getString(R.string.send_button_placeholder))
         .replace("[LOGIN_TITLE]", appContext.getString(R.string.login_title_placeholder))
         .replace("[QUESTION]", question.question)
@@ -185,9 +134,9 @@ class FileHandler @Inject constructor(
         .replaceAnswersNames(question)
         .replaceOtherFunctions(question)
 
+    /** Reemplaza todas las respuestas que tiene la pregunta por el valor correspondiente */
     private fun String.replaceAnswersNames(question: Question): String {
         var result = this
-        // Reemplaza los marcadores de posición de las respuestas por los valores correspondientes.
         question.getAnswers().forEachIndexed { index, answer ->
             result = result.replace("[ANSWER$index]", answer.answer)
         }
@@ -197,6 +146,7 @@ class FileHandler @Inject constructor(
     private fun String.replaceOtherFunctions(question: Question): String {
         // Si el usuario envia varias respuestas a la vez
         val answersToString = question.getAnswers().joinToString(";") { it.answer }
+
         // Si la pregunta es de eleccion multiple o de respuesta multiple
         val multipleChoices = if (question.isMultipleChoices) MULTIPLE_CHOICE else SINGLE_CHOICE
         val multipleAnswers = if (question.isMultipleAnswers) MULTIPLE_CHOICE else SINGLE_CHOICE
@@ -213,9 +163,6 @@ class FileHandler @Inject constructor(
         const val HTTP_FILES_EXTENSION = ".html"
         const val MULTIPLE_CHOICE = "multiple"
         const val SINGLE_CHOICE = "single"
-        const val CSV_FILE_NAME = "data"
-        const val TIME_FORMAT = "HH:mm:ss"
-        const val DATE_FORMAT = "dd/MM/yyyy"
     }
 
 }

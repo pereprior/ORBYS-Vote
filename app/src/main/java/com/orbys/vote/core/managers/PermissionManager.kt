@@ -12,7 +12,7 @@ class PermissionManager(activity: AppCompatActivity) {
     private val storagePermissionManager = StoragePermissionManager(activity)
     private val overlayPermissionManager = OverlayPermissionManager(activity)
 
-    /** Comprueba y solicita los permisos necesarios. */
+    /** Comprueba y solicita en caso de no tener los permisos que necesarios. */
     fun checkAndRequestPermissions() {
         storagePermissionManager.checkAndRequestPermission()
         overlayPermissionManager.checkAndRequestPermission()

@@ -2,6 +2,7 @@ package com.orbys.vote.data.controllers.handlers
 
 import android.content.Context
 import com.orbys.vote.R
+import com.orbys.vote.core.extensions.ERROR_ENDPOINT
 import io.ktor.http.ContentType
 import io.ktor.server.application.call
 import io.ktor.server.response.respondText
@@ -12,28 +13,25 @@ import javax.inject.Inject
 /**
  * Clase para gestionar los errores y excepciones del servidor http.
  *
- * @param appContext Contexto de la aplicación.
+ * @property appContext Contexto de la aplicación.
  */
-class ErrorHandler @Inject constructor(
-    private val appContext: Context,
-    private val fileHandler: FileHandler
-): IHttpHandler {
+class ErrorHandler @Inject constructor(private val appContext: Context) {
 
-    override fun setupRoutes(route: Route) {
+    private val fileHandler = FileHandler(appContext)
+
+    fun setupRoutes(route: Route) {
         route.apply {
             handleError()
         }
     }
 
-    /**
-     * Ruta con la página con el error correspondiente.
-     *
-     * @return GET
-     */
+    /** Ruta que devuelve al usuario el error que corresponda en cada caso */
     private fun Route.handleError() = get("$ERROR_ENDPOINT/{id}") {
         val id = call.parameters["id"]?.toIntOrNull() ?: 0
         val fileContent = replacePopupPlaceHolders(
+            // Contenido del archivo de error por defecto
             content = fileHandler.loadHtmlFile("error"),
+            // Lo modificamos segun el tipo de error que corresponda
             errorType = getErrorById(id)
         )
 
@@ -48,7 +46,6 @@ class ErrorHandler @Inject constructor(
      *
      * @param content Contenido del archivo html.
      * @param errorType Tipo de error que llama.
-     * @return Contenido del archivo html con los marcadores reemplazados.
      */
     private fun replacePopupPlaceHolders(content: String?, errorType: ErrorType): String? {
 
@@ -70,7 +67,7 @@ class ErrorHandler @Inject constructor(
         }
 
         return content
-            ?.replace(POPUP_CONTENT_PLACEHOLDER, errorMessage)
+            ?.replace("[POPUP_CONTENT]", errorMessage)
             ?.replace("[ERROR_TYPE]", errorType.code.toString())
     }
 
@@ -106,11 +103,6 @@ class ErrorHandler @Inject constructor(
         TIME_OUT(5),
         NO_RESPONSE(6),
         USER_RESPONDED(7)
-    }
-
-    private companion object {
-        const val POPUP_CONTENT_PLACEHOLDER = "[POPUP_CONTENT]"
-        const val ERROR_ENDPOINT = "/error"
     }
 
 }
