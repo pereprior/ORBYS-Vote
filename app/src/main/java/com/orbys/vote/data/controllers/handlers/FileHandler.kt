@@ -63,6 +63,7 @@ class FileHandler @Inject constructor(private val appContext: Context) {
         get("/images/empty_checkbox.svg") { loadImage("empty_checkbox.svg") }
         get("/images/filled_radio.svg") { loadImage("filled_radio.svg") }
         get("/images/filled_checkbox.svg") { loadImage("filled_checkbox.svg") }
+        get("/images/triangle.svg") { loadImage("triangle.svg") }
     }
 
     /** Ruta GET para que los usuarios puedan descargar un fichero con los resultados de la votación */

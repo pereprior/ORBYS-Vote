@@ -1,7 +1,5 @@
 // Función que genera un id aleatorio para los popups
 function generateId() { return 'popup_' + Math.random().toString(36).substr(2, 9); }
-// Función para escalar los popups según la orientación de la pantalla
-function getPopupSizeMultiplier(portraitValue, landscapeValue) { return window.innerWidth > window.innerHeight ? landscapeValue : portraitValue; }
 
 // Función que crea un popup con un mensaje
 function createInfoPopup(icon, message, buttonText, showImmediately = false) {
@@ -9,8 +7,7 @@ function createInfoPopup(icon, message, buttonText, showImmediately = false) {
         id: generateId(),
         title: " ",
         textColor: "#FFFFFF",
-        widthMultiplier: getPopupSizeMultiplier(0.9, 0.8),
-        heightMultiplier: getPopupSizeMultiplier(0.4, 0.1),
+        widthMultiplier: getPopupSizeResponsive(),
         backgroundColor: "#010101",
         content: `<img src="../images/${icon}" alt="ERROR" class="logo">
                                 <span><strong>${message}</strong></span>
@@ -37,8 +34,7 @@ function createConfirmPopup(message, buttonRefuseText, buttonAcceptText, infoPop
         id: generateId(),
         title: " ",
         textColor: "#FFFFFF",
-        widthMultiplier: getPopupSizeMultiplier(0.9, 0.8),
-        heightMultiplier: getPopupSizeMultiplier(0.4, 0.1),
+        widthMultiplier: getPopupSizeResponsive(),
         backgroundColor: "#010101",
         content: `
             <img src="../images/alert.svg" alt="ALERT" class="logo">
@@ -67,6 +63,29 @@ function createConfirmPopup(message, buttonRefuseText, buttonAcceptText, infoPop
     return popup;
 }
 
+// Función para escalar los popups según la orientación y el tamaño de la pantalla
+function getPopupSizeResponsive() {
+    let multiplier;
+    if (window.innerWidth > window.innerHeight) {
+        if (window.innerWidth > 800) {
+            // Responsive para monitores
+            multiplier = 0.7;
+        } else {
+            // Responsive para movil en orientación horizontal
+            multiplier = 0.5;
+        }
+    } else {
+        if (window.innerWidth > 600) {
+            // Responsive para tablets
+            multiplier = 0.75;
+        } else {
+            // Responsive para movil en orientación vertical
+            multiplier = 0.85;
+        }
+    }
+    return multiplier;
+}
+
 // Función que oculta o muestra un elemento por su id
 function setElementVisibilityById(id, action) {
     const element = document.getElementById(id);
@@ -82,13 +101,21 @@ function setElementVisibilityById(id, action) {
 // Función que oculta los principales elementos de la página
 function hideElements() {
     setElementVisibilityById('myForm', 'hide');
-    setElementVisibilityById('triangulo', 'hide');
+    setElementVisibilityById('triangle', 'hide');
     setElementVisibilityById('questionForm', 'hide');
 }
 
 // Función que muestra los principales elementos de la página
 function showElements() {
     setElementVisibilityById('myForm', 'show');
-    setElementVisibilityById('triangulo', 'show');
+    setElementVisibilityById('triangle', 'show');
     setElementVisibilityById('questionForm', 'show');
 }
+
+window.onload = function() {
+    // Deshabilitamos el menú contextual en las imágenes
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG')
+            e.preventDefault();
+    }, false);
+};
