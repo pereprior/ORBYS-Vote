@@ -18,54 +18,45 @@ import java.util.Calendar
 import java.util.Locale
 
 /**
- * Repositorio para manejar las operaciones de archivos.
+ * Repositorio que gestiona las operaciones relacionadas al archivo de almacenamiento de datos CSV.
  *
  * @property context Contexto de la aplicación.
  */
 class FileRepositoryImpl private constructor(
     private val context: Context,
 ) : IFileRepository {
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        @Volatile
-        private var INSTANCE: FileRepositoryImpl? = null
-        const val CSV_FILE_NAME = "data"
 
-        // Instancia unica para el repositorio.
-        fun getInstance(context: Context): FileRepositoryImpl {
-            return INSTANCE ?: synchronized(this) {
-                FileRepositoryImpl(context).also { INSTANCE = it }
-            }
-        }
-    }
+    /** Variable que representa el fichero contenedor de los resultados de la votación */
+    var resultFile = File("assets")
+        private set
 
-    private var file = File("")
-    override fun getFile() = file
-    override fun deleteFile() { if (file.exists()) file.delete() }
+    /** Función para eliminar el fichero del dispositivo */
+    override fun deleteFile() { if (resultFile.exists()) resultFile.delete() }
 
     /**
-     * Crea un archivo CSV y escribe la leyenda de la pregunta.
+     * Crea un archivo CSV en el dispositivo para almacenar los resultados de la votación.
      *
      * @param fileName Nombre del nuevo archivo.
      * @param question Pregunta a la que corresponde el nuevo fichero.
      */
     fun createFile(question: Question, fileName: String = CSV_FILE_NAME) {
         val filePath = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + "$fileName.csv"
-        file = File(filePath)
+        resultFile = File(filePath)
 
-        // Si el archivo no existe, se crea y se escribe la leyenda de la pregunta.
-        if (!file.exists()) {
-            file.createNewFile()
-            writeLegend(question, question.getAnswersAsString())
+        // Si el archivo no existe, creamos uno nuevo
+        if (!resultFile.exists()) {
+            resultFile.createNewFile()
+            // Escribimos la leyenda de la pregunta lanzada en las primeras lineas del archivo
+            writeLegend(question)
         }
     }
 
     /**
-     * Escribe una línea en el archivo CSV correspondiente a una respuesta.
+     * Escribe una nueva línea en el archivo CSV correspondiente a una respuesta de un cliente
      *
-     * @param ip Dirección IP del usuario que ha respondido.
-     * @param username Nombre del usuario que ha respondido.
-     * @param answer Respuesta seleccionada por el usuario.
+     * @param ip Dirección IP del cliente que ha respondido.
+     * @param username Nombre de usuario  del cliente que ha respondido.
+     * @param answer Respuesta seleccionada por el cliente.
      */
     fun writeLine(
         ip: String,
@@ -77,8 +68,8 @@ class FileRepositoryImpl private constructor(
         val date = dateFormatter.format(Calendar.getInstance().time)
         val time = timeFormatter.format(Calendar.getInstance().time)
 
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
+        if (resultFile.exists()) {
+            val fileWriter = FileWriter(resultFile, true)
             val bufferedWriter = BufferedWriter(fileWriter)
 
             val csvData = "$date;$time;$ip;$username;$answer\n"
@@ -89,20 +80,20 @@ class FileRepositoryImpl private constructor(
     }
 
     /**
-     * Modifica una línea en el archivo CSV.
+     * Reemplaza el contenido de una linea dada dentro del fichero csv
      *
      * @param lineNumber Número de la línea a modificar.
      * @param newContent Nuevo contenido de la línea.
      */
     override suspend fun modifyLineInFile(lineNumber: Int, newContent: String) {
         withContext(Dispatchers.IO) {
-            if (file.exists()) {
-                val lines = file.readLines().toMutableList()
+            if (resultFile.exists()) {
+                val lines = resultFile.readLines().toMutableList()
 
                 if (lineNumber < 0 || lineNumber >= lines.size) return@withContext
 
                 lines[lineNumber] = newContent
-                file.writeText(lines.joinToString(separator = "\n"))
+                resultFile.writeText(lines.joinToString(separator = "\n"))
             }
         }
     }
@@ -111,13 +102,12 @@ class FileRepositoryImpl private constructor(
      * Escribe la leyenda de la pregunta en el archivo CSV.
      *
      * @param question Pregunta a la que corresponde el archivo.
-     * @param answers Lista de respuestas de la pregunta.
      */
-    private fun writeLegend(question: Question, answers: List<String>) {
-        if (file.exists()) {
-            val fileWriter = FileWriter(file, true)
+    private fun writeLegend(question: Question) {
+        if (resultFile.exists()) {
+            val fileWriter = FileWriter(resultFile, true)
             val bufferedWriter = BufferedWriter(fileWriter)
-            val answersToCsv = answers.joinToString(";")
+            val answersToCsv = question.getAnswersAsString().joinToString(";")
             val modifiedQuestion = question.question.replace("\n", " ")
 
             bufferedWriter.write("${context.getString(R.string.csv_legend_question_type)}${question.getAnswerType()}\n")
@@ -126,6 +116,20 @@ class FileRepositoryImpl private constructor(
             bufferedWriter.write("${context.getString(R.string.csv_legend)}\n")
 
             bufferedWriter.close()
+        }
+    }
+
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        @Volatile
+        private var INSTANCE: FileRepositoryImpl? = null
+        const val CSV_FILE_NAME = "data"
+
+        /** Instancia única de la clase FileRepositoryImpl */
+        fun getInstance(context: Context): FileRepositoryImpl {
+            return INSTANCE ?: synchronized(this) {
+                FileRepositoryImpl(context).also { INSTANCE = it }
+            }
         }
     }
 

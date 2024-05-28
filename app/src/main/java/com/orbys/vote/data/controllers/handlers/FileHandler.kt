@@ -68,7 +68,7 @@ class FileHandler @Inject constructor(private val appContext: Context) {
 
     /** Ruta GET para que los usuarios puedan descargar un fichero con los resultados de la votación */
     private fun Route.handleDownloadRoute() = get(DOWNLOAD_ENDPOINT) {
-        val file = fileRepository.getFile()
+        val file = fileRepository.resultFile
 
         // Si el tiempo para responder la pregunta esta activo, no se puede descargar el archivo.
         if (!questionRepository.getTimerState()) call.respondRedirect("$ERROR_ENDPOINT/3")

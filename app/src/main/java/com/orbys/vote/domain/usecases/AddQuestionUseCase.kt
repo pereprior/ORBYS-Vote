@@ -8,5 +8,5 @@ import javax.inject.Inject
 class AddQuestionUseCase @Inject constructor(
     private val repository: IQuestionRepository
 ) {
-    operator fun invoke(question: Question) { repository.addQuestion(question) }
+    operator fun invoke(question: Question) { repository.generateQuestion(question) }
 }
