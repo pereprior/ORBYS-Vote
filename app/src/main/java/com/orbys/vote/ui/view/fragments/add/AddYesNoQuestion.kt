@@ -24,7 +24,7 @@ class AddYesNoQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
         ),
         answerType = answerType,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
+        timer = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
     )
 
 }

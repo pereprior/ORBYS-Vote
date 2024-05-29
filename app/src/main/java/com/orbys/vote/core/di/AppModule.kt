@@ -1,13 +1,13 @@
 package com.orbys.vote.core.di
 
 import android.content.Context
+import com.orbys.vote.data.repositories.ClientRepositoryImpl
 import com.orbys.vote.data.repositories.FileRepositoryImpl
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
-import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.data.services.HttpService
+import com.orbys.vote.domain.repositories.IClientRepository
 import com.orbys.vote.domain.repositories.IFileRepository
 import com.orbys.vote.domain.repositories.IQuestionRepository
-import com.orbys.vote.domain.repositories.IUsersRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +32,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUsersRepository(): IUsersRepository = UsersRepositoryImpl.getInstance()
+    fun provideUsersRepository(): IClientRepository = ClientRepositoryImpl.getInstance()
 
     @Provides
     @Singleton

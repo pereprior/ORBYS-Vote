@@ -7,9 +7,9 @@ import com.orbys.vote.core.extensions.ERROR_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswers
 import com.orbys.vote.core.extensions.loadFile
 import com.orbys.vote.core.extensions.loadImage
+import com.orbys.vote.data.repositories.ClientRepositoryImpl
 import com.orbys.vote.data.repositories.FileRepositoryImpl
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
-import com.orbys.vote.data.repositories.UsersRepositoryImpl
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import io.ktor.http.ContentType
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class FileHandler @Inject constructor(private val appContext: Context) {
 
     private val questionRepository = QuestionRepositoryImpl.getInstance()
-    private val usersRepository = UsersRepositoryImpl.getInstance()
+    private val usersRepository = ClientRepositoryImpl.getInstance()
     private val fileRepository = FileRepositoryImpl.getInstance(appContext)
 
     fun setupRoutes(route: Route) {

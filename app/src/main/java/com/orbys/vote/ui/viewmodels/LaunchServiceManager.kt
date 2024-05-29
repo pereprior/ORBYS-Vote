@@ -14,13 +14,13 @@ import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
-import com.orbys.vote.domain.models.Bar
 import com.orbys.vote.domain.models.Question
-import com.orbys.vote.domain.usecases.ClearUsersListUseCase
+import com.orbys.vote.domain.usecases.ClearClientListUseCase
 import com.orbys.vote.domain.usecases.GetHttpServiceUseCase
 import com.orbys.vote.domain.usecases.GetQuestionUseCase
 import com.orbys.vote.domain.usecases.GetUsersListUseCase
 import com.orbys.vote.domain.usecases.SetTimeOutUseCase
+import com.orbys.vote.ui.components.graphics.GraphicView
 import com.orbys.vote.ui.components.qr.QRCodeGenerator
 import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.MainActivity
@@ -36,14 +36,14 @@ import javax.inject.Inject
  *
  * @param context Contexto de la aplicación
  * @param getQuestionUseCase Caso de uso para obtener la pregunta del repositorio
- * @param clearUsersListUseCase Caso de uso para limpiar la lista de usuarios
+ * @param clearClientListUseCase Caso de uso para limpiar la lista de usuarios
  * @param setTimeOutUseCase Caso de uso para cambiar el estado del temporizador
  * @param getUsersListUseCase Caso de uso para obtener la lista de usuarios
  * @param getHttpServiceUseCase Caso de uso para obtener el servicio http
  */
 class LaunchServiceManager @Inject constructor(
-    private val context: Context, private val getQuestionUseCase: GetQuestionUseCase, 
-    private val clearUsersListUseCase: ClearUsersListUseCase, private val setTimeOutUseCase: SetTimeOutUseCase, 
+    private val context: Context, private val getQuestionUseCase: GetQuestionUseCase,
+    private val clearClientListUseCase: ClearClientListUseCase, private val setTimeOutUseCase: SetTimeOutUseCase,
     private val getUsersListUseCase: GetUsersListUseCase, private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
 
@@ -84,8 +84,8 @@ class LaunchServiceManager @Inject constructor(
         banner.closeButton.visibility = View.GONE
 
         // Si el tiempo de espera no es nulo se muestra el temporizador
-        if (question.timeOut!! > 0)
-            setTimerCount(question.timeOut)
+        if (question.timer!! > 0)
+            setTimerCount(question.timer)
 
         // Accion para finalizar una pregunta
         timeOutButton.setOnClickListener {
@@ -177,13 +177,13 @@ class LaunchServiceManager @Inject constructor(
 
                 // Por cada respuesta nueva añadimos una barra al grafico
                 answers.forEach { answer ->
-                    val bar = Bar(answer.answer, answer.getCount())
+                    val bar = GraphicView.Bar(answer.answer, answer.getCount())
                     barView.addBar(bar)
 
                     GlobalScope.launch {
                         // Recoge los cambios en contador para cada respuesta
                         answer.count.collect { count ->
-                            bar.height = count
+                            bar.length = count
                             barView.invalidate()
                         }
                     }
@@ -222,7 +222,7 @@ class LaunchServiceManager @Inject constructor(
         context.startActivity(intent)
 
         // Limpiamos la lista de usuarios
-        clearUsersListUseCase()
+        clearClientListUseCase()
 
         // Detenemos el servicio
         context.stopService(Intent(context, FloatingViewService::class.java))

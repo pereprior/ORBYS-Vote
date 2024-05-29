@@ -46,7 +46,7 @@ class AddNumericQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
         answerType = answerType,
         maxNumericAnswer = answersManager.getAnswersText().firstOrNull()?.toIntOrNull() ?: 0,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
+        timer = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
         isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
     )
 

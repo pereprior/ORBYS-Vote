@@ -32,7 +32,7 @@ class QuestionRepositoryImpl private constructor(): IQuestionRepository {
     override fun generateQuestion(question: Question) { this.question.tryEmit(question) }
 
     /** Actualiza el estado del temporizador */
-    override fun setTimeOutAs(isTimeOut: Boolean) { isTimerOut.tryEmit(isTimeOut) }
+    override fun setTimerAs(isTimeOut: Boolean) { isTimerOut.tryEmit(isTimeOut) }
 
     /**
      * Busca si una respuesta existe en la lista de respuestas de la pregunta actual

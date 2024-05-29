@@ -5,9 +5,9 @@ import com.orbys.vote.core.extensions.ERROR_ENDPOINT
 import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
 import com.orbys.vote.core.extensions.USER_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswerType
+import com.orbys.vote.data.repositories.ClientRepositoryImpl
 import com.orbys.vote.data.repositories.QuestionRepositoryImpl
-import com.orbys.vote.data.repositories.UsersRepositoryImpl
-import com.orbys.vote.domain.models.User
+import com.orbys.vote.domain.models.Client
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
@@ -29,7 +29,7 @@ import javax.inject.Inject
 class ResponseHandler@Inject constructor(appContext: Context) {
 
     private val questionRepository = QuestionRepositoryImpl.getInstance()
-    private val usersRepository = UsersRepositoryImpl.getInstance()
+    private val usersRepository = ClientRepositoryImpl.getInstance()
     private val fileHandler = FileHandler(appContext)
 
     fun setupRoutes(route: Route) {
@@ -49,7 +49,7 @@ class ResponseHandler@Inject constructor(appContext: Context) {
         val fileContent = fileHandler.loadHtmlFile(question.getAnswerType())
 
         // Si la pregunta no es anonima y el usuario no existe, redirigimos a la pagina de login
-        if(!question.isAnonymous && usersRepository.userNotExists(userIP))
+        if(!question.isAnonymous && usersRepository.clientNotExists(userIP))
             call.respondRedirect(USER_ENDPOINT)
 
         // Si el tiempo para responder se ha agotado, redirigimos a la pagina de error
@@ -57,7 +57,7 @@ class ResponseHandler@Inject constructor(appContext: Context) {
             call.respondRedirect("$ERROR_ENDPOINT/5")
 
         // Si la pregunta no es de multiples respuestas y el usuario ya ha respondido, redirigimos a la pagina de error
-        if (usersRepository.userResponded(userIP) && !question.isMultipleAnswers)
+        if (usersRepository.clientResponded(userIP) && !question.isMultipleAnswers)
             call.respondRedirect("$ERROR_ENDPOINT/7")
 
         try {
@@ -105,8 +105,8 @@ class ResponseHandler@Inject constructor(appContext: Context) {
         }
 
         // Si el usuario no existe, se registra
-        if (usersRepository.userNotExists(userIP))
-            usersRepository.addUser(User(userIP, username))
+        if (usersRepository.clientNotExists(userIP))
+            usersRepository.addClient(Client(userIP, username))
 
         call.respondRedirect(QUESTION_ENDPOINT)
     }
@@ -126,10 +126,10 @@ class ResponseHandler@Inject constructor(appContext: Context) {
         questionRepository.incAnswerCount(choice)
 
         // Si el usuario no existe, se registra
-        if (usersRepository.userNotExists(user))
-            usersRepository.addUser(User(user, usersRepository.getUsernameByIp(user), true))
+        if (usersRepository.clientNotExists(user))
+            usersRepository.addClient(Client(user, usersRepository.getUsernameByIp(user), true))
         else
-            usersRepository.setUserResponded(user)
+            usersRepository.setClientResponded(user)
 
         // Si la respuesta no es nula, se añade al archivo de datos
         if (choice != null)

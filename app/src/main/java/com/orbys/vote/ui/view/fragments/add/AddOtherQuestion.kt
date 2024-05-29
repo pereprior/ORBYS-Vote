@@ -77,7 +77,7 @@ class AddOtherQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
         answers = fieldsManager.getAnswers(),
         answerType = answerType,
         isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timeOut = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
+        timer = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
         isMultipleChoices = binding.multiAnswerQuestionOption.isChecked,
         isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
     )

@@ -15,6 +15,12 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.routing.routing
 import javax.inject.Inject
 
+/**
+ * Servicio que se encarga de iniciar el servidor HTTP
+ *
+ * @property controller Controlador de las rutas del servidor
+ * @property server Servidor HTTP
+ */
 @AndroidEntryPoint
 class HttpService: Service() {
 
@@ -30,6 +36,7 @@ class HttpService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int) = START_NOT_STICKY
 
+    /** Inicia el servidor HTTP en un hilo aparte */
     private fun startServer() {
         Thread {
             server = createServer()
@@ -37,6 +44,7 @@ class HttpService: Service() {
         }.start()
     }
 
+    /** Crea el servidor HTTP con las plantillas y las rutas correspondientes */
     private fun createServer() = embeddedServer(Netty, port = SERVER_PORT) {
         install(FreeMarker) {
             templateLoader = ClassTemplateLoader(this::class.java.classLoader, "assets")
@@ -46,7 +54,9 @@ class HttpService: Service() {
     }
 
     override fun onDestroy() {
+        // Elimina el fichero de los resultados
         controller.clearDataFile()
+        // Detiene el servidor HTTP
         server?.stop(1000, 5000)
 
         super.onDestroy()
