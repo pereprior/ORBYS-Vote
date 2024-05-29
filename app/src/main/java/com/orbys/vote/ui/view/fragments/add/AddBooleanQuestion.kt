@@ -7,7 +7,7 @@ import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AddBooleanQuestion(viewModel: QuestionViewModel) : AddFragment(viewModel) {
+class AddBooleanQuestion(viewModel: QuestionViewModel) : AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.BOOLEAN
 

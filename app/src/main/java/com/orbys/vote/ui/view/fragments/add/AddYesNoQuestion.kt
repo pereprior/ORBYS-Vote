@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
  */
-class AddYesNoQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
+class AddYesNoQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.YES_NO
 

@@ -8,18 +8,18 @@ import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
-import com.orbys.vote.ui.components.managers.AnswerManager
-import com.orbys.vote.ui.components.managers.NumericAnswersManager
+import com.orbys.vote.ui.components.managers.AnswerFieldsManager
+import com.orbys.vote.ui.components.managers.NumericFieldsManager
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Numerico".
  */
-class AddNumericQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
+class AddNumericQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.NUMERIC
 
-    private lateinit var answersManager: AnswerManager
+    private lateinit var answersManager: AnswerFieldsManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +28,7 @@ class AddNumericQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
             addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.medium_fragment_layout_height)
 
             // Configurar el formulario para añadir el número máximo para la respuesta
-            answersManager = NumericAnswersManager(
+            answersManager = NumericFieldsManager(
                 context = requireContext(),
                 layout = answersLayout,
                 hintText = getString(R.string.numeric_answer_hint)

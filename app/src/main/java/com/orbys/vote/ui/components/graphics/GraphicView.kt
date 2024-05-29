@@ -38,7 +38,7 @@ abstract class GraphicView(
     }
 
     protected fun setPaintColor(color: Int) {
-        val resColor = context.getColor(R.color.gray3)
+        val resColor = context.getColor(color)
         paint.color = resColor
     }
 

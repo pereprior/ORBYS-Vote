@@ -16,12 +16,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Actividad principal de la aplicación
+ *
+ * @property viewModel Contiene los datos de las preguntas las funciones para poder gestionarlas
+ * @property binding Referencia a la vista de la actividad
+ * @property permissionManager Gestor de los permisos necesarios para la aplicación
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<QuestionViewModel>()
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionManager: PermissionManager
 
@@ -45,12 +48,19 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+        // Si se han concedido los permisos necesarios, mostrar los fragmentos
         permissionManager
             .onRequestPermissionsResult(requestCode, grantResults) {
                 printFragments()
             }
     }
 
+    /**
+     * Imprime los fragmentos en la actividad
+     *
+     * Si se ha pasado un extra en el intent, se mostrará el fragmento de descarga del fichero
+     * en caso contrario, se mostrará el fragmento de selección de tipos de preguntas
+     */
     private fun printFragments() {
 
         with(binding) {
@@ -68,7 +78,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
     }
 
 }

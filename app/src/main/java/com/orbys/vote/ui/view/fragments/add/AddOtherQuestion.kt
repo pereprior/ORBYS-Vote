@@ -8,16 +8,16 @@ import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
-import com.orbys.vote.ui.components.managers.TextAnswersManager
+import com.orbys.vote.ui.components.managers.TextFieldsManager
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Otros".
  */
-class AddOtherQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
+class AddOtherQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.OTHER
-    private lateinit var fieldsManager: TextAnswersManager
+    private lateinit var fieldsManager: TextFieldsManager
 
     companion object {
         private const val MIN_ANSWERS = 2
@@ -31,7 +31,7 @@ class AddOtherQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
             addContainer.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
 
             // Configurar el formulario para añadir las respuestas
-            fieldsManager = TextAnswersManager(
+            fieldsManager = TextFieldsManager(
                 context = requireContext(),
                 layout = answersLayout,
                 minAnswers = MIN_ANSWERS,

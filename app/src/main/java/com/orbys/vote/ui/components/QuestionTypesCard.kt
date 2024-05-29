@@ -9,9 +9,8 @@ import com.orbys.vote.databinding.CardTypesQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
 
 /**
- * Clase que sirve como base para las vistas que representan a las tarjetas de tipos de preguntas.
- *
- * @property binding Enlace común a la vista que comparten todas las clases que extienden.
+ * Clase que extiende de [FrameLayout]
+ * Representa una tarjeta con el tipo de pregunta y su icono correspondiente.
  */
 class QuestionTypesCard(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

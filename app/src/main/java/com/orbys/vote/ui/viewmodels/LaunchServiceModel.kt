@@ -32,7 +32,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
- * Clase que gestiona los datos que se muestran en la vista flotante
+ * Modelo que gestiona los datos que se muestran en la vista flotante
  *
  * @param context Contexto de la aplicación
  * @param getQuestionUseCase Caso de uso para obtener la pregunta del repositorio
@@ -41,79 +41,72 @@ import javax.inject.Inject
  * @param getUsersListUseCase Caso de uso para obtener la lista de usuarios
  * @param getHttpServiceUseCase Caso de uso para obtener el servicio http
  */
-class LaunchServiceManager @Inject constructor(
-    private val context: Context, private val getQuestionUseCase: GetQuestionUseCase,
-    private val clearClientListUseCase: ClearClientListUseCase, private val setTimeOutUseCase: SetTimeOutUseCase,
-    private val getUsersListUseCase: GetUsersListUseCase, private val getHttpServiceUseCase: GetHttpServiceUseCase
+class LaunchServiceModel @Inject constructor(
+    private val context: Context,
+    private val getQuestionUseCase: GetQuestionUseCase,
+    private val clearClientListUseCase: ClearClientListUseCase,
+    private val setTimeOutUseCase: SetTimeOutUseCase,
+    private val getUsersListUseCase: GetUsersListUseCase,
+    private val getHttpServiceUseCase: GetHttpServiceUseCase
 ) {
 
+    /** Devuelve una instancia del servicio que inicia el servidor http */
+    fun getHttpService() = getHttpServiceUseCase()
+
+    /**
+     * Añade los elementos de la vista y la lógica de la pregunta lanzada
+     *
+     * @param binding Enlace con la vista
+     */
     fun bind(binding: ServiceLaunchQuestionBinding) {
         val question = getQuestionUseCase()
 
         with(binding) {
-            // Información de la pregunta
-            setQuestionElements(question)
+            banner.closeButton.visibility = View.GONE
+            questionText.text = question.question
 
-            // Opciones para responder la pregunta
             setQrOptions()
 
-            // Recuento de usuarios que han respondido
+            setTimer(question.timer)
+
             setUsersCount()
 
-            // Grafico de barras con el recuento de respuestas
             setGraphicAnswersCount(question)
-
-            // Ponemos el servidor escuchando respuestas
-            setTimeOutUseCase(false)
         }
-    }
 
-    // Devuelve una instancia del servicio http
-    fun getHttpService() = getHttpServiceUseCase()
-
-
-    /**
-     * Añade a los elementos de la vista la pregunta lanzada en el widget
-     *
-     * @param question Pregunta lanzada
-     */
-    private fun ServiceLaunchQuestionBinding.setQuestionElements(question: Question) {
-        // Titulo de la pregunta
-        questionText.text = question.question
-        // Ocultamos el botón de cerrar la aplicación en el widget
-        banner.closeButton.visibility = View.GONE
-
-        // Si el tiempo de espera no es nulo se muestra el temporizador
-        if (question.timer!! > 0)
-            setTimerCount(question.timer)
-
-        // Accion para finalizar una pregunta
-        timeOutButton.setOnClickListener {
-            setTimeOutUseCase(true)
-            timer.cancelTimer()
-
-            stopService()
-        }
+        // Ponemos el servidor escuchando respuestas
+        setTimeOutUseCase(false)
     }
 
     /**
-     * Añade a los elementos de la vista las diferentes opciones para responder la pregunta
+     * Esta función gestiona las opciones del qr que se muestran en la vista flotante
+     * Comprobamos si hay algúna IP como punto de acceso, si no la hay solo mostramos el qr para la red local
      */
     private fun ServiceLaunchQuestionBinding.setQrOptions() {
         with(qrContainer) {
             val hotspotUrl = getServerUrl(QUESTION_ENDPOINT, true)
+            // Mostramos el qr por defecto al abrir el widget
             setQrCode(!hotspotUrl.isNullOrEmpty())
 
+            // Al pulsar a cada uno de los contenedores, se muestra el qr correspondiente
             respondContainer.setOnClickListener { setQrCode() }
             respondHotspotContainer.setOnClickListener { setQrCode( true) }
         }
     }
 
+    /**
+     * Esta función modifica la vista del qr en función de si se debe mostrar el qr para la red local o para la red de punto de acceso
+     *
+     * @param isHotspot Indica si se debe mostrar el qr para hotspot
+     * @param endpoint Indica el endpoint al que te dirige la url del código qr
+     */
     private fun ServiceLaunchQuestionBinding.setQrCode(
-        isHotspot: Boolean = false, endpoint: String = QUESTION_ENDPOINT
+        isHotspot: Boolean = false,
+        endpoint: String = QUESTION_ENDPOINT
     ) {
         with(qrContainer) {
             val url = getServerUrl(endpoint, isHotspot)
+            // Si la url es nula o vacía, mostramos un mensaje de error
             if (url.isNullOrEmpty()) {
                 context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
                 return
@@ -123,6 +116,7 @@ class LaunchServiceManager @Inject constructor(
             val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
 
             if (isHotspot) {
+                // Qr para la red de punto de acceso
                 lanQrCode.visibility = View.GONE
                 lanQrText.visibility = View.GONE
                 step1HotspotContainer.visibility = View.VISIBLE
@@ -135,6 +129,7 @@ class LaunchServiceManager @Inject constructor(
                     setExpandOnClick()
                 }
             } else {
+                // Qr para la red local
                 step1HotspotContainer.visibility = View.GONE
                 step2HotspotContainer.visibility = View.GONE
 
@@ -147,9 +142,53 @@ class LaunchServiceManager @Inject constructor(
                     text = url
                 }
             }
+
         }
     }
 
+    /**
+     * Función que determina si el cliente puede seguir contestando una pregunta o no
+     *
+     * @param time Tiempo de espera para la pregunta
+     */
+    private fun ServiceLaunchQuestionBinding.setTimer(time: Int?) {
+        // Si el tiempo de espera no es nulo ni 0, se muestra el temporizador
+        if (time!! > 0)
+            setTimerCount(time)
+
+        // Botón para finalizar la pregunta
+        timeOutButton.setOnClickListener {
+            setTimeOutUseCase(true)
+            timer.cancelTimer()
+
+            stopService()
+        }
+    }
+
+    /**
+     * Función que muestra y gestiona el temporizador en la vista flotante
+     *
+     * @param timeInMinutes Tiempo de espera para la pregunta en minutos
+     */
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
+        // Muestra el temporizador
+        timer.visibility = ConstraintLayout.VISIBLE
+
+        // Convertimos los minutos a milisegundos
+        val timeInMillis = timeInMinutes.minutesToMillis()
+
+        // Iniciamos el temporizador
+        timer.setTimeInMillis(timeInMillis)
+        timer.startCountDown()
+
+        // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
+        GlobalScope.launch {
+            timer.isFinished.collect { setTimeOutUseCase(it) }
+        }
+    }
+
+    /** Función que gestiona el contador de usuarios que han respondido a la pregunta */
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setUsersCount() {
         // Recogemos los cambios en el número de usuarios que han respondido
@@ -162,12 +201,19 @@ class LaunchServiceManager @Inject constructor(
         }
     }
 
+    /**
+     * Función que gestiona el gráfico de respuestas de la pregunta
+     *
+     * @param question Pregunta a la que pertenecen las respuestas
+     */
     @OptIn(DelicateCoroutinesApi::class)
     private fun ServiceLaunchQuestionBinding.setGraphicAnswersCount(question: Question) {
+        val maxAnswersNumber = 5
+        // Si la pregunta es numérica, el tamaño del gráfico será fijo ya que pueden haber hasta 9999 respuestas diferentes
         if (question.answerType == AnswerType.NUMERIC) {
-            // Tamaño fijo para la pregunta de tipo numérico debido a que puede tener más de 5 respuestas
-            scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * 5
-            // Tamaño variable dependiendo del número de respuestas para las preguntas con respuestas fijas
+            scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * maxAnswersNumber
+
+        // Si no es numérica, el tamaño del gráfico varia dependiendo del número de respuestas de la pregunta
         } else scrollView.layoutParams.height = context.resources.getDimensionPixelSize(R.dimen.graphic_line_size) * question.answers.value.size
 
         GlobalScope.launch {
@@ -194,24 +240,7 @@ class LaunchServiceManager @Inject constructor(
 
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun ServiceLaunchQuestionBinding.setTimerCount(timeInMinutes: Int) {
-        // Muestra el temporizador
-        timer.visibility = ConstraintLayout.VISIBLE
-
-        // Convertimos los minutos a milisegundos
-        val timeInMillis = timeInMinutes.minutesToMillis()
-
-        // Iniciamos el temporizador
-        timer.setTimeInMillis(timeInMillis)
-        timer.startCountDown()
-
-        // Lanzamos una corrutina para recoger los cambios en el estado del temporizador
-        GlobalScope.launch {
-            timer.isFinished.collect { setTimeOutUseCase(it) }
-        }
-    }
-
+    /** Función que detiene el servicio flotante y vuelve a abrir la actividad principal */
     private fun stopService() {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK

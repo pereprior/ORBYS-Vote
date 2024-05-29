@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 /**
  * Clase que representa una actividad para añadir preguntas de tipo "Estrellas".
  */
-class AddStarsQuestion(viewModel: QuestionViewModel): AddFragment(viewModel) {
+class AddStarsQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.STARS
 

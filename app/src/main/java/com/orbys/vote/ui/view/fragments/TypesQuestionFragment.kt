@@ -13,15 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.showToastWithCustomView
-import com.orbys.vote.data.services.HttpService
 import com.orbys.vote.databinding.FragmentQuestionTypesBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.ui.components.QuestionTypesCard
 import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.fragments.add.AddBooleanQuestion
-import com.orbys.vote.ui.view.fragments.add.AddFragment
 import com.orbys.vote.ui.view.fragments.add.AddNumericQuestion
 import com.orbys.vote.ui.view.fragments.add.AddOtherQuestion
+import com.orbys.vote.ui.view.fragments.add.AddQuestionFragment
 import com.orbys.vote.ui.view.fragments.add.AddStarsQuestion
 import com.orbys.vote.ui.view.fragments.add.AddYesNoQuestion
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
@@ -29,7 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
 /**
- * Fragmento que contiene los tipos de preguntas que se pueden crear.
+ * Fragmento inicial que contiene botones con los distintos tipos de preguntas que se pueden crear.
+ *
+ * @property viewModel Contiene los datos de las preguntas las funciones para poder gestionarlas
  */
 @AndroidEntryPoint
 class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment() {
@@ -62,7 +63,13 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
 
     }
 
-    private fun FrameLayout.addCardTypeView(answerType: AnswerType, fragment: AddFragment) {
+    /**
+     * Añade una tarjeta con el tipo de pregunta al [FrameLayout].
+     *
+     * @param answerType Tipo de pregunta
+     * @param fragment Fragmento a mostrar al hacer click en la tarjeta
+     */
+    private fun FrameLayout.addCardTypeView(answerType: AnswerType, fragment: AddQuestionFragment) {
         addView(
             QuestionTypesCard(requireContext()).apply {
                 bindCard(answerType)
@@ -70,10 +77,12 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
         )
 
         setOnClickListener {
+            // Si no hay conexión a Internet, mostrar un mensaje de error
             if (!viewModel.isNetworkAvailable(activity as AppCompatActivity)) {
                 activity?.showToastWithCustomView(getString(R.string.no_network_error), Toast.LENGTH_LONG)
                 return@setOnClickListener
             } else {
+                // Mostrar el fragmento para crear una nueva pregunta del tipo seleccionado
                 parentFragmentManager.beginTransaction().apply {
                     replace(R.id.fragment_container, fragment)
                     addToBackStack(null)
@@ -83,6 +92,7 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
         }
     }
 
+    /** Establece la función a un botón para cerrar la actividad y la aplicación */
     private fun ImageButton.backButtonFunctions() {
         // Detenemos el servicio
         this.setOnClickListener {
@@ -91,9 +101,9 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
         }
     }
 
-    // Cierra los servicios activos de la actividad
+    /** Cierra los servicios activos de la actividad */
     private fun FragmentActivity.stopActiveServices() {
-        this.stopService(Intent(this, HttpService::class.java))
+        this.stopService(Intent(this, viewModel.getHttpService()::class.java))
         this.stopService(Intent(this, FloatingViewService::class.java))
     }
 

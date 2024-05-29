@@ -13,19 +13,21 @@ import com.orbys.vote.R
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 
 /**
- * Clase que representa una vista para lanzar una pregunta a ser contestada.
+ * Clase que extiende a [ConstraintLayout]
+ * Representa una vista flotante que el usuario puede mover por la pantalla.
  *
  * @property binding Objeto de enlace para acceder a los elementos de la interfaz de usuario.
  * @property windowManager Gestor de ventanas para controlar la vista.
- * @property layoutParams Parámetros de diseño de la ventana.
- * @property x Coordenada x de la vista.
- * @property y Coordenada y de la vista.
+ * @property layoutParams Parámetros de diseño del constraint layout.
+ * @property x Coordenada x inicial.
+ * @property y Coordenada y inicial.
  * @property onChangeX Cambio en la coordenada x durante un evento de movimiento.
  * @property onChangeY Cambio en la coordenada y durante un evento de movimiento.
  */
 class LaunchQuestionView(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
 ): ConstraintLayout(context, attrs, defStyleAttr), View.OnTouchListener {
+
     var binding: ServiceLaunchQuestionBinding
         private set
     var windowManager: WindowManager
@@ -34,12 +36,12 @@ class LaunchQuestionView(
     private val layoutParams = WindowManager.LayoutParams(
         context.resources.getDimensionPixelSize(R.dimen.widget_layout_size),
         WindowManager.LayoutParams.WRAP_CONTENT,
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
-            WindowManager.LayoutParams.TYPE_PHONE
-        },
-        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT
+        else
+            WindowManager.LayoutParams.TYPE_PHONE,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT
     )
 
     private var x: Int = 0
@@ -69,7 +71,7 @@ class LaunchQuestionView(
                 onChangeY = event.rawY
             }
 
-            //Change the position of the widget
+            // Cambia la posición del widget en la pantalla.
             MotionEvent.ACTION_MOVE -> {
                 layoutParams.x = (x + event.rawX - onChangeX).toInt()
                 layoutParams.y = (y + event.rawY - onChangeY).toInt()

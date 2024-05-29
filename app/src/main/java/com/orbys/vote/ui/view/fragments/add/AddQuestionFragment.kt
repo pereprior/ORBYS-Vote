@@ -21,13 +21,16 @@ import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * Clase abstracta que representa un Fragmento para añadir nueva pregunta a lanzar
+ * Clase abstracta que contiene la lógica común de un fragmento para generar una nueva pregunta
+ *
+ * @property viewModel Contiene los datos de las preguntas las funciones para poder gestionarlas
  */
 @AndroidEntryPoint
-abstract class AddFragment(private val viewModel: QuestionViewModel): Fragment() {
+abstract class AddQuestionFragment(private val viewModel: QuestionViewModel): Fragment() {
 
     protected lateinit var binding: FragmentAddQuestionBinding
 
+    // Variable abstracta que contiene el tipo de pregunta a generar
     protected abstract val answerType: AnswerType
 
     override fun onCreateView(
@@ -95,7 +98,7 @@ abstract class AddFragment(private val viewModel: QuestionViewModel): Fragment()
             return
         }
 
-        viewModel.addQuestion(question)
+        viewModel.generateQuestion(question)
 
         // Lanzar la actividad para añadir respuestas
         context.startService(Intent(context, FloatingViewService::class.java))

@@ -4,24 +4,28 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.orbys.vote.ui.components.LaunchQuestionView
-import com.orbys.vote.ui.viewmodels.LaunchServiceManager
+import com.orbys.vote.ui.viewmodels.LaunchServiceModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Servicio que muestra una vista flotante en la pantalla del dispositivo
+ *
+ * @property serviceModel Modelo que gestiona los datos de la vista flotante
+ * @property launchQuestionView Vista flotante que se muestra en la pantalla
  */
 @AndroidEntryPoint
 class FloatingViewService: Service() {
 
     @Inject
-    lateinit var manager: LaunchServiceManager
+    lateinit var serviceModel: LaunchServiceModel
     private lateinit var launchQuestionView: LaunchQuestionView
 
     override fun onCreate() {
         super.onCreate()
 
-        val serviceIntent = Intent(this, manager.getHttpService()::class.java)
+        // Iniciamos el servidor http
+        val serviceIntent = Intent(this, serviceModel.getHttpService()::class.java)
         startService(serviceIntent)
 
         launchQuestionView = LaunchQuestionView(this).apply {
@@ -29,13 +33,14 @@ class FloatingViewService: Service() {
 
             // Añadir la pregunta a la vista
             with(binding) {
-                manager.bind(this)
+                serviceModel.bind(this)
             }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
         // Eliminar la vista del servicio
         launchQuestionView.windowManager.removeView(launchQuestionView)
     }
