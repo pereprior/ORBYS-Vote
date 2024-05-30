@@ -3,6 +3,7 @@ package com.orbys.vote.ui.components.qr
 import android.app.Dialog
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.wifi.WifiManager
 import android.view.View
 import android.widget.Toast
 import com.orbys.vote.R
@@ -11,6 +12,7 @@ import com.orbys.vote.core.extensions.setExpandOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.DialogQrCodeBinding
 import com.orbys.vote.databinding.FragmentQrCodeBinding
+import java.lang.reflect.InvocationTargetException
 
 /**
  * Clase que extiende de [Dialog] y muestra una imagen ampliada en un dialogo.
@@ -105,7 +107,7 @@ private fun FragmentQrCodeBinding.setQrCode(
     }
 }
 
-/*fun getHotspotCredentials(context: Context): Pair<String?, String?> {
+fun getHotspotCredentials(context: Context): Pair<String?, String?> {
     val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
     try {
         val method = wifiManager.javaClass.getDeclaredMethod("getWifiApConfiguration")
@@ -128,4 +130,4 @@ private fun FragmentQrCodeBinding.setQrCode(
         e.printStackTrace()
     }
     return Pair(null, null)
-}*/
+}

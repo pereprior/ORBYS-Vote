@@ -19,7 +19,7 @@ import com.orbys.vote.R
 /** Clase para generar códigos QR de manera personalizada */
 class QRCodeGenerator(private val context: Context) {
 
-    /*fun generateWifiQRCode(ssid: String, password: String): Bitmap {
+    fun generateWifiQRCode(ssid: String, password: String): Bitmap {
         //"WIFI:S:SSID;P:PASSWORD;T:Security;"
         val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
         val bitMatrix = encodeAsBitmap(wifiData, 400, 400)
@@ -32,7 +32,7 @@ class QRCodeGenerator(private val context: Context) {
         }
 
         return bitmap
-    }*/
+    }
 
     /**
      * Genera un código QR a partir de una URL.
