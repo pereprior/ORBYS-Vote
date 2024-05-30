@@ -19,6 +19,21 @@ import com.orbys.vote.R
 /** Clase para generar códigos QR de manera personalizada */
 class QRCodeGenerator(private val context: Context) {
 
+    /*fun generateWifiQRCode(ssid: String, password: String): Bitmap {
+        //"WIFI:S:SSID;P:PASSWORD;T:Security;"
+        val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
+        val bitMatrix = encodeAsBitmap(wifiData, 400, 400)
+
+        val bitmap = Bitmap.createBitmap(bitMatrix.width, bitMatrix.height, Bitmap.Config.RGB_565)
+        for (x in 0 until bitMatrix.width) {
+            for (y in 0 until bitMatrix.height) {
+                bitmap.setPixel(x, y, if (bitMatrix.get(x, y)) Color.BLACK else Color.WHITE)
+            }
+        }
+
+        return bitmap
+    }*/
+
     /**
      * Genera un código QR a partir de una URL.
      *

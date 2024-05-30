@@ -104,3 +104,28 @@ private fun FragmentQrCodeBinding.setQrCode(
         }
     }
 }
+
+/*fun getHotspotCredentials(context: Context): Pair<String?, String?> {
+    val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    try {
+        val method = wifiManager.javaClass.getDeclaredMethod("getWifiApConfiguration")
+        method.isAccessible = true
+        val wifiConfig = method.invoke(wifiManager) as Any
+        val ssidField = wifiConfig.javaClass.getDeclaredField("SSID")
+        ssidField.isAccessible = true
+        val ssid = ssidField.get(wifiConfig) as String
+        val passwordField = wifiConfig.javaClass.getDeclaredField("preSharedKey")
+        passwordField.isAccessible = true
+        val password = passwordField.get(wifiConfig) as String
+        return Pair(ssid.removeSurrounding("\""), password)
+    } catch (e: NoSuchMethodException) {
+        e.printStackTrace()
+    } catch (e: IllegalAccessException) {
+        e.printStackTrace()
+    } catch (e: InvocationTargetException) {
+        e.printStackTrace()
+    } catch (e: NoSuchFieldException) {
+        e.printStackTrace()
+    }
+    return Pair(null, null)
+}*/

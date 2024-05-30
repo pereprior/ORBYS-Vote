@@ -11,7 +11,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.orbys.vote"
+        applicationId = "com.orbys.vote1"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -23,21 +23,17 @@ android {
     buildTypes {
         release {
             // optimizacion y ofuscacion de clases y funciones
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             // optimizacion de los recursos
-            isShrinkResources = false
+            isShrinkResources = true
 
             // @Keep para ignorar clases
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
-    }
-
-    packagingOptions {
-        exclude("META-INF/INDEX.LIST")
-        exclude("META-INF/io.netty.versions.properties")
     }
 
     compileOptions {
@@ -52,6 +48,13 @@ android {
     // ViewBinding
     buildFeatures {
         viewBinding = true
+    }
+
+    packaging {
+        resources {
+            pickFirsts += "META-INF/INDEX.LIST"
+            pickFirsts += "META-INF/io.netty.versions.properties"
+        }
     }
 
 }
