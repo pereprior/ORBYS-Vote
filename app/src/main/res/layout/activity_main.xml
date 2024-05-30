@@ -2,7 +2,6 @@
 <!-- Actividad principal -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,7 +9,7 @@
     tools:context=".ui.view.MainActivity"
     android:background="@drawable/bg_main" >
 
-    <!-- Banner de la aplicacion -->
+    <!-- Banner de la aplicación -->
     <include
         layout="@layout/fragment_banner"
         android:layout_width="match_parent"

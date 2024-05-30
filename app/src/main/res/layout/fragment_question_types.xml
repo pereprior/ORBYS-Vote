@@ -9,7 +9,7 @@
     android:layout_marginBottom="@dimen/medium_margin"
     tools:context=".ui.view.MainActivity">
 
-    <!-- Logo de la aplicacion -->
+    <!-- Logo de la aplicación -->
     <ImageView
         android:id="@+id/vote_logo"
         android:layout_width="wrap_content"
@@ -23,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Texto de ayuda que muestra la función del fragmento -->
     <TextView
         android:id="@+id/vote_title"
         android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
         android:gravity="center"
         android:fontFamily="@font/montserrat_family"
         android:text="@string/activity_question_type_title"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/vote_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -64,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Layout para crear preguntas numericas -->
+    <!-- Layout para crear preguntas numéricas -->
     <FrameLayout
         android:id="@+id/numeric_card_container"
         android:layout_width="match_parent"

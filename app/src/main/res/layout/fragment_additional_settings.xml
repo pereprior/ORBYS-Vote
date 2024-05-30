@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fragmento que contiene las opciones de configuración adicional de la pregunta -->
+<LinearLayout
+    android:id="@+id/child_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/minimum_margin"
+    android:visibility="gone"
+    android:orientation="vertical">
+
+    <!-- Texto de ayuda que muestra la función del siguiente radio group -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/anonymous_radio_title"
+        android:textSize="@dimen/font_size" />
+
+    <!-- Grupo de selección para configurar el nombre de los clientes que acceden al servidor -->
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/minimum_margin"
+        android:orientation="horizontal" >
+
+        <!-- Botón para seleccionar la opción de que todos los clientes sean anónimos -->
+        <RadioButton
+            android:id="@+id/anonymous_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="true"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Texto que indica la funcionalidad del botón anterior -->
+        <TextView
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/anonymous_question_option_text" />
+
+        <!-- Botón para seleccionar la opción de que todos los clientes deben introducir un nombre de usuario antes de contestar la pregunta -->
+        <RadioButton
+            android:id="@+id/non_anonymous_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="false"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Texto que indica la funcionalidad del botón anterior -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/non_anonymous_question_option_text" />
+
+    </RadioGroup>
+
+    <!-- Texto de ayuda que muestra la función del siguiente radio group -->
+    <TextView
+        android:id="@+id/filter_users_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_users_radio_title"
+        android:textSize="@dimen/font_size" />
+
+    <!-- Grupo de selección para configurar el número de veces que puede responder un cliente a una misma respuesta -->
+    <RadioGroup
+        android:id="@+id/filter_users_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/minimum_margin"
+        android:orientation="horizontal" >
+
+        <!-- Botón para seleccionar la opción de que un cliente solo pueda responder una vez -->
+        <RadioButton
+            android:id="@+id/filter_users_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="true"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Texto que indica la funcionalidad del botón anterior -->
+        <TextView
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/filter_users_question_option_text" />
+
+        <!-- Botón para seleccionar la opción de que un cliente pueda responder las veces que quiera -->
+        <RadioButton
+            android:id="@+id/non_filter_users_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="false"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Texto que indica la funcionalidad del botón anterior -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/non_filter_users_question_option_text" />
+
+    </RadioGroup>
+
+    <!-- Texto de ayuda que muestra la función del siguiente radio group -->
+    <TextView
+        android:id="@+id/multi_answer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/answers_radio_title"
+        android:textSize="@dimen/font_size" />
+
+    <!-- Grupo de selección para configurar el número de respuestas que se pueden seleccionar en una misma pregunta -->
+    <RadioGroup
+        android:id="@+id/multi_answer_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/minimum_margin"
+
+        android:orientation="horizontal" >
+
+        <!-- Botón para seleccionar la opción de que la pregunta solo tenga una única respuesta posible -->
+        <RadioButton
+            android:id="@+id/single_answer_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="true"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Botón para seleccionar la opción de que la pregunta tenga varias respuestas posibles -->
+        <TextView
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/single_answer_question_option_text" />
+
+        <!-- Radio button para que la pregunta admita varias respuestas -->
+        <RadioButton
+            android:id="@+id/multi_answer_question_option"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:checked="false"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+        <!-- Texto que indica la funcionalidad del botón anterior -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_font_size"
+            android:text="@string/multi_answer_question_option_text" />
+
+    </RadioGroup>
+
+    <!-- Texto de ayuda que muestra la función del contenedor -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_checkbox_title"
+        android:textSize="@dimen/font_size" />
+
+    <!-- Contenedor para configurar el tiempo limite de la pregunta -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/minimum_margin">
+
+        <!-- CheckBox para establecer si la pregunta tiene tiempo limite o no (desactivado por defecto) -->
+        <CheckBox
+            android:id="@+id/timeout_question_option"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Texto que indica la funcionalidad del check box anterior -->
+        <TextView
+            android:id="@+id/timeout_question_option_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timeout_question_option_text"
+            android:textSize="@dimen/small_font_size"
+            app:layout_constraintStart_toEndOf="@id/timeout_question_option"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Contenedor para introducir el tiempo limite de la pregunta (oculto por defecto) -->
+        <RelativeLayout
+            android:id="@+id/timeout_input_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:paddingHorizontal="6dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/timeout_question_option_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" >
+
+            <!-- Campo de texto para indicar el tiempo limite de la pregunta -->
+            <EditText
+                android:id="@+id/timeout_input"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:autofillHints=""
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="@dimen/minimum_margin"
+                android:gravity="start"
+                android:background="@drawable/bg_border_textbox"
+                android:textSize="@dimen/minimum_font_size"
+                tools:ignore="LabelFor" />
+
+            <!-- Texto que indica en que unidad de tiempo se debe indicar el tiempo limite -->
+            <TextView
+                android:id="@+id/minutes_help_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginStart="20dp"
+                android:text="@string/minutes_hint"
+                android:textSize="@dimen/minimum_font_size" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

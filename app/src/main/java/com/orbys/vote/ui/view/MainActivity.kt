@@ -63,20 +63,16 @@ class MainActivity : AppCompatActivity() {
      */
     private fun printFragments() {
 
-        with(binding) {
-
-            supportFragmentManager.beginTransaction().apply {
-                val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {
-                    // Mostrar el fragmento de descarga del fichero
-                    DownloadFragment(viewModel)
-                } else {
-                    // Mostrar el fragmento de selección de tipos de preguntas
-                    TypesQuestionFragment(viewModel)
-                }
-                replace(fragmentContainer.id, fragment)
-                commit()
+        supportFragmentManager.beginTransaction().apply {
+            val fragment = if (intent.getBooleanExtra("SHOW_DOWNLOAD_FRAGMENT", false)) {
+                // Mostrar el fragmento de descarga del fichero
+                DownloadFragment(viewModel)
+            } else {
+                // Mostrar el fragmento de selección de tipos de preguntas
+                TypesQuestionFragment(viewModel)
             }
-
+            replace(binding.fragmentContainer.id, fragment)
+            commit()
         }
     }
 

@@ -3,15 +3,11 @@ package com.orbys.vote.ui.viewmodels
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
 import com.orbys.vote.core.extensions.getCount
-import com.orbys.vote.core.extensions.getServerUrl
 import com.orbys.vote.core.extensions.minutesToMillis
-import com.orbys.vote.core.extensions.setExpandOnClick
-import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
@@ -21,7 +17,7 @@ import com.orbys.vote.domain.usecases.GetQuestionUseCase
 import com.orbys.vote.domain.usecases.GetUsersListUseCase
 import com.orbys.vote.domain.usecases.SetTimeOutUseCase
 import com.orbys.vote.ui.components.graphics.GraphicView
-import com.orbys.vote.ui.components.qr.QRCodeGenerator
+import com.orbys.vote.ui.components.qr.setQrOptions
 import com.orbys.vote.ui.services.FloatingViewService
 import com.orbys.vote.ui.view.MainActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -65,7 +61,7 @@ class LaunchServiceModel @Inject constructor(
             banner.closeButton.visibility = View.GONE
             questionText.text = question.question
 
-            setQrOptions()
+            qrContainer.setQrOptions(context, QUESTION_ENDPOINT, )
 
             setTimer(question.timer)
 
@@ -76,74 +72,6 @@ class LaunchServiceModel @Inject constructor(
 
         // Ponemos el servidor escuchando respuestas
         setTimeOutUseCase(false)
-    }
-
-    /**
-     * Esta función gestiona las opciones del qr que se muestran en la vista flotante
-     * Comprobamos si hay algúna IP como punto de acceso, si no la hay solo mostramos el qr para la red local
-     */
-    private fun ServiceLaunchQuestionBinding.setQrOptions() {
-        with(qrContainer) {
-            val hotspotUrl = getServerUrl(QUESTION_ENDPOINT, true)
-            // Mostramos el qr por defecto al abrir el widget
-            setQrCode(!hotspotUrl.isNullOrEmpty())
-
-            // Al pulsar a cada uno de los contenedores, se muestra el qr correspondiente
-            respondContainer.setOnClickListener { setQrCode() }
-            respondHotspotContainer.setOnClickListener { setQrCode( true) }
-        }
-    }
-
-    /**
-     * Esta función modifica la vista del qr en función de si se debe mostrar el qr para la red local o para la red de punto de acceso
-     *
-     * @param isHotspot Indica si se debe mostrar el qr para hotspot
-     * @param endpoint Indica el endpoint al que te dirige la url del código qr
-     */
-    private fun ServiceLaunchQuestionBinding.setQrCode(
-        isHotspot: Boolean = false,
-        endpoint: String = QUESTION_ENDPOINT
-    ) {
-        with(qrContainer) {
-            val url = getServerUrl(endpoint, isHotspot)
-            // Si la url es nula o vacía, mostramos un mensaje de error
-            if (url.isNullOrEmpty()) {
-                context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
-                return
-            }
-
-            val qrGenerator = QRCodeGenerator(context)
-            val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
-
-            if (isHotspot) {
-                // Qr para la red de punto de acceso
-                lanQrCode.visibility = View.GONE
-                lanQrText.visibility = View.GONE
-                step1HotspotContainer.visibility = View.VISIBLE
-                step2HotspotContainer.visibility = View.VISIBLE
-
-                hotspotQrText.text = url
-                otherQrCode.setExpandOnClick()
-                hotspotQrCode.apply {
-                    setImageBitmap(qrCodeBitmap)
-                    setExpandOnClick()
-                }
-            } else {
-                // Qr para la red local
-                step1HotspotContainer.visibility = View.GONE
-                step2HotspotContainer.visibility = View.GONE
-
-                lanQrCode.apply {
-                    visibility = View.VISIBLE
-                    setImageBitmap(qrCodeBitmap)
-                }
-                lanQrText.apply {
-                    visibility = View.VISIBLE
-                    text = url
-                }
-            }
-
-        }
     }
 
     /**

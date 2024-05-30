@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fragmento para crear una nueva pregunta -->
+<!-- Fragmento para generar una nueva pregunta -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_container"
     android:orientation="vertical"
@@ -12,7 +11,7 @@
     android:elevation="@dimen/small_margin"
     android:gravity="start">
 
-    <!-- Tarjeta del tipo de pregunta -->
+    <!-- Contenedor que muestra el tipo de pregunta que se va a generar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +20,7 @@
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
+        <!-- Icono que representa el tipo de pregunta a generar -->
         <ImageView
             android:id="@+id/card_icon"
             android:layout_width="@dimen/icon_size"
@@ -30,7 +30,7 @@
             android:layout_marginVertical="@dimen/minimum_margin"
             android:contentDescription="@string/card_type_icon_desc" />
 
-        <!-- Nombre del tipo de pregunta que representa la tarjeta -->
+        <!-- Nombre del tipo de pregunta a generar -->
         <TextView
             android:id="@+id/card_title"
             android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
 
     </LinearLayout>
 
-    <!-- Título del campo de texto -->
+    <!-- Texto de ayuda que indica la función del siguiente Text Box -->
     <TextView
         android:id="@+id/question_title"
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         android:textSize="@dimen/font_size"
         android:text="@string/question_question_title"/>
 
-    <!-- Text Box para crear la pregunta -->
+    <!-- Text Box para introducir el texto de la pregunta a generar -->
     <EditText
         android:id="@+id/question_question"
         android:layout_width="match_parent"
@@ -65,6 +65,8 @@
         android:textSize="@dimen/small_font_size"
         android:inputType="textMultiLine" />
 
+
+    <!-- Contenedor para añadir respuestas personalizadas a la pregunta (oculto por defecto) -->
     <LinearLayout
         android:id="@+id/add_answers_layout"
         android:orientation="vertical"
@@ -72,6 +74,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone" >
 
+        <!-- Texto de ayuda que indica la función del siguiente contenedor  -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +82,7 @@
             android:layout_marginBottom="@dimen/minimum_margin"
             android:textSize="@dimen/font_size"/>
 
-        <!-- Layout para añadir respuestas personalizadas -->
+        <!-- Contenedor para añadir campos de texto para introducir respuestas personalizadas -->
         <LinearLayout
             android:id="@+id/answersLayout"
             android:layout_width="match_parent"
@@ -87,6 +90,7 @@
             android:gravity="end"
             android:orientation="vertical" />
 
+        <!-- Botón para añadir nuevos campos de texto dentro del contenedor -->
         <Button
             android:id="@+id/add_answer_button"
             android:layout_width="match_parent"
@@ -97,7 +101,7 @@
 
     </LinearLayout>
 
-    <!-- Layout de las configuraciones adicionales -->
+    <!-- Contenedor clickable para mostrar y ocultar las configuraciones adicionales de la pregunta -->
     <LinearLayout
         android:id="@+id/show_configurations_layout"
         android:layout_width="match_parent"
@@ -106,7 +110,7 @@
         android:layout_marginVertical="@dimen/small_margin"
         android:orientation="horizontal">
 
-        <!-- Botón para mostrar la configuración adicional de la pregunta -->
+        <!-- Icono de configuración -->
         <ImageView
             android:id="@+id/configurations_icon"
             android:layout_width="wrap_content"
@@ -115,7 +119,7 @@
             android:src="@drawable/ic_config"
             android:contentDescription="@string/config_icon_desc" />
 
-        <!-- Texto para describir el uso del botón anterior -->
+        <!-- Texto de ayuda que describe la acción que se realiza al pulsar el contenedor -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -126,6 +130,7 @@
             android:text="@string/additional_config_text"
             android:textColor="@color/blue_selected" />
 
+        <!-- Icono que muestra el estado en el que se encuentra el contenedor de las configuraciones adicionales (oculto por defecto) -->
         <ImageView
             android:id="@+id/icon_config_visibility"
             android:layout_width="wrap_content"
@@ -136,242 +141,24 @@
 
     </LinearLayout>
 
-    <!-- Layout con las opciones de configuración adicional de la pregunta -->
-    <LinearLayout
+    <!-- Contenedor que muestra las configuraciones adicionales de la pregunta (oculto por defecto) -->
+    <include
         android:id="@+id/configurations_layout"
+        layout="@layout/fragment_additional_settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/minimum_margin"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <!-- Titulo del grupo de configuració de usuario -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/anonymous_radio_title"
-            android:textSize="@dimen/font_size" />
-
-        <!-- Radio button para configurar el nombre de los usuarios que acceden -->
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/minimum_margin"
-            android:orientation="horizontal" >
-
-            <!-- Boton para que todos los usuarios sean anonimos -->
-            <RadioButton
-                android:id="@+id/anonymous_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/anonymous_question_option_text" />
-
-            <!-- Boton para que los usuarios tengan que acceder con nombre de usuario -->
-            <RadioButton
-                android:id="@+id/non_anonymous_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/non_anonymous_question_option_text" />
-
-        </RadioGroup>
-
-        <!-- Radio button para configurar el numero de respuestas por usuario -->
-        <TextView
-            android:id="@+id/filter_users_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_users_radio_title"
-            android:textSize="@dimen/font_size" />
-
-        <RadioGroup
-            android:id="@+id/filter_users_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/minimum_margin"
-
-            android:orientation="horizontal" >
-
-            <!-- Boton para que los usuarios puedan responder solo una vez -->
-            <RadioButton
-                android:id="@+id/filter_users_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/filter_users_question_option_text" />
-
-            <!-- Boton para que los usuarios puedan responder las veces que quieran -->
-            <RadioButton
-                android:id="@+id/non_filter_users_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/non_filter_users_question_option_text" />
-
-        </RadioGroup>
-
-        <!-- Grupo para configurar el numero de respuestas correctas de una pregunta -->
-        <TextView
-            android:id="@+id/multi_answer_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/answers_radio_title"
-            android:textSize="@dimen/font_size" />
-
-        <RadioGroup
-            android:id="@+id/multi_answer_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/minimum_margin"
-
-            android:orientation="horizontal" >
-
-            <!-- Radio button para que la pregunta solo tenga una respuesta -->
-            <RadioButton
-                android:id="@+id/single_answer_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/single_answer_question_option_text" />
-
-            <!-- Radio button para que la pregunta admita varias respuestas -->
-            <RadioButton
-                android:id="@+id/multi_answer_question_option"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:checked="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/small_font_size"
-                android:text="@string/multi_answer_question_option_text" />
-
-        </RadioGroup>
-
-        <!-- Titulo para configurar el temporizador -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_checkbox_title"
-            android:textSize="@dimen/font_size" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/minimum_margin">
-
-            <!-- CheckBox para poner tiempo limite a una pregunta -->
-            <CheckBox
-                android:id="@+id/timeout_question_option"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleX="0.6"
-                android:scaleY="0.6"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/timeout_question_option_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/timeout_question_option_text"
-                android:textSize="@dimen/small_font_size"
-                app:layout_constraintStart_toEndOf="@id/timeout_question_option"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <RelativeLayout
-                android:id="@+id/timeout_input_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:orientation="horizontal"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:paddingHorizontal="6dp"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@id/timeout_question_option_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" >
-
-                <!-- Campo de texto para indicar el tiempo limite de la pregunta -->
-                <EditText
-                    android:id="@+id/timeout_input"
-                    android:layout_width="32dp"
-                    android:layout_height="match_parent"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:padding="@dimen/minimum_margin"
-                    android:gravity="start"
-                    android:background="@drawable/bg_border_textbox"
-                    android:textSize="6sp" />
-
-                <!-- Texto que indica en que unidad de tiempo se debe indicar el tiempo limite -->
-                <TextView
-                    android:id="@+id/minutes_help_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:text="min"
-                    android:textSize="6sp" />
-
-            </RelativeLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-    <!-- Botón para lanzar la pregunta creada -->
+    <!-- Botón para lanzar la pregunta generada al servidor http -->
     <Button
         android:id="@+id/launch_button"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_gravity="center"
         android:textSize="@dimen/font_size"
+        android:layout_gravity="center"
         android:text="@string/launch_button_placeholder"
         android:layout_marginBottom="@dimen/small_margin"
         android:textAlignment="center"
         android:textStyle="bold" />
+
 
 </LinearLayout>

@@ -11,8 +11,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.limitLines
+import com.orbys.vote.core.extensions.replaceFragmentOnClick
 import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.FragmentAddQuestionBinding
+import com.orbys.vote.databinding.FragmentAdditionalSettingsBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
 import com.orbys.vote.ui.services.FloatingViewService
@@ -39,40 +41,21 @@ abstract class AddQuestionFragment(private val viewModel: QuestionViewModel): Fr
         binding = FragmentAddQuestionBinding.inflate(inflater, container, false)
 
         val backButton: ImageView = activity?.findViewById(R.id.app_logo)!!
-        backButton.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, TypesQuestionFragment(viewModel))
-                addToBackStack(null)
-                commit()
-            }
-        }
+        replaceFragmentOnClick(backButton, TypesQuestionFragment(viewModel))
 
         with(binding) {
-            // Configurar el título y el icono de la pregunta
-            addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.small_fragment_layout_height)
-
-            // Configurar el tipo de pregunta
+            // Mostrar en la vista el tipo de pregunta que queremos generar
             cardIcon.setImageResource(answerType.iconResId)
             cardTitle.text = getString(answerType.titleResId)
 
-            // Limitar el número de lineas de la pregunta
+            // Limitar el número de líneas de la pregunta
             questionQuestion.limitLines(3)
 
-            // Configurar el boton para lanzar la pregunta
-            launchButton.setOnClickListener { saveQuestion(it.context) }
+            // Configurar el botón para lanzar la pregunta
+            launchButton.setOnClickListener { launchQuestion(it.context) }
 
-            // Mostrar la configuración adicional
-            showConfigurationsLayout.setOnClickListener {
-                if (configurationsLayout.visibility == View.VISIBLE)
-                    setConfigVisibilityTo(R.drawable.ic_config_hide, View.GONE)
-                else
-                    setConfigVisibilityTo(R.drawable.ic_config_show, View.VISIBLE)
-            }
-
-            // Mostrar el formulario del tiempo de espera
-            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) timeoutInputLayout.visibility = View.VISIBLE else timeoutInputLayout.visibility = View.GONE
-            }
+            // Configuraciones adicionales de la pregunta
+            bindAdditionalConfigurations()
 
             return root
         }
@@ -82,14 +65,17 @@ abstract class AddQuestionFragment(private val viewModel: QuestionViewModel): Fr
         super.onViewCreated(view, savedInstanceState)
 
         // Configuración adicionales por defecto de las preguntas
-        binding.setAdditionalConfigurations(
-            filterUsersConfig = false, multiAnswerConfig = false
-        )
+        binding.configurationsLayout.setAdditionalConfigurations(timerConfig = true)
     }
 
+    /**
+     * Función abstracta que crea una instancia de [Question] a partir de los parametros introducidos en la interfaz.
+     * La instancia cambia dependiendo del tipo de pregunta que se quiera generar
+     */
     protected abstract fun createQuestionFromInput(): Question
 
-    protected open fun saveQuestion(context: Context) {
+    /** Función que se encarga de lanzar la pregunta generada para que los clientes del servidor la puedan contestar */
+    protected open fun launchQuestion(context: Context) {
         val question = createQuestionFromInput()
 
         // Comprobar si la pregunta o el título están vacíos
@@ -107,27 +93,72 @@ abstract class AddQuestionFragment(private val viewModel: QuestionViewModel): Fr
         binding.questionQuestion.text.clear()
     }
 
-    // Configurar las opciones adicionales de la pregunta
-    protected fun FragmentAddQuestionBinding.setAdditionalConfigurations(
-        filterUsersConfig: Boolean = true,
-        multiAnswerConfig: Boolean = true,
-        timerConfig: Boolean = true
-    ) {
-        filterUsersTitle.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
-        filterUsersGroup.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
-        multiAnswerTitle.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
-        multiAnswerGroup.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
-        timeoutQuestionOption.visibility = if (timerConfig) View.VISIBLE else View.GONE
-    }
+    /** Función que se encarga de gestionar las acciones de configuración adicional de la pregunta */
+    private fun FragmentAddQuestionBinding.bindAdditionalConfigurations() {
+        // Establecemos un tamaño fijo al fragmento para que no cambie al mostrar la configuración adicional
+        addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.small_fragment_layout_height)
 
-    // Cambiar la visibilidad de la confirguración adicional
-    protected open fun setConfigVisibilityTo(icon: Int, visible: Int) {
-        with(binding) {
-            iconConfigVisibility.setImageResource(icon)
-            configurationsLayout.visibility = visible
-            questionTitle.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
-            questionQuestion.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+        // Mostrar la configuración adicional
+        showConfigurationsLayout.setOnClickListener {
+            if (configurationsLayout.childLayout.visibility == View.VISIBLE)
+                setConfigVisibilityTo(R.drawable.ic_config_hide, View.GONE)
+            else
+                setConfigVisibilityTo(R.drawable.ic_config_show, View.VISIBLE)
+        }
+
+        // Mostrar el formulario del tiempo de espera
+        with(configurationsLayout) {
+            timeoutQuestionOption.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) timeoutInputLayout.visibility = View.VISIBLE
+                else timeoutInputLayout.visibility = View.GONE
+            }
         }
     }
 
+    /**
+     * Cambia la vista del fragmento entre el formulario de la pregunta y la configuración adicional
+     *
+     * @param icon Icono que indica si se muestra o no la configuración adicional
+     * @param additionalConfigurationsVisibility Visibilidad de la configuración adicional
+     */
+    protected open fun setConfigVisibilityTo(icon: Int, additionalConfigurationsVisibility: Int) {
+        with(binding) {
+            iconConfigVisibility.setImageResource(icon)
+            configurationsLayout.childLayout.visibility = additionalConfigurationsVisibility
+
+            questionTitle.visibility = if (additionalConfigurationsVisibility == View.VISIBLE) View.GONE else View.VISIBLE
+            questionQuestion.visibility = if (additionalConfigurationsVisibility == View.VISIBLE) View.GONE else View.VISIBLE
+        }
+    }
+
+    /**
+     * Gestiona las diferentes opciones disponibles en la configuración adicional de la pregunta
+     *
+     * @param filterUsersConfig Mostrar o no la opción de filtrar usuarios
+     * @param multiAnswerConfig Mostrar o no la opción de respuestas múltiples
+     * @param timerConfig Mostrar o no la opción de tiempo de espera
+     */
+    protected fun FragmentAdditionalSettingsBinding.setAdditionalConfigurations(
+        filterUsersConfig: Boolean = false, multiAnswerConfig: Boolean = false, timerConfig: Boolean = false
+    ) {
+        filterUsersTitle.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
+        filterUsersGroup.visibility = if (filterUsersConfig) View.VISIBLE else View.GONE
+
+        multiAnswerTitle.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
+        multiAnswerGroup.visibility = if (multiAnswerConfig) View.VISIBLE else View.GONE
+
+        timeoutQuestionOption.visibility = if (timerConfig) View.VISIBLE else View.GONE
+    }
+
+    /** Función que obtiene el valor del grupo del nombre de los clientes que acceden al servidor */
+    protected fun FragmentAdditionalSettingsBinding.getIsAnonymous() = anonymousQuestionOption.isChecked
+
+    /** Función que obtiene el número de veces que puede responder un cliente a una misma respuesta */
+    protected fun FragmentAdditionalSettingsBinding.getIsMultipleAnswers() = nonFilterUsersQuestionOption.isChecked
+
+    /** Función que obtiene el número de respuestas que se pueden seleccionar en una misma pregunta */
+    protected fun FragmentAdditionalSettingsBinding.getIsMultipleChoices() = multiAnswerQuestionOption.isChecked
+
+    /** Función que obtiene el valor de si la pregunta tiene tiempo limite o no */
+    protected fun FragmentAdditionalSettingsBinding.getTime() = timeoutInput.text.toString().toIntOrNull() ?: 0
 }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -43,7 +43,7 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
     ): View {
         binding = FragmentQuestionTypesBinding.inflate(inflater, container, false)
 
-        val backButton: ImageButton? = activity?.findViewById(R.id.close_button)
+        val backButton: ImageView? = activity?.findViewById(R.id.close_button)
         backButton!!.backButtonFunctions()
 
         // Detiene los servicios activos
@@ -93,7 +93,7 @@ class TypesQuestionFragment(private val viewModel: QuestionViewModel): Fragment(
     }
 
     /** Establece la función a un botón para cerrar la actividad y la aplicación */
-    private fun ImageButton.backButtonFunctions() {
+    private fun ImageView.backButtonFunctions() {
         // Detenemos el servicio
         this.setOnClickListener {
             activity?.finish()

@@ -8,23 +8,20 @@ import com.orbys.vote.ui.viewmodels.QuestionViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
- * Clase que representa una actividad para añadir preguntas de tipo "Si/No".
+ * Fragmento que extiende de [AddQuestionFragment]
+ * Muestra el formulario para generar preguntas de tipo "Si o no"
  */
 class AddYesNoQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
     override val answerType = AnswerType.YES_NO
 
+    /** Función que genera un objeto [Question] con respuestas de tipo "Verdadero o Falso" */
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
-        answers = MutableStateFlow(
-            listOf(
-                Answer(this.getString(R.string.yes_answer_placeholder)),
-                Answer(this.getString(R.string.no_answers_placeholder))
-            )
-        ),
+        answers = MutableStateFlow(listOf(Answer(this.getString(R.string.yes_answer_placeholder)), Answer(this.getString(R.string.no_answers_placeholder)))),
         answerType = answerType,
-        isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timer = binding.timeoutInput.text.toString().toIntOrNull() ?: 0
+        isAnonymous = binding.configurationsLayout.getIsAnonymous(),
+        timer = binding.configurationsLayout.getTime()
     )
 
 }

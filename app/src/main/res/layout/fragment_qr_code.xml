@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Vista que muestra un codigo qr -->
+<!-- Contenedor que muestra las opciones para conectarse al servidor mediante código qr -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +9,7 @@
     android:background="@android:color/transparent"
     android:layout_gravity="center">
 
+    <!-- Texto de ayuda que indica la función que realiza el código qr (por defecto está oculto) -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         android:textSize="@dimen/title_font_size"
         android:layout_margin="@dimen/small_margin"/>
 
-    <!-- Layout con la información para responder la pregunta -->
+    <!-- Layout con el código qr para acceder al servidor mediante red local (LAN/WLAN) -->
     <LinearLayout
         android:id="@+id/respond_container"
         android:layout_width="@dimen/qr_code_size"
@@ -29,6 +30,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <!-- Título del contenedor de red local -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,12 +38,14 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
+            <!-- Icono de red local -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ic_wifi_desc"
                 android:src="@drawable/ic_wifi" />
 
+            <!-- Texto indicando que el contenedor contiene el qr de red local -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +57,7 @@
 
         </LinearLayout>
 
-        <!-- Fragmento que contiene la información del codigo qr -->
+        <!-- Image que muestra el código qr para poder conectarse al servidor mediante red local (oculto por defecto) -->
         <ImageView
             android:id="@+id/lan_qr_code"
             android:layout_width="@dimen/qr_code_size"
@@ -62,7 +66,7 @@
             android:contentDescription="@string/qr_code_desc"
             android:visibility="gone"/>
 
-        <!-- Texto con el texto del codigo qr -->
+        <!-- Texto de ayuda con la url visible para poder conectarse al servidor de forma manual (oculto por defecto)  -->
         <TextView
             android:id="@+id/lan_qr_text"
             android:layout_width="match_parent"
@@ -75,6 +79,8 @@
 
     </LinearLayout>
 
+
+    <!-- Layout con el código qr para acceder al servidor mediante punto de acceso (HOTSPOT) -->
     <LinearLayout
         android:id="@+id/respond_hotspot_container"
         android:layout_width="@dimen/qr_code_size"
@@ -87,6 +93,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <!-- Título del contenedor de punto de acceso -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,12 +101,14 @@
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">
 
+            <!-- Icono de punto de acceso -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/ic_wifi_desc"
                 android:src="@drawable/ic_hotspot" />
 
+            <!-- Texto indicando que el contenedor contiene el qr de punto de acceso -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,6 +120,7 @@
 
         </LinearLayout>
 
+        <!-- Contenedor que muestra el paso para que el cliente se conecte al punto de acceso -->
         <LinearLayout
             android:id="@+id/step_1_hotspot_container"
             android:layout_width="match_parent"
@@ -118,10 +128,11 @@
             android:layout_marginTop="@dimen/small_margin"
             android:orientation="horizontal">
 
+            <!-- Indica el orden de forma númerica en el que se deben seguir los pasos para conectarse mediante hotspot -->
             <TextView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:text="1"
+                android:text="@string/first_step_number_text"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -129,6 +140,7 @@
                 android:background="@drawable/bg_blue_circle"
                 android:textStyle="bold"/>
 
+            <!-- Texto que indica la acción que realiza el código qr que se muestra a continuación -->
             <TextView
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -137,7 +149,7 @@
                 android:textSize="@dimen/small_font_size"
                 android:textColor="@color/background_black"/>
 
-            <!-- Fragmento que contiene la información del codigo qr -->
+            <!-- Imagen que muestra el código qr para poder conectarse al punto de acceso -->
             <ImageView
                 android:id="@+id/other_qr_code"
                 android:layout_width="75dp"
@@ -148,7 +160,7 @@
 
         </LinearLayout>
 
-
+        <!-- Contenedor que muestra el paso para que el cliente que ya se encuentra en el punto de acceso responda la pregunta -->
         <LinearLayout
             android:id="@+id/step_2_hotspot_container"
             android:layout_width="match_parent"
@@ -156,10 +168,11 @@
             android:layout_marginTop="@dimen/small_margin"
             android:orientation="horizontal">
 
+            <!-- Indica el orden de forma númerica en el que se deben seguir los pasos para conectarse mediante hotspot -->
             <TextView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:text="2"
+                android:text="@string/second_step_number_text"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -167,10 +180,11 @@
                 android:background="@drawable/bg_blue_circle"
                 android:textStyle="bold"/>
 
+            <!-- Texto que indica la acción que realiza el código qr que se muestra a continuación -->
             <TextView
+                android:id="@+id/step_2_hotspot_text"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/step_3_hotspot_text"
                 android:layout_gravity="center"
                 android:textSize="@dimen/small_font_size"
                 android:textColor="@color/background_black"/>
@@ -180,7 +194,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
 
-                <!-- Fragmento que contiene la información del codigo qr -->
+                <!-- Imagen que muestra el código qr para poder conectarse al servidor mediante punto de acceso -->
                 <ImageView
                     android:id="@+id/hotspot_qr_code"
                     android:layout_width="@dimen/small_qr_code_size"
@@ -188,7 +202,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/qr_code_desc" />
 
-                <!-- Texto con el texto del codigo qr -->
+                <!-- Texto de ayuda con la url visible para poder conectarse al servidor de forma manual -->
                 <TextView
                     android:id="@+id/hotspot_qr_text"
                     android:layout_width="match_parent"
@@ -196,7 +210,7 @@
                     android:textAlignment="center"
                     android:layout_gravity="bottom"
                     android:textColor="@color/blue_selected"
-                    android:textSize="5sp"
+                    android:textSize="@dimen/minimum_font_size"
                     tools:ignore="RtlCompat" />
 
             </FrameLayout>

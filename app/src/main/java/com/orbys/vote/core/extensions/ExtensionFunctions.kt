@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.orbys.vote.R
 import com.orbys.vote.domain.models.Answer
 import com.orbys.vote.domain.models.Question
@@ -136,5 +137,24 @@ suspend fun PipelineContext<Unit, ApplicationCall>.loadImage(
         call.respondBytes(imageContent, contentType)
     } catch (e: Exception) {
         call.respondRedirect("/error/1")
+    }
+}
+
+/**
+ * Esta función reemplaza el fragmento actual por otro nuevo al pulsar un botón.
+ *
+ * @param button El botón que al pulsar se reemplaza el fragmento.
+ * @param newFragment El nuevo fragmento que se muestra.
+ * @param oldFragmentId El id del fragmento que se reemplaza (por defecto es el contenedor de la actividad principal).
+ */
+fun Fragment.replaceFragmentOnClick(
+    button: ImageView, newFragment: Fragment, oldFragmentId: Int = R.id.fragment_container
+) {
+    button.setOnClickListener {
+        parentFragmentManager.beginTransaction().apply {
+            replace(oldFragmentId, newFragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

@@ -13,7 +13,10 @@ import com.orbys.vote.ui.components.managers.NumericFieldsManager
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
 
 /**
- * Clase que representa una actividad para añadir preguntas de tipo "Numerico".
+ * Fragmento que extiende de [AddQuestionFragment]
+ * Muestra el formulario para generar preguntas de tipo "Numérico"
+ *
+ * @property answersManager Gestor de los campos para introducir las respuestas
  */
 class AddNumericQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewModel) {
 
@@ -25,43 +28,45 @@ class AddNumericQuestion(viewModel: QuestionViewModel): AddQuestionFragment(view
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            // Ajustar el tamaño del contenedor del formulario
             addContainer.layoutParams.height = resources.getDimensionPixelSize(R.dimen.medium_fragment_layout_height)
 
             // Configurar el formulario para añadir el número máximo para la respuesta
-            answersManager = NumericFieldsManager(
-                context = requireContext(),
-                layout = answersLayout,
-                hintText = getString(R.string.numeric_answer_hint)
-            )
-
             addAnswersLayout.visibility = View.VISIBLE
-            setAdditionalConfigurations(multiAnswerConfig = false)
+            answersManager = NumericFieldsManager(requireContext(), answersLayout, getString(R.string.numeric_answer_hint))
+            answersManager.addAnswerField()
+
+            // Configurar las configuraciones adicionales
+            configurationsLayout.setAdditionalConfigurations(filterUsersConfig = true, timerConfig = true)
         }
 
-        answersManager.addAnswerField()
     }
 
+    /** Función que genera un objeto [Question] con respuestas de tipo "Numérico" */
     override fun createQuestionFromInput() = Question(
         question = binding.questionQuestion.text.toString(),
         answerType = answerType,
         maxNumericAnswer = answersManager.getAnswersText().firstOrNull()?.toIntOrNull() ?: 0,
-        isAnonymous = binding.anonymousQuestionOption.isChecked,
-        timer = binding.timeoutInput.text.toString().toIntOrNull() ?: 0,
-        isMultipleAnswers = binding.nonFilterUsersQuestionOption.isChecked
+        isAnonymous = binding.configurationsLayout.getIsAnonymous(),
+        timer = binding.configurationsLayout.getTime(),
+        isMultipleAnswers = binding.configurationsLayout.getIsMultipleAnswers()
     )
 
-    override fun saveQuestion(context: Context) {
+    /** Función que se encarga de lanzar la pregunta generada para que los clientes del servidor la puedan contestar */
+    override fun launchQuestion(context: Context) {
+        // Controlar que los campos de las preguntas no estén vacíos
         if (answersManager.anyAnswerIsEmpty()) {
             context.showToastWithCustomView(getString(R.string.empty_answers_error), Toast.LENGTH_LONG)
             return
         }
 
-        super.saveQuestion(context)
+        super.launchQuestion(context)
     }
 
-    override fun setConfigVisibilityTo(icon: Int, visible: Int) {
-        super.setConfigVisibilityTo(icon, visible)
-        binding.addAnswersLayout.visibility = if (visible == View.VISIBLE) View.GONE else View.VISIBLE
+    override fun setConfigVisibilityTo(icon: Int, additionalConfigurationsVisibility: Int) {
+        super.setConfigVisibilityTo(icon, additionalConfigurationsVisibility)
+        // Añadimos el control de visibilidad del formulario de respuestas
+        binding.addAnswersLayout.visibility = if (additionalConfigurationsVisibility == View.VISIBLE) View.GONE else View.VISIBLE
     }
 
 }
