@@ -293,8 +293,8 @@ input[type="text"] {
 
     #orbys_logo { margin-top: var(--margin-xsmall); width: 10%; }
     #vote_logo { display: none; }
-    #btn-refuse { font-size: var(--font-size-small); }
-    #btn-accept { font-size: var(--font-size-small); }
+    #btn-refuse { font-size: var(--font-size-xsmall); }
+    #btn-accept { font-size: var(--font-size-xsmall); }
     #radioContainer div { font-size: var(--font-size-small); }
     #checkboxContainer div { font-size: var(--font-size-small); }
     #triangle { height: var(--icon-size-small); }

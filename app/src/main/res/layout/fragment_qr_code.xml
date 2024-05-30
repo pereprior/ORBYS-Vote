@@ -210,7 +210,7 @@
                     android:textAlignment="center"
                     android:layout_gravity="bottom"
                     android:textColor="@color/blue_selected"
-                    android:textSize="@dimen/minimum_font_size"
+                    android:textSize="5sp"
                     tools:ignore="RtlCompat" />
 
             </FrameLayout>

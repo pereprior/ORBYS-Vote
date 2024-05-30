@@ -170,19 +170,21 @@ class LaunchServiceModel @Inject constructor(
 
     /** Función que detiene el servicio flotante y vuelve a abrir la actividad principal */
     private fun stopService() {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
+        with(context) {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                putExtra("SHOW_DOWNLOAD_FRAGMENT", true)
+            }
+
+            // Iniciamos la actividad principal
+            startActivity(intent)
+
+            // Limpiamos la lista de usuarios
+            clearClientListUseCase()
+
+            // Detenemos el servicio
+            stopService(Intent(this, FloatingViewService::class.java))
         }
-
-        // Iniciamos la actividad principal
-        context.startActivity(intent)
-
-        // Limpiamos la lista de usuarios
-        clearClientListUseCase()
-
-        // Detenemos el servicio
-        context.stopService(Intent(context, FloatingViewService::class.java))
     }
 
 }

@@ -62,26 +62,28 @@ class AddOtherQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewMo
 
     /** Función que se encarga de lanzar la pregunta generada para que los clientes del servidor la puedan contestar */
     override fun launchQuestion(context: Context) {
-        // Controlar que los campos de las preguntas no estén vacíos
-        if (answersManager.anyAnswerIsEmpty()) {
-            context.showToastWithCustomView(getString(R.string.empty_answers_error))
-            return
-        }
+        with(context) {
+            // Controlar que los campos de las preguntas no estén vacíos
+            if (answersManager.anyAnswerIsEmpty()) {
+                showToastWithCustomView(getString(R.string.empty_answers_error))
+                return
+            }
 
-        // Controlar que no haya dos preguntas iguales
-        val answerTexts = answersManager.getAnswersText()
-        if (answerTexts.size != answerTexts.toSet().size) {
-            context.showToastWithCustomView(getString(R.string.same_question_error))
-            return
-        }
+            // Controlar que no haya dos preguntas iguales
+            val answerTexts = answersManager.getAnswersText()
+            if (answerTexts.size != answerTexts.toSet().size) {
+                showToastWithCustomView(getString(R.string.same_question_error))
+                return
+            }
 
-        // Controlar que no haya caracteres no permitidos en las respuestas
-        if (answersManager.anyAnswerContainsInvalidCharacter()) {
-            context.showToastWithCustomView(getString(R.string.char_unavailable_message))
-            return
-        }
+            // Controlar que no haya caracteres no permitidos en las respuestas
+            if (answersManager.anyAnswerContainsInvalidCharacter()) {
+                showToastWithCustomView(getString(R.string.char_unavailable_message))
+                return
+            }
 
-        super.launchQuestion(context)
+            super.launchQuestion(this)
+        }
     }
 
     override fun setConfigVisibilityTo(icon: Int, additionalConfigurationsVisibility: Int) {
@@ -92,7 +94,7 @@ class AddOtherQuestion(viewModel: QuestionViewModel): AddQuestionFragment(viewMo
 
     companion object {
         private const val MIN_ANSWERS = 2
-        private const val MAX_ANSWERS = 4
+        private const val MAX_ANSWERS = 5
     }
 
 }

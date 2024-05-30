@@ -218,6 +218,7 @@
                 android:inputType="number"
                 android:maxLength="3"
                 android:padding="@dimen/minimum_margin"
+                android:layout_marginStart="@dimen/minimum_margin"
                 android:gravity="start"
                 android:background="@drawable/bg_border_textbox"
                 android:textSize="@dimen/minimum_font_size"

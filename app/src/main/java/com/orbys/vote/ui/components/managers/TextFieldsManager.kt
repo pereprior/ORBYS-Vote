@@ -54,7 +54,7 @@ class TextFieldsManager(
 
         button.setOnClickListener {
             // Si no se ha superado el número mínimo de respuestas, se elimina el campo
-            if(answerFields.size >= minAnswers) {
+            if(answerFields.size > minAnswers) {
                 layout.removeView(this)
                 answerFields.remove(answer)
             } else context.showToastWithCustomView(context.getString(R.string.min_answers_error), Toast.LENGTH_SHORT)
@@ -79,7 +79,7 @@ class TextFieldsManager(
     fun setAddButtonListener(button: Button) {
         button.setOnClickListener {
             // Si no se ha llegado al límite de respuestas, se añade un nuevo campo
-            if (answerFields.size > maxAnswers) context.showToastWithCustomView(context.getString(R.string.max_answers_error))
+            if (answerFields.size >= maxAnswers) context.showToastWithCustomView(context.getString(R.string.max_answers_error))
             else addAnswerField()
         }
     }
