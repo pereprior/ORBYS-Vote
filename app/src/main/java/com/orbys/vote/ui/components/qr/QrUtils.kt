@@ -75,38 +75,84 @@ private fun FragmentQrCodeBinding.setQrCode(
     }
 
     val qrGenerator = QRCodeGenerator(context)
-    val qrCodeBitmap = qrGenerator.generateUrlQrCode(url, true)
 
     if (isHotspot) {
         // Qr para la red de punto de acceso
-        lanQrCode.visibility = View.GONE
-        lanQrText.visibility = View.GONE
-        step1HotspotContainer.visibility = View.VISIBLE
-        step2HotspotContainer.visibility = View.VISIBLE
-        step2HotspotText.text = hotspotStep2Text
-
-        hotspotQrText.text = url
-        otherQrCode.setExpandOnClick()
-        hotspotQrCode.apply {
-            setImageBitmap(qrCodeBitmap)
-            setExpandOnClick()
-        }
+        setHotspotQrCode(context, qrGenerator, url, hotspotStep2Text)
     } else {
         // Qr para la red local
-        step1HotspotContainer.visibility = View.GONE
-        step2HotspotContainer.visibility = View.GONE
+        setLanQrCode(url, qrGenerator)
+    }
 
-        lanQrCode.apply {
-            visibility = View.VISIBLE
-            setImageBitmap(qrCodeBitmap)
-        }
-        lanQrText.apply {
-            visibility = View.VISIBLE
-            text = url
-        }
+}
+
+/**
+ * Esta función modifica la vista para mostrar el qr de la red local
+ *
+ * @param url Url del qr
+ * @param qrGenerator Generador de códigos qr
+ */
+private fun FragmentQrCodeBinding.setLanQrCode(url: String, qrGenerator: QRCodeGenerator) {
+    val qrCodeUrl = qrGenerator.generateUrlQrCode(url, true)
+
+    // Ocultamos los elementos de la red de punto de acceso
+    step1HotspotContainer.visibility = View.GONE
+    step2HotspotContainer.visibility = View.GONE
+    // Mostramos los elementos de la red local
+    lanQrCode.apply {
+        visibility = View.VISIBLE
+        setImageBitmap(qrCodeUrl)
+    }
+    lanQrText.apply {
+        visibility = View.VISIBLE
+        text = url
     }
 }
 
+/**
+ * Esta función modifica la vista para mostrar el qr de la red de punto de acceso
+ *
+ * @param url Url del qr
+ * @param qrGenerator Generador de códigos qr
+ * @param hotspotStep2Text Texto que se muestra en el paso 2 del qr para la red de punto de acceso
+ */
+private fun FragmentQrCodeBinding.setHotspotQrCode(
+    context: Context, qrGenerator: QRCodeGenerator, url: String, hotspotStep2Text: String
+) {
+    val qrCodeUrl = qrGenerator.generateUrlQrCode(url, true)
+
+    try {
+        // Intentamos obtener las credenciales de la red de punto de acceso
+        val hotspotCredentials = getHotspotCredentials(context)
+        val qrCodeWifi = qrGenerator.generateWifiQRCode(hotspotCredentials.first!!, hotspotCredentials.second!!)
+        otherQrCode.setImageBitmap(qrCodeWifi)
+    } catch (e: Exception) {
+        // Si no se pueden obtener las credenciales, dejamos el qr por defecto
+        e.printStackTrace()
+    }
+
+    // Ocultamos los elementos de la red local
+    lanQrCode.visibility = View.GONE
+    lanQrText.visibility = View.GONE
+
+    // Mostramos los elementos de la red de punto de acceso
+    step1HotspotContainer.visibility = View.VISIBLE
+    step2HotspotContainer.visibility = View.VISIBLE
+    step2HotspotText.text = hotspotStep2Text
+    hotspotQrText.text = url
+    otherQrCode.setExpandOnClick()
+    hotspotQrCode.apply {
+        setImageBitmap(qrCodeUrl)
+        setExpandOnClick()
+    }
+}
+
+/**
+ * Esta función obtiene las credenciales de la red de punto de acceso
+ *
+ * @param context Contexto de la aplicación
+ * @return Pair con el nombre de la red (first) y la contraseña (second)
+ */
 fun getHotspotCredentials(context: Context): Pair<String?, String?> {
     val wifiManager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
     try {

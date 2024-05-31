@@ -1,6 +1,6 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name" translatable="false">ORBYS Vote 1</string>
+    <string name="app_name" translatable="false">ORBYS Vote</string>
 
     <!-- Elements description -->
     <string name="exit_button_desc" translatable="false">Exit from the dialog\n</string>

@@ -152,9 +152,8 @@
             <!-- Imagen que muestra el código qr para poder conectarse al punto de acceso -->
             <ImageView
                 android:id="@+id/other_qr_code"
-                android:layout_width="75dp"
+                android:layout_width="@dimen/small_qr_code_size"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/small_margin"
                 android:contentDescription="@string/qr_code_desc"
                 android:src="@drawable/qr" />
 
