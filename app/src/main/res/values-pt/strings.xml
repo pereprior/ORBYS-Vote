@@ -20,7 +20,8 @@
     <string name="min_answers_error">Uma pergunta não pode ter menos de 2 respostas</string>
     <string name="empty_answers_error">Não é possível iniciar a pergunta se houver campos vazios</string>
     <string name="same_question_error">Não é possível iniciar se houver duas respostas iguais</string>
-    <string name="no_network_error">Sem conexão com a internet!</string>
+    <string name="no_network_error">Sem conexão à Internet! Verifique e tente novamente</string>
+    <string name="no_hotspot_error">Hotspot indisponível! Verifique e tente novamente</string>
     <string name="storage_permission_denied">Permissão de armazenamento negada!</string>
     <string name="success_message">Resposta enviada com sucesso!</string>
     <string name="confirm_message">Você já respondeu a pergunta. Deseja enviar outra resposta?</string>

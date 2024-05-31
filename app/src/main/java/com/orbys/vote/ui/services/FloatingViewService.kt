@@ -33,7 +33,7 @@ class FloatingViewService: Service() {
 
             // Añadir la pregunta a la vista
             with(binding) {
-                serviceModel.bind(this)
+                serviceModel.bind(this, windowManager)
             }
         }
     }

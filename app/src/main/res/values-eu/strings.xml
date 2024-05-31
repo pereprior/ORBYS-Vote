@@ -20,7 +20,8 @@
     <string name="min_answers_error">Galdera batek ezin du 2 erantzun baino gutxiago izan</string>
     <string name="empty_answers_error">Ezin duzu galdera hasi hutsuneak dauden eremuekin</string>
     <string name="same_question_error">Ezin duzu hasi bi erantzun berdinak badaude</string>
-    <string name="no_network_error">Ez dago internet konexiorik!</string>
+    <string name="no_network_error">Ez dago Internet konexiorik! Egiaztatu eta saiatu berriro</string>
+    <string name="no_hotspot_error">Hotspot-a ez dago erabilgarri! Egiaztatu eta saiatu berriro</string>
     <string name="storage_permission_denied">Biltegiratze baimena ukatua!</string>
     <string name="success_message">Erantzuna arrakastaz bidali da!</string>
     <string name="confirm_message">Galdera honi dagoeneko erantzun diozu. Beste erantzun bat bidali nahi duzu?</string>

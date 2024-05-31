@@ -124,7 +124,7 @@
         <LinearLayout
             android:id="@+id/step_1_hotspot_container"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="@dimen/small_qr_code_size"
             android:layout_marginTop="@dimen/small_margin"
             android:orientation="horizontal">
 
@@ -163,8 +163,7 @@
         <LinearLayout
             android:id="@+id/step_2_hotspot_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_height="@dimen/small_qr_code_size"
             android:orientation="horizontal">
 
             <!-- Indica el orden de forma númerica en el que se deben seguir los pasos para conectarse mediante hotspot -->
@@ -197,7 +196,7 @@
                 <ImageView
                     android:id="@+id/hotspot_qr_code"
                     android:layout_width="@dimen/small_qr_code_size"
-                    android:layout_height="@dimen/small_qr_code_size"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:contentDescription="@string/qr_code_desc" />
 

@@ -20,7 +20,8 @@
     <string name="min_answers_error">Een vraag kan niet minder dan 2 antwoorden hebben</string>
     <string name="empty_answers_error">De vraag kan niet worden gestart als er lege velden zijn</string>
     <string name="same_question_error">Kan niet starten als er twee dezelfde antwoorden zijn</string>
-    <string name="no_network_error">Geen internetverbinding!</string>
+    <string name="no_network_error">Geen internetverbinding! Controleer en probeer het opnieuw</string>
+    <string name="no_hotspot_error">Hotspot niet beschikbaar! Controleer en probeer het opnieuw</string>
     <string name="storage_permission_denied">Toestemming voor opslag geweigerd!</string>
     <string name="success_message">Antwoord succesvol verzonden!</string>
     <string name="confirm_message">Je hebt de vraag al beantwoord. Wil je een ander antwoord verzenden?</string>

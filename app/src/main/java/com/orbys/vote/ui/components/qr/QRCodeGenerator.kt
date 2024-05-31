@@ -19,19 +19,14 @@ import com.orbys.vote.R
 /** Clase para generar códigos QR de manera personalizada */
 class QRCodeGenerator(private val context: Context) {
 
-    fun generateWifiQRCode(ssid: String, password: String): Bitmap {
+    fun generateWifiQRCode(
+        ssid: String, password: String,
+        width: Int = context.resources.getDimensionPixelSize(R.dimen.large_qr_code_size), height: Int = context.resources.getDimensionPixelSize(R.dimen.large_qr_code_size)
+    ): Bitmap {
         //"WIFI:S:SSID;P:PASSWORD;T:Security;"
         val wifiData = "WIFI:S:$ssid;P:$password;T:WPA2;"
-        val bitMatrix = encodeAsBitmap(wifiData, 400, 400)
-
-        val bitmap = Bitmap.createBitmap(bitMatrix.width, bitMatrix.height, Bitmap.Config.RGB_565)
-        for (x in 0 until bitMatrix.width) {
-            for (y in 0 until bitMatrix.height) {
-                bitmap.setPixel(x, y, if (bitMatrix.get(x, y)) Color.BLACK else Color.WHITE)
-            }
-        }
-
-        return bitmap
+        val bitMatrix = encodeAsBitmap(wifiData, width, height)
+        return createBitmapFromBitMatrix(bitMatrix)
     }
 
     /**
@@ -44,11 +39,8 @@ class QRCodeGenerator(private val context: Context) {
      * @param height Alto del código QR.
      */
     fun generateUrlQrCode(
-        url: String,
-        qrWithLogo: Boolean = false,
-        logoResId: Int = R.drawable.ic_orbys,
-        width: Int = context.resources.getDimensionPixelSize(R.dimen.qr_code_size),
-        height: Int = context.resources.getDimensionPixelSize(R.dimen.qr_code_size)
+        url: String, qrWithLogo: Boolean = false, logoResId: Int = R.drawable.ic_orbys,
+        width: Int = context.resources.getDimensionPixelSize(R.dimen.large_qr_code_size), height: Int = context.resources.getDimensionPixelSize(R.dimen.large_qr_code_size)
     ): Bitmap {
         val bitMatrix = encodeAsBitmap(url, width, height)
         val qrCode = createBitmapFromBitMatrix(bitMatrix, qrWithLogo)

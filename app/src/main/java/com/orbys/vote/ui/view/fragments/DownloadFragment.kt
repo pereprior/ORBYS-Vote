@@ -10,6 +10,7 @@ import com.orbys.vote.R
 import com.orbys.vote.core.extensions.DOWNLOAD_ENDPOINT
 import com.orbys.vote.core.extensions.getAnswersAsString
 import com.orbys.vote.core.extensions.replaceFragmentOnClick
+import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.FragmentQrCodeBinding
 import com.orbys.vote.ui.components.qr.setQrOptions
 import com.orbys.vote.ui.viewmodels.QuestionViewModel
@@ -37,7 +38,9 @@ class DownloadFragment(private val viewModel: QuestionViewModel): Fragment() {
         replaceFragmentOnClick(backButton, TypesQuestionFragment(viewModel))
 
         with(binding) {
-            setQrOptions(requireContext(), DOWNLOAD_ENDPOINT, getString(R.string.step_3_hotspot_text))
+            setQrOptions(requireContext(), DOWNLOAD_ENDPOINT, getString(R.string.step_3_hotspot_text)) {
+                requireContext().showToastWithCustomView(getString(R.string.no_hotspot_error))
+            }
             return root
         }
 

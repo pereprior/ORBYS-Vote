@@ -20,7 +20,8 @@
     <string name="min_answers_error">لا يمكن أن يحتوي السؤال على أقل من إجابتين</string>
     <string name="empty_answers_error">لا يمكن بدء السؤال إذا كانت هناك حقول فارغة</string>
     <string name="same_question_error">لا يمكن بدء السؤال إذا كانت هناك إجابتان متطابقتان</string>
-    <string name="no_network_error">لا يوجد اتصال بالإنترنت!</string>
+    <string name="no_network_error">لا يوجد اتصال بالإنترنت! يرجى التحقق والمحاولة مرة أخرى</string>
+    <string name="no_hotspot_error">نقطة الاتصال غير متوفرة! يرجى التحقق والمحاولة مرة أخرى</string>
     <string name="storage_permission_denied">تم رفض إذن التخزين!</string>
     <string name="success_message">تم إرسال الإجابة بنجاح!</string>
     <string name="confirm_message">لقد أجبت على السؤال بالفعل. هل تريد إرسال إجابة أخرى؟</string>

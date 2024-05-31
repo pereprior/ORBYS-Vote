@@ -3,11 +3,13 @@ package com.orbys.vote.ui.viewmodels
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.QUESTION_ENDPOINT
 import com.orbys.vote.core.extensions.getCount
 import com.orbys.vote.core.extensions.minutesToMillis
+import com.orbys.vote.core.extensions.showToastOnService
 import com.orbys.vote.databinding.ServiceLaunchQuestionBinding
 import com.orbys.vote.domain.models.AnswerType
 import com.orbys.vote.domain.models.Question
@@ -54,14 +56,24 @@ class LaunchServiceModel @Inject constructor(
      *
      * @param binding Enlace con la vista
      */
-    fun bind(binding: ServiceLaunchQuestionBinding) {
+    fun bind(
+        binding: ServiceLaunchQuestionBinding, windowManager: WindowManager
+    ) {
         val question = getQuestionUseCase()
 
         with(binding) {
             banner.closeButton.visibility = View.GONE
             questionText.text = question.question
 
-            qrContainer.setQrOptions(context, QUESTION_ENDPOINT, )
+            qrContainer.setQrOptions(
+                context, QUESTION_ENDPOINT,
+                errorAction = {
+                    context.showToastOnService(
+                        context.getString(R.string.no_hotspot_error),
+                        windowManager
+                    )
+                }
+            )
 
             setTimer(question.timer)
 

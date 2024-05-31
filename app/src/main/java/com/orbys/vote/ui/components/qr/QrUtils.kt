@@ -5,11 +5,9 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.wifi.WifiManager
 import android.view.View
-import android.widget.Toast
 import com.orbys.vote.R
 import com.orbys.vote.core.extensions.getServerUrl
 import com.orbys.vote.core.extensions.setExpandOnClick
-import com.orbys.vote.core.extensions.showToastWithCustomView
 import com.orbys.vote.databinding.DialogQrCodeBinding
 import com.orbys.vote.databinding.FragmentQrCodeBinding
 import java.lang.reflect.InvocationTargetException
@@ -46,15 +44,17 @@ class ImageDialog(
  * @param hotspotStep2Text Texto que se muestra en el paso 2 del qr para la red de punto de acceso
  */
 fun FragmentQrCodeBinding.setQrOptions(
-    context: Context, endpoint: String, hotspotStep2Text: String = context.getString(R.string.step_2_hotspot_text)
+    context: Context, endpoint: String,
+    hotspotStep2Text: String = context.getString(R.string.step_2_hotspot_text),
+    errorAction: () -> Unit,
 ) {
     val hotspotUrl = getServerUrl(endpoint, true)
-    // Mostramos el qr por defecto al abrir el widget
-    setQrCode(context, endpoint, hotspotStep2Text, !hotspotUrl.isNullOrEmpty())
+    // Mostramos el qr por defecto al abrir el widget (el hotspot sera el qr por defecto si hay una IP disponible)
+    setQrCode(context, endpoint, hotspotStep2Text, errorAction, !hotspotUrl.isNullOrEmpty())
 
     // Al pulsar a cada uno de los contenedores, se muestra el qr correspondiente
-    respondContainer.setOnClickListener { setQrCode(context, endpoint, hotspotStep2Text) }
-    respondHotspotContainer.setOnClickListener { setQrCode(context, endpoint, hotspotStep2Text, true) }
+    respondContainer.setOnClickListener { setQrCode(context, endpoint, hotspotStep2Text, errorAction) }
+    respondHotspotContainer.setOnClickListener { setQrCode(context, endpoint, hotspotStep2Text, errorAction, true) }
 }
 
 /**
@@ -65,25 +65,29 @@ fun FragmentQrCodeBinding.setQrOptions(
  * @param hotspotStep2Text Texto que se muestra en el paso 2 del qr para la red de punto de acceso
  */
 private fun FragmentQrCodeBinding.setQrCode(
-    context: Context, endpoint: String, hotspotStep2Text: String, isHotspot: Boolean = false
+    context: Context, endpoint: String, hotspotStep2Text: String, errorAction: () -> Unit, isHotspot: Boolean = false
 ) {
-    val url = getServerUrl(endpoint, isHotspot)
+    var url = getServerUrl(endpoint, isHotspot)
     // Si la url es nula o vacía, mostramos un mensaje de error
     if (url.isNullOrEmpty()) {
-        context.showToastWithCustomView(context.getString(R.string.no_network_error), Toast.LENGTH_LONG)
+        errorAction()
         return
     }
 
     val qrGenerator = QRCodeGenerator(context)
-
     if (isHotspot) {
         // Qr para la red de punto de acceso
-        setHotspotQrCode(context, qrGenerator, url, hotspotStep2Text)
+        try {
+            setHotspotQrCode(context, qrGenerator, url, hotspotStep2Text)
+        } catch (e: Exception) {
+            errorAction()
+            url = getServerUrl(endpoint, false)
+            setLanQrCode(url?:"", qrGenerator)
+        }
     } else {
         // Qr para la red local
         setLanQrCode(url, qrGenerator)
     }
-
 }
 
 /**
@@ -119,17 +123,10 @@ private fun FragmentQrCodeBinding.setLanQrCode(url: String, qrGenerator: QRCodeG
 private fun FragmentQrCodeBinding.setHotspotQrCode(
     context: Context, qrGenerator: QRCodeGenerator, url: String, hotspotStep2Text: String
 ) {
+    // Obtenemos las credenciales de la red de punto de acceso
+    val hotspotCredentials = getHotspotCredentials(context)
+    val qrCodeWifi = qrGenerator.generateWifiQRCode(hotspotCredentials.first!!, hotspotCredentials.second!!)
     val qrCodeUrl = qrGenerator.generateUrlQrCode(url, true)
-
-    try {
-        // Intentamos obtener las credenciales de la red de punto de acceso
-        val hotspotCredentials = getHotspotCredentials(context)
-        val qrCodeWifi = qrGenerator.generateWifiQRCode(hotspotCredentials.first!!, hotspotCredentials.second!!)
-        otherQrCode.setImageBitmap(qrCodeWifi)
-    } catch (e: Exception) {
-        // Si no se pueden obtener las credenciales, dejamos el qr por defecto
-        e.printStackTrace()
-    }
 
     // Ocultamos los elementos de la red local
     lanQrCode.visibility = View.GONE
@@ -140,7 +137,10 @@ private fun FragmentQrCodeBinding.setHotspotQrCode(
     step2HotspotContainer.visibility = View.VISIBLE
     step2HotspotText.text = hotspotStep2Text
     hotspotQrText.text = url
-    otherQrCode.setExpandOnClick()
+    otherQrCode.apply {
+        setImageBitmap(qrCodeWifi)
+        setExpandOnClick()
+    }
     hotspotQrCode.apply {
         setImageBitmap(qrCodeUrl)
         setExpandOnClick()

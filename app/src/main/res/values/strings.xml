@@ -38,7 +38,8 @@
     <string name="min_answers_error">A question cannot have less than 2 answers</string>
     <string name="empty_answers_error">Cannot start the question if there are empty fields</string>
     <string name="same_question_error">Cannot start if there are two identical answers</string>
-    <string name="no_network_error">No internet connection!</string>
+    <string name="no_network_error">No internet connection! Please check and try again</string>
+    <string name="no_hotspot_error">Hotspot unavailable! Please check and try again</string>
     <string name="storage_permission_denied">Storage permission denied!</string>
     <string name="success_message">Answer successfully sent!</string>
     <string name="confirm_message">You have already answered the question. Do you want to send another answer?</string>
@@ -75,6 +76,7 @@
     <string name="add_answer_button_text">Add answers</string>
     <string name="close_button_placeholder">Close</string>
     <string name="char_unavailable_message">Answers do not support special characters</string>
+    <string name="question_type_error">Select the type of question</string>
     <string name="step_2_hotspot_text">VOTE</string>
     <string name="step_3_hotspot_text">DOWNLOAD</string>
     <string name="step_1_hotspot_text">CONNECT</string>

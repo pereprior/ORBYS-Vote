@@ -20,7 +20,8 @@
     <string name="min_answers_error">O întrebare nu poate avea mai puțin de 2 răspunsuri</string>
     <string name="empty_answers_error">Nu puteți începe întrebarea dacă există câmpuri goale</string>
     <string name="same_question_error">Nu puteți începe dacă există două răspunsuri identice</string>
-    <string name="no_network_error">Nu există conexiune la internet!</string>
+    <string name="no_network_error">Nu există conexiune la internet! Vă rugăm să verificați și să încercați din nou</string>
+    <string name="no_hotspot_error">Hotspot indisponibil! Vă rugăm să verificați și să încercați din nou</string>
     <string name="storage_permission_denied">Permisiunea de stocare a fost refuzată!</string>
     <string name="success_message">Răspuns trimis cu succes!</string>
     <string name="confirm_message">Ați răspuns deja la întrebare. Doriți să trimiteți un alt răspuns?</string>

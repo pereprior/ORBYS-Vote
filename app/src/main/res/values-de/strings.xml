@@ -20,7 +20,8 @@
     <string name="min_answers_error">Eine Frage darf nicht weniger als 2 Antworten haben</string>
     <string name="empty_answers_error">Sie können die Frage nicht starten, wenn es leere Felder gibt</string>
     <string name="same_question_error">Sie können nicht starten, wenn es zwei gleiche Antworten gibt</string>
-    <string name="no_network_error">Keine Internetverbindung!</string>
+    <string name="no_network_error">Keine Internetverbindung! Bitte überprüfen und erneut versuchen</string>
+    <string name="no_hotspot_error">Hotspot nicht verfügbar! Bitte überprüfen und erneut versuchen</string>
     <string name="storage_permission_denied">Speichererlaubnis verweigert!</string>
     <string name="success_message">Antwort erfolgreich gesendet!</string>
     <string name="confirm_message">Sie haben die Frage bereits beantwortet. Möchten Sie eine weitere Antwort senden?</string>

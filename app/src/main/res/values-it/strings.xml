@@ -20,7 +20,8 @@
     <string name="min_answers_error">Una domanda non può avere meno di 2 risposte</string>
     <string name="empty_answers_error">Non è possibile avviare la domanda se ci sono campi vuoti</string>
     <string name="same_question_error">Non è possibile avviare se ci sono due risposte uguali</string>
-    <string name="no_network_error">Nessuna connessione Internet!</string>
+    <string name="no_network_error">Nessuna connessione a Internet! Si prega di controllare e riprovare</string>
+    <string name="no_hotspot_error">Hotspot non disponibile! Si prega di controllare e riprovare</string>
     <string name="storage_permission_denied">Permesso di archiviazione negato!</string>
     <string name="success_message">Risposta inviata con successo!</string>
     <string name="confirm_message">Hai già risposto alla domanda. Vuoi inviare un\'altra risposta?</string>

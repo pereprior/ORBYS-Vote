@@ -20,7 +20,8 @@
     <string name="min_answers_error">Une question ne peut pas avoir moins de 2 réponses</string>
     <string name="empty_answers_error">Vous ne pouvez pas démarrer la question s´il y a des champs vides</string>
     <string name="same_question_error">Vous ne pouvez pas démarrer s´il y a deux réponses identiques</string>
-    <string name="no_network_error">Pas de connexion Internet!</string>
+    <string name="no_network_error">Pas de connexion Internet ! Veuillez vérifier et réessayer</string>
+    <string name="no_hotspot_error">Hotspot indisponible ! Veuillez vérifier et réessayer</string>
     <string name="storage_permission_denied">Permission de stockage refusée!</string>
     <string name="success_message">Réponse envoyée avec succès!</string>
     <string name="confirm_message">Vous avez déjà répondu à la question. Voulez-vous envoyer une autre réponse?</string>

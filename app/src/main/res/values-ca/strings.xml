@@ -20,7 +20,8 @@
     <string name="min_answers_error">Una pregunta no pot tenir menys de 2 respostes</string>
     <string name="empty_answers_error">No es pot iniciar la pregunta si hi ha camps buits</string>
     <string name="same_question_error">No es pot iniciar si hi ha dues respostes iguals</string>
-    <string name="no_network_error">No hi ha connexió a internet!</string>
+    <string name="no_network_error">No hi ha connexió a Internet! Si us plau, comprova-ho i torna-ho a intentar</string>
+    <string name="no_hotspot_error">Punt d\'accés no disponible! Si us plau, comprova-ho i torna-ho a intentar</string>
     <string name="storage_permission_denied">Permís d\'emmagatzematge denegat!</string>
     <string name="success_message">Resposta enviada amb èxit!</string>
     <string name="confirm_message">Ja has respost a la pregunta. Vols enviar una altra resposta?</string>

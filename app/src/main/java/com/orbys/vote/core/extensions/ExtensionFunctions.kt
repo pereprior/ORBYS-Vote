@@ -2,7 +2,10 @@ package com.orbys.vote.core.extensions
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.PixelFormat
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -79,7 +82,7 @@ fun ImageView.setExpandOnClick(size: Int = 1024) {
 }
 
 /**
- * Muestra un mensaje informativo.
+ * Muestra un mensaje informativo en una actividad.
  * No se muestra si el dispositivo no tiene permisos de notificación activos o los tiene bloqueados
  *
  * @param message El mensaje que muestra.
@@ -103,6 +106,42 @@ fun Context.showToastWithCustomView(
     toast.view = customToastView
     toast.show()
 }
+
+/**
+ * Muestra un mensaje informativo en un servicio.
+ *
+ * @param message El mensaje que muestra.
+ * @param windowManager El administrador de ventanas de la vista del servicio.
+ */
+fun Context.showToastOnService(message: String, windowManager: WindowManager) {
+    val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    val customToastView = inflater.inflate(R.layout.toast_custom, null)
+
+    val toastText = customToastView.findViewById<TextView>(R.id.custom_toast_text)
+    toastText.text = message
+    toastText.textSize = 8f
+
+    val params = WindowManager.LayoutParams(
+        WindowManager.LayoutParams.WRAP_CONTENT,
+        WindowManager.LayoutParams.WRAP_CONTENT,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE,
+        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+        PixelFormat.TRANSLUCENT
+    )
+
+    params.gravity = Gravity.BOTTOM or Gravity.CENTER
+    params.x = 0
+    params.y = 200
+
+    windowManager.addView(customToastView, params)
+
+    // Remove the view after the desired duration
+    Handler(Looper.getMainLooper()).postDelayed({
+        windowManager.removeView(customToastView)
+    }, 2000) // for example, 2000 milliseconds
+}
+
 
 /**
  * Carga un archivo de texto de la carpeta de assets.
